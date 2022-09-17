@@ -1,0 +1,75 @@
+:root {
+  --color-white: #ffffff;
+  --color-gray: #bbbbbb;
+}
+
+.container {
+  max-width: 400px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.container label {
+  color: var(--color-white);
+  text-transform: capitalize;
+
+  line-height: 30px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.container input {
+  height: 44px;
+
+  color: var(--color-white);
+  text-transform: capitalize;
+
+  padding: 15px;
+  padding-right: 33px;
+
+  border: 1px solid #fff;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.container input[type="password"] {
+  padding-right: 80px;
+}
+
+.container input::placeholder {
+  color: var(--color-gray);
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.container input[type="date"] {
+  color: var(--color-gray);
+  text-transform: uppercase;
+}
+::-webkit-inner-spin-button {
+  display: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  width: 70px;
+
+  padding: 5px;
+
+  cursor: pointer;
+  background: url("../../../assets/icon/calendar.svg") 100% 50% no-repeat;
+}
+
+.container svg {
+  font-size: 25px;
+  color: var(--color-gray);
+
+  position: absolute;
+  right: 33px;
+  bottom: 10px;
+
+  cursor: pointer;
+}
