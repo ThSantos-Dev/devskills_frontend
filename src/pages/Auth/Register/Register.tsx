@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // Hooks
 import { useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Input from "./../../../components/shared/Input/Input";
 
 // Regex
+import SelectCustom from "../../../components/shared/Select/SelectCustom";
 import regex from "../../../utils/my-regex";
 
 const Register = () => {
@@ -16,11 +17,14 @@ const Register = () => {
   // State
   const [input, setInputs] = useState({
     password: "",
-    idade: 0,
+    idade: "",
     name: "",
+    cpf: "",
+    telefone: "",
   });
 
   const handleOnChange = (value: string, label: any) => {
+    console.log(label, value);
     setInputs((prevState) => ({ ...prevState, [label]: value }));
   };
 
@@ -36,13 +40,13 @@ const Register = () => {
         value={input.name}
         label="nome completo"
         name="name"
-        placeholder="teste"
+        placeholder="Digite seu nome..."
         mask={regex.onlyLetters}
       />
-      <Input
+      {/* <Input
         label="data de nascimento"
         type={"date"}
-        name="data_nasc"
+        name="idade"
         value={input.idade}
         handleOnChange={handleOnChange}
       />
@@ -50,10 +54,28 @@ const Register = () => {
         label="Digite sua senha"
         name="password"
         type={"password"}
+        // placeholder={"teste"}
         placeholder={"teste"}
         value={input.password}
         handleOnChange={handleOnChange}
       />
+      <Input
+        label="CPF"
+        name="cpf"
+        value={input.cpf}
+        handleOnChange={handleOnChange}
+        placeholder={"000.000.000-00"}
+        mask={"000.000.000-00"}
+      />
+      <Input
+        label="Telefone"
+        name="telefone"
+        value={input.telefone}
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
+        handleOnChange={handleOnChange}
+      /> */}
+      <SelectCustom />
     </div>
   );
 };

@@ -1,74 +1,73 @@
-import { ChangeEvent, useState } from "react";
-
-// Styles
-import styles from "./Input.module.css";
+import React, { InputHTMLAttributes, ChangeEvent, useState } from "react";
 
 // Components
 import { IMaskInput } from "react-imask";
 
+// Styles
+import styles from "./Input.module.css";
+
 // Icons
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
-interface Props {
-  label: string;
-  value: string | number;
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
   name: string;
-  placeholder?: string;
   mask?: RegExp | string | any;
-  type?: React.HTMLInputTypeAttribute;
+  type?: "text" | "number" | "date" | "password" | "email";
+
   handleOnChange(value: string, name: string): void;
 }
 
-const Input = ({
+const Input: React.FC<Props> = ({
   label,
-  value,
   name,
-  placeholder,
-  type,
   mask,
+  type,
   handleOnChange,
-}: Props) => {
-  // Lógica de exibição para senha
-  const [showValue, setShowValue] = useState<Boolean>(false);
+  ...props
+}) => {
+  // Aplicando state de exibição de senha
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
 
   return (
     <div className={styles.container}>
-      <label>{label}</label>
-      {type ? (
+      {label && <label>{label}</label>}
+
+      {/* Lógica de exibição para Input */}
+      {mask ? (
+        <IMaskInput
+          mask={mask}
+          {...props}
+          onAccept={(value: any) => handleOnChange(value, name)}
+        />
+      ) : (
         <>
-          {type !== "password" ? (
-            <input
-              type={type}
-              value={value}
-              placeholder={placeholder}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                handleOnChange(e.target.value, name)
-              }
-            />
-          ) : (
+          {type === "password" ? (
             <>
               <input
-                type={!showValue ? "password" : "text"}
-                value={value}
-                placeholder={placeholder}
+                type={!showPassword ? "password" : "text"}
+                {...props}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleOnChange(e.target.value, name)
                 }
               />
-
-              {!showValue ? (
-                <BsEye onClick={() => setShowValue(true)} />
+              {/* Ícone */}
+              {!showPassword ? (
+                <BsEye onClick={() => setShowPassword(true)} />
               ) : (
-                <BsEyeSlash onClick={() => setShowValue(false)} />
+                <BsEyeSlash onClick={() => setShowPassword(false)} />
               )}
             </>
+          ) : (
+            <input
+              type={type}
+              {...props}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleOnChange(e.target.value, name)
+              }
+            />
           )}
         </>
-      ) : (
-        <IMaskInput
-          mask={mask && mask}
-          onAccept={(value: any) => handleOnChange(value, name)}
-        />
       )}
     </div>
   );
