@@ -75,7 +75,7 @@ const Register = () => {
         placeholder="(00) 00000-0000"
         handleOnChange={handleOnChange}
       /> */}
-      <SelectCustom />
+      <SelectCustom placeholder="Meu placeholder" closeMenuOnSelect={true} />
     </div>
   );
 };
