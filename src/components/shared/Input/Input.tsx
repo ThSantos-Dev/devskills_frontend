@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ChangeEvent, useState } from "react";
+import React, { ChangeEvent, InputHTMLAttributes, useState } from "react";
 
 // Components
 import { IMaskInput } from "react-imask";
@@ -13,7 +13,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   name: string;
   mask?: RegExp | string | any;
-  type?: "text" | "number" | "date" | "password" | "email";
+  type?: "text" | "number" | "date" | "password" | "email" | "time";
 
   handleOnChange(value: string, name: string): void;
 }

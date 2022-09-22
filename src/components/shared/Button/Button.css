@@ -1,0 +1,71 @@
+:root {
+  --color-white: #cbcbcb;
+  --color-dark: #000;
+
+  --bg-color-blue: rgb(28, 57, 119);
+
+  --font-medium: 1.5rem;
+  --font-small: 1.2rem;
+}
+
+.btn_size_medium span,
+.btn_size_small span {
+  width: 100%;
+}
+
+/* Cores */
+.btn_color_solid_white {
+  font-weight: 600;
+  text-transform: capitalize;
+
+  transition: all 0.3s;
+  border-radius: 8px;
+  background-color: var(--color-white);
+}
+.btn_color_solid_white:hover {
+  cursor: pointer;
+  color: var(--color-white);
+
+  border: 1px solid var(--color-white);
+  background-color: var(--bg-color-blue);
+}
+
+/* Tamanhos */
+.btn_size_medium {
+  max-width: 235px;
+  max-height: 52px;
+
+  font-size: var(--font-medium);
+
+  padding: clamp(0.3rem, 10vw, 0.625rem) clamp(1.625rem, 10vw, 2rem);
+}
+
+.btn_size_small {
+  max-width: 185px;
+
+  font-size: var(--font-small);
+
+  padding: 8px 30px;
+}
+
+/* Icones */
+.btn_size_medium,
+.btn_size_small {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn_size_medium.icon {
+  padding: 10px 40px 10px 20px;
+}
+.btn_size_medium.icon svg {
+  font-size: 2.75rem;
+}
+
+.btn_size_small.icon {
+  padding: 0px 26px 2px 16px;
+}
+.btn_size_small.icon svg {
+  font-size: 2.9rem;
+}

@@ -4,7 +4,8 @@
 }
 
 .container {
-  max-width: 400px;
+  flex: 1;
+  min-width: 200px;
 
   position: relative;
 
@@ -39,13 +40,13 @@
 }
 
 .container input:focus {
-    /* box-shadow: 0 0 0 0; */
-    /* border: 0 none; */
-    outline-color: var(--color-white)
+  /* box-shadow: 0 0 0 0; */
+  /* border: 0 none; */
+  outline-color: var(--color-white);
 }
 
 .container input[type="password"] {
-  padding-right: 80px;
+  padding-right: clamp(100% - 20px);
 }
 
 .container input::placeholder {
@@ -58,17 +59,33 @@
   text-transform: uppercase;
 }
 
-::-webkit-inner-spin-button {
+.container input[type="date"]::-webkit-inner-spin-button {
   display: none;
 }
 
-::-webkit-calendar-picker-indicator {
-  width: 70px;
+.container input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 20px;
 
   padding: 5px;
 
   cursor: pointer;
   background: url("../../../assets/icon/calendar.svg") 100% 50% no-repeat;
+}
+
+/* .container input[type="time"]::-webkit-inner-spin-button {
+  display: none;
+} */
+
+.container input[type="time"] {
+  max-width: 150px;
+  padding-right: 15px;
+  color: var(--color-white);
+}
+
+.container input[type="time"]::-webkit-calendar-picker-indicator {
+  background-color: var(--color-gray);
+  cursor: pointer;
+  background: url("../../../assets/icon/clock-history.svg") 100% 50% no-repeat;
 }
 
 .container svg {

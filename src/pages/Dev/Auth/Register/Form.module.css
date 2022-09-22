@@ -1,0 +1,10 @@
+.container {
+  width: inherit;
+  height: inherit;
+
+  display: flex;
+  flex-flow: row wrap;
+  gap: 30px 56px;
+
+  padding-top: 40px;
+}

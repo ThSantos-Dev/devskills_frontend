@@ -1,0 +1,37 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  gap: 40px;
+}
+
+.image {
+  flex: 650px 0 2;
+  height: 100vh;
+
+  position: relative;
+}
+
+.image img.ilustration {
+  width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+
+.image img.logo {
+  z-index: 1;
+
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.content {
+  max-width: 1080px;
+  flex: 660px 1 0;
+
+  padding-top: 50px;
+  padding-right: 120px;
+}

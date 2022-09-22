@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route } from "react-router-dom"
 
 
 import Home from './pages/Institutional/Home';
-import Register from './pages/Auth/Register/Register';
+import Register from './pages/Dev/Auth/Register/Register';
 
 interface Props {}
 

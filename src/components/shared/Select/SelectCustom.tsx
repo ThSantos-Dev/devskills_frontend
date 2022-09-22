@@ -1,6 +1,7 @@
 import React from "react";
 
 // Styles
+import styles from "./SelectCustom.module.css";
 
 // Components
 import Select from "react-select";
@@ -9,13 +10,14 @@ interface Props {
   isMulti?: boolean;
   closeMenuOnSelect?: boolean;
   placeholder: string;
+  label?: string;
 }
 
-const styles = {
+const selectStyles = {
   control: (styles: any) => {
     return {
       ...styles,
-      maxWidth: 400,
+      maxWidth: 600,
       minHeight: "clamp(45px, 10vw, 40px)",
       backgroundColor: "transparent",
     };
@@ -30,7 +32,6 @@ const styles = {
     return {
       ...styles,
       color: "#bbbbbb",
-      fontFamily: "var(--font)",
       fontSize: "clamp(0.75rem, 3vw, 1.125rem)",
       fontWeight: 400,
     };
@@ -74,24 +75,28 @@ const SelectCustom: React.FC<Props> = ({
   isMulti = false,
   closeMenuOnSelect = false,
   placeholder,
+  label,
 }) => {
   return (
-    <Select
-      isMulti={isMulti}
-      closeMenuOnSelect={closeMenuOnSelect}
-      placeholder={placeholder}
-      options={options}
-      styles={styles}
-      theme={(theme) => ({
-        ...theme,
-        borderRadius: 8,
-        colors: {
-          ...theme.colors,
-          primary25: "#cacaca",
-          primary: "#708FDE",
-        },
-      })}
-    />
+    <div className={styles.container}>
+      <label>{label && label}</label>
+      <Select
+        isMulti={isMulti}
+        closeMenuOnSelect={closeMenuOnSelect}
+        placeholder={placeholder}
+        options={options}
+        styles={selectStyles}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 8,
+          colors: {
+            ...theme.colors,
+            primary25: "#cacaca",
+            primary: "#708FDE",
+          },
+        })}
+      />
+    </div>
   );
 };
 
