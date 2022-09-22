@@ -3,8 +3,27 @@
   height: inherit;
 
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   gap: 30px 56px;
+
+  padding-top: 40px;
+}
+
+.container .input_container {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 56px;
+}
+
+.button_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  font-size: 1.25rem;
 
   padding-top: 40px;
 }

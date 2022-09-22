@@ -7,9 +7,10 @@
 }
 
 .image {
-  flex: 650px 0 2;
+  width: clamp(650px, 50vw, 1080px);
   height: 100vh;
 
+  background-color: #fff;
   position: relative;
 }
 
@@ -20,6 +21,7 @@
 }
 
 .image img.logo {
+  width: clamp(250px, 40vw, 300px);
   z-index: 1;
 
   position: absolute;
@@ -29,7 +31,8 @@
 }
 
 .content {
-  max-width: 1080px;
+  max-width: 1280px;
+  margin: 0 auto;
   flex: 660px 1 0;
 
   padding-top: 50px;

@@ -31,7 +31,7 @@ const selectStyles = {
   placeholder: (styles: any) => {
     return {
       ...styles,
-      color: "#bbbbbb",
+      color: "#cbcbcb",
       fontSize: "clamp(0.75rem, 3vw, 1.125rem)",
       fontWeight: 400,
     };
@@ -39,7 +39,7 @@ const selectStyles = {
   multiValue: (styles: any) => {
     return {
       ...styles,
-      backgroundColor: "rgba(217, 107, 107, 0.3)",
+      backgroundColor: "red",
     };
   },
   multiValueRemove: (styles: any) => {
@@ -47,7 +47,7 @@ const selectStyles = {
       ...styles,
       cursor: "pointer",
       ":hover": {
-        color: "#000",
+        color: "#fff",
       },
     };
   },
@@ -73,7 +73,7 @@ const options = [
 
 const SelectCustom: React.FC<Props> = ({
   isMulti = false,
-  closeMenuOnSelect = false,
+  closeMenuOnSelect = true,
   placeholder,
   label,
 }) => {
@@ -85,14 +85,18 @@ const SelectCustom: React.FC<Props> = ({
         closeMenuOnSelect={closeMenuOnSelect}
         placeholder={placeholder}
         options={options}
+        className={styles.react_select}
+        classNamePrefix={styles.react_select}
         styles={selectStyles}
         theme={(theme) => ({
           ...theme,
           borderRadius: 8,
+          background: "#000",
           colors: {
             ...theme.colors,
-            primary25: "#cacaca",
-            primary: "#708FDE",
+            primary25: "#4166C6",
+            // primary: "#fff",
+            primary50: "#fff",
           },
         })}
       />

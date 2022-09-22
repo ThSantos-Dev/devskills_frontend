@@ -2,15 +2,17 @@
 import styles from "./Form.module.css";
 
 // Hooks
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
 // Component
 import Input from "../../../../components/shared/Input/Input";
+import SelectCustom from "./../../../../components/shared/Select/SelectCustom";
+import Accept from "../../../../components/shared/Accept/Accept";
 
 // Utils
-import { FormEvent } from "react";
 import regex from "../../../../utils/my-regex";
-import SelectCustom from "./../../../../components/shared/Select/SelectCustom";
+import { Link } from "react-router-dom";
+import Button from "../../../../components/shared/Button/Button";
 
 interface Props {}
 
@@ -47,63 +49,87 @@ const Form = (props: Props) => {
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
-      <Input
-        name="name"
-        label="Nome Completo"
-        placeholder="Digite seu nome..."
-        value={inputs.name}
-        mask={regex.onlyLetters}
-        handleOnChange={handleOnChange}
-        autoFocus
-      />
+      <div className={styles.input_container}>
+        <Input
+          name="name"
+          label="Nome Completo"
+          placeholder="Digite seu nome..."
+          value={inputs.name}
+          mask={regex.onlyLetters}
+          handleOnChange={handleOnChange}
+          autoFocus
+        />
 
-      <Input
-        name="birth_date"
-        label="Data de Nascimento"
-        type="date"
-        value={inputs.birth_date}
-        handleOnChange={handleOnChange}
-      />
+        <Input
+          name="birth_date"
+          label="Data de Nascimento"
+          type="date"
+          value={inputs.birth_date}
+          handleOnChange={handleOnChange}
+        />
+      </div>
 
-      <Input
-        name="cpf"
-        label="CPF"
-        placeholder="000.000.000-00"
-        value={inputs.cpf}
-        mask={"000.000.000-00"}
-        handleOnChange={handleOnChange}
-      />
+      <div className={styles.input_container}>
+        <Input
+          name="cpf"
+          label="CPF"
+          placeholder="000.000.000-00"
+          value={inputs.cpf}
+          mask={"000.000.000-00"}
+          handleOnChange={handleOnChange}
+        />
 
-      <SelectCustom placeholder="escolha" label="Gênero" />
+        <SelectCustom placeholder="escolha" label="Gênero" />
+      </div>
 
-      <Input
-        name="email"
-        label="E-mail"
-        placeholder="email@email.com"
-        value={inputs.email}
-        type="email"
-        handleOnChange={handleOnChange}
-      />
+      <div className={styles.input_container}>
+        <Input
+          name="email"
+          label="E-mail"
+          placeholder="email@email.com"
+          value={inputs.email}
+          type="email"
+          handleOnChange={handleOnChange}
+        />
 
-      <SelectCustom placeholder="escolha" label="Senioridade" />
+        <SelectCustom placeholder="escolha" label="Senioridade" />
+      </div>
 
-      <Input
-        name="password"
-        label="Defina uma senha"
-        placeholder="Defina a senha"
-        value={inputs.password}
-        type="password"
-        handleOnChange={handleOnChange}
-      />
+      <div className={styles.input_container}>
+        <Input
+          name="password"
+          label="Defina uma senha"
+          placeholder="Defina a senha"
+          value={inputs.password}
+          type="password"
+          handleOnChange={handleOnChange}
+        />
 
-      <Input
-        name="confirmPassword"
-        label="Confirme a Senha"
-        placeholder="Confirme sua senha"
-        value={inputs.confirmPassword}
-        type="password"
-        handleOnChange={handleOnChange}
-      />
+        <Input
+          name="confirmPassword"
+          label="Confirme a Senha"
+          placeholder="Confirme sua senha"
+          value={inputs.confirmPassword}
+          type="password"
+          handleOnChange={handleOnChange}
+        />
+      </div>
+
+      <Accept name="email" handleOnClick={(name) => console.log(name)}>
+        <p>Sim, eu aceito receber e-mails da DevSkills.</p>
+      </Accept>
+
+      <Accept name="termos" handleOnClick={(name) => console.log(name)}>
+        <p>
+          Sim, eu concordo com todos os <Link to="/">Termos</Link> e{" "}
+          <Link to="/">Política Privacidade</Link>.
+        </p>
+      </Accept>
+
+      <div className={styles.button_container}>
+        <Button color="solid_white" size="medium" text="Continuar" />
+        <p>Já possui conta? <Link to="/">Entrar</Link></p>
+      </div>
     </form>
   );
 };

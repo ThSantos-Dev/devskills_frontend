@@ -11,7 +11,7 @@ interface Props {
   color: "solid_white" | "solid_gray" | "solid_pink" | "outline";
   size: "small" | "medium" | "inherit";
   skipIcon?: boolean;
-  submit: boolean;
+  submit?: boolean;
 
   handleOnClick?(e: MouseEvent<HTMLButtonElement>): void;
   handleOnSubmit?(e: FormEvent<HTMLButtonElement>): void;

@@ -1,11 +1,10 @@
 :root {
   --color-white: #ffffff;
-  --color-gray: #bbbbbb;
+  --color-grey: #bbbbbb;
 }
 
 .container {
   flex: 1;
-  min-width: 200px;
 
   position: relative;
 
@@ -46,11 +45,11 @@
 }
 
 .container input[type="password"] {
-  padding-right: clamp(100% - 20px);
+  padding-right: 40px;
 }
 
 .container input::placeholder {
-  color: var(--color-gray);
+  color: var(--color-grey);
   font-size: 18px;
 }
 
@@ -83,17 +82,16 @@
 }
 
 .container input[type="time"]::-webkit-calendar-picker-indicator {
-  background-color: var(--color-gray);
+  background-color: var(--color-grey);
   cursor: pointer;
   background: url("../../../assets/icon/clock-history.svg") 100% 50% no-repeat;
 }
 
 .container svg {
   font-size: 25px;
-  color: var(--color-gray);
+  color: var(--color-grey);
 
   position: absolute;
-  z-index: 1;
   right: 15px;
   bottom: 10px;
 

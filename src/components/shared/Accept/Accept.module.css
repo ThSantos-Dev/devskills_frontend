@@ -1,0 +1,52 @@
+.container {
+  flex: 1;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+
+  position: relative;
+}
+
+.container label {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.container input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+
+  transform: translateY(-6px);
+}
+
+.container input[type="checkbox"]:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+
+  border: 1px solid #cacaca;
+  color: #cbcbcb;
+  background-color: #060624;
+}
+
+.container input[type="checkbox"]:checked:after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 5px;
+  left: 9px;
+}
