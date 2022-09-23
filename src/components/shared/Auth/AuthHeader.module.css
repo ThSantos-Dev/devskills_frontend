@@ -1,8 +1,11 @@
 .container {
   flex: 1;
+
+  color: var(--color-white-text);
+
   padding-bottom: 20px;
 
-  border-bottom: 1px solid #cbcbcb;
+  border-bottom: 1px solid var(--color-white-text);
 }
 
 .container h1 {

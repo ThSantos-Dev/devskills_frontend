@@ -14,7 +14,6 @@ interface Props {
   submit?: boolean;
 
   handleOnClick?(e: MouseEvent<HTMLButtonElement>): void;
-  handleOnSubmit?(e: FormEvent<HTMLButtonElement>): void;
 }
 
 const Button: React.FC<Props> = ({
@@ -24,33 +23,15 @@ const Button: React.FC<Props> = ({
   submit = true,
   skipIcon = false,
   handleOnClick,
-  handleOnSubmit,
 }) => {
   return (
-    <>
-      {submit ? (
-        <button
-          type="submit"
-          className={`btn_color_${color} btn_size_${size} ${
-            skipIcon && "icon"
-          }`}
-          onSubmit={handleOnSubmit}
-        >
-          {skipIcon && <MdOutlineChevronRight />}
-          <span>{text}</span>
-        </button>
-      ) : (
-        <button
-          className={`btn_color_${color} btn_size_${size} ${
-            skipIcon && "icon"
-          }`}
-          onClick={handleOnClick}
-        >
-          {skipIcon && <MdOutlineChevronRight />}
-          <span>{text}</span>
-        </button>
-      )}
-    </>
+    <button
+      className={`btn_color_${color} btn_size_${size} ${skipIcon && "icon"}`}
+      onClick={handleOnClick}
+    >
+      {skipIcon && <MdOutlineChevronRight />}
+      <span>{text}</span>
+    </button>
   );
 };
 

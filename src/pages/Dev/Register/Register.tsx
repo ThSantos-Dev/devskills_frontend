@@ -2,24 +2,22 @@
 import styles from "./Register.module.css";
 
 // SVG
-import ilustration from "../../../../assets/img/dev-ilustration.svg";
-import logo from "../../../../assets/img/logo.svg";
+import ilustration from "../../../assets/img/dev-ilustration.svg";
+import logo from "../../../assets/img/logo.svg";
 
 // Hooks
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // Components
-import AuthHeader from "../../../../components/shared/Auth/AuthHeader";
-import Form from "./Form";
+import AuthHeader from "../../../components/shared/Auth/AuthHeader";
+import FormRegister from "./Form/FormRegister";
+import { TDevRegister } from "../../../types/dev/TDevRegister";
 
 // Regex
 
 const Register = () => {
-  // Resgatando valor do Parâmetro passado pela URL
-  const { user } = useParams();
-
-  // State
+  // Armazena as inputs
   const [input, setInputs] = useState({
     password: "",
     idade: "",
@@ -32,6 +30,12 @@ const Register = () => {
     console.log(label, value);
     setInputs((prevState) => ({ ...prevState, [label]: value }));
   };
+  
+  const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: TDevRegister) => {
+    e.preventDefault()
+
+    console.log(data)
+  }
 
   return (
     <div className={styles.container}>
@@ -55,7 +59,7 @@ const Register = () => {
           </p>
         </AuthHeader>
 
-        <Form />
+        <FormRegister handleOnSubmit={handleOnSubmit} />
       </div>
     </div>
   );

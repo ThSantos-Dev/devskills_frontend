@@ -1,34 +1,28 @@
 // Styles
-import styles from "./Form.module.css";
+import styles from "./FormRegister.module.css";
 
 // Hooks
 import { FormEvent, useState } from "react";
 
 // Component
+import { Link } from "react-router-dom";
 import Accept from "../../../../components/shared/Accept/Accept";
 import Input from "../../../../components/shared/Input/Input";
-import SelectCustom from "./../../../../components/shared/Select/SelectCustom";
+import SelectCustom from "../../../../components/shared/Select/SelectCustom";
+import Button from "../../../../components/shared/Button/Button";
 
 // Utils
-import { Link } from "react-router-dom";
-import Button from "../../../../components/shared/Button/Button";
 import regex from "../../../../utils/my-regex";
 
-interface Props {}
+// Types
+import { TDevRegister } from "../../../../types/dev/TDevRegister";
 
-type TUserRegister = {
-  name: string;
-  birth_date: string;
-  cpf: string;
-  genre: string;
-  email: string;
-  seniority: string;
-  password: string;
-  confirmPassword: string;
-};
+interface Props {
+  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TDevRegister): void;
+}
 
-const Form = (props: Props) => {
-  const [inputs, setInputs] = useState<TUserRegister>({
+const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
+  const [inputs, setInputs] = useState<TDevRegister>({
     name: "",
     birth_date: "",
     cpf: "",
@@ -45,10 +39,13 @@ const Form = (props: Props) => {
     setInputs((prevState) => ({ ...prevState, [input]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {};
-
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
+    <form
+      className={styles.container}
+      onSubmit={(e: FormEvent<HTMLFormElement>) =>
+        handleOnSubmit(e, { ...inputs })
+      }
+    >
       <div className={styles.input_container}>
         <Input
           name="name"
@@ -79,7 +76,12 @@ const Form = (props: Props) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom />
+        <SelectCustom
+          placeholder="Gênero"
+          label="Gênero"
+          isMulti
+          noOptionsMessage="Não há gêneros disponíveis."
+        />
       </div>
 
       <div className={styles.input_container}>
@@ -92,7 +94,11 @@ const Form = (props: Props) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom  />
+        <SelectCustom
+          placeholder="Senioridade"
+          label="Senioridade"
+          noOptionsMessage="Não há mais opções disponíveis."
+        />
       </div>
 
       <div className={styles.input_container}>
@@ -138,4 +144,4 @@ const Form = (props: Props) => {
   );
 };
 
-export default Form;
+export default FormRegister;

@@ -8,7 +8,7 @@
 }
 
 .container label {
-  color: var(--color-white);
+  color: var(--color-white-text);
 
   font-size: clamp(1rem, 1.6vw, 1.25rem);
 
