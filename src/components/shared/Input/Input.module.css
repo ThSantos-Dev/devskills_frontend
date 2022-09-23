@@ -5,6 +5,7 @@
 
 .container {
   flex: 1;
+  min-width: 200px;
 
   position: relative;
 
@@ -16,16 +17,16 @@
 .container label {
   color: var(--color-white);
 
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
   line-height: 30px;
   font-weight: 600;
-  font-size: 20px;
 }
 
 .container input {
   height: 44px;
 
   color: var(--color-white);
-  font-size: 18px;
+  font-size: clamp(1rem, 2vw, 1.75rem);
 
   padding: 15px;
 
@@ -50,11 +51,13 @@
 
 .container input::placeholder {
   color: var(--color-grey);
-  font-size: 18px;
+  font-size: clamp(1rem, 1vw, 1.75rem);
 }
 
 .container input[type="date"] {
   color: var(--color-white);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+
   text-transform: uppercase;
 }
 

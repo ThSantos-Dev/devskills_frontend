@@ -1,17 +1,16 @@
 .container {
   flex: 1;
-  height: 50px;
 
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 20px;
 
   position: relative;
 }
 
 .container label {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 300;
 }
 
@@ -49,4 +48,12 @@
   position: absolute;
   top: 5px;
   left: 9px;
+}
+
+/** Media Queries **/
+@media only screen and (max-width: 425px) {
+  .container label {
+    padding-top: 10px;
+    align-self: center;
+  }
 }

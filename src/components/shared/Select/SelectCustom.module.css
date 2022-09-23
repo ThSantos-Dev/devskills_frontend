@@ -1,5 +1,6 @@
 .container {
   flex: 1;
+  min-width: 210px;
 
   display: flex;
   flex-direction: column;
@@ -9,9 +10,8 @@
 .container label {
   color: var(--color-white);
 
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+
   line-height: 30px;
   font-weight: 600;
-  font-size: 20px;
 }
-
-

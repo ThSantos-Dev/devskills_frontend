@@ -2,17 +2,17 @@
 import styles from "./Form.module.css";
 
 // Hooks
-import { useState, FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 // Component
+import Accept from "../../../../components/shared/Accept/Accept";
 import Input from "../../../../components/shared/Input/Input";
 import SelectCustom from "./../../../../components/shared/Select/SelectCustom";
-import Accept from "../../../../components/shared/Accept/Accept";
 
 // Utils
-import regex from "../../../../utils/my-regex";
 import { Link } from "react-router-dom";
 import Button from "../../../../components/shared/Button/Button";
+import regex from "../../../../utils/my-regex";
 
 interface Props {}
 
@@ -79,7 +79,7 @@ const Form = (props: Props) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom placeholder="escolha" label="Gênero" />
+        <SelectCustom />
       </div>
 
       <div className={styles.input_container}>
@@ -92,7 +92,7 @@ const Form = (props: Props) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom placeholder="escolha" label="Senioridade" />
+        <SelectCustom  />
       </div>
 
       <div className={styles.input_container}>
@@ -115,20 +115,24 @@ const Form = (props: Props) => {
         />
       </div>
 
-      <Accept name="email" handleOnClick={(name) => console.log(name)}>
-        <p>Sim, eu aceito receber e-mails da DevSkills.</p>
-      </Accept>
+      <div className={styles.accept}>
+        <Accept name="email" handleOnClick={(name) => console.log(name)}>
+          <p>Sim, eu aceito receber e-mails da DevSkills.</p>
+        </Accept>
 
-      <Accept name="termos" handleOnClick={(name) => console.log(name)}>
-        <p>
-          Sim, eu concordo com todos os <Link to="/">Termos</Link> e{" "}
-          <Link to="/">Política Privacidade</Link>.
-        </p>
-      </Accept>
+        <Accept name="termos" handleOnClick={(name) => console.log(name)}>
+          <p>
+            Sim, eu concordo com todos os <Link to="/">Termos</Link> e{" "}
+            <Link to="/">Política Privacidade</Link>.
+          </p>
+        </Accept>
+      </div>
 
       <div className={styles.button_container}>
         <Button color="solid_white" size="medium" text="Continuar" />
-        <p>Já possui conta? <Link to="/">Entrar</Link></p>
+        <p>
+          Já possui conta? <Link to="/">Entrar</Link>
+        </p>
       </div>
     </form>
   );

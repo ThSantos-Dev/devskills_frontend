@@ -45,6 +45,8 @@ const Register = () => {
       </div>
 
       <div className={styles.content}>
+        <img src={logo} alt="<DevSkills />" className={styles.logo_small} />
+
         <AuthHeader title="Olá, Recruta!" subtitle="Experimente novos desafios">
           <p>
             Ao se cadastrar como <b>desenvolvedor</b> você terá acesso a
