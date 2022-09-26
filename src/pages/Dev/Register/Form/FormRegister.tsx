@@ -2,26 +2,29 @@
 import styles from "./FormRegister.module.css";
 
 // Hooks
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 
 // Component
 import { Link } from "react-router-dom";
 import Accept from "../../../../components/shared/Accept/Accept";
-import Input from "../../../../components/shared/Input/Input";
-import SelectCustom from "../../../../components/shared/Select/SelectCustom";
-import Button from "../../../../components/shared/Button/Button";
+import Input from "../../../../components/shared/Form/Input/Input";
+import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
+import Button from "../../../../components/shared/Form/Button/Button";
 
 // Utils
 import regex from "../../../../utils/my-regex";
 
 // Types
 import { TDevRegister } from "../../../../types/dev/TDevRegister";
+import GenreService from "../../../../services/GenreService";
 
 interface Props {
   handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TDevRegister): void;
 }
 
 const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
+
+
   const [inputs, setInputs] = useState<TDevRegister>({
     name: "",
     birth_date: "",
@@ -33,11 +36,20 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     confirmPassword: "",
   });
 
-  const handleOnChange = (value: string, input: string) => {
+  // Atualiza o state
+  const handleOnChange = (value: string | boolean, input: string) => {
     console.log(input, value);
 
     setInputs((prevState) => ({ ...prevState, [input]: value }));
   };
+
+  // Carregando os dados dos selects
+  useEffect(() => {
+    console.log(process.env.REACT_APP_API_BASE_URL);
+    GenreService.getAll().then(data => console.log(data))
+  }, [])
+
+  
 
   return (
     <form
@@ -76,12 +88,13 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom
+        {/* <SelectCustom
+          handleOnChange={handleOnChange}
+          name="genre"
           placeholder="Gênero"
           label="Gênero"
-          isMulti
           noOptionsMessage="Não há gêneros disponíveis."
-        />
+        /> */}
       </div>
 
       <div className={styles.input_container}>
@@ -94,11 +107,13 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           handleOnChange={handleOnChange}
         />
 
-        <SelectCustom
+        {/* <SelectCustom
+          handleOnChange={handleOnChange}
+          name="seniority"
           placeholder="Senioridade"
           label="Senioridade"
           noOptionsMessage="Não há mais opções disponíveis."
-        />
+        /> */}
       </div>
 
       <div className={styles.input_container}>
@@ -122,11 +137,21 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       </div>
 
       <div className={styles.accept}>
-        <Accept name="email" handleOnClick={(name) => console.log(name)}>
+        <Accept
+          name="accept_email"
+          handleOnClick={(value: boolean, name: string) =>
+            handleOnChange(value, name)
+          }
+        >
           <p>Sim, eu aceito receber e-mails da DevSkills.</p>
         </Accept>
 
-        <Accept name="termos" handleOnClick={(name) => console.log(name)}>
+        <Accept
+          name="accept_terms"
+          handleOnClick={(value: boolean, name: string) =>
+            handleOnChange(value, name)
+          }
+        >
           <p>
             Sim, eu concordo com todos os <Link to="/">Termos</Link> e{" "}
             <Link to="/">Política Privacidade</Link>.

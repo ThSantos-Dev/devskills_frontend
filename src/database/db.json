@@ -1,0 +1,28 @@
+{
+    "genres": [
+        {"id": 1, "name": "masculino"},
+        {"id": 2, "name": "feminino"},
+        {"id": 3, "name": "outro"}
+    ],
+    "senioritys": [
+        {"id": 1, "name": "estagiário"},
+        {"id": 2, "name": "júnior"},
+        {"id": 3, "name": "pleno"},
+        {"id": 4, "name": "senior"}
+    ],
+    "stacks": [
+        {"id": 1, "name": "front-end"},
+        {"id": 2, "name": "back-end"},
+        {"id": 3, "name": "mobile"},
+        {"id": 4, "name": "fullstack"}
+    ],
+    "technologies": [
+        {"id": 1, "name": "JavaScript", "idStack": 1},
+        {"id": 2, "name": "HTML5", "idStack": 1},
+        {"id": 3, "name": "CSS3", "idStack": 1},
+        {"id": 4, "name": "Node.js", "idStack": 2}
+    ],
+    "dev": [
+        
+    ]
+}

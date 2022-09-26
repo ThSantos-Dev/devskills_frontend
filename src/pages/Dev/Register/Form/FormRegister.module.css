@@ -7,7 +7,6 @@
   gap: clamp(10px, 2vw, 30px) 56px;
 
   padding-top: clamp(20px, 3vw, 40px);
-  padding-bottom: 40px;
 }
 
 .container .input_container {
@@ -28,7 +27,7 @@
   font-size: 1.25rem;
   color: var(--color-white-text);
 
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .container .accept {

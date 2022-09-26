@@ -65,7 +65,7 @@
   padding: 5px;
 
   cursor: pointer;
-  background: url("../../../assets/icon/calendar.svg") 100% 50% no-repeat;
+  background: url("../../../../assets/icon/calendar.svg") 100% 50% no-repeat;
 }
 
 /* .container input[type="time"]::-webkit-inner-spin-button {
@@ -81,7 +81,7 @@
 .container input[type="time"]::-webkit-calendar-picker-indicator {
   background-color: var(--color-white-text);
   cursor: pointer;
-  background: url("../../../assets/icon/clock-history.svg") 100% 50% no-repeat;
+  background: url("../../../../assets/icon/clock-history.svg") 100% 50% no-repeat;
 }
 
 .container svg {

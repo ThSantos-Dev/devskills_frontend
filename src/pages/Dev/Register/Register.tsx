@@ -17,20 +17,6 @@ import { TDevRegister } from "../../../types/dev/TDevRegister";
 // Regex
 
 const Register = () => {
-  // Armazena as inputs
-  const [input, setInputs] = useState({
-    password: "",
-    idade: "",
-    name: "",
-    cpf: "",
-    telefone: "",
-  });
-
-  const handleOnChange = (value: string, label: any) => {
-    console.log(label, value);
-    setInputs((prevState) => ({ ...prevState, [label]: value }));
-  };
-  
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: TDevRegister) => {
     e.preventDefault()
 

@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./SelectCustom.module.css";
 
 // // Components
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 
 interface Props {
   isMulti?: boolean;
@@ -12,6 +12,9 @@ interface Props {
   closeMenuOnSelect?: boolean;
   placeholder: string;
   noOptionsMessage?: string;
+  name: string;
+  options: SingleValue<{label: string, value: string}>[];
+  handleOnChange(value: any, input: string): void;
 }
 
 const selectStyles = {
@@ -86,24 +89,26 @@ const options = [
 ];
 
 const SelectCustom: React.FC<Props> = ({
+  options,
+  name,
   isMulti = false,
-  closeMenuOnSelect = true,
-  noOptionsMessage = "Não há mais opções disponíveis.",
   placeholder,
   label,
+  closeMenuOnSelect = true,
+  noOptionsMessage = "Não há mais opções disponíveis.",
+  handleOnChange,
 }) => {
   return (
     <div className={styles.container}>
       <label>{label && label}</label>
       <Select
-        noOptionsMessage={() => noOptionsMessage}
         isMulti={isMulti}
         closeMenuOnSelect={closeMenuOnSelect}
         placeholder={placeholder}
         options={options}
-        className={styles.react_select}
-        classNamePrefix={styles.react_select}
+        noOptionsMessage={() => noOptionsMessage}
         styles={selectStyles}
+        onChange={(value) => handleOnChange(value, name)}
         theme={(theme) => ({
           ...theme,
           borderRadius: 8,

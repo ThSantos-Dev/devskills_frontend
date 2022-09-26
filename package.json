@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "server": "json-server --watch ./src/database/db.json --port 3004",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-input-mask": "^3.0.1"
+    "@types/react-input-mask": "^3.0.1",
+    "json-server": "^0.17.0"
   }
 }

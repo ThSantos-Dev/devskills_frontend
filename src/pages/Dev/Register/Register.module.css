@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-  min-height: 100vh;
 
   display: flex;
   gap: clamp(40px, 2vw, 80px);
@@ -9,17 +8,20 @@
 .image {
   flex: 690px;
   max-width: 1080px;
+  height: inherit;
   
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  
   position: relative;
-  background-color: #fff;
+  background-color: #E3E3E3;
 }
 
 .image img.ilustration {
   width: 100%;
-  height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .image img.logo {
@@ -41,6 +43,7 @@
   max-width: 1024px;
 
   padding-top: 50px;
+  padding-bottom: 40px;
   padding-right: clamp(40px, 3vw, 150px);
 }
 
