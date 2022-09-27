@@ -6,8 +6,7 @@ import ilustration from "../../../assets/img/dev-ilustration.svg";
 import logo from "../../../assets/img/logo.svg";
 
 // Hooks
-import { FormEvent, useState } from "react";
-import { useParams } from "react-router-dom";
+import { FormEvent } from "react";
 
 // Components
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";

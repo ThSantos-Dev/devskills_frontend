@@ -6,11 +6,16 @@ import styles from "./SelectCustom.module.css";
 // // Components
 import Select, { SingleValue } from "react-select";
 
+// Icons
+import { MdErrorOutline } from "react-icons/md";
+
 interface Props {
   isMulti?: boolean;
   label?: string;
   closeMenuOnSelect?: boolean;
   placeholder: string;
+  error?: boolean,
+  errorMessage?: string;
   noOptionsMessage?: string;
   name: string;
   options: SingleValue<{label: string, value: string}>[];
@@ -82,17 +87,14 @@ const selectStyles = {
   },
 };
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
 
 const SelectCustom: React.FC<Props> = ({
   options,
   name,
   isMulti = false,
   placeholder,
+  error = true,
+  errorMessage = "Selecione uma opção",
   label,
   closeMenuOnSelect = true,
   noOptionsMessage = "Não há mais opções disponíveis.",
@@ -119,6 +121,12 @@ const SelectCustom: React.FC<Props> = ({
           },
         })}
       />
+
+      {error && (
+        <span className={styles.error_message}>
+          <MdErrorOutline /> {errorMessage}
+        </span>
+      )}
     </div>
   );
 };

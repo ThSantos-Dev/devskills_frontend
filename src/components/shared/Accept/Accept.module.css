@@ -16,6 +16,11 @@
   font-weight: 300;
 }
 
+.container label a {
+  font-size: clamp(0.75rem, 3vw, 1.125rem);
+}
+
+
 .container input[type="checkbox"] {
   position: relative;
   cursor: pointer;

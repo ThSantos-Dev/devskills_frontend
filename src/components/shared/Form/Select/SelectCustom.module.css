@@ -9,9 +9,30 @@
 
 .container label {
   color: var(--color-white-text);
+  text-transform: lowercase;
 
   font-size: clamp(1rem, 1.6vw, 1.25rem);
 
   line-height: 30px;
   font-weight: 600;
+}
+
+.container *::first-letter {
+  text-transform: uppercase;
+}
+
+.error_message {
+  color: var(--dark-pink);
+  font-size: clamp(0.75rem, 3vw, 1rem);
+  font-weight: bold;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.error_message svg {
+  font-size: clamp(0.75rem, 3vw, 1.25rem);
 }

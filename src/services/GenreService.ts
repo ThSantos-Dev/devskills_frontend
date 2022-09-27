@@ -6,30 +6,21 @@
  */
 
 // Utils
-import { requestConfig } from './../utils/request-config';
-
-// Env
-const BASE_URL = process.env.BASE_URL;
+// import { requestConfig } from './../utils/request-config';
 
 // Types
-export type Genre = {
-  id: number;
-  name: string;
-};
+import { TGenre } from '../types/genre/TGenre';
+
+// Env
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default class GenreService {
   // Busca todos os Gêneros cadastrados
-  static async getAll(): Promise<Genre[] | boolean> {
-
-    console.log(BASE_URL)
-
+  static async getAll(): Promise<TGenre[] | boolean> {
     try {
       const res = await fetch(`${BASE_URL}/genres`)
         .then((data) => data.json())
         .catch((error) => console.error(error));
-
-
-        console.log(res)
 
         return res
     } catch (error) {

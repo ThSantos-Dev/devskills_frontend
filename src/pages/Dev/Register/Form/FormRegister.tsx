@@ -2,29 +2,56 @@
 import styles from "./FormRegister.module.css";
 
 // Hooks
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 // Component
 import { Link } from "react-router-dom";
 import Accept from "../../../../components/shared/Accept/Accept";
+import Button from "../../../../components/shared/Form/Button/Button";
 import Input from "../../../../components/shared/Form/Input/Input";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
-import Button from "../../../../components/shared/Form/Button/Button";
 
 // Utils
 import regex from "../../../../utils/my-regex";
 
 // Types
+import { SingleValue } from "react-select";
 import { TDevRegister } from "../../../../types/dev/TDevRegister";
+import { TGenre } from "../../../../types/genre/TGenre";
+import { TSeniority } from "../../../../types/seniority/TSeniority";
+
+// Service
 import GenreService from "../../../../services/GenreService";
+import SeniorityService from "../../../../services/SeniorityService";
 
 interface Props {
   handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TDevRegister): void;
 }
 
 const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
+  // State responsável por armazenar os dados de select de Gênero
+  const [genres, setGenres] = useState<
+    SingleValue<{ label: string; value: string }>[]
+  >([]);
 
+  // State responsável por armazenar os dados de select de Senioridade
+  const [seniority, setSeniority] = useState<
+    SingleValue<{ label: string; value: string }>[]
+  >([]);
 
+  // State resposável por armazenar erros
+  const [errors, setErrors] = useState({
+    name: false,
+    birth_date: false,
+    cpf: false,
+    genre: false,
+    email: false,
+    seniority: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  // State responsável por armazenar os dados do formulario
   const [inputs, setInputs] = useState<TDevRegister>({
     name: "",
     birth_date: "",
@@ -38,26 +65,91 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
 
   // Atualiza o state
   const handleOnChange = (value: string | boolean, input: string) => {
-    console.log(input, value);
-
     setInputs((prevState) => ({ ...prevState, [input]: value }));
+  };
+
+  // Efetua as validações do formulário
+  const handleValidate = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleOnSubmit(e, { ...inputs });
+
+    // Validando os campos obrigatórios
+    // nome, email, senha, cpf, data_nasc
+    if (!inputs.name.trim() || inputs.name.trim().length < 5)
+      return setErrors({ ...errors, name: true });
+
+    if (!inputs.email.trim() || inputs.email.trim().length < 10)
+      return setErrors({ ...errors, email: true });
+
+    if (!inputs.cpf.trim() || inputs.cpf.trim().length !== 11)
+      return setErrors({ ...errors, cpf: true });
+
+    if (!inputs.birth_date || inputs.birth_date.trim().length < 7)
+      return setErrors({ ...errors, birth_date: true });
+
+    if (!inputs.genre) return setErrors({ ...errors, genre: true });
+
+    if(!inputs.password)
+      return setErrors({...errors, password: true})
+
+    if(inputs.password !== inputs.confirmPassword)
+      return setErrors({ ...errors, confirmPassword: true });
+
+
+    // Resetando os erros
+    setErrors({
+      name: false,
+      birth_date: false,
+      cpf: false,
+      genre: false,
+      email: false,
+      seniority: false,
+      password: false,
+      confirmPassword: false,
+    });
+
+    // Validação para verificar se a o usuário tem 14 anos ao menos
+    const minimunDate = new Date().getFullYear() - 14;
+
+    // REFATORAR A MENSAGEM DE ERRO
+    if (minimunDate < new Date(inputs.birth_date).getFullYear())
+      alert("Você é um neném, n podi enta");
   };
 
   // Carregando os dados dos selects
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_BASE_URL);
-    GenreService.getAll().then(data => console.log(data))
-  }, [])
+    // Variáveis auxiliares
+    let genresOption: SingleValue<{ label: string; value: string }>[] = [];
+    let seniorityOption: SingleValue<{ label: string; value: string }>[] = [];
 
-  
+    // Buscando os Gêneros
+    GenreService.getAll().then((data) => {
+      if (typeof data == "boolean") return;
+
+      data.map((genre: TGenre) => {
+        return genresOption.push({ value: `${genre.id}`, label: genre.name });
+      });
+
+      setGenres(genresOption);
+    });
+
+    // Buscando Senioridade
+    SeniorityService.getAll().then((data) => {
+      if (typeof data == "boolean") return;
+
+      data.map((seniority: TSeniority) => {
+        return seniorityOption.push({
+          value: `${seniority.id}`,
+          label: seniority.name,
+        });
+      });
+
+      setSeniority(seniorityOption);
+    });
+  }, []);
 
   return (
-    <form
-      className={styles.container}
-      onSubmit={(e: FormEvent<HTMLFormElement>) =>
-        handleOnSubmit(e, { ...inputs })
-      }
-    >
+    <form className={styles.container} onSubmit={handleValidate}>
       <div className={styles.input_container}>
         <Input
           name="name"
@@ -65,7 +157,9 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           placeholder="Digite seu nome..."
           value={inputs.name}
           mask={regex.onlyLetters}
+          error={errors.name}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, name: false })}
           autoFocus
         />
 
@@ -74,7 +168,11 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           label="Data de Nascimento"
           type="date"
           value={inputs.birth_date}
+          min={`${new Date().getFullYear() - 90}-01-01`}
+          max={`${new Date().getFullYear() - 14}-12-31`}
+          error={errors.birth_date}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, birth_date: false })}
         />
       </div>
 
@@ -85,16 +183,20 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           placeholder="000.000.000-00"
           value={inputs.cpf}
           mask={"000.000.000-00"}
+          error={errors.cpf}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, cpf: false })}
         />
 
-        {/* <SelectCustom
-          handleOnChange={handleOnChange}
+        <SelectCustom
           name="genre"
-          placeholder="Gênero"
           label="Gênero"
+          placeholder="Gênero"
+          handleOnChange={handleOnChange}
+          error={errors.genre}
           noOptionsMessage="Não há gêneros disponíveis."
-        /> */}
+          options={genres && genres}
+        />
       </div>
 
       <div className={styles.input_container}>
@@ -104,16 +206,20 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           placeholder="email@email.com"
           value={inputs.email}
           type="email"
+          error={errors.email}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, email: false })}
         />
 
-        {/* <SelectCustom
-          handleOnChange={handleOnChange}
+        <SelectCustom
           name="seniority"
-          placeholder="Senioridade"
           label="Senioridade"
+          placeholder="Senioridade"
+          handleOnChange={handleOnChange}
           noOptionsMessage="Não há mais opções disponíveis."
-        /> */}
+          error={errors.seniority}
+          options={seniority && seniority}
+        />
       </div>
 
       <div className={styles.input_container}>
@@ -123,7 +229,9 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           placeholder="Defina a senha"
           value={inputs.password}
           type="password"
+          error={errors.password}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, password: false })}
         />
 
         <Input
@@ -132,7 +240,10 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           placeholder="Confirme sua senha"
           value={inputs.confirmPassword}
           type="password"
+          errorMessage="As senhas não são iguais."
+          error={errors.confirmPassword}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, confirmPassword: false })}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import React, { FormEvent, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 
 // Styles
 import "./Button.css";

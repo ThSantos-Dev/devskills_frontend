@@ -8,10 +8,13 @@ import styles from "./Input.module.css";
 
 // Icons
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
   name: string;
+  error: boolean;
+  errorMessage?: string;
+  label?: string;
   mask?: RegExp | string | any;
   type?: "text" | "number" | "date" | "password" | "email" | "time";
 
@@ -19,8 +22,10 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FC<Props> = ({
-  label,
   name,
+  errorMessage = "Esse campo é obrigatório",
+  error,
+  label,
   mask,
   type,
   handleOnChange,
@@ -36,6 +41,7 @@ const Input: React.FC<Props> = ({
       {/* Lógica de exibição para Input */}
       {mask ? (
         <IMaskInput
+          unmask={true}
           mask={mask}
           {...props}
           onAccept={(value: any) => handleOnChange(value, name)}
@@ -43,7 +49,7 @@ const Input: React.FC<Props> = ({
       ) : (
         <>
           {type === "password" ? (
-            <>
+            <div className={styles.password_container}>
               <input
                 type={!showPassword ? "password" : "text"}
                 {...props}
@@ -57,7 +63,7 @@ const Input: React.FC<Props> = ({
               ) : (
                 <BsEyeSlash onClick={() => setShowPassword(false)} />
               )}
-            </>
+            </div>
           ) : (
             <input
               type={type}
@@ -68,6 +74,12 @@ const Input: React.FC<Props> = ({
             />
           )}
         </>
+      )}
+
+      {error && (
+        <span className={styles.error_message}>
+          <MdErrorOutline /> {errorMessage}
+        </span>
       )}
     </div>
   );
