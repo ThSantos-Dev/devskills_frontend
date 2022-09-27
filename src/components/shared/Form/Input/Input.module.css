@@ -10,6 +10,12 @@
   gap: 9px;
 }
 
+.container.error input {
+  color: var(--dark-pink);
+
+  border: 2px solid var(--dark-pink);
+}
+
 .container label {
   color: var(--color-white-text);
 
@@ -68,10 +74,6 @@
   cursor: pointer;
   background: url("../../../../assets/icon/calendar.svg") 100% 50% no-repeat;
 }
-
-/* .container input[type="time"]::-webkit-inner-spin-button {
-  display: none;
-} */
 
 .container input[type="time"] {
   max-width: 150px;

@@ -18,14 +18,12 @@ import regex from "../../../../utils/my-regex";
 import { SingleValue } from "react-select";
 import { TDevRegister } from "../../../../types/dev/TDevRegister";
 import { TGenre } from "../../../../types/genre/TGenre";
-import { TSeniority } from "../../../../types/seniority/TSeniority";
 
 // Service
 import GenreService from "../../../../services/GenreService";
-import SeniorityService from "../../../../services/SeniorityService";
 
 interface Props {
-  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TDevRegister): void;
+  handleOnSubmit(data: TDevRegister): void;
 }
 
 const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
@@ -34,10 +32,8 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     SingleValue<{ label: string; value: string }>[]
   >([]);
 
-  // State responsável por armazenar os dados de select de Senioridade
-  const [seniority, setSeniority] = useState<
-    SingleValue<{ label: string; value: string }>[]
-  >([]);
+  // State responsável por manipular a máscara de Telefone
+  const [maskTell, setMaskTell] = useState<String>("(00) 0");
 
   // State resposável por armazenar erros
   const [errors, setErrors] = useState({
@@ -46,7 +42,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     cpf: false,
     genre: false,
     email: false,
-    seniority: false,
+    tellphone: false,
     password: false,
     confirmPassword: false,
   });
@@ -58,43 +54,48 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     cpf: "",
     genre: "",
     email: "",
-    seniority: "",
+    tellphone: "",
     password: "",
     confirmPassword: "",
+    accept_terms: false,
+    accept_email: false
   });
 
-  // Atualiza o state
+  // Atualiza o state a cada mundança nas inputs
   const handleOnChange = (value: string | boolean, input: string) => {
+    // Atualizando os dados do state
     setInputs((prevState) => ({ ...prevState, [input]: value }));
+
+    // Alterando a máscara do Telefone
+    if (inputs.tellphone.charAt(2) !== "9")
+      return setMaskTell("(00) 0000-0000");
+
+    return setMaskTell("(00) 00000-0000");
   };
 
   // Efetua as validações do formulário
   const handleValidate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleOnSubmit(e, { ...inputs });
 
     // Validando os campos obrigatórios
-    // nome, email, senha, cpf, data_nasc
     if (!inputs.name.trim() || inputs.name.trim().length < 5)
       return setErrors({ ...errors, name: true });
-
-    if (!inputs.email.trim() || inputs.email.trim().length < 10)
-      return setErrors({ ...errors, email: true });
-
-    if (!inputs.cpf.trim() || inputs.cpf.trim().length !== 11)
-      return setErrors({ ...errors, cpf: true });
 
     if (!inputs.birth_date || inputs.birth_date.trim().length < 7)
       return setErrors({ ...errors, birth_date: true });
 
+    if (!inputs.cpf.trim() || inputs.cpf.trim().length !== 11)
+      return setErrors({ ...errors, cpf: true });
+
     if (!inputs.genre) return setErrors({ ...errors, genre: true });
 
-    if(!inputs.password)
-      return setErrors({...errors, password: true})
+    if (!inputs.email.trim() || inputs.email.trim().length < 10)
+      return setErrors({ ...errors, email: true });
 
-    if(inputs.password !== inputs.confirmPassword)
+    if (!inputs.password) return setErrors({ ...errors, password: true });
+
+    if (inputs.password !== inputs.confirmPassword)
       return setErrors({ ...errors, confirmPassword: true });
-
 
     // Resetando os erros
     setErrors({
@@ -103,24 +104,18 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       cpf: false,
       genre: false,
       email: false,
-      seniority: false,
+      tellphone: false,
       password: false,
       confirmPassword: false,
     });
 
-    // Validação para verificar se a o usuário tem 14 anos ao menos
-    const minimunDate = new Date().getFullYear() - 14;
-
-    // REFATORAR A MENSAGEM DE ERRO
-    if (minimunDate < new Date(inputs.birth_date).getFullYear())
-      alert("Você é um neném, n podi enta");
+    return handleOnSubmit({ ...inputs });
   };
 
   // Carregando os dados dos selects
   useEffect(() => {
     // Variáveis auxiliares
     let genresOption: SingleValue<{ label: string; value: string }>[] = [];
-    let seniorityOption: SingleValue<{ label: string; value: string }>[] = [];
 
     // Buscando os Gêneros
     GenreService.getAll().then((data) => {
@@ -131,20 +126,6 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       });
 
       setGenres(genresOption);
-    });
-
-    // Buscando Senioridade
-    SeniorityService.getAll().then((data) => {
-      if (typeof data == "boolean") return;
-
-      data.map((seniority: TSeniority) => {
-        return seniorityOption.push({
-          value: `${seniority.id}`,
-          label: seniority.name,
-        });
-      });
-
-      setSeniority(seniorityOption);
     });
   }, []);
 
@@ -196,6 +177,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           error={errors.genre}
           noOptionsMessage="Não há gêneros disponíveis."
           options={genres && genres}
+          handleOnFocus={() => setErrors({ ...errors, genre: false })}
         />
       </div>
 
@@ -211,14 +193,14 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           onFocus={() => setErrors({ ...errors, email: false })}
         />
 
-        <SelectCustom
-          name="seniority"
-          label="Senioridade"
-          placeholder="Senioridade"
+        <Input
+          name="tellphone"
+          label="Telefone"
+          placeholder="(00) 90000-0000"
+          mask={maskTell}
           handleOnChange={handleOnChange}
-          noOptionsMessage="Não há mais opções disponíveis."
-          error={errors.seniority}
-          options={seniority && seniority}
+          value={inputs.tellphone}
+          error={errors.tellphone}
         />
       </div>
 
@@ -271,7 +253,12 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       </div>
 
       <div className={styles.button_container}>
-        <Button color="solid_white" size="medium" text="Continuar" />
+        <Button
+          color="solid_white"
+          size="medium"
+          text="Continuar"
+          disabled={!inputs.accept_terms}
+        />
         <p>
           Já possui conta? <Link to="/">Entrar</Link>
         </p>

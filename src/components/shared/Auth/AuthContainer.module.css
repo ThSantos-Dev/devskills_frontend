@@ -48,6 +48,12 @@
 }
 
 /** Media Queries **/
+@media only screen and (min-height: 1281px) {
+  .container {
+    height: 100vh;
+  }
+}
+
 @media only screen and (max-width: 840px) {
   .container {
     margin: 0 auto;

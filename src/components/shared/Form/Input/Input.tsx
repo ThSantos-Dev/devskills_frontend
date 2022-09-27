@@ -35,7 +35,7 @@ const Input: React.FC<Props> = ({
   const [showPassword, setShowPassword] = useState<Boolean>(false);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${error && styles.error}`}>
       {label && <label>{label}</label>}
 
       {/* Lógica de exibição para Input */}

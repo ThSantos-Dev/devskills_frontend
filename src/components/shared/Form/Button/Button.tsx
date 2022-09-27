@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, { ButtonHTMLAttributes, MouseEvent } from "react";
 
 // Styles
 import "./Button.css";
@@ -6,7 +6,7 @@ import "./Button.css";
 // Icons
 import { MdOutlineChevronRight } from "react-icons/md";
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement>{
   text: string;
   color: "solid_white" | "solid_gray" | "solid_pink" | "outline";
   size: "small" | "medium" | "inherit";
@@ -23,11 +23,13 @@ const Button: React.FC<Props> = ({
   submit = true,
   skipIcon = false,
   handleOnClick,
+  ...props
 }) => {
   return (
     <button
       className={`btn_color_${color} btn_size_${size} ${skipIcon && "icon"}`}
       onClick={handleOnClick}
+      {...props}
     >
       {skipIcon && <MdOutlineChevronRight />}
       <span>{text}</span>
