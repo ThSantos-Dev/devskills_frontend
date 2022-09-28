@@ -16,11 +16,11 @@ import regex from "../../../../utils/my-regex";
 
 // Types
 import { SingleValue } from "react-select";
-import { TDevRegister } from "../../../../types/dev/TDevRegister";
-import { TGenre } from "../../../../types/genre/TGenre";
+import { TDevRegister } from "../../../../types/devskills/dev/TDevRegister";
+import { TGenre } from "../../../../types/devskills/genre/TGenre";
 
 // Service
-import GenreService from "../../../../services/GenreService";
+import GenreService from "../../../../services/apiDevSkills/GenreService";
 
 interface Props {
   handleOnSubmit(data: TDevRegister): void;
@@ -42,7 +42,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     cpf: false,
     genre: false,
     email: false,
-    tellphone: false,
+    telephone: false,
     password: false,
     confirmPassword: false,
   });
@@ -54,11 +54,11 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     cpf: "",
     genre: "",
     email: "",
-    tellphone: "",
+    telephone: "",
     password: "",
     confirmPassword: "",
     accept_terms: false,
-    accept_email: false
+    accept_email: false,
   });
 
   // Atualiza o state a cada mundança nas inputs
@@ -67,7 +67,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     setInputs((prevState) => ({ ...prevState, [input]: value }));
 
     // Alterando a máscara do Telefone
-    if (inputs.tellphone.charAt(2) !== "9")
+    if (inputs.telephone.charAt(2) !== "9")
       return setMaskTell("(00) 0000-0000");
 
     return setMaskTell("(00) 00000-0000");
@@ -104,7 +104,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       cpf: false,
       genre: false,
       email: false,
-      tellphone: false,
+      telephone: false,
       password: false,
       confirmPassword: false,
     });
@@ -194,13 +194,13 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
         />
 
         <Input
-          name="tellphone"
+          name="telephone"
           label="Telefone"
           placeholder="(00) 90000-0000"
           mask={maskTell}
           handleOnChange={handleOnChange}
-          value={inputs.tellphone}
-          error={errors.tellphone}
+          value={inputs.telephone}
+          error={errors.telephone}
         />
       </div>
 
@@ -260,7 +260,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           disabled={!inputs.accept_terms}
         />
         <p>
-          Já possui conta? <Link to="/">Entrar</Link>
+          Já possui conta? <Link to="/dev/login">Entrar</Link>
         </p>
       </div>
     </form>

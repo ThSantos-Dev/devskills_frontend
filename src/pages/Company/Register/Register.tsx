@@ -1,12 +1,17 @@
+// Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from '../../../components/shared/Auth/AuthHeader';
+
+// SVG
+import ilustration from "../../../assets/img/comapny-ilustration.svg";
+import FormRegister from "./Form/FormRegister";
 
 interface Props {}
 
 const Register = (props: Props) => {
   return (
     <div>
-      <AuthContainer ilustration={{ src: "", alt: "teste" }}>
+      <AuthContainer ilustration={{ src: ilustration, alt: "company-ilustration" }}>
         <AuthHeader
           title="Bem-vindo, recrutador!"
           subtitle="Experimente novos desafios"
@@ -16,6 +21,8 @@ const Register = (props: Props) => {
             reais do mercado de trabalho, que serão de grande aprendizado.
           </p>
         </AuthHeader>
+
+        <FormRegister />
       </AuthContainer>
     </div>
   );

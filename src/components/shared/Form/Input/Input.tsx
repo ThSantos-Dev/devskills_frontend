@@ -12,13 +12,13 @@ import { MdErrorOutline } from "react-icons/md";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  error: boolean;
+  error?: boolean;
   errorMessage?: string;
   label?: string;
   mask?: RegExp | string | any;
   type?: "text" | "number" | "date" | "password" | "email" | "time";
 
-  handleOnChange(value: string, name: string): void;
+  handleOnChange?(value: string, name: string): void;
 }
 
 const Input: React.FC<Props> = ({
@@ -44,7 +44,9 @@ const Input: React.FC<Props> = ({
           unmask={true}
           mask={mask}
           {...props}
-          onAccept={(value: any) => handleOnChange(value, name)}
+          onAccept={(value: any) =>
+            handleOnChange && handleOnChange(value, name)
+          }
         />
       ) : (
         <>
@@ -54,7 +56,7 @@ const Input: React.FC<Props> = ({
                 type={!showPassword ? "password" : "text"}
                 {...props}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleOnChange(e.target.value, name)
+                  handleOnChange && handleOnChange(e.target.value, name)
                 }
               />
               {/* Ícone */}
@@ -69,7 +71,7 @@ const Input: React.FC<Props> = ({
               type={type}
               {...props}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                handleOnChange(e.target.value, name)
+                handleOnChange && handleOnChange(e.target.value, name)
               }
             />
           )}

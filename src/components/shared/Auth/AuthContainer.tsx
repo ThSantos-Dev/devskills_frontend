@@ -1,23 +1,26 @@
 // Styles
-import styles from "./AuthContainer.module.css"
+import styles from "./AuthContainer.module.css";
 
 // SVG
-import logo from "../../../assets/img/logo.svg"
+import logo from "../../../assets/img/logo.svg";
+import { Link } from "react-router-dom";
 
 interface Props {
-    ilustration: {
-        src: any,
-        alt: string
-    },
+  ilustration: {
+    src: any;
+    alt: string;
+  };
 
-    children: JSX.Element
+  children: JSX.Element | JSX.Element[];
 }
 
-const AuthContainer: React.FC<Props> = ({ilustration, children}) => {
+const AuthContainer: React.FC<Props> = ({ ilustration, children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.image}>
-        <img src={logo} alt="<DevSkills />" className={styles.logo} />
+        <Link to="/">
+          <img src={logo} alt="<DevSkills />" className={styles.logo} />
+        </Link>
         <img
           src={ilustration.src}
           alt={ilustration.alt}
@@ -26,12 +29,14 @@ const AuthContainer: React.FC<Props> = ({ilustration, children}) => {
       </div>
 
       <div className={styles.content}>
-        <img src={logo} alt="<DevSkills />" className={styles.logo_small} />
+        <Link to="/">
+          <img src={logo} alt="<DevSkills />" className={styles.logo_small} />
+        </Link>
 
         {children}
       </div>
     </div>
   );
-}
+};
 
-export default AuthContainer
+export default AuthContainer;

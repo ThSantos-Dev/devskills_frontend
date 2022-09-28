@@ -9,7 +9,7 @@
 // import { requestConfig } from './../utils/request-config';
 
 // Types
-import { TGenre } from '../types/genre/TGenre';
+import { TGenre } from '../../types/devskills/genre/TGenre';
 
 // Env
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;

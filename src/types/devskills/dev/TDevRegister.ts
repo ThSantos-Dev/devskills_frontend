@@ -4,7 +4,7 @@ export type TDevRegister = {
   cpf: string;
   genre: string;
   email: string;
-  tellphone: string;
+  telephone: string;
   password: string;
   confirmPassword: string;
   accept_terms: boolean;

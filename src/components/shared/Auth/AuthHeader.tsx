@@ -4,7 +4,7 @@ import styles from "./AuthHeader.module.css";
 interface Props {
   title: string;
   subtitle: string;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 const AuthHeader: React.FC<Props> = ({ title, subtitle, children }) => {

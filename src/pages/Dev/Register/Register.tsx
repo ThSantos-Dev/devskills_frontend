@@ -1,14 +1,13 @@
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration.svg";
-import logo from "../../../assets/img/logo.svg";
 
 // Components
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 import FormRegister from "./Form/FormRegister";
 
 // Types
-import { TDevRegister } from "../../../types/dev/TDevRegister";
+import { TDevRegister } from "../../../types/devskills/dev/TDevRegister";
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 
 const Register = () => {
@@ -18,7 +17,6 @@ const Register = () => {
 
   return (
     <AuthContainer ilustration={{ src: ilustration, alt: "ilustração" }}>
-      <>
         <AuthHeader title="Olá, Recruta!" subtitle="Experimente novos desafios">
           <p>
             Ao se cadastrar como <b>desenvolvedor</b> você terá acesso a
@@ -28,7 +26,6 @@ const Register = () => {
         </AuthHeader>
 
         <FormRegister handleOnSubmit={handleOnSubmit} />
-      </>
     </AuthContainer>
   );
 };
