@@ -8,14 +8,13 @@ export default class CNPJService {
   static async search(cnpj: string | number): Promise<TCNPJResponse | boolean> {
     console.log(BASE_URL)
     try {
-      const res: TCNPJResponse = await fetch(BASE_URL + `/${cnpj}`)
-        .then((data) => data.json())
-        .catch((error) => console.error(error));
+      const res: Response = await fetch(BASE_URL + `/${cnpj}`);
 
-      console.log(res);
-      return res;
+      if(res.status !== 200)
+        throw new Error()
+
+      return await res.json();
     } catch (error) {
-      console.error(error);
       return false;
     }
   }

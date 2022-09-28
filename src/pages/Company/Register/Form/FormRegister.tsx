@@ -53,7 +53,6 @@ const FormRegister = (props: Props) => {
   const handleOnChange = (value: string | boolean, input: string) => {
     // Atualizando os dados do state
     setInputs((prevState) => ({ ...prevState, [input]: value }));
-    console.log(input, value);
 
     // Alterando a máscara do Telefone
     if (inputs.telephone.charAt(2) !== "9")
@@ -66,7 +65,36 @@ const FormRegister = (props: Props) => {
   useEffect(() => {
     if (inputs.cnpj.toString().length === 14) {
       setLoading(true);
-      CNPJService.search(inputs.cnpj).then((data) => setLoading(false));
+      console.log('carregando...')
+      CNPJService.search(inputs.cnpj).then((data) => {
+        if(typeof data === "boolean")
+          return
+
+        setInputs(prevState => {
+          return {
+            ...prevState,
+            cnpj: data.cnpj,
+            fantasy_name: data.nome_fantasia,
+            telephone: data.ddd_telefone_1,
+            address: {
+              district: data.bairro,
+              number: data.numero,
+              public_place: data.descricao_tipo_de_logradouro,
+              zip_code: data.cep,
+              complement: data.complemento,
+              state: {
+                name: "",
+                federative_unit: data.uf,
+              },
+              city: {
+                name: data.municipio,
+              },
+            },
+          };
+        } )
+
+        return setLoading(false);
+      });
     }
   }, [inputs.cnpj]);
 
@@ -114,7 +142,7 @@ const FormRegister = (props: Props) => {
         />
       </div>
       <div className={styles.input_container}>
-        <div className={styles.input_container}>
+        <div className={`${styles.input_container} ${styles.no_wrap}`}>
           <Input
             name="addressZipCode"
             label="CEP"
@@ -139,7 +167,7 @@ const FormRegister = (props: Props) => {
           name="complement"
           label="Complemento"
           placeholder="Bloco C22"
-          value={inputs.fantasy_name}
+          value={inputs.address.complement}
           error={false}
           handleOnChange={handleOnChange}
         />
@@ -149,7 +177,10 @@ const FormRegister = (props: Props) => {
           name="address"
           label="Endereço"
           placeholder="Alameda Java Green"
-          value={inputs.cnpj}
+          value={
+            inputs.address.public_place &&
+            `${inputs.address.public_place}, ${inputs.address.number} - ${inputs.address.district}, ${inputs.address.city.name} - ${inputs.address.state.federative_unit}`
+          }
           error={false}
           disabled
           autoFocus

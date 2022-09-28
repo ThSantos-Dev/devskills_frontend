@@ -37,6 +37,10 @@
   padding: 20px 0;
 }
 
+.container .input_container.no_wrap {
+  flex-wrap: nowrap !important;
+}
+
 /* Media Queries */
 @media only screen and (max-width: 485px) {
 .button_container {
