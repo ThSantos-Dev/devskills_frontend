@@ -6,12 +6,22 @@ import AuthHeader from '../../../components/shared/Auth/AuthHeader';
 import ilustration from "../../../assets/img/comapny-ilustration.svg";
 import FormRegister from "./Form/FormRegister";
 
+// Types
+import { TCompanyRegister } from "../../../types/devskills/company/TCompanyRegister";
+
 interface Props {}
 
 const Register = (props: Props) => {
+
+  const handleSubmit = (data: TCompanyRegister) => {
+    console.log(data)
+  }
+
   return (
     <div>
-      <AuthContainer ilustration={{ src: ilustration, alt: "company-ilustration" }}>
+      <AuthContainer
+        ilustration={{ src: ilustration, alt: "company-ilustration" }}
+      >
         <AuthHeader
           title="Bem-vindo, recrutador!"
           subtitle="Experimente novos desafios"
@@ -22,7 +32,7 @@ const Register = (props: Props) => {
           </p>
         </AuthHeader>
 
-        <FormRegister />
+        <FormRegister handleSubmit={handleSubmit} />
       </AuthContainer>
     </div>
   );

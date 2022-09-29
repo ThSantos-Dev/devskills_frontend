@@ -2,34 +2,39 @@
 import styles from "./FormRegister.module.css";
 
 // Hooks
-import { useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+
+// Services
+import CEPService from "../../../../services/apiBrasil/CEPService";
+import CNPJService from "../../../../services/apiBrasil/CNPJService";
 
 // Components
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Accept from "../../../../components/shared/Accept/Accept";
 import Input from "../../../../components/shared/Form/Input/Input";
+import Button from "./../../../../components/shared/Form/Button/Button";
 
 // Types
-import { useEffect } from "react";
-import CNPJService from "../../../../services/apiBrasil/CNPJService";
 import { TCompanyRegister } from "../../../../types/devskills/company/TCompanyRegister";
-import Button from "./../../../../components/shared/Form/Button/Button";
-import { Link } from "react-router-dom";
-import Accept from "../../../../components/shared/Accept/Accept";
 
-interface Props {}
+interface Props {
+  handleSubmit(data: TCompanyRegister): void;
+}
 
-const FormRegister = (props: Props) => {
+const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
   // State responsável por armazenar os dados do formulario
-  const [inputs, setInputs] = useState<TCompanyRegister>({
+  const [inputs, setInputs] = useState({
     cnpj: "",
     fantasy_name: "",
     email: "",
     telephone: "",
+    complement: "",
     address: {
       district: "",
       number: "",
       public_place: "",
       zip_code: "",
-      complement: "",
       state: {
         name: "",
         federative_unit: "",
@@ -40,6 +45,7 @@ const FormRegister = (props: Props) => {
     },
     password: "",
     confirmPassword: "",
+    active: false,
     accept_terms: false,
     accept_email: false,
   });
@@ -47,7 +53,14 @@ const FormRegister = (props: Props) => {
   // State responsável por manipular a máscara de Telefone
   const [maskTell, setMaskTell] = useState<String>("(00) 0");
 
-  const [loading, setLoading] = useState<boolean>(false);
+  // State para manipular os erros
+  const [errors, setErrors] = useState({
+    // cnpj, email, senha, nome_fantasia, telefone
+    cnpj: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   // Atualiza o state a cada mundança nas inputs
   const handleOnChange = (value: string | boolean, input: string) => {
@@ -61,45 +74,141 @@ const FormRegister = (props: Props) => {
     return setMaskTell("(00) 00000-0000");
   };
 
+  // Validação dos dados
+  const handleValidate = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(inputs.cnpj);
+
+    // Validando os dados
+    if (!inputs.cnpj || inputs.cnpj.trim().length !== 14 || !inputs.active) {
+      toast.error("O CNPJ informado é inválido!");
+      setErrors({ ...errors, cnpj: true });
+      return;
+    }
+
+    if (!inputs.email || inputs.email.trim().length < 11)
+      return setErrors({ ...errors, email: true });
+
+    if (!inputs.password) return setErrors({ ...errors, password: true });
+
+    if (inputs.password !== inputs.confirmPassword)
+      return setErrors({ ...errors, confirmPassword: true });
+
+    // Zerando os erros
+    setErrors({
+      cnpj: false,
+      email: false,
+      password: false,
+      confirmPassword: false,
+    });
+
+    return handleSubmit({ ...inputs });
+  };
+
   // Busca as informações da empresa com base no CNPJ
   useEffect(() => {
-    if (inputs.cnpj.toString().length === 14) {
-      setLoading(true);
-      console.log('carregando...')
+    if (inputs.cnpj.length === 14) {
+      // Buscando informações da empresa com base no CNPJ
       CNPJService.search(inputs.cnpj).then((data) => {
-        if(typeof data === "boolean")
-          return
+        if (typeof data === "boolean") {
+          // Resetando os campos que são de preenchimento da API
+          setInputs((prevState) => ({
+            cnpj: prevState.cnpj,
+            fantasy_name: "",
+            email: prevState.email,
+            telephone: "",
+            complement: "",
+            address: {
+              district: "",
+              number: "",
+              public_place: "",
+              zip_code: "",
+              state: {
+                name: "",
+                federative_unit: "",
+              },
+              city: {
+                name: "",
+              },
+            },
+            password: prevState.password,
+            confirmPassword: prevState.confirmPassword,
+            active: false,
+            accept_terms: prevState.accept_terms,
+            accept_email: prevState.accept_email,
+          }));
 
-        setInputs(prevState => {
+          // Acusando erro no CNPJ
+          setErrors((prevState) => ({ ...prevState, cnpj: true }));
+          return toast.error("O CNPJ informado é inválido!");
+        }
+
+        // Adicionando os dados na State
+        setInputs((prevState) => {
           return {
             ...prevState,
             cnpj: data.cnpj,
-            fantasy_name: data.nome_fantasia,
+            fantasy_name: data.nome_fantasia
+              ? data.nome_fantasia.toUpperCase()
+              : data.razao_social.toLocaleUpperCase(),
             telephone: data.ddd_telefone_1,
+            active: data.descricao_situacao_cadastral.toLowerCase() === "ativa",
+            complement: data.complemento,
             address: {
-              district: data.bairro,
+              district: "",
               number: data.numero,
-              public_place: data.descricao_tipo_de_logradouro,
+              public_place: "",
               zip_code: data.cep,
-              complement: data.complemento,
               state: {
                 name: "",
-                federative_unit: data.uf,
+                federative_unit: "",
               },
               city: {
-                name: data.municipio,
+                name: "",
               },
             },
           };
-        } )
+        });
 
-        return setLoading(false);
+        return;
       });
     }
+
+    return setErrors((prevState) => ({ ...prevState, cnpj: false }));
   }, [inputs.cnpj]);
 
+  // Busca as informações de endereço com base no CEP
+  useEffect(() => {
+    if (inputs.address.zip_code.length === 8) {
+      CEPService.search(inputs.address.zip_code).then((data) => {
+        if (typeof data === "boolean") return;
+
+        setInputs((prevState) => {
+          return {
+            ...prevState,
+            address: {
+              district: data.neighborhood,
+              number: prevState.address.number,
+              public_place: data.street,
+              zip_code: data.cep,
+              complement: prevState.complement,
+              state: {
+                name: "",
+                federative_unit: data.state,
+              },
+              city: {
+                name: data.city,
+              },
+            },
+          };
+        });
+      });
+    }
+  }, [inputs.address.zip_code]);
+
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={handleValidate}>
       <div className={styles.input_container}>
         <Input
           name="cnpj"
@@ -107,8 +216,9 @@ const FormRegister = (props: Props) => {
           placeholder="00.000.000/0000-00"
           mask="00.000.000/0000-00"
           value={inputs.cnpj}
-          error={false}
+          error={errors.cnpj}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, confirmPassword: false })}
           autoFocus
         />
 
@@ -117,8 +227,6 @@ const FormRegister = (props: Props) => {
           label="Nome Fantasia"
           placeholder="Nome fantasia..."
           value={inputs.fantasy_name}
-          error={false}
-          handleOnChange={handleOnChange}
         />
       </div>
       <div className={styles.input_container}>
@@ -128,8 +236,10 @@ const FormRegister = (props: Props) => {
           placeholder="email@email.org.com"
           type="email"
           value={inputs.email}
-          error={false}
+          error={errors.email}
+          minLength={10}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, email: false })}
         />
         <Input
           name="telephone"
@@ -138,7 +248,6 @@ const FormRegister = (props: Props) => {
           mask={maskTell}
           handleOnChange={handleOnChange}
           value={inputs.telephone}
-          error={false}
         />
       </div>
       <div className={styles.input_container}>
@@ -150,16 +259,13 @@ const FormRegister = (props: Props) => {
             mask="00000-000"
             disabled
             value={inputs.address.zip_code}
-            error={false}
           />
           <Input
             name="addressNumber"
             label="Número"
             placeholder="00A"
             value={inputs.address.number}
-            error={false}
-            handleOnChange={handleOnChange}
-            autoFocus
+            disabled
           />
         </div>
 
@@ -167,8 +273,7 @@ const FormRegister = (props: Props) => {
           name="complement"
           label="Complemento"
           placeholder="Bloco C22"
-          value={inputs.address.complement}
-          error={false}
+          value={inputs.complement}
           handleOnChange={handleOnChange}
         />
       </div>
@@ -181,9 +286,7 @@ const FormRegister = (props: Props) => {
             inputs.address.public_place &&
             `${inputs.address.public_place}, ${inputs.address.number} - ${inputs.address.district}, ${inputs.address.city.name} - ${inputs.address.state.federative_unit}`
           }
-          error={false}
           disabled
-          autoFocus
         />
       </div>
       <div className={styles.input_container}>
@@ -193,8 +296,9 @@ const FormRegister = (props: Props) => {
           placeholder="Defina a senha"
           value={inputs.password}
           type="password"
-          error={false}
+          error={errors.password}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, password: false })}
         />
 
         <Input
@@ -204,8 +308,9 @@ const FormRegister = (props: Props) => {
           value={inputs.confirmPassword}
           type="password"
           errorMessage="As senhas não são iguais."
-          error={false}
+          error={errors.confirmPassword}
           handleOnChange={handleOnChange}
+          onFocus={() => setErrors({ ...errors, confirmPassword: false })}
         />
       </div>
       <div className={styles.accept}>
@@ -235,7 +340,7 @@ const FormRegister = (props: Props) => {
           color="solid_white"
           size="medium"
           text="Continuar"
-          disabled={!inputs.accept_terms}
+          disabled={!inputs.accept_terms || !inputs.active}
         />
         <p>
           Já possui conta? <Link to="/company/login">Entrar</Link>

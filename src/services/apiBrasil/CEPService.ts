@@ -11,8 +11,6 @@ export default class CEPService {
         .then((data) => data.json())
         .catch((error) => console.error(error));
 
-        console.log(res)
-
         return res
 
         } catch (error) {

@@ -8,6 +8,7 @@ export type TCompanyRegister = {
   password: string;
   confirmPassword: string;
   telephone: string;
+  active: boolean;
   accept_terms: boolean;
   accept_email: boolean;
   address: TAdrress;
