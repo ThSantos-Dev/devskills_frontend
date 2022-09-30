@@ -5,6 +5,21 @@
   gap: clamp(40px, 2vw, 80px);
 }
 
+.container.center {
+  padding-left: 0px;
+}
+
+.container.center .content {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+}
+
 .image {
   flex: 690px;
   max-width: 1080px;
@@ -48,7 +63,7 @@
 }
 
 /** Media Queries **/
-@media only screen and (min-height: 1281px) {
+@media only screen and (min-height: 1280px) {
   .container {
     height: 100vh;
   }

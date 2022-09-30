@@ -6,6 +6,7 @@ import logo from "../../../assets/img/logo.svg";
 import { Link } from "react-router-dom";
 
 interface Props {
+  position?: "center";
   ilustration: {
     src: any;
     alt: string;
@@ -14,9 +15,17 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-const AuthContainer: React.FC<Props> = ({ ilustration, children }) => {
+const AuthContainer: React.FC<Props> = ({
+  ilustration,
+  position,
+  children,
+}) => {
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        position === "center" ? styles.center : ""
+      }`}
+    >
       <div className={styles.image}>
         <Link to="/">
           <img src={logo} alt="<DevSkills />" className={styles.logo} />

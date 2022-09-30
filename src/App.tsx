@@ -7,6 +7,7 @@ import {BrowserRouter, Routes, Route } from "react-router-dom"
 // Pages
 import Home from './pages/Institutional/Home';
 import DevRegister from './pages/Dev/Register/Register';
+import DevLogin from './pages/Dev/Login/Login';
 import CompanyRegister from './pages/Company/Register/Register';
 
 // Notify
@@ -23,6 +24,7 @@ const App = (props: Props) => {
 
         {/* Routes of Dev */}
         <Route path="/dev/register" element={<DevRegister />} />
+        <Route path="/dev/login" element={<DevLogin />} />
 
         {/* Routes of Company */}
         <Route path="/company/register" element={<CompanyRegister />} />
