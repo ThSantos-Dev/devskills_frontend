@@ -22,11 +22,6 @@ const FormLogin = () => {
       </div>
 
       <div className={styles.options}>
-        {/* <div className={styles.checkbox_container}>
-          <input type="checkbox" name="" id="" />
-          <label>Lembrar-me</label>
-        </div> */}
-
         <Accept
           name="remember"
           handleOnClick={(checked, name) => console.log("teste")}
@@ -39,9 +34,6 @@ const FormLogin = () => {
 
       <div className={styles.button_container}>
         <Button size="inherit" text="Entrar" color="solid_white" />
-        <p>
-          Ainda não possui conta? <Link to="/register">Cadastre-se </Link>
-        </p>
       </div>
     </form>
   );

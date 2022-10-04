@@ -1,3 +1,8 @@
+// Redux
+import { register, reset } from "../../../slices/dev/authSlice";
+
+// Hooks 
+import { useSelector, useDispatch } from "react-redux";
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration.svg";
@@ -9,11 +14,27 @@ import FormRegister from "./Form/FormRegister";
 // Types
 import { TDevRegister } from "../../../types/devskills/dev/TDevRegister";
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
+import { useEffect } from "react";
 
 const Register = () => {
+
+  // Instanciando o Dispatch para ter acesso as funções do Redux
+  const dispatch = useDispatch<any>()
+
+  // Resgatando os estados do Redux
+  const {loading, error } = useSelector((state: any) => state.devAuth)
+
   const handleOnSubmit = (data: TDevRegister) => {
     console.log(data);
+
+    // Encaminhando os dados para o Redux realizar a requisição
+    dispatch(register(data))
   };
+
+  useEffect(() => {
+    // Limapando os dados do Dev a cada renderização do Login
+    dispatch(reset())
+  }, [dispatch])
 
   return (
     <AuthContainer ilustration={{ src: ilustration, alt: "ilustração" }}>

@@ -5,14 +5,14 @@ import { requestConfig } from "../../../utils/request-config";
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default class authService {
-  // Registra um dev
+  // Registra uma  Company
   static async register(data: any) {
     // Configurando a requisição
     const config = requestConfig("POST", data);
 
     try {
-        // Realizando a requisição para cadastrar um DEV
-      const res = await fetch(BASE_URL + "/dev/register", config)
+        // Realizando a requisição para cadastrar umacompany
+      const res = await fetch(BASE_URL + "/company/register", config)
         .then((res) => res.json())
         .catch((err) => err);
 
@@ -27,19 +27,19 @@ export default class authService {
     }
   }
 
-  // Logout do dev
+  // Logout da company
   static async logout(){
     localStorage.removeItem('user')
   }
 
-  // Login do dev
+  // Login da company
   static async login (data: any) {
     // Configurando a requisição
     const config = requestConfig("POST", data)
 
     try {
       // Realizando requisição para efetuar o login
-      const res: any = fetch(BASE_URL + '/dev/login', config).then((res) => res.json()).catch(err => err)
+      const res: any = fetch(BASE_URL + '/company/login', config).then((res) => res.json()).catch(err => err)
 
       // Validando o retorno da API
       if(res.id) 

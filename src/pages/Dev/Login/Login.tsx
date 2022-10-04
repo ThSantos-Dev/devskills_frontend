@@ -1,6 +1,15 @@
 // Styles
 import styles from "./Login.module.css";
 
+// React
+import { FormEvent } from "react";
+
+// Redux 
+import { useDispatch } from "react-redux";
+
+// Reducer
+import { login } from "../../../slices/dev/authSlice";
+
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
 
@@ -10,6 +19,19 @@ import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 import FormLogin from "./Form/FormLogin";
 
 const Login = () => {
+
+  // Instanciando o Dispatch para poder utilizar as funções do Redux
+  const dispatch = useDispatch<any>()
+
+  // Realiza a requisição para o servidor
+  const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: any) => {
+    e.preventDefault();
+
+    // Adiona a função de login
+    dispatch(login(data));
+  };
+
+
   return (
     <AuthContainer
       ilustration={{ src: ilustration, alt: "ilustração" }}
@@ -23,7 +45,7 @@ const Login = () => {
           </p>
         </AuthHeader>
 
-        <FormLogin />
+        <FormLogin handleOnSubmit={handleOnSubmit} />
       </div>
     </AuthContainer>
   );
