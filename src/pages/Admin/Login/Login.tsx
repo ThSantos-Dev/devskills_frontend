@@ -2,7 +2,7 @@
 import styles from "./Login.module.css";
 
 // SVG
-import ilustration from "../../../assets/img/dev-ilustration-login.svg";
+import ilustration from "../../../assets/img/admin-ilustration-login.svg";
 
 // Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";

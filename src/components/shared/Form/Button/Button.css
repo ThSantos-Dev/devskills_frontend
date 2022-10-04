@@ -48,6 +48,13 @@
   padding: 8px 30px;
 }
 
+.btn_size_inherit {
+  width: 100%;
+
+  padding: clamp(0.1rem, 10vw, 0.15rem) clamp(1rem, 10vw, 0.15rem);
+  font-size: var(--font-medium);
+}
+
 /* Icones */
 .btn_size_medium,
 .btn_size_small {

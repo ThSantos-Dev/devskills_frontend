@@ -22,11 +22,6 @@ const FormLogin = () => {
       </div>
 
       <div className={styles.options}>
-        {/* <div className={styles.checkbox_container}>
-          <input type="checkbox" name="" id="" />
-          <label>Lembrar-me</label>
-        </div> */}
-
         <Accept
           name="remember"
           handleOnClick={(checked, name) => console.log("teste")}

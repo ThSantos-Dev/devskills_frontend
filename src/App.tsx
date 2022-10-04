@@ -8,6 +8,7 @@ import {BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from './pages/Institutional/Home';
 import DevRegister from './pages/Dev/Register/Register';
 import DevLogin from './pages/Dev/Login/Login';
+import CompanyLogin from './pages/Company/Login/Login';
 import CompanyRegister from './pages/Company/Register/Register';
 
 // Notify
@@ -28,6 +29,7 @@ const App = (props: Props) => {
 
         {/* Routes of Company */}
         <Route path="/company/register" element={<CompanyRegister />} />
+        <Route path="/company/login" element={<CompanyLogin />} />
       </Routes>
 
       <ToastContainer />

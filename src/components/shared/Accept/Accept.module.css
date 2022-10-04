@@ -32,8 +32,8 @@
   content: "";
   display: block;
   position: absolute;
-  width: 25px;
-  height: 25px;
+  width: clamp(15px, 10vw, 25px);
+  height: clamp(15px, 10vw, 25px);
   top: 0;
   left: 0;
 
