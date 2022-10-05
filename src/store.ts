@@ -2,15 +2,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 // Dev Redux
-import devAuthReducer from './slices/dev/authSlice'
+import devReducer from "./slices/devSlice";
 
 // Comapany Redux
-import companyAuthReducer from './slices/company/authSlice'
-
+import companyReducer from "./slices/companySlice";
 
 export const store = configureStore({
-    reducer: {
-        devAuth: devAuthReducer,
-        companyAuth: companyAuthReducer
-    }
-})
+  reducer: {
+    devReducer: devReducer,
+    companyReducer: companyReducer,
+  },
+});

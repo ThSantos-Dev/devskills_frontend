@@ -27,6 +27,11 @@ export default class authService {
     }
   }
 
+  // Logout do dev
+  static async logout(){
+    localStorage.removeItem('user')
+  }
+
   // Login do dev
   static async login (data: any) {
     // Configurando a requisição

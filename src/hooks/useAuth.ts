@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export const useAuth = () => {
   // Restando o dev do Redux
-  const { user } = useSelector((state: any) => state.devAuth);
+  const { user, type } = useSelector((state: any) => state.auth);
 
   // State para valdiar se o usuário está autenticado ou não
   const [auth, setAuth] = useState<boolean>(false);
@@ -17,5 +17,5 @@ export const useAuth = () => {
     setLoading(false);
   }, [user]);
 
-  return { auth, loading };
+  return { auth, loading, type };
 };

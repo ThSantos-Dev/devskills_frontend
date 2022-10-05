@@ -14,8 +14,7 @@ import FormLogin from "./Form/FormLogin";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { login } from "../../../slices/company/authSlice";
-
+import { login } from "../../../slices/authSlice";
 
 const Login = () => {
   // Instanciando o Dispatch para poder utilizar as funções do Redux
@@ -26,7 +25,7 @@ const Login = () => {
     e.preventDefault();
 
     // Adiona a função de login
-    dispatch(login(data));
+    dispatch(login({ user: data, type: "COMPANY" }));
   };
 
   return (

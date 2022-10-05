@@ -1,5 +1,5 @@
 // Redux
-import { register, reset } from "../../../slices/dev/authSlice";
+import { register, reset } from "../../../slices/devSlice";
 
 // Hooks 
 import { useSelector, useDispatch } from "react-redux";

@@ -26,12 +26,7 @@ export default class authService {
       console.error(error);
     }
   }
-
-  // Logout da company
-  static async logout(){
-    localStorage.removeItem('user')
-  }
-
+  
   // Login da company
   static async login (data: any) {
     // Configurando a requisição

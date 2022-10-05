@@ -1,5 +1,5 @@
 // Hooks
-import { useAuth as devUseAuth } from "./hooks/dev/useAuth";
+import { useAuth } from "./hooks/useAuth";
 
 
 // Components
@@ -16,14 +16,13 @@ import CompanyRegister from './pages/Company/Register/Register';
 import 'react-toastify/dist/ReactToastify.min.css'
 import { ToastContainer } from 'react-toastify';
 
-interface Props {}
 
-const App = (props: Props) => {
+const App = () => {
 
   // Utilizando o hook para validar se o usuário está autenticado
-  const {auth: devAuth, loading: devLoading} = devUseAuth()
+  const {auth, loading} = useAuth()
 
-  if(devLoading) {
+  if(loading) {
     return <p>Carregando...</p>
   }
 
@@ -35,11 +34,11 @@ const App = (props: Props) => {
         {/* Routes of Dev */}
         <Route
           path="/dev/register"
-          element={!devAuth ? <DevRegister /> : <Navigate to="/dev/" />}
+          element={!auth ? <DevRegister /> : <Navigate to="/dev/" />}
         />
         <Route
           path="/dev/login"
-          element={!devAuth ? <DevLogin /> : <Navigate to="/dev/" />}
+          element={!auth ? <DevLogin /> : <Navigate to="/dev/" />}
         />
 
         {/* Routes of Company */}

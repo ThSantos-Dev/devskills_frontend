@@ -8,7 +8,7 @@ import { FormEvent } from "react";
 import { useDispatch } from "react-redux";
 
 // Reducer
-import { login } from "../../../slices/dev/authSlice";
+import { login } from "../../../slices/authSlice";
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
 
     // Adiona a função de login
-    dispatch(login(data));
+    dispatch(login({user: data, type: "DEV"}));
   };
 
 
