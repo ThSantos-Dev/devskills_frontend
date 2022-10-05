@@ -1,6 +1,9 @@
 // Redux
 import { configureStore } from "@reduxjs/toolkit";
 
+// Auth Redux
+import authReducer from "./slices/authSlice"
+
 // Dev Redux
 import devReducer from "./slices/devSlice";
 
@@ -9,7 +12,8 @@ import companyReducer from "./slices/companySlice";
 
 export const store = configureStore({
   reducer: {
-    devReducer: devReducer,
-    companyReducer: companyReducer,
+    auth: authReducer,
+    dev: devReducer,
+    company: companyReducer,
   },
 });

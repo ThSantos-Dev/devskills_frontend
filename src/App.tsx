@@ -4,6 +4,7 @@ import { useAuth } from "./hooks/useAuth";
 
 // Components
 import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
 
 // Pages
 import Home from './pages/Institutional/Home';
@@ -14,7 +15,6 @@ import CompanyRegister from './pages/Company/Register/Register';
 
 // Notify
 import 'react-toastify/dist/ReactToastify.min.css'
-import { ToastContainer } from 'react-toastify';
 
 
 const App = () => {

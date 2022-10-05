@@ -1,22 +1,28 @@
-// React
-import { FormEvent } from "react";
-
 // Styles
 import styles from "./Login.module.css";
 
+// React
+import { FormEvent, useState } from "react";
+
+// Redux
+import { useDispatch } from "react-redux";
+
+// Reducer
+import { login } from "../../../slices/authSlice";
+
 // SVG
-import ilustration from "../../../assets/img/company-ilustration-login.svg";
+import ilustration from "../../../assets/img/dev-ilustration-login.svg";
 
 // Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
+import ForgotPassword from "../../../components/shared/ForgotPassword/ForgotPassword";
 import FormLogin from "./Form/FormLogin";
 
-// Redux
-import { useDispatch } from "react-redux";
-import { login } from "../../../slices/authSlice";
-
 const Login = () => {
+  // State responsável por controlar a validação da Modal
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   // Instanciando o Dispatch para poder utilizar as funções do Redux
   const dispatch = useDispatch<any>();
 
@@ -25,25 +31,33 @@ const Login = () => {
     e.preventDefault();
 
     // Adiona a função de login
-    dispatch(login({ user: data, type: "COMPANY" }));
+    dispatch(login({ user: data, type: "DEV" }));
   };
 
   return (
-    <AuthContainer
-      ilustration={{ src: ilustration, alt: "ilustração" }}
-      position="center"
-    >
-      <div className={styles.container}>
-        <AuthHeader title="Entrar" subtitle="Entre na sua conta">
-          <p>
-            Obrigado por retornar a DevSkills, acesse sua conta para ver as
-            novidades.
-          </p>
-        </AuthHeader>
+    <>
+      <AuthContainer
+        ilustration={{ src: ilustration, alt: "ilustração" }}
+        position="center"
+      >
+        <div className={styles.container}>
+          <AuthHeader title="Entrar" subtitle="Entre na sua conta">
+            <p>
+              Obrigado por retornar a DevSkills, acesse sua conta para ver as
+              novidades.
+            </p>
+          </AuthHeader>
 
-        <FormLogin handleOnSubmit={handleOnSubmit} />
-      </div>
-    </AuthContainer>
+          <FormLogin handleOnSubmit={handleOnSubmit} openModal={() => setShowModal(!showModal)}/>
+        </div>
+      </AuthContainer>
+
+      {showModal && (
+        <div className={styles.modal}>
+          <ForgotPassword closeModal={() => setShowModal(!showModal)} type="DEV"/>
+        </div>
+      )}
+    </>
   );
 };
 

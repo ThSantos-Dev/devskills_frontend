@@ -22,7 +22,7 @@ const Register = () => {
   const dispatch = useDispatch<any>()
 
   // Resgatando os estados do Redux
-  const {loading, error } = useSelector((state: any) => state.devAuth)
+  const {loading, error } = useSelector((state: any) => state.dev)
 
   const handleOnSubmit = (data: TDevRegister) => {
     console.log(data);

@@ -12,10 +12,11 @@ import Input from "../../../../components/shared/Form/Input/Input";
 
 // Props
 interface Props {
+  openModal():void;
   handleOnSubmit(e: FormEvent<HTMLFormElement>, data: any): void;
 }
 
-const FormLogin: React.FC<Props> = ({ handleOnSubmit }) => {
+const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
   // State para controlar as inputs
   const [inputs, setInputs] = useState({
     email: "",
@@ -52,13 +53,13 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit }) => {
 
       <div className={styles.options}>
         <Accept
-          name="remember"
+          name="remember" 
           handleOnClick={(checked, name) => console.log("teste")}
         >
           <p>Lembrar-me</p>
         </Accept>
 
-        <Link to="/">Esqueceu a senha?</Link>
+        <span onClick={openModal} className={styles.forgot_password}>Esqueceu a senha?</span>
       </div>
 
       <div className={styles.button_container}>

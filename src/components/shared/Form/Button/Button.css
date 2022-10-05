@@ -4,7 +4,7 @@
 
   --bg-color-blue: rgb(28, 57, 119);
 
-  --font-medium: 1.5rem;
+  --font-medium: clamp(1rem, 4.5vw, 1.5rem);
   --font-small: 1.2rem;
 }
 
@@ -33,7 +33,7 @@
 /* Tamanhos */
 .btn_size_medium {
   max-width: 235px;
-  max-height: 52px;
+  height: clamp(2.4rem, 6vw, 3.6rem);
 
   font-size: var(--font-medium);
 
