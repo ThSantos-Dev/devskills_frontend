@@ -12,6 +12,8 @@ import DevRegister from './pages/Dev/Register/Register';
 import DevLogin from './pages/Dev/Login/Login';
 import CompanyLogin from './pages/Company/Login/Login';
 import CompanyRegister from './pages/Company/Register/Register';
+import RetrievePassword from "./pages/RetrievePassword/RetrievePassword";
+
 
 // Notify
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -30,6 +32,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+
+        {/* Routes Shared */}
+        <Route path="/redefine" element={<RetrievePassword />} />
 
         {/* Routes of Dev */}
         <Route
