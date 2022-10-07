@@ -65,7 +65,7 @@
 /** Media Queries **/
 @media only screen and (min-height: 1280px) {
   .container {
-    height: 100vh;
+    min-height: 100vh;
   }
 }
 
@@ -90,5 +90,16 @@
     max-width: 980px;
 
     padding: 40px 15px;
+  }
+
+  .container.center {
+    padding-right: 0px;
+  }
+
+  .center .content  {
+    max-width: 980px;
+    flex-direction: column;
+    
+    padding: 10px !important;
   }
 }

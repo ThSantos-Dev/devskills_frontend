@@ -35,3 +35,12 @@ padding-top: 30px;
   color: var(--color-white-text);
   cursor: pointer;
 }
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 480px) {
+  .options {
+    flex-direction: column !important; 
+    gap: 20px;
+
+  }
+}
