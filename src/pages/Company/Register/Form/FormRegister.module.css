@@ -42,9 +42,14 @@
 }
 
 /* Media Queries */
-@media only screen and (max-width: 485px) {
+@media only screen and (max-width: 480px) {
 .button_container {
   justify-content: center;
   align-items: center;
+}
+
+.input_container {
+  flex-direction: column;
+  padding: 0 10pxww;
 }
 }
