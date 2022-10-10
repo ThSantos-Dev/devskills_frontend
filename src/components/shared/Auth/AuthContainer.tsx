@@ -12,7 +12,7 @@ interface Props {
     alt: string;
   };
 
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
 }
 
 const AuthContainer: React.FC<Props> = ({

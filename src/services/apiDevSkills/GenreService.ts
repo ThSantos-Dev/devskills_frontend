@@ -12,13 +12,13 @@
 import { TGenre } from '../../types/devskills/genre/TGenre';
 
 // Env
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+// const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default class GenreService {
   // Busca todos os Gêneros cadastrados
   static async getAll(): Promise<TGenre[] | boolean> {
     try {
-      const res = await fetch(`${BASE_URL}/genres`)
+      const res = await fetch(`10.107.144.16:8081/gender`)
         .then((data) => data.json())
         .catch((error) => console.error(error));
 

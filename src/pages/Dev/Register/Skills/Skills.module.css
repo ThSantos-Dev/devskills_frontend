@@ -1,0 +1,23 @@
+.container {
+    flex: 1;
+    padding-top: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+    
+}
+
+.input_container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.button_container {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
