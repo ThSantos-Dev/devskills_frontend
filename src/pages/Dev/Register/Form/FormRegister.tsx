@@ -3,6 +3,7 @@ import styles from "./FormRegister.module.css";
 
 // Hooks
 import { FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // Component
 import { Link } from "react-router-dom";
@@ -16,19 +17,35 @@ import regex from "../../../../utils/my-regex";
 
 // Types
 import { SingleValue } from "react-select";
-import { TDevRegister } from "../../../../types/devskills/dev/TDevRegister";
-import { TGenre } from "../../../../types/devskills/genre/TGenre";
+import { TGender } from "../../../../types/devskills/gender/TGender";
 
-// Service
-import GenreService from "../../../../services/apiDevSkills/GenreService";
+// Redux
+import { getAll } from "../../../../slices/genderSlice";
 
 interface Props {
-  handleOnSubmit(data: TDevRegister): void;
+  handleOnSubmit(data: TDevRegisterStepOne): void;
 }
 
+export type TDevRegisterStepOne = {
+  name: string;
+  birth_date: string;
+  cpf: string;
+  gender: string;
+  email: string;
+  telephone: string;
+  password: string;
+  confirmPassword: string;
+
+  accept_terms: boolean;
+  accept_email: boolean;
+};
+
 const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
+  // Resgatando os Generos do Redux
+  const { genders, loading, error } = useSelector((state: any) => state.gender);
+
   // State responsável por armazenar os dados de select de Gênero
-  const [genres, setGenres] = useState<
+  const [genderOptions, setGenderOptions] = useState<
     SingleValue<{ label: string; value: string }>[]
   >([]);
 
@@ -36,7 +53,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
   const [maskTell, setMaskTell] = useState<String>("(00) 0");
 
   // State resposável por armazenar erros
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<any>({
     name: false,
     birth_date: false,
     cpf: false,
@@ -45,21 +62,28 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     telephone: false,
     password: false,
     confirmPassword: false,
+
+    accept_terms: false,
+    accept_email: false,
   });
 
   // State responsável por armazenar os dados do formulario
-  const [inputs, setInputs] = useState<TDevRegister>({
+  const [inputs, setInputs] = useState<TDevRegisterStepOne>({
     name: "",
     birth_date: "",
     cpf: "",
-    genre: "",
+    gender: "",
     email: "",
     telephone: "",
     password: "",
     confirmPassword: "",
+
     accept_terms: false,
     accept_email: false,
   });
+
+  // Instanciando o useDispatch para poder utilizar as funções do Redux
+  const dispatch = useDispatch<any>();
 
   // Atualiza o state a cada mundança nas inputs
   const handleOnChange = (value: string | boolean, input: string) => {
@@ -87,7 +111,7 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     if (!inputs.cpf.trim() || inputs.cpf.trim().length !== 11)
       return setErrors({ ...errors, cpf: true });
 
-    if (!inputs.genre) return setErrors({ ...errors, genre: true });
+    if (!inputs.gender) return setErrors({ ...errors, genre: true });
 
     if (!inputs.email.trim() || inputs.email.trim().length < 10)
       return setErrors({ ...errors, email: true });
@@ -112,22 +136,26 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     return handleOnSubmit({ ...inputs });
   };
 
-  // Carregando os dados dos selects
+  // Carregando os dados do select de genero
   useEffect(() => {
-    // Variáveis auxiliares
-    let genresOption: SingleValue<{ label: string; value: string }>[] = [];
-
-    // Buscando os Gêneros
-    GenreService.getAll().then((data) => {
-      if (typeof data == "boolean") return;
-
-      data.map((genre: TGenre) => {
-        return genresOption.push({ value: `${genre.id}`, label: genre.name });
-      });
-
-      setGenres(genresOption);
-    });
+    dispatch(getAll);
   }, []);
+
+  useEffect(() => {
+
+
+    if(!genders) 
+      return
+
+    let genderOptionsFormated: SingleValue<{ label: string; value: string }>[] = [];
+
+    genderOptionsFormated = genders.map((gender: TGender) => ({
+      value: `${gender.id}`,
+      label: gender.nome,
+    }));
+
+    setGenderOptions(genderOptionsFormated);
+  }, [genders]);
 
   return (
     <form className={styles.container} onSubmit={handleValidate}>
@@ -170,14 +198,17 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
         />
 
         <SelectCustom
-          name="genre"
+          name="gender"
           label="Gênero"
           placeholder="Gênero"
-          handleOnChange={handleOnChange}
+          isLoading={loading}
+          handleOnChange={(selected: { label: string; value: string }) =>
+            handleOnChange(selected.value, "gender")
+          }
           error={errors.genre}
           noOptionsMessage="Não há gêneros disponíveis."
-          options={genres && genres}
-          handleOnFocus={() => setErrors({ ...errors, genre: false })}
+          options={genderOptions && genderOptions}
+          handleOnFocus={() => setErrors({ ...errors, gender: false })}
         />
       </div>
 

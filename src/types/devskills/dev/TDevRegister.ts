@@ -1,12 +1,15 @@
 export type TDevRegister = {
-  name: string;
-  birth_date: string;
-  cpf: string;
-  genre: string;
-  email: string;
-  telephone: string;
-  password: string;
-  confirmPassword: string;
-  accept_terms: boolean;
-  accept_email: false;
-};
+  nome: string
+  email: string
+  senha: string
+  cpf: string
+  id_genero: number
+  data_nascimento: string
+  numero: string
+  ddd: string
+  confirmar_senha: string
+  id_tipo_telefone: number
+
+  ids_habilidades?: number[]
+  ids_stacks?: number[]
+}

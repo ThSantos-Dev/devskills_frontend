@@ -14,13 +14,14 @@ interface Props {
   label?: string;
   closeMenuOnSelect?: boolean;
   placeholder: string;
-  error?: boolean,
+  error?: boolean;
+  isLoading?: boolean;
   errorMessage?: string;
   noOptionsMessage?: string;
   name: string;
-  options: SingleValue<{label: string, value: string}>[];
+  options: SingleValue<{ label: string; value: string }>[];
   handleOnChange(value: any, input: string): void;
-  handleOnFocus?(): void
+  handleOnFocus?(): void;
 }
 
 const SelectCustom: React.FC<Props> = ({
@@ -28,6 +29,7 @@ const SelectCustom: React.FC<Props> = ({
   name,
   isMulti = false,
   placeholder,
+  isLoading,
   error = false,
   errorMessage = "Selecione uma opção",
   label,
@@ -119,6 +121,7 @@ const SelectCustom: React.FC<Props> = ({
     <div className={styles.container}>
       <label>{label && label}</label>
       <Select
+        isLoading={isLoading}
         isMulti={isMulti}
         options={options}
         styles={selectStyles}

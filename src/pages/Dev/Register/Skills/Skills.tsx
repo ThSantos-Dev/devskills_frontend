@@ -1,14 +1,57 @@
-import React from "react";
+import React, { FormEvent, useEffect, useState } from "react";
+
+// Styles
+import styles from "./Skills.module.css";
+
+// Components
 import Button from "../../../../components/shared/Form/Button/Button";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
 
-import styles from "./Skills.module.css";
 
-type Props = {};
+interface Props {
+  handleOnSubmit(e: FormEvent<HTMLFormElement> , data: any): void
+};
 
-const Skills: React.FC<Props> = ({}) => {
+export type TSkillsData = {
+  stacks: number[]
+  skills: number[]
+}
+
+type TSelected = {
+  label: string,
+  value: string
+}
+
+const Skills: React.FC<Props> = ({ handleOnSubmit }) => {
+
+  // State responsável por armazenar os dados dos selects
+  const [selects, setSelects] = useState<TSkillsData>({
+    stacks: [],
+    skills: []
+  })
+
+  // Função responsável por alterar os do Selects a cada alteracao
+  const handleOnChange = (selecteds: TSelected[], input: string) => {
+    setSelects({
+      ...selects,
+      [input]: selecteds.map((select: TSelected) => parseInt(select.value)),
+    });
+  }
+
+  // Buscando as Stacks
+  useEffect(() => {
+
+  }, [])
+  
+
+
   return (
-    <form className={styles.container}>
+    <form
+      className={styles.container}
+      onSubmit={(e: FormEvent<HTMLFormElement>) =>
+        handleOnSubmit(e, { ...selects })
+      }
+    >
       <div className={styles.input_container}>
         <div className={styles.input}>
           <SelectCustom
@@ -25,12 +68,14 @@ const Skills: React.FC<Props> = ({}) => {
             ]}
             isMulti={true}
             closeMenuOnSelect={false}
-            handleOnChange={(value) => console.log(value)}
+            handleOnChange={(selecteds: TSelected[]) =>
+              handleOnChange(selecteds, "stacks")
+            }
           />
         </div>
         <div className={styles.input}>
           <SelectCustom
-            name="tecnologias"
+            name="skills"
             label="Tecnologias"
             placeholder="Selelcione"
             options={[
@@ -43,7 +88,9 @@ const Skills: React.FC<Props> = ({}) => {
             ]}
             isMulti={true}
             closeMenuOnSelect={false}
-            handleOnChange={(value) => console.log(value)}
+            handleOnChange={(selecteds: TSelected[]) =>
+              handleOnChange(selecteds, "skills")
+            }
           />
         </div>
       </div>

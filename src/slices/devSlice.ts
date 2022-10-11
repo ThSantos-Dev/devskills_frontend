@@ -19,6 +19,7 @@ export interface IAuthDev {
 const initialState: IAuthDev = {
   user: user ? user : null,
   type: "DEV",
+  
   error: null,
   success: false,
   loading: false,
