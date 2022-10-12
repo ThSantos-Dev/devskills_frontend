@@ -13,6 +13,7 @@ import DevLogin from './pages/Dev/Login/Login';
 import CompanyLogin from './pages/Company/Login/Login';
 import CompanyRegister from './pages/Company/Register/Register';
 import RetrievePassword from "./pages/RetrievePassword/RetrievePassword";
+import CreateTest from "./pages/Test/Create/CreateTest";
 
 
 // Notify
@@ -34,7 +35,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
 
         {/* Routes Shared */}
-        <Route path="/redefine" element={<RetrievePassword />} />
+        <Route path="/:user/redefine" element={<RetrievePassword />} />
+        <Route path="/:user/test/create" element={<CreateTest />} />
 
         {/* Routes of Dev */}
         <Route
