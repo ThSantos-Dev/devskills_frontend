@@ -37,10 +37,25 @@
   padding: 20px 0;
 }
 
+.password_info_container {
+  color: var(--color-white-text);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+
+  padding-left: 15px;
+}
+
+.password_info_container ul li.error {
+  color: var(--dark-pink);
+}
+
+.password_info_container ul li.success {
+  color: var(--toastify-color-success);
+}
+
 /* Media Queries */
 @media only screen and (max-width: 485px) {
-.button_container {
-  justify-content: center;
-  align-items: center;
-}
+  .button_container {
+    justify-content: center;
+    align-items: center;
+  }
 }

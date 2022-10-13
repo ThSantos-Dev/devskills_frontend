@@ -59,6 +59,7 @@ const Register = () => {
       numero: data.telephone.slice(2),
       id_genero: parseInt(data.gender),
       id_tipo_telefone: data.telephone.slice(2).length === 9 ? 1 : 2,
+      permissao_email: data.accept_email
     };
 
     // Adicionando os dados ao state

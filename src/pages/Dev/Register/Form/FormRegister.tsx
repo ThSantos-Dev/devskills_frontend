@@ -21,6 +21,7 @@ import { SingleValue } from "react-select";
 
 // Redux
 import { getAll } from "../../../../slices/common/genderSlice";
+import validateRegex from "../../../../utils/validate-regex";
 
 interface Props {
   handleOnSubmit(data: TDevRegisterStepOne): void;
@@ -70,6 +71,12 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     accept_email: false,
   });
 
+  // State responsável por controlar a exibição das informaçoes de senha (segurança)
+  const [showPassInfo, setShowPassInfo] = useState<boolean>(false);
+
+  // State responsável por armazenar
+
+
   // State responsável por armazenar os dados do formulario
   const [inputs, setInputs] = useState<TDevRegisterStepOne>({
     name: "",
@@ -118,6 +125,14 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
 
     if (!inputs.password) return setErrors({ ...errors, password: true });
 
+    // Validando a senha
+    const password = inputs.password
+   
+    // Verificando se tem letra minúscula
+    if (validateRegex(password, '[a-z]'))
+      return 
+      
+
     if (inputs.password !== inputs.confirmPassword)
       return setErrors({ ...errors, confirmPassword: true });
 
@@ -133,7 +148,13 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       confirmPassword: false,
     });
 
-    localStorage.setItem('stepOneData', JSON.stringify(inputs))
+    localStorage.setItem(
+      "stepOneData",
+      JSON.stringify({
+        ...inputs,
+        gender: genderOptions[parseInt(inputs.gender)],
+      })
+    );
 
     return handleOnSubmit({ ...inputs });
   };
@@ -237,7 +258,11 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           type="password"
           error={errors.password}
           handleOnChange={handleOnChange}
-          onFocus={() => setErrors({ ...errors, password: false })}
+          onFocus={() => {
+            setErrors({ ...errors, password: false })
+            setShowPassInfo(true)
+          }}
+          onBlur={() => setShowPassInfo(false)}
         />
 
         <Input
@@ -253,9 +278,19 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
         />
       </div>
 
-      <div className="info">
-        <p></p>
-      </div>
+      {true && (
+        <div className={styles.password_info_container}>
+          <ul>
+            <li className={styles.error}>
+              A senha deve ter o tamanho entre 8-15 caracteres.
+            </li>
+            <li className={styles.success}>Deve conter uma letra MAIÚSCULA.</li>
+            <li>Deve conter uma letra minúscula.</li>
+            <li>Deve conter um número.</li>
+            <li>Deve conter catactere especial (!@#$%)</li>
+          </ul>
+        </div>
+      )}
 
       <div className={styles.accept}>
         <Accept
