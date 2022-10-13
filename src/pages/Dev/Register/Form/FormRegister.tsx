@@ -14,13 +14,13 @@ import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom
 
 // Utils
 import regex from "../../../../utils/my-regex";
+import { selectFormat } from "../../../../utils/select-format";
 
 // Types
 import { SingleValue } from "react-select";
-import { TGender } from "../../../../types/devskills/gender/TGender";
 
 // Redux
-import { getAll } from "../../../../slices/genderSlice";
+import { getAll } from "../../../../slices/common/genderSlice";
 
 interface Props {
   handleOnSubmit(data: TDevRegisterStepOne): void;
@@ -41,8 +41,11 @@ export type TDevRegisterStepOne = {
 };
 
 const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
+  // Instanciando o useDispatch para poder utilizar as funções do Redux
+  const dispatch: any = useDispatch();
+
   // Resgatando os Generos do Redux
-  const { genders, loading, error } = useSelector((state: any) => state.gender);
+  const { genders, loading } = useSelector((state: any) => state.gender);
 
   // State responsável por armazenar os dados de select de Gênero
   const [genderOptions, setGenderOptions] = useState<
@@ -81,9 +84,6 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
     accept_terms: false,
     accept_email: false,
   });
-
-  // Instanciando o useDispatch para poder utilizar as funções do Redux
-  const dispatch = useDispatch<any>();
 
   // Atualiza o state a cada mundança nas inputs
   const handleOnChange = (value: string | boolean, input: string) => {
@@ -133,28 +133,21 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
       confirmPassword: false,
     });
 
+    localStorage.setItem('stepOneData', JSON.stringify(inputs))
+
     return handleOnSubmit({ ...inputs });
   };
 
   // Carregando os dados do select de genero
   useEffect(() => {
-    dispatch(getAll);
-  }, []);
+    dispatch(getAll());
+  }, [dispatch]);
 
+  // Monitorando o carregamento do Genero
   useEffect(() => {
+    if (!genders) return;
 
-
-    if(!genders) 
-      return
-
-    let genderOptionsFormated: SingleValue<{ label: string; value: string }>[] = [];
-
-    genderOptionsFormated = genders.map((gender: TGender) => ({
-      value: `${gender.id}`,
-      label: gender.nome,
-    }));
-
-    setGenderOptions(genderOptionsFormated);
+    setGenderOptions(selectFormat(genders));
   }, [genders]);
 
   return (
@@ -258,6 +251,10 @@ const FormRegister: React.FC<Props> = ({ handleOnSubmit }) => {
           handleOnChange={handleOnChange}
           onFocus={() => setErrors({ ...errors, confirmPassword: false })}
         />
+      </div>
+
+      <div className="info">
+        <p></p>
       </div>
 
       <div className={styles.accept}>

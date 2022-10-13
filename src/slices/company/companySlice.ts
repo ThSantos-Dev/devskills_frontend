@@ -1,35 +1,32 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { autenticate } from "./authSlice";
+import { autenticate } from "../authSlice";
 
 // Service
-import authService from "../services/apiDevSkills/dev/authService";
+import authService from "../../services/apiDevSkills/company/authService";
 
 const user = JSON.parse(localStorage.getItem("user")!);
 
-export interface IAuthDev {
+export interface IAuthCompany {
   user: any;
-  type: "DEV";
   error: any;
   success: boolean;
   loading: boolean;
 }
 
-const initialState: IAuthDev = {
+const initialState: IAuthCompany = {
   user: user ? user : null,
-  type: "DEV",
-  
   error: null,
   success: false,
   loading: false,
 };
 
-// Cadastro e login do Dev
+// Cadastro e login da Company
 export const register = createAsyncThunk(
-  "authDev/register",
+  "authCompany/register",
   async (user: any, thunkAPI) => {
-    // Chamando o service responsável por cadastrar o dev
+    // Chamando o service responsável por cadastrar a Company
     const data = await authService.register(user);
 
     // Validando a resposta do servidor
@@ -47,8 +44,8 @@ export const register = createAsyncThunk(
 );
 
 // Criando slice para manipular os estados
-export const devSlice = createSlice({
-  name: "devSlice",
+export const companySlice = createSlice({
+  name: "companySlice",
   initialState,
   reducers: {
     // Função responsável por RESETAR o meu state para o ESTADO INICIAL
@@ -83,5 +80,5 @@ export const devSlice = createSlice({
 });
 
 // Exportanto o Slice
-export const { reset } = devSlice.actions;
-export default devSlice.reducer;
+export const { reset } = companySlice.actions;
+export default companySlice.reducer;

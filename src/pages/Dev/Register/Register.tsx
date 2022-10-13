@@ -1,8 +1,8 @@
 // Redux
-import { register, reset } from "../../../slices/devSlice";
+import { register, reset } from "../../../slices/dev/devSlice";
 
 // Hooks
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration.svg";
@@ -14,8 +14,10 @@ import FormRegister, { TDevRegisterStepOne } from "./Form/FormRegister";
 import Skills, { TSkillsData } from "./Skills/Skills";
 
 // Types
-import { TDevRegister } from "../../../types/devskills/dev/TDevRegister";
 import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { TDevRegister } from "../../../types/devskills/dev/TDevRegister";
 
 const Register = () => {
   // State para controlar as etapas
@@ -24,14 +26,24 @@ const Register = () => {
     two: false,
   });
 
+  // State que controla as notificações
+  const [idToast, setIdToast] = useState<any>();
+
   // State que armazena os dados do usuário
   const [devData, setDevData] = useState<TDevRegister>();
 
   // Instanciando o Dispatch para ter acesso as funções do Redux
   const dispatch = useDispatch<any>();
 
+  const navigate = useNavigate();
+
   // Resgatando os estados do Redux
-  const { loading, error } = useSelector((state: any) => state.auth);
+  const { loading } = useSelector((state: any) => state.auth);
+  const {
+    success,
+    error,
+    loading: devLoading,
+  } = useSelector((state: any) => state.dev);
 
   // Resgata os dados do primeiro formulario
   const handleDataStepOne = (data: TDevRegisterStepOne) => {
@@ -58,21 +70,49 @@ const Register = () => {
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: TSkillsData) => {
     e.preventDefault();
 
-    if (data.stacks.length > 0 || data.skills.length > 0)
-      setDevData({
-        ...devData!,
+    // Encaminhando os dados para o Redux realizar a requisição
+    dispatch(
+      register({
+        ...devData,
         ids_stacks: data.stacks,
         ids_habilidades: data.skills,
-      });
-
-    // Encaminhando os dados para o Redux realizar a requisição
-    dispatch(register(devData));
+      })
+    );
   };
 
   useEffect(() => {
     // Limapando os dados do Dev a cada renderização do Login
-    dispatch(reset());
-  }, [dispatch]);
+    reset();
+  }, []);
+
+  useEffect(() => {
+    if (devLoading && !idToast) setIdToast(toast.loading("Processando..."));
+
+    if (success) {
+      toast.update(idToast, {
+        render: "Usuário cadastrado com sucesso! Efetue o login.",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      // toast.success("Usuário cadastrado com sucesso! Efetue o login.");
+      navigate("/dev/login");
+    }
+
+    if (error) {
+      toast.update(idToast, {
+        render: error,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      setStep({ one: true, two: false });
+    }
+  }, [devLoading, success, error, navigate, idToast]);
+
+  if (loading) return <p>Carregando...</p>;
 
   return (
     <AuthContainer ilustration={{ src: ilustration, alt: "ilustração" }}>

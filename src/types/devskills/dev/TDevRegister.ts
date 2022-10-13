@@ -10,6 +10,6 @@ export type TDevRegister = {
   confirmar_senha: string
   id_tipo_telefone: number
 
-  ids_habilidades?: number[]
-  ids_stacks?: number[]
+  ids_habilidades?: number[] | null
+  ids_stacks?: number[] | null
 }

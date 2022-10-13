@@ -4,10 +4,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // Service
 import genderService, {
   TResponse,
-} from "../services/apiDevSkills/admin/genderService";
+} from "../../services/apiDevSkills/common/genderService";
 
 // Types
-import { TGender } from "../types/devskills/gender/TGender";
+import { TGender } from "../../types/devskills/gender/TGender";
 
 // Interface
 interface IGenderSlice {
@@ -31,8 +31,6 @@ const initialState: IGenderSlice = {
 
 // Listagem de Generos
 export const getAll = createAsyncThunk("gender/getAll", async (_, thunkAPI) => {
-    console.log("teste");
-
   // Chamando o service responsável por listar todos os Generos
   const data: TResponse = await genderService.getAll();
 

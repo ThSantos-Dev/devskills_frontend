@@ -2,7 +2,7 @@
 
 export const requestConfig = (
   method: "GET" | "POST" | "PUT" | "DELETE",
-  data?: JSON,
+  data?: Object,
   token?: string,
   image?: boolean
 ) => {

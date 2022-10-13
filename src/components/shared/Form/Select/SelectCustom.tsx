@@ -10,15 +10,16 @@ import Select, { SingleValue } from "react-select";
 import { MdErrorOutline } from "react-icons/md";
 
 interface Props {
-  isMulti?: boolean;
+  name: string;
+  value?: string;
   label?: string;
-  closeMenuOnSelect?: boolean;
-  placeholder: string;
   error?: boolean;
+  isMulti?: boolean;
+  placeholder: string;
   isLoading?: boolean;
   errorMessage?: string;
   noOptionsMessage?: string;
-  name: string;
+  closeMenuOnSelect?: boolean;
   options: SingleValue<{ label: string; value: string }>[];
   handleOnChange(value: any, input: string): void;
   handleOnFocus?(): void;
@@ -126,6 +127,7 @@ const SelectCustom: React.FC<Props> = ({
         options={options}
         styles={selectStyles}
         placeholder={placeholder}
+      
         closeMenuOnSelect={closeMenuOnSelect}
         noOptionsMessage={() => noOptionsMessage}
         onFocus={() => handleOnFocus && handleOnFocus()}

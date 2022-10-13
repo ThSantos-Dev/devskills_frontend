@@ -65,7 +65,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
       <div className={styles.button_container}>
         <Button size="inherit" text="Entrar" color="solid_white" />
         <p>
-          Ainda não possui conta? <Link to="/register">Cadastre-se </Link>
+          Ainda não possui conta? <Link to="/dev/register">Cadastre-se </Link>
         </p>
       </div>
     </form>
