@@ -53,13 +53,15 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
 
       <div className={styles.options}>
         <Accept
-          name="remember" 
+          name="remember"
           handleOnClick={(checked, name) => console.log("teste")}
         >
           <p>Lembrar-me</p>
         </Accept>
 
-        <span onClick={openModal} className={styles.forgot_password}>Esqueceu a senha?</span>
+        <span onClick={openModal} className={styles.forgot_password}>
+          Esqueceu a senha?
+        </span>
       </div>
 
       <div className={styles.button_container}>

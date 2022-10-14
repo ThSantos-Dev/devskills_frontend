@@ -1,4 +1,4 @@
-const validateRegex = (value: string, regex: string) => {
+const validateRegex = (value: string, regex: string | RegExp) => {
   const regexText = new RegExp(regex);
   return regexText.test(value);
 };

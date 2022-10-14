@@ -41,6 +41,21 @@
   flex-wrap: nowrap !important;
 }
 
+.password_info_container {
+  color: var(--color-white-text);
+  font-size: clamp(.8rem, 1.6vw, 1rem);
+
+  padding-left: 15px;
+}
+
+.password_info_container ul li.error {
+  color: var(--dark-pink);
+}
+
+.password_info_container ul li.success {
+  color: var(--toastify-color-success);
+}
+
 /* Media Queries */
 @media only screen and (max-width: 480px) {
 .button_container {

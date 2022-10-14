@@ -53,6 +53,9 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
   // State responsável por manipular a máscara de Telefone
   const [maskTell, setMaskTell] = useState<String>("(00) 0");
 
+  // State responsável por controlar a exibição das informaçoes de senha (segurança)
+  const [showPassInfo, setShowPassInfo] = useState<boolean>(false);
+
   // State para manipular os erros
   const [errors, setErrors] = useState({
     // cnpj, email, senha, nome_fantasia, telefone
@@ -298,7 +301,11 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
           type="password"
           error={errors.password}
           handleOnChange={handleOnChange}
-          onFocus={() => setErrors({ ...errors, password: false })}
+          onFocus={() => {
+            setErrors({ ...errors, password: false });
+            setShowPassInfo(true);
+          }}
+          onBlur={() => setShowPassInfo(false)}
         />
 
         <Input
@@ -313,6 +320,19 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
           onFocus={() => setErrors({ ...errors, confirmPassword: false })}
         />
       </div>
+
+      {showPassInfo && (
+        <div className={styles.password_info_container}>
+          <ul>
+            <li>A senha deve ter o tamanho entre 8-15 caracteres.</li>
+            <li>Deve conter uma letra MAIÚSCULA.</li>
+            <li>Deve conter uma letra minúscula.</li>
+            <li>Deve conter um número.</li>
+            <li>Deve conter catactere especial (!@#$%)</li>
+          </ul>
+        </div>
+      )}
+
       <div className={styles.accept}>
         <Accept
           name="accept_email"

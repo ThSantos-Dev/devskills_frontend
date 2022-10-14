@@ -39,16 +39,16 @@
 
 .password_info_container {
   color: var(--color-white-text);
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-size: clamp(.8rem, 1.6vw, 1rem);
 
   padding-left: 15px;
 }
 
-.password_info_container ul li.error {
+.password_info_container ul.error {
   color: var(--dark-pink);
 }
 
-.password_info_container ul li.success {
+.password_info_container ul.success {
   color: var(--toastify-color-success);
 }
 
