@@ -2,7 +2,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Service
-import { toast } from "react-toastify";
 import authService from "../../services/apiDevSkills/dev/authService";
 
 const user = JSON.parse(localStorage.getItem("user")!);
@@ -33,15 +32,11 @@ export const register = createAsyncThunk(
 
     // Validando a resposta do servidor
     if (data.error) {
-      toast.error(data.error);
       return thunkAPI.rejectWithValue(data.error);
     }
 
     if(data.message)
       return thunkAPI.fulfillWithValue(data.message)
-
-    // Retornando o usuário cadastrado
-    return data;
   }
 );
 

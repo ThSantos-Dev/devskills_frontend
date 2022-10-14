@@ -104,7 +104,7 @@ const Register = () => {
     if (error) {
       toast.update(idToast, {
         render: error,
-        type: "success",
+        type: "error",
         isLoading: false,
         autoClose: 3000,
       });

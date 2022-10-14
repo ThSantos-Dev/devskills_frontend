@@ -15,12 +15,31 @@ import Accept from "../../../../components/shared/Accept/Accept";
 import Input from "../../../../components/shared/Form/Input/Input";
 import Button from "./../../../../components/shared/Form/Button/Button";
 
+// Utils
+import validateRegex from "../../../../utils/validate-regex";
+import regex from "../../../../utils/my-regex";
+
 // Types
-import { TCompanyRegister } from "../../../../types/devskills/company/TCompanyRegister";
+import { TAdrress } from "../../../../types/devskills/address/TAddress"; 
 
 interface Props {
-  handleSubmit(data: TCompanyRegister): void;
+  handleSubmit(data: TFormCompanyRegister): void;
 }
+
+// Type
+
+export type TFormCompanyRegister = {
+  cnpj: string;
+  fantasy_name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  telephone: string;
+  active: boolean;
+  accept_terms: boolean;
+  accept_email: boolean;
+  address: TAdrress;
+};
 
 const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
   // State responsável por armazenar os dados do formulario
@@ -81,8 +100,6 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
   const handleValidate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(inputs.cnpj);
-
     // Validando os dados
     if (!inputs.cnpj || inputs.cnpj.trim().length !== 14 || !inputs.active) {
       toast.error("O CNPJ informado é inválido!");
@@ -93,7 +110,8 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
     if (!inputs.email || inputs.email.trim().length < 11)
       return setErrors({ ...errors, email: true });
 
-    if (!inputs.password) return setErrors({ ...errors, password: true });
+    if (!validateRegex(inputs.password, regex.passwordStrong))
+      return setErrors({ ...errors, password: true });
 
     if (inputs.password !== inputs.confirmPassword)
       return setErrors({ ...errors, confirmPassword: true });
@@ -300,6 +318,7 @@ const FormRegister: React.FC<Props> = ({ handleSubmit }) => {
           value={inputs.password}
           type="password"
           error={errors.password}
+          errorMessage="Senha inválida!"
           handleOnChange={handleOnChange}
           onFocus={() => {
             setErrors({ ...errors, password: false });

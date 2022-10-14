@@ -1,21 +1,20 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import { autenticate } from "../authSlice";
 
 // Service
 import authService from "../../services/apiDevSkills/company/authService";
+import { TCompanyRegister } from "../../types/devskills/company/TCompanyRegister";
 
 const user = JSON.parse(localStorage.getItem("user")!);
 
-export interface IAuthCompany {
+export interface ICompany {
   user: any;
   error: any;
-  success: boolean;
+  success: any;
   loading: boolean;
 }
 
-const initialState: IAuthCompany = {
+const initialState: ICompany = {
   user: user ? user : null,
   error: null,
   success: false,
@@ -24,22 +23,20 @@ const initialState: IAuthCompany = {
 
 // Cadastro e login da Company
 export const register = createAsyncThunk(
-  "authCompany/register",
-  async (user: any, thunkAPI) => {
+  "company/register",
+  async (company: TCompanyRegister, thunkAPI) => {
     // Chamando o service responsável por cadastrar a Company
-    const data = await authService.register(user);
+    const data = await authService.register(company);
 
     // Validando a resposta do servidor
     if (data.error) {
       return thunkAPI.rejectWithValue(data.error);
     }
 
-    // Atualizando o Redux de autenticação
-    const dispatch = useDispatch<any>();
-    dispatch(autenticate({ user: data, type: "DEV" }));
+    if (data.message) return thunkAPI.fulfillWithValue(data.message);
 
-    // Retornando o usuário cadastrado
-    return data;
+    // AJUSTAR COM A NATHALIA
+    if (data.newCompany) return thunkAPI.fulfillWithValue("Cadastrado!");
   }
 );
 
@@ -64,10 +61,9 @@ export const companySlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.error = null;
 
-        state.user = action.payload;
+        state.success = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;

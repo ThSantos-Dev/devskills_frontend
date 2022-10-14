@@ -1,15 +1,20 @@
-// Type
-import { TAdrress } from "../address/TAddress" 
-
 export type TCompanyRegister = {
-  cnpj: number | string;
-  fantasy_name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  telephone: string;
-  active: boolean;
-  accept_terms: boolean;
-  accept_email: boolean;
-  address: TAdrress;
-};
+  cnpj: string;
+  nome_fantasia: string;
+  email:string;
+  senha: string;
+  confirmar_senha: string;
+  permissao_email: boolean;
+
+  ddd: string;
+  numero_telefone: string;
+
+
+  cep: string;
+  logradouro: string;
+  numero_rua: string;
+  complemento?: string;
+  bairro: string;
+  nome_cidade: string;
+  estado: string;
+}

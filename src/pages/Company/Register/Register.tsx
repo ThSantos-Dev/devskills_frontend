@@ -1,21 +1,82 @@
 // Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
-import AuthHeader from '../../../components/shared/Auth/AuthHeader';
+import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 
 // SVG
 import ilustration from "../../../assets/img/comapny-ilustration.svg";
 import FormRegister from "./Form/FormRegister";
 
 // Types
+import { TFormCompanyRegister } from "./Form/FormRegister";
 import { TCompanyRegister } from "../../../types/devskills/company/TCompanyRegister";
-
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../slices/company/companySlice";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 interface Props {}
 
 const Register = (props: Props) => {
+  // Responsável por armazenar o id do Tost para atualizações
+  const [idToast, setIdToast] = useState<any>();
 
-  const handleSubmit = (data: TCompanyRegister) => {
-    console.log(data)
-  }
+  // Resgatando o Redux da Company
+  const { success, error, loading } = useSelector(
+    (state: any) => state.company
+  );
+
+  // Instanciando o dispatch para ter acesso as funções do Redux
+  const dispatch = useDispatch<any>();
+
+  // Responsável por redirecionamentos
+  const navigate = useNavigate();
+
+  const handleSubmit = (data: TFormCompanyRegister) => {
+    const dataFormated: TCompanyRegister = {
+      cnpj: data.cnpj,
+      email: data.email,
+      nome_fantasia: data.fantasy_name,
+      senha: data.password,
+      confirmar_senha: data.confirmPassword,
+      ddd: data.telephone.slice(0, 2),
+      numero_telefone: data.telephone.slice(2),
+      logradouro: data.address.public_place,
+      numero_rua: data.address.number,
+      bairro: data.address.district,
+      complemento: data.address.complement,
+      nome_cidade: data.address.city.name,
+      estado: data.address.state.name,
+      cep: data.address.zip_code,
+      permissao_email: data.accept_email
+    };
+
+    dispatch(register(dataFormated));
+  };
+
+  useEffect(() => {
+    if (loading && !idToast) setIdToast(toast.loading("Processando..."));
+
+    if (success) {
+      toast.update(idToast, {
+        render: "Cadastro realizado com sucesso! Efetue o login.",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      navigate("/company/login");
+    }
+
+    if (error) {
+      toast.update(idToast, {
+        render: error,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
+
+  }, [success, error, loading, idToast, navigate]);
 
   return (
     <div>
