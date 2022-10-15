@@ -14,30 +14,65 @@ import { login } from "../../../slices/authSlice";
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
 
 // Components
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 import ForgotPassword from "../../../components/shared/ForgotPassword/ForgotPassword";
-import FormLogin from "./Form/FormLogin";
+import FormLogin, { TDevLoginData } from "./Form/FormLogin";
 
 const Login = () => {
   // State responsável por controlar a validação da Modal
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  // Monitorando o Redux de autenticação
+  const { loading, error, success } = useSelector((state: any) => state.auth);
+
   // Instanciando o Dispatch para poder utilizar as funções do Redux
   const dispatch = useDispatch<any>();
 
+  // Permite redirecionar o usuário
+  const navigate = useNavigate();
+
   // Realiza a requisição para o servidor
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: any) => {
+  const handleOnSubmit = (
+    e: FormEvent<HTMLFormElement>,
+    data: TDevLoginData
+  ) => {
     e.preventDefault();
 
     // Adiona a função de login
-    dispatch(login({ user: data, type: "DEV" }));
+    dispatch(
+      login({
+        user: { login: data.email, senha: data.password },
+        type: "DEVELOPER",
+      })
+    );
   };
 
   // Realiza a recuperação de senha
-  const handleRetrievePassword = (email: string, type: string) => {
-    // Implementar a lógica de recuperação de senha
-  }
+  // const handleRetrievePassword = (email: string, type: string) => {
+  //   // Implementar a lógica de recuperação de senha
+  // };
+
+  // Responsável por verifica se deu certo
+  useEffect(() => {
+    if (success) {
+      toast.success(success, {
+        autoClose: 3000,
+      });
+
+      navigate("/dev/home");
+    }
+
+    if (error) {
+      toast.error(error, {
+        autoClose: 3000,
+      });
+    }
+  }, [error, navigate, success]);
 
   return (
     <>
@@ -54,6 +89,7 @@ const Login = () => {
           </AuthHeader>
 
           <FormLogin
+            loading={loading}
             handleOnSubmit={handleOnSubmit}
             openModal={() => setShowModal(!showModal)}
           />

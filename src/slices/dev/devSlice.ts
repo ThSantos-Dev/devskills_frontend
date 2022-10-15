@@ -29,7 +29,7 @@ export const register = createAsyncThunk(
   async (user: any, thunkAPI) => {
     // Chamando o service responsável por cadastrar o dev
     const data = await authService.register(user);
-
+    
     // Validando a resposta do servidor
     if (data.error) {
       return thunkAPI.rejectWithValue(data.error);

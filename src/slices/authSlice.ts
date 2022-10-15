@@ -8,15 +8,20 @@ import devAuthService from "../services/apiDevSkills/dev/authService";
 
 export interface IAuth {
   user: any;
-  type: "ADMIN" | "DEV" | "COMPANY" | null;
   error: any;
-  success: boolean;
+  success: any;
   loading: boolean;
 }
 
+// Resgatando o usuário que foi armazenado no localStorage
+const user: {
+  token?: string;
+  id?: string;
+  type?: "DEVELOPER" | "COMPANY" | "ADMIN";
+} = JSON.parse(localStorage.getItem("user") || "{}");
+
 const initialState: IAuth = {
-  user: null,
-  type: null,
+  user: user.token ? user : null,
   error: null,
   success: false,
   loading: false,
@@ -24,13 +29,21 @@ const initialState: IAuth = {
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (data: any, thunkAPI) => {
+  async (
+    data: {
+      user: { login: string; senha: string };
+      type: "DEVELOPER" | "COMPANY" | "ADMIN";
+    },
+    thunkAPI
+  ) => {
     // Verificando qual tipo de usuário está tentando se autenticar
-    const type: "ADMIN" | "DEV" | "COMPANY" = data.type;
+    const type = data.type;
 
-    if (type === "DEV") {
+    if (type === "DEVELOPER") {
       //  Chamando o service responsável por realizar o login do Desenvolvedor
       const res = await devAuthService.login(data.user);
+
+      console.log(res);
 
       // Validando a resposta do servidor
       if (res.error) {
@@ -65,15 +78,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const autenticate = createAsyncThunk(
-  "auth/autenticate",
-  async (data: any, thunkAPI) => {
-    await data;
-
-    return data;
-  }
-);
-
 export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("user");
 });
@@ -88,6 +92,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = false;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -107,9 +112,9 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.error = null;
 
+        state.success = action.payload.message;
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
@@ -118,16 +123,9 @@ export const authSlice = createSlice({
         state.success = false;
 
         state.user = null;
-      })
-      // Autenticate
-      .addCase(autenticate.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        state.success = true;
-
-        state.user = action.payload;
       });
   },
 });
 
+export const { reset } = authSlice.actions;
 export default authSlice.reducer;

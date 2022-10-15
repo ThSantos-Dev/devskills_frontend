@@ -30,8 +30,8 @@ const Login = () => {
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: any) => {
     e.preventDefault();
 
-    // Adiona a função de login
-    dispatch(login({ user: data, type: "DEV" }));
+    // Aciona a função de login
+    dispatch(login({ user: data, type: "COMPANY" }));
   };
 
   return (

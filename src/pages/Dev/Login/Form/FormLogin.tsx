@@ -12,13 +12,19 @@ import Input from "../../../../components/shared/Form/Input/Input";
 
 // Props
 interface Props {
+  loading: boolean;
   openModal():void;
-  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: any): void;
+  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TDevLoginData): void;
 }
 
-const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
+export type TDevLoginData = {
+  email: string;
+  password: string;
+}
+
+const FormLogin: React.FC<Props> = ({ loading, handleOnSubmit, openModal }) => {
   // State para controlar as inputs
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<TDevLoginData>({
     email: "",
     password: "",
   });
@@ -27,6 +33,8 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
   const handleOnChange = (value: string, input: string) => {
     setInputs({ ...inputs, [input]: value });
   };
+
+  
 
   return (
     <form
@@ -39,6 +47,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
           label="Usuário"
           type="email"
           placeholder="E-mail"
+          required
           handleOnChange={handleOnChange}
         />
 
@@ -47,6 +56,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
           label="Senha"
           type="password"
           placeholder="Senha"
+          required
           handleOnChange={handleOnChange}
         />
       </div>
@@ -65,7 +75,12 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
       </div>
 
       <div className={styles.button_container}>
-        <Button size="inherit" text="Entrar" color="solid_white" />
+        <Button
+          size="inherit"
+          text={!loading ? "Entrar" : "Aguarde..."}
+          color="solid_white"
+          disabled={loading}
+        />
         <p>
           Ainda não possui conta? <Link to="/dev/register">Cadastre-se </Link>
         </p>

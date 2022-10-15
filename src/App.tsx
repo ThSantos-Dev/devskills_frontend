@@ -3,30 +3,27 @@ import { useAuth } from "./hooks/useAuth";
 
 
 // Components
-import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { ToastContainer } from 'react-toastify';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 // Pages
-import Home from './pages/Institutional/Home';
-import DevRegister from './pages/Dev/Register/Register';
-import DevLogin from './pages/Dev/Login/Login';
-import CompanyLogin from './pages/Company/Login/Login';
-import CompanyRegister from './pages/Company/Register/Register';
+import CompanyLogin from "./pages/Company/Login/Login";
+import CompanyRegister from "./pages/Company/Register/Register";
+import DevLogin from "./pages/Dev/Login/Login";
+import DevRegister from "./pages/Dev/Register/Register";
+import Home from "./pages/Institutional/Home";
 import RetrievePassword from "./pages/RetrievePassword/RetrievePassword";
 import CreateTest from "./pages/Test/Create/CreateTest";
 
-
 // Notify
-import 'react-toastify/dist/ReactToastify.min.css'
-
+import "react-toastify/dist/ReactToastify.min.css";
 
 const App = () => {
-
   // Utilizando o hook para validar se o usuário está autenticado
-  const {auth, loading} = useAuth()
+  const { auth, loading } = useAuth();
 
-  if(loading) {
-    return <p>Carregando...</p>
+  if (loading) {
+    return <p>Carregando...</p>;
   }
 
   return (
@@ -41,11 +38,11 @@ const App = () => {
         {/* Routes of Dev */}
         <Route
           path="/dev/register"
-          element={!auth ? <DevRegister /> : <Navigate to="/dev/" />}
+          element={!auth ? <DevRegister /> : <Navigate to="/dev/home" />}
         />
         <Route
           path="/dev/login"
-          element={!auth ? <DevLogin /> : <Navigate to="/dev/" />}
+          element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
 
         {/* Routes of Company */}
@@ -53,9 +50,9 @@ const App = () => {
         <Route path="/company/login" element={<CompanyLogin />} />
       </Routes>
 
-      <ToastContainer />
+      <ToastContainer limit={3}/>
     </BrowserRouter>
   );
-}
+};
 
 export default App

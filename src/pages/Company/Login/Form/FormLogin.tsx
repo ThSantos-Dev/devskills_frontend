@@ -16,6 +16,12 @@ interface Props {
   handleOnSubmit(e: FormEvent<HTMLFormElement>, data: any): void;
 }
 
+// Types
+export type TCompanyLoginData = {
+  login: string;
+  senha: string;
+}
+
 const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
   // State para controlar as inputs
   const [inputs, setInputs] = useState({
@@ -39,6 +45,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
           label="Usuário"
           type="email"
           placeholder="E-mail"
+          required
           handleOnChange={handleOnChange}
         />
 
@@ -47,6 +54,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
           label="Senha"
           type="password"
           placeholder="Senha"
+          required
           handleOnChange={handleOnChange}
         />
       </div>
@@ -65,7 +73,7 @@ const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
       <div className={styles.button_container}>
         <Button size="inherit" text="Entrar" color="solid_white" />
         <p>
-          Ainda não possui conta? <Link to="/register">Cadastre-se </Link>
+          Ainda não possui conta? <Link to="/company/register">Cadastre-se </Link>
         </p>
       </div>
     </form>
