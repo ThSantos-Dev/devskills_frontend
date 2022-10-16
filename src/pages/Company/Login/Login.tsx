@@ -1,11 +1,12 @@
 // Styles
 import styles from "./Login.module.css";
 
-// React
-import { FormEvent, useState } from "react";
+// Hooks
+import { FormEvent, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // Reducer
 import { login } from "../../../slices/authSlice";
@@ -13,26 +14,60 @@ import { login } from "../../../slices/authSlice";
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
 
+// Notificações
+import { toast } from "react-toastify";
+
 // Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 import ForgotPassword from "../../../components/shared/ForgotPassword/ForgotPassword";
-import FormLogin from "./Form/FormLogin";
+import FormLogin, { TCompanyLoginData } from "./Form/FormLogin";
 
 const Login = () => {
   // State responsável por controlar a validação da Modal
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  // Recebendo os estados do Redux de autenticação
+  const {error, success } = useSelector((state: any) => state.auth)
+
   // Instanciando o Dispatch para poder utilizar as funções do Redux
   const dispatch = useDispatch<any>();
 
+  // Permite redirecionar o usuário
+  const navigate = useNavigate()
+
   // Realiza a requisição para o servidor
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>, data: any) => {
+  const handleOnSubmit = (
+    e: FormEvent<HTMLFormElement>,
+    data: TCompanyLoginData
+  ) => {
     e.preventDefault();
 
     // Aciona a função de login
-    dispatch(login({ user: data, type: "COMPANY" }));
+    dispatch(
+      login({
+        user: { login: data.email, senha: data.password },
+        type: "COMPANY",
+      })
+    );
   };
+
+  // Responsável por verifica se deu certo
+  useEffect(() => {
+    if (success) {
+      toast.success(success, {
+        autoClose: 3000,
+      });
+
+      navigate("/company/home");
+    }
+
+    if (error) {
+      toast.error(error, {
+        autoClose: 3000,
+      });
+    }
+  }, [error, navigate, success]);
 
   return (
     <>
@@ -48,13 +83,19 @@ const Login = () => {
             </p>
           </AuthHeader>
 
-          <FormLogin handleOnSubmit={handleOnSubmit} openModal={() => setShowModal(!showModal)}/>
+          <FormLogin
+            handleOnSubmit={handleOnSubmit}
+            openModal={() => setShowModal(!showModal)}
+          />
         </div>
       </AuthContainer>
 
       {showModal && (
         <div className={styles.modal}>
-          <ForgotPassword closeModal={() => setShowModal(!showModal)} type="DEV"/>
+          <ForgotPassword
+            closeModal={() => setShowModal(!showModal)}
+            type="COMPANY"
+          />
         </div>
       )}
     </>

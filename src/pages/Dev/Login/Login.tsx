@@ -99,7 +99,7 @@ const Login = () => {
       {showModal && (
         <div className={styles.modal}>
           <ForgotPassword
-            type="DEV"
+            type="DEVELOPER"
             closeModal={() => setShowModal(!showModal)}
           />
         </div>

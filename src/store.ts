@@ -14,6 +14,7 @@ import companyReducer from "./slices/company/companySlice";
 import genderSlice from "./slices/common/genderSlice";
 import stackSlice from "./slices/common/stackSlice";
 import skillSlice from "./slices/common/skillSlice";
+import forgotPasswordSlice from "./slices/common/forgotPasswordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     // Recursos
     gender: genderSlice,
     stack: stackSlice,
-    skill: skillSlice
+    skill: skillSlice,
+    forgotPassword: forgotPasswordSlice,
   },
 });

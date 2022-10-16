@@ -12,19 +12,19 @@ import Input from "../../../../components/shared/Form/Input/Input";
 
 // Props
 interface Props {
-  openModal():void;
-  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: any): void;
+  openModal(): void;
+  handleOnSubmit(e: FormEvent<HTMLFormElement>, data: TCompanyLoginData): void;
 }
 
 // Types
 export type TCompanyLoginData = {
-  login: string;
-  senha: string;
+  email: string;
+  password: string;
 }
 
 const FormLogin: React.FC<Props> = ({ handleOnSubmit, openModal }) => {
   // State para controlar as inputs
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<TCompanyLoginData>({
     email: "",
     password: "",
   });
