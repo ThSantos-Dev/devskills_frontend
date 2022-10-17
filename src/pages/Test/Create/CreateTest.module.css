@@ -3,6 +3,8 @@
   padding: 40px;
   padding-bottom: 200rem;
 
+  margin: auto;
+
   color: var(--color-white-text);
 }
 
@@ -36,13 +38,248 @@
 }
 
 .description_container textarea {
-    height: 200px;
-    resize: none;
+  height: 100px;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
 
-.description_container > .link_github > .icon {
-    height: 2rem !important;
-    width: 2rem;
+.description_container textarea:hover,
+.description_container textarea:focus {
+  outline: 1px solid var(--color-white-text);
+}
+
+.description_container textarea::placeholder {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+}
+
+.link_github {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.link_github svg {
+  width: 2rem;
+}
+
+.link_github input {
+  height: 34px;
+  border: 1px solid var(--color-white-text);
+  background: transparent;
+  width: 100%;
+  border-radius: 5px;
+  padding-left: 15px;
+}
+
+/* Config */
+.config_container {
+  height: 450px;
+  display: flex;
+  background-color: var(--dark-container);
+  margin-top: 20px;
+  padding: 30px 35px;
+  flex-direction: column;
+  gap: 15px;
+
+  border-radius: 20px;
+}
+
+.config {
+  display: flex;
+  height: 100%;
+
+  gap: 80px;
+}
+
+.time_container {
+  flex: 3;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.duration_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duration_container span {
+  flex: 2;
+}
+
+.skills_container {
+  flex: 5;
+
+  border-left: 1px solid var(--color-white-text);
+  padding-left: 110px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Questions */
+.questions_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 15px;
+
+  padding-top: 20px;
+}
+
+.aside_bar {
+  width: 50px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  position: sticky;
+  top: 8rem;
+
+  border-radius: 10px;
+  background: var(--dark-container);
+}
+
+.icon svg {
+  font-size: 1.75rem;
+  color: var(--color-white-text);
+}
+
+.questions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.question_container {
+  padding: 35px 20px;
+  background: var(--dark-container);
+  border-radius: 20px;
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.question_header {
+  display: flex;
+  justify-content: space-between;
+  gap: 45px;
+  align-items: center;
+}
+
+.question_header .text {
+  flex: 4;
+  border-bottom: 1px solid var(--color-white-text);
+  padding-bottom: 8px;
+}
+
+.question_header .text input {
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: clamp(1rem, 5vw, 1.2rem);
+  color: var(--color-white-text);
+}
+
+.icon {
+  font-size: 2rem;
+  color: var(--color-white-text);
+  cursor: pointer;
+}
+
+.question_body {
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.question_body p {
+  max-width: 740px;
+  border-bottom: dotted 2px;
+  padding-bottom: 8px;
+}
+
+.question_footer {
+  align-self: end;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid var(--color-white-text);
+  padding-top: 20px;
+  font-size: 25px;
+}
+
+.alternative_container {
+  display: flex;
+  gap: 4rem;
+
+  transition: all 0.3s;
+}
+
+.alternative_container:hover input {
+  background-color: rgba(200, 200, 200, 0.372);
+}
+
+.alternative {
+  flex: 1;
+  border-bottom: 1px solid;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.alternative input {
+  width: 100%;
+
+  color: var(--color-white-text);
+  font-size: clamp(1rem, 5vw, 1.2rem);
+
+  padding-bottom: 2px;
+
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.alternative .icon svg {
+  font-size: 1.2rem;
+}
+
+.alternative.correct .icon svg {
+  color: #fff;
+}
+
+.alternative button {
+  width: 1.7rem;
+  height: 1.7rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 0;
+
+  border-radius: 100%;
+  outline: 2px solid var(--color-white-text);
+  background-color: transparent;
+}
+
+.alternative.correct button {
+  width: 2rem;
+  height: 2rem;
+  
+  outline: 0;
+  background-color: #1bb69d !important;
 }
 
 /* Switch */
@@ -76,7 +313,7 @@
 }
 
 .switch_container input:checked + label {
-  background: #bada55;
+  background: #1bb69d;
 }
 
 .switch_container input:checked + label:after {
