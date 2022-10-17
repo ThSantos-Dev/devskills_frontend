@@ -1,5 +1,9 @@
 // Hooks
-import { useState } from "react";
+import { useState, FormEvent, useEffect } from "react";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { sendEmail } from "../../../slices/common/forgotPasswordSlice";
 
 // Styles
 import styles from "./ForgotPassword.module.css";
@@ -9,11 +13,10 @@ import Button from "../Form/Button/Button";
 import Input from "../Form/Input/Input";
 
 // Icons
-import { FormEvent, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+
+// Notiy
 import { toast } from "react-toastify";
-import { sendEmail } from "../../../slices/common/forgotPasswordSlice";
 
 interface Props {
   type: "DEVELOPER" | "COMPANY" | "ADMIN";

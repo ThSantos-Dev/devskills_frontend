@@ -1,19 +1,26 @@
+// Hooks
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../slices/company/companySlice";
+
 // Components
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
+import FormRegister from "./Form/FormRegister";
 
 // SVG
 import ilustration from "../../../assets/img/comapny-ilustration.svg";
-import FormRegister from "./Form/FormRegister";
+
+// Notificações
+import { toast } from "react-toastify";
 
 // Types
 import { TFormCompanyRegister } from "./Form/FormRegister";
 import { TCompanyRegister } from "../../../types/devskills/company/TCompanyRegister";
-import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../../slices/company/companySlice";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+
 interface Props {}
 
 const Register = (props: Props) => {
