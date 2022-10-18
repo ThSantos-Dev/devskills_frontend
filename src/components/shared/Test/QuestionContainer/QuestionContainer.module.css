@@ -1,0 +1,38 @@
+.questions_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 15px;
+
+  padding-top: 20px;
+}
+
+
+.aside_bar {
+  width: 50px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  position: sticky;
+  top: 8rem;
+
+  border-radius: 10px;
+  background: var(--dark-container);
+}
+
+.icon svg {
+  font-size: 1.75rem;
+  color: var(--color-white-text);
+}
+
+.questions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+} 

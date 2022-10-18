@@ -9,7 +9,7 @@ interface Props {}
 const TestDescription = (props: Props) => {
   return (
     <div className={styles.description_container}>
-      <input type="text" name="" value="Título da prova" />
+      <input type="text" name="" placeholder="Título da prova" />
 
       {/* <QuillEditor /> */}
       <textarea name="" id="" placeholder="Insira uma descrição"></textarea>
