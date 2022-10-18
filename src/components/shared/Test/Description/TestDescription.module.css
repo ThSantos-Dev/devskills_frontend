@@ -1,0 +1,63 @@
+.description_container {
+  min-height: 230px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 40px;
+
+  padding: 40px 35px;
+
+  border-radius: 20px;
+  background-color: var(--dark-container);
+}
+
+.description_container > input {
+  font-size: clamp(1.6rem, 8vw, 2rem);
+  color: var(--color-white-text);
+
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.description_container > input:hover,
+.description_container > input:focus {
+  outline: 1px solid var(--color-white-text);
+}
+
+.description_container textarea {
+  height: 100px;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.description_container textarea:hover,
+.description_container textarea:focus {
+  outline: 1px solid var(--color-white-text);
+}
+
+.description_container textarea::placeholder {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+}
+
+.link_github {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.link_github svg {
+  font-size: 2rem;
+}
+
+.link_github input {
+  height: 34px;
+  border: 1px solid var(--color-white-text);
+  background: transparent;
+  width: 100%;
+  border-radius: 5px;
+  padding-left: 15px;
+}

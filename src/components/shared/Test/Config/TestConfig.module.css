@@ -1,0 +1,44 @@
+.config_container {
+  display: flex;
+  background-color: var(--dark-container);
+  margin-top: 20px;
+  padding: 30px 35px;
+  flex-direction: column;
+  gap: 15px;
+
+  border-radius: 20px;
+}
+
+.config {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+
+  gap: 80px;
+}
+
+.time_container {
+  flex: 3;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.duration_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duration_container span {
+  flex: 2;
+}
+
+.skills_container {
+  flex: 5;
+
+  border-left: 1px solid var(--color-white-text);
+  padding-left: clamp(40px, 5vw, 110px);
+  display: flex;
+  flex-direction: column;
+}
