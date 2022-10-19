@@ -23,11 +23,11 @@ const CreateTest = (props: Props) => {
       <TestConfig />
 
       <QuestionContainer>
-        <TestQuestion type="DISSERTATIVA"/>
+        <TestQuestion setType="DISSERTATIVA"/>
 
-        <TestQuestion type="UNICA_ESCOLHA" />
+        <TestQuestion setType="UNICA_ESCOLHA" />
 
-        <TestQuestion type="MULTIPLA_ESCOLHA" />
+        <TestQuestion setType="DISSERTATIVA" />
 
       </QuestionContainer>
     </form>

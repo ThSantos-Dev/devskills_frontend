@@ -6,7 +6,7 @@ import React, { ChangeEvent, useRef, useState } from "react";
 
 // Icons
 import { BiImageAdd } from "react-icons/bi";
-import { BsCircle, BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 
 // Components
@@ -14,18 +14,23 @@ import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
 interface Props {
-  type: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
+  setType?: "DISSERTATIVA" | "UNICA_ESCOLHA";
 }
 
-const TestQuestion: React.FC<Props> = ({ type }) => {
+const TestQuestion: React.FC<Props> = ({ setType }) => {
   // State para armazenar a imagem caso haja
   const [image, setImage] = useState<any>({ file: null, url: null });
 
   // State que controla a exibição das opções de imagem
   const [showImageOptions, setShowImageOptions] = useState<boolean>(false);
 
-  // Reeferencia a input de imagem
+  const [selected, setSelected] = useState<
+    "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA"
+  >(setType ? setType : "DISSERTATIVA");
+
+  // Reeferencias aos elementos
   const inputFileEl = useRef<HTMLInputElement>(null);
+  const checkboxSwitchEl = useRef<HTMLInputElement>(null);
 
   // Função que lida com a foto
   const handleOnChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,9 +66,9 @@ const TestQuestion: React.FC<Props> = ({ type }) => {
             name="type_question"
             options={[
               { label: "dissertativa", value: "DISSERTATIVA" },
-              { label: "opcoes", value: "UNICA_ESCOLHA" },
+              { label: "opções", value: "UNICA_ESCOLHA" },
             ]}
-            handleOnChange={(value) => console.log(value)}
+            handleOnChange={(value) => setSelected(value.value)}
           />
         </div>
       </div>
@@ -103,43 +108,42 @@ const TestQuestion: React.FC<Props> = ({ type }) => {
 
               <img
                 src={URL.createObjectURL(image.file)}
+                alt={image.file.name}
                 onClick={() => setShowImageOptions(false)}
               />
             </div>
           </>
         )}
 
-        {type === "DISSERTATIVA" && (
+        {selected === "DISSERTATIVA" && (
           <p>A resposta será no formato dissertativo...</p>
         )}
 
-        {type === "UNICA_ESCOLHA" && (
+        {selected === "UNICA_ESCOLHA" && (
           <>
             {[1, 2, 3].map((x: any) => (
-              <TestAlternative type={type} />
+              <TestAlternative type={selected} />
             ))}
+
+            <div className={styles.new_alternative}>
+              <span className={styles.circle}></span>
+              <p>Adicionar alternativa</p>
+            </div>
           </>
         )}
 
-        {type === "MULTIPLA_ESCOLHA" && (
+        {selected === "MULTIPLA_ESCOLHA" && (
           <>
-            {[1, 2, 3, 4].map((x: any) => (
-              <TestAlternative type={type} />
+            {[1, 2, 3].map((x: any) => (
+              <TestAlternative type={selected} />
             ))}
+
+            <div className={styles.new_alternative}>
+              <span className={styles.multiples}></span>
+              <p>Adicionar alternativa</p>
+            </div>
           </>
         )}
-      </div>
-
-      <div className={styles.outhers_container}>
-        <div className={styles.icon}>
-          <BsCircle  />
-        </div>
-
-        <div className={styles.options}>
-          <p>
-            <span>Adicionar opção</span> ou <span>adicionar "Outro"</span>
-          </p>
-        </div>
       </div>
 
       <div className={styles.question_footer}>
@@ -147,13 +151,22 @@ const TestQuestion: React.FC<Props> = ({ type }) => {
           <BsFillTrashFill />
         </div>
 
-        {type !== "DISSERTATIVA" && (
+        {selected !== "DISSERTATIVA" && (
           <div className={styles.switch_container}>
             <span>Várias opções</span>
 
             <div className={styles.switch}>
-              <input type="checkbox" id="switch" />
-              <label htmlFor="switch">Toggle</label>
+              <input type="checkbox" ref={checkboxSwitchEl} />
+              <label
+                onClick={() => {
+                  checkboxSwitchEl.current!.checked =
+                    !checkboxSwitchEl.current!.checked;
+
+                    setSelected(checkboxSwitchEl.current!.checked ? "MULTIPLA_ESCOLHA" : "UNICA_ESCOLHA" )
+                }}
+              >
+                Toggle
+              </label>
             </div>
           </div>
         )}
