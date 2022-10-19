@@ -19,6 +19,7 @@ interface Props {
   isLoading?: boolean;
   errorMessage?: string;
   noOptionsMessage?: string;
+  defaultValue?: any
   closeMenuOnSelect?: boolean;
   options: SingleValue<{ label: string; value: string }>[];
   handleOnChange(value: any, input: string): void;
@@ -34,6 +35,7 @@ const SelectCustom: React.FC<Props> = ({
   error = false,
   errorMessage = "Selecione uma opção",
   label,
+  defaultValue,
   closeMenuOnSelect = true,
   noOptionsMessage = "Não há mais opções disponíveis.",
   handleOnChange,
@@ -127,7 +129,7 @@ const SelectCustom: React.FC<Props> = ({
         options={options}
         styles={selectStyles}
         placeholder={placeholder}
-      
+        defaultValue={defaultValue}
         closeMenuOnSelect={closeMenuOnSelect}
         noOptionsMessage={() => noOptionsMessage}
         onFocus={() => handleOnFocus && handleOnFocus()}

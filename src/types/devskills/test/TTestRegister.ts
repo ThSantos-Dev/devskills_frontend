@@ -1,4 +1,4 @@
-export type TestData = {
+export type TTestRegister = {
   titulo: string;
   id_criador: number;
   tipo_criador: "ADMIN" | "EMPRESA";
@@ -28,5 +28,5 @@ export type TQuestion = {
 
 export type TOption = {
   texto: string;
-  correto: boolean;
+  correto: boolean | null;
 }

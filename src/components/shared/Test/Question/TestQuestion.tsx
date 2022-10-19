@@ -68,6 +68,11 @@ const TestQuestion: React.FC<Props> = ({ setType }) => {
               { label: "dissertativa", value: "DISSERTATIVA" },
               { label: "opções", value: "UNICA_ESCOLHA" },
             ]}
+            defaultValue={
+              selected !== "DISSERTATIVA"
+                ? { label: "opções", value: "UNICA_ESCOLHA" }
+                : { label: "dissertativa", value: "DISSERTATIVA" }
+            }
             handleOnChange={(value) => setSelected(value.value)}
           />
         </div>
@@ -162,7 +167,11 @@ const TestQuestion: React.FC<Props> = ({ setType }) => {
                   checkboxSwitchEl.current!.checked =
                     !checkboxSwitchEl.current!.checked;
 
-                    setSelected(checkboxSwitchEl.current!.checked ? "MULTIPLA_ESCOLHA" : "UNICA_ESCOLHA" )
+                  setSelected(
+                    checkboxSwitchEl.current!.checked
+                      ? "MULTIPLA_ESCOLHA"
+                      : "UNICA_ESCOLHA"
+                  );
                 }}
               >
                 Toggle

@@ -1,16 +1,35 @@
-import React from 'react'
+import React from "react";
 
-import styles from './TestConfig.module.css'
-import Accept from './../../Accept/Accept';
-import SelectCustom from './../../Form/Select/SelectCustom';
-import { useState } from 'react';
-import Input from '../../Form/Input/Input';
+import styles from "./TestConfig.module.css";
+import Accept from "./../../Accept/Accept";
+import SelectCustom from "./../../Form/Select/SelectCustom";
+import { useState } from "react";
+import Input from "../../Form/Input/Input";
 
-interface Props {}
+interface Props {
+  getData(data: {
+    data_inicio: string;
+    data_fim: string;
+    duracao: string;
+  }): void;
+}
 
-const TestConfig = (props: Props) => {
+const TestConfig: React.FC<Props> = ({ getData }) => {
   // Controla a exibição do relógio para definir duração
   const [showTime, setShowTime] = useState<boolean>(false);
+
+  // Armazena os dados das inputs
+  const [inputs, setInputs] = useState({
+    data_inicio: "",
+    data_fim: "",
+    duracao: "",
+  })
+
+  // Altera os dados das inputs
+  const handleOnChange = (value: string, name: string) => {
+    getData({ ...inputs, [name]: value });
+    setInputs({...inputs, [name]: value})
+  }
 
   return (
     <div className={styles.config_container}>
@@ -18,22 +37,33 @@ const TestConfig = (props: Props) => {
 
       <div className={styles.config}>
         <div className={styles.time_container}>
-          <Input name="initial_date" label="Data de início" type="date" />
-          <Input name="end_date" label="Data de término" type="date" />
+          <Input
+            name="data_inicio"
+            label="Data de início"
+            type="date"
+            value={inputs.data_inicio}
+            handleOnChange={handleOnChange}
+          />
+          <Input
+            name="data_fim"
+            label="Data de término"
+            type="date"
+            value={inputs.data_fim}
+            handleOnChange={handleOnChange}
+          />
 
-          <Accept
-            name="duration"
-            handleOnClick={(checked) => setShowTime(checked)}
-          >
+          <Accept name="" handleOnClick={(checked) => setShowTime(checked)}>
             <p>Definir duração de tempo</p>
           </Accept>
           {showTime && (
             <div className={styles.duration_container}>
               <Input
-                name="time_duration"
+                name="duracao"
                 type="time"
                 step={2}
-                placeholder="hh:mm:ss"
+                handleOnChange={handleOnChange}
+
+                value={inputs.duracao}
               />
 
               <span>(HH:MM:SS)</span>
@@ -65,6 +95,6 @@ const TestConfig = (props: Props) => {
       </div>
     </div>
   );
-}
+};
 
-export default TestConfig
+export default TestConfig;
