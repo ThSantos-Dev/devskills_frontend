@@ -33,61 +33,7 @@ const CreateTest = (props: Props) => {
     ids_habilidades: [1, 2, 3],
     ids_stacks: [2, 3, 5],
 
-    questoes: [
-      {
-        enunciado: "",
-        id_tipo: 2,
-        tipo: "DISSERTATIVA",
-      },
-      {
-        enunciado: "",
-        id_tipo: 2,
-        tipo: "UNICA_ESCOLHA",
-
-        alternativas: [
-          {
-            texto: "teste1",
-            correto: null,
-          },
-          {
-            texto: "teste2",
-            correto: null,
-          },
-          {
-            texto: "teste3",
-            correto: null,
-          },
-        ],
-      },
-      {
-        enunciado: "",
-        id_tipo: 2,
-        tipo: "MULTIPLA_ESCOLHA",
-
-        alternativas: [
-          {
-            texto: "",
-            correto: false,
-          },
-          {
-            texto: "",
-            correto: true,
-          },
-          {
-            texto: "",
-            correto: null,
-          },
-          {
-            texto: "",
-            correto: false,
-          },
-          {
-            texto: "",
-            correto: null,
-          },
-        ],
-      },
-    ],
+    questoes: [],
   });
 
   // Resgata os dadosda descrição
@@ -119,6 +65,14 @@ const CreateTest = (props: Props) => {
     });
   };
 
+  // Remove uma questão
+  const deleteQuestion = (index: any) => {
+    const fields = testData;
+    fields.questoes!.splice(index, 1);
+
+    setTestData({ ...fields });
+  };
+
   // Adiciona uma alternativa em uma questão
   const addAternativeToSpecificOption = (index: any) => {
     const fields = testData;
@@ -130,10 +84,6 @@ const CreateTest = (props: Props) => {
     indexQuestion: any,
     indexAlternative: any
   ) => {
-    console.log(
-      testData.questoes![indexQuestion].alternativas![indexAlternative]
-    );
-
     const fields = testData;
     fields.questoes![indexQuestion]!.alternativas!.splice(indexAlternative, 1);
     console.log(testData);
@@ -162,22 +112,104 @@ const CreateTest = (props: Props) => {
     value: boolean | null,
     indexQuestion: any,
     indexAlternative: any,
-    type?: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA" 
+    type?: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA"
   ) => {
     const fields = testData;
 
     if (type === "UNICA_ESCOLHA") {
+      if (value === null) {
+        const correctAlternatives = fields.questoes![
+          indexQuestion
+        ].alternativas!.filter((alternative) => alternative.correto === true);
 
-      if(typeof value === "boolean") 
+        if (correctAlternatives.length === 1) {
+          // Alterando o valor de todas as alternativas para null
+          const alternatives = fields.questoes![
+            indexQuestion
+          ].alternativas!.map((alternative) => {
+            return { texto: alternative.texto, correto: null };
+          });
 
-      fields.questoes![indexQuestion].alternativas![indexAlternative] = {
-        texto:
-          fields.questoes![indexQuestion].alternativas![indexAlternative].texto,
-        correto: value,
-      };
+          // Atribuindo ao fields
+          fields.questoes![indexQuestion].alternativas = alternatives;
+        } else {
+          // Atribuindo ao fields
+          fields.questoes![indexQuestion].alternativas![indexAlternative] = {
+            texto:
+              fields.questoes![indexQuestion].alternativas![indexAlternative]
+                .texto,
+            correto: false,
+          };
+        }
+      } else if (value) {
+        // Alterando o valor de todas as alternativas para false
+        const alternatives = fields.questoes![indexQuestion].alternativas!.map(
+          (alternative) => {
+            return { texto: alternative.texto, correto: false };
+          }
+        );
+
+        // Atribuindo ao fields
+        fields.questoes![indexQuestion].alternativas = alternatives;
+
+        // Atribuindo o value passado para a alternativa especifica
+        fields.questoes![indexQuestion].alternativas![indexAlternative] = {
+          texto:
+            fields.questoes![indexQuestion].alternativas![indexAlternative]
+              .texto,
+          correto: value,
+        };
+      }
     } else {
-      
+      if (value === null) {
+        const correctAlternatives = fields.questoes![
+          indexQuestion
+        ].alternativas!.filter((alternative) => alternative.correto === true);
+
+        if (correctAlternatives.length === 1) {
+          // Alterando o valor de todas as alternativas para null
+          const alternatives = fields.questoes![
+            indexQuestion
+          ].alternativas!.map((alternative) => {
+            return { texto: alternative.texto, correto: null };
+          });
+
+          // Atribuindo ao fields
+          fields.questoes![indexQuestion].alternativas = alternatives;
+        } else {
+          // Atribuindo ao fields
+          fields.questoes![indexQuestion].alternativas![indexAlternative] = {
+            texto:
+              fields.questoes![indexQuestion].alternativas![indexAlternative]
+                .texto,
+            correto: false,
+          };
+        }
+      } else if (value) {
+        // Alterando o valor de todas as alternativas para false
+        const alternatives = fields.questoes![indexQuestion].alternativas!.map(
+          (alternative) => {
+            return {
+              texto: alternative.texto,
+              correto: alternative.correto ? alternative.correto : false,
+            };
+          }
+        );
+
+        // Atribuindo ao fields
+        fields.questoes![indexQuestion].alternativas = alternatives;
+
+        // Atribuindo o value passado para a alternativa especifica
+        fields.questoes![indexQuestion].alternativas![indexAlternative] = {
+          texto:
+            fields.questoes![indexQuestion].alternativas![indexAlternative]
+              .texto,
+          correto: value,
+        };
+      }
     }
+
+    console.log(fields.questoes![indexQuestion].alternativas);
 
     setTestData({ ...fields });
   };
@@ -202,6 +234,7 @@ const CreateTest = (props: Props) => {
               setType={question.tipo}
               key={index}
               options={question.alternativas && question.alternativas}
+              handleOnDelete={() => deleteQuestion(index)}
               addAlternative={() => addAternativeToSpecificOption(index)}
               deleteQuestionAlternative={deleteQuestionAlternative}
               handleOnChangeAlternative={handleOnChangeAlternative}

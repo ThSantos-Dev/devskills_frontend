@@ -15,10 +15,12 @@ import { TOption } from "../../../../types/devskills/test/TTestRegister";
 import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
+
 interface Props {
   setType?: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
   options?: TOption[];
   indexQuestion: any;
+  handleOnDelete(): void;
   addAlternative(index: any): void;
   deleteQuestionAlternative(indexParent: any, indexOpton: any): void;
   handleOnChangeAlternative(
@@ -29,7 +31,8 @@ interface Props {
   handleOnSelectAlternativeCorrect(
     value: boolean | null,
     indexQuestion: any,
-    indexAlternative: any
+    indexAlternative: any,
+    type?: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA"
   ): void;
 }
 
@@ -37,6 +40,7 @@ const TestQuestion: React.FC<Props> = ({
   setType,
   options,
   indexQuestion,
+  handleOnDelete,
   addAlternative,
   deleteQuestionAlternative,
   handleOnChangeAlternative,
@@ -178,7 +182,8 @@ const TestQuestion: React.FC<Props> = ({
                     handleOnSelectAlternativeCorrect(
                       selected,
                       indexQuestion,
-                      indexAlternative
+                      indexAlternative,
+                      "UNICA_ESCOLHA"
                     )
                   }
                 />
@@ -211,7 +216,8 @@ const TestQuestion: React.FC<Props> = ({
                     handleOnSelectAlternativeCorrect(
                       selected,
                       indexQuestion,
-                      indexAlternative
+                      indexAlternative,
+                      "MULTIPLA_ESCOLHA"
                     )
                   }
                   handleOnDelete={() =>
@@ -229,7 +235,7 @@ const TestQuestion: React.FC<Props> = ({
       </div>
 
       <div className={styles.question_footer}>
-        <div className={styles.icon}>
+        <div className={styles.icon} onClick={handleOnDelete}>
           <BsFillTrashFill />
         </div>
 
