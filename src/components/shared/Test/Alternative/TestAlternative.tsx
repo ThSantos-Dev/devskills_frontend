@@ -12,6 +12,9 @@ interface Props {
   handleOnDelete(): void;
 }
 
+
+
+
 const TestAlternative: React.FC<Props> = ({
   type,
   text,

@@ -25,11 +25,16 @@
 }
 
 .question_header .text input {
-  background: transparent;
-  outline: none;
-  border: none;
+  width: 100%;
+  
   font-size: clamp(1rem, 5vw, 1.2rem);
   color: var(--color-white-text);
+
+  padding-right: 10px;
+
+  outline: none;
+  border: none;
+  background: transparent;
 }
 
 .icon {

@@ -11,15 +11,24 @@ import { IoMdMore } from "react-icons/io";
 
 // Components
 import { useEffect } from "react";
-import { TOption } from "../../../../types/devskills/test/TTestRegister";
+
 import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
-
 interface Props {
   setType?: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
-  options?: TOption[];
+  options?: TOptionData[];
   indexQuestion: any;
+  initialData?: {
+    enunciado: string;
+    image?: { url?: string; file?: File | null };
+  };
+  handleOnChange(data: {
+    enunciado: string;
+    image?: { file: File | null; url: string };
+
+    tipo: "DISSERTATIVA" | "MULTIPLA_ESCOLHA" | "UNICA_ESCOLHA";
+  }): void;
   handleOnDelete(): void;
   addAlternative(index: any): void;
   deleteQuestionAlternative(indexParent: any, indexOpton: any): void;
@@ -36,19 +45,31 @@ interface Props {
   ): void;
 }
 
+export type TQuestionData = {
+  enunciado: string;
+  image?: { file: File | null; url: string };
+
+  tipo: "DISSERTATIVA" | "MULTIPLA_ESCOLHA" | "UNICA_ESCOLHA";
+  alternativas?: TOptionData[];
+};
+
+export type TOptionData = {
+  texto: string;
+  correto: boolean | null;
+};
+
 const TestQuestion: React.FC<Props> = ({
   setType,
   options,
+  initialData,
   indexQuestion,
+  handleOnChange,
   handleOnDelete,
   addAlternative,
   deleteQuestionAlternative,
   handleOnChangeAlternative,
   handleOnSelectAlternativeCorrect,
 }) => {
-  // State para armazenar a imagem caso haja
-  const [image, setImage] = useState<any>({ file: null, url: null });
-
   // State que controla a exibição das opções de imagem
   const [showImageOptions, setShowImageOptions] = useState<boolean>(false);
 
@@ -66,7 +87,14 @@ const TestQuestion: React.FC<Props> = ({
 
     if (!e.target.files) return;
 
-    setImage({ ...image, file: e.target.files[0] });
+    handleOnChange({
+      enunciado: initialData?.enunciado ? initialData.enunciado : "",
+      image: {
+        file: e.target.files[0],
+        url: initialData?.image?.url ? initialData?.image?.url : "",
+      },
+      tipo: selected,
+    });
   };
 
   useEffect(() => {
@@ -78,7 +106,14 @@ const TestQuestion: React.FC<Props> = ({
     <div className={styles.question_container}>
       <div className={styles.question_header}>
         <div className={styles.text}>
-          <input type="text" placeholder="Pergunta" />
+          <input
+            type="text"
+            placeholder="Pergunta"
+            value={initialData && initialData.enunciado}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleOnChange({ enunciado: e.target.value, tipo: selected })
+            }
+          />
         </div>
 
         <div className={styles.icon}>
@@ -112,7 +147,7 @@ const TestQuestion: React.FC<Props> = ({
       </div>
 
       <div className={styles.question_body}>
-        {image.file && (
+        {initialData && initialData?.image?.file && (
           <>
             <div className={styles.image_container}>
               <span className={styles.icon}>
@@ -135,7 +170,13 @@ const TestQuestion: React.FC<Props> = ({
                     className={styles.image_option}
                     onClick={() => {
                       inputFileEl.current!.value = "";
-                      setImage({ file: "", url: null });
+                      handleOnChange({
+                        enunciado: initialData.enunciado
+                          ? initialData.enunciado
+                          : "",
+                        image: { file: null, url: "" },
+                        tipo: selected,
+                      });
                       setShowImageOptions(false);
                     }}
                   >
@@ -145,8 +186,11 @@ const TestQuestion: React.FC<Props> = ({
               )}
 
               <img
-                src={URL.createObjectURL(image.file)}
-                alt={image.file.name}
+                src={
+                  initialData?.image.url ||
+                  URL.createObjectURL(initialData.image.file)
+                }
+                alt={initialData.image.file.name}
                 onClick={() => setShowImageOptions(false)}
               />
             </div>
@@ -177,8 +221,6 @@ const TestQuestion: React.FC<Props> = ({
                     deleteQuestionAlternative(indexQuestion, indexAlternative)
                   }
                   handleOnSelect={(selected) =>
-                    
-
                     handleOnSelectAlternativeCorrect(
                       selected,
                       indexQuestion,
