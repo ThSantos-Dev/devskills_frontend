@@ -10,14 +10,38 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 
 // Components
+import { useEffect } from "react";
+import { TOption } from "../../../../types/devskills/test/TTestRegister";
 import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
 interface Props {
-  setType?: "DISSERTATIVA" | "UNICA_ESCOLHA";
+  setType?: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
+  options?: TOption[];
+  indexQuestion: any;
+  addAlternative(index: any): void;
+  deleteQuestionAlternative(indexParent: any, indexOpton: any): void;
+  handleOnChangeAlternative(
+    value: string,
+    indexQuestion: any,
+    indexAlternative: any
+  ): void;
+  handleOnSelectAlternativeCorrect(
+    value: boolean | null,
+    indexQuestion: any,
+    indexAlternative: any
+  ): void;
 }
 
-const TestQuestion: React.FC<Props> = ({ setType }) => {
+const TestQuestion: React.FC<Props> = ({
+  setType,
+  options,
+  indexQuestion,
+  addAlternative,
+  deleteQuestionAlternative,
+  handleOnChangeAlternative,
+  handleOnSelectAlternativeCorrect,
+}) => {
   // State para armazenar a imagem caso haja
   const [image, setImage] = useState<any>({ file: null, url: null });
 
@@ -41,11 +65,16 @@ const TestQuestion: React.FC<Props> = ({ setType }) => {
     setImage({ ...image, file: e.target.files[0] });
   };
 
+  useEffect(() => {
+    if (setType === "MULTIPLA_ESCOLHA")
+      checkboxSwitchEl.current!.checked = true;
+  }, [setType]);
+
   return (
     <div className={styles.question_container}>
       <div className={styles.question_header}>
         <div className={styles.text}>
-          <input type="text" value="Pergunta" />
+          <input type="text" placeholder="Pergunta" />
         </div>
 
         <div className={styles.icon}>
@@ -126,11 +155,36 @@ const TestQuestion: React.FC<Props> = ({ setType }) => {
 
         {selected === "UNICA_ESCOLHA" && (
           <>
-            {[1, 2, 3].map((x: any) => (
-              <TestAlternative type={selected} />
-            ))}
+            {options &&
+              options.map((option, indexAlternative) => (
+                <TestAlternative
+                  key={indexAlternative}
+                  type={selected}
+                  checked={option.correto}
+                  text={option.texto}
+                  handleOnChange={(value) =>
+                    handleOnChangeAlternative(
+                      value,
+                      indexQuestion,
+                      indexAlternative
+                    )
+                  }
+                  handleOnDelete={() =>
+                    deleteQuestionAlternative(indexQuestion, indexAlternative)
+                  }
+                  handleOnSelect={(selected) =>
+                    
 
-            <div className={styles.new_alternative}>
+                    handleOnSelectAlternativeCorrect(
+                      selected,
+                      indexQuestion,
+                      indexAlternative
+                    )
+                  }
+                />
+              ))}
+
+            <div className={styles.new_alternative} onClick={addAlternative}>
               <span className={styles.circle}></span>
               <p>Adicionar alternativa</p>
             </div>
@@ -139,11 +193,34 @@ const TestQuestion: React.FC<Props> = ({ setType }) => {
 
         {selected === "MULTIPLA_ESCOLHA" && (
           <>
-            {[1, 2, 3].map((x: any) => (
-              <TestAlternative type={selected} />
-            ))}
+            {options &&
+              options.map((option, indexAlternative) => (
+                <TestAlternative
+                  key={indexAlternative}
+                  type={selected}
+                  checked={option.correto}
+                  text={option.texto}
+                  handleOnChange={(value) =>
+                    handleOnChangeAlternative(
+                      value,
+                      indexQuestion,
+                      indexAlternative
+                    )
+                  }
+                  handleOnSelect={(selected) =>
+                    handleOnSelectAlternativeCorrect(
+                      selected,
+                      indexQuestion,
+                      indexAlternative
+                    )
+                  }
+                  handleOnDelete={() =>
+                    deleteQuestionAlternative(indexQuestion, indexAlternative)
+                  }
+                />
+              ))}
 
-            <div className={styles.new_alternative}>
+            <div className={styles.new_alternative} onClick={addAlternative}>
               <span className={styles.multiples}></span>
               <p>Adicionar alternativa</p>
             </div>

@@ -24,6 +24,10 @@
   border-bottom: 1px solid;
 }
 
+.alternative svg {
+  color: #fff;
+}
+
 .alternative input {
   width: 100%;
 
@@ -70,18 +74,8 @@
   border-radius: 4px;
 }
 
-.alternative_container.single .alternative.correct button {
-  width: 2rem;
-  height: 2rem;
-
-  outline: 0;
-  background-color: #1bb69d !important;
-}
-
+.alternative_container.single .alternative.correct button,
 .alternative_container.multiples .alternative.correct button {
-  width: 2rem;
-  height: 2rem;
-
-  outline: 0;
+  outline-color: #1bb69d;
   background-color: #1bb69d !important;
 }

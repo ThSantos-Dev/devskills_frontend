@@ -1,27 +1,27 @@
-import React, { useState, ChangeEvent, MouseEvent } from "react";
+import React, { ChangeEvent, MouseEvent, useState } from "react";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 import styles from "./TestAlternative.module.css";
 
 interface Props {
   type: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
-  checked?: boolean | null;
-  handleOnSelect?(selected: boolean): void;
-  handleOnChange?(value: string | boolean): void;
-  handleOnDelete?(): void;
+  checked: boolean | null;
+  text?: string;
+  handleOnSelect(selected: boolean | null): void;
+  handleOnChange(value: any): void;
+  handleOnDelete(): void;
 }
 
 const TestAlternative: React.FC<Props> = ({
   type,
-  checked = null,
-  handleOnSelect = () => {},
-  handleOnChange = () => {},
-  handleOnDelete = () => {},
+  text,
+  checked,
+  handleOnSelect,
+  handleOnChange,
+  handleOnDelete,
 }) => {
   // Controla a passagem do mouse sobre o marcador da alternativa
   const [showCheckedIcon, setShowCheckedIcon] = useState<boolean>(false);
-
-  const [selected, setSelected] = useState<boolean | null>(checked);
 
   return (
     <div
@@ -31,33 +31,43 @@ const TestAlternative: React.FC<Props> = ({
     >
       <div
         className={`${styles.alternative}  ${
-          checked ? styles.correct : styles.uncorrect
+          typeof checked === "boolean"
+            ? checked
+              ? styles.correct
+              : styles.uncorrect
+            : ""
         }`}
       >
         <button
           className={styles.icon}
           onClick={(e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
-            handleOnSelect(!selected);
-            setSelected(!selected);
+
+            if (checked) {
+              return handleOnSelect(null);
+            }
+
+            handleOnSelect(!checked);
           }}
           onMouseEnter={() => !checked && setShowCheckedIcon(true)}
           onMouseLeave={() => !checked && setShowCheckedIcon(false)}
         >
-          {checked === null ? null : checked ? (
+          {typeof checked !== "boolean" ? null : checked ? (
             <AiOutlineCheck />
           ) : (
             <AiOutlineClose />
           )}
 
-          {showCheckedIcon && <AiOutlineCheck />}
+          {showCheckedIcon && checked === null && <AiOutlineCheck />}
         </button>
         <input
           type="text"
+          value={text}
           placeholder="Insira uma alternativa..."
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleOnChange(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            console.log(e.target.value);
+            handleOnChange(e.target.value);
+          }}
         />
       </div>
 
