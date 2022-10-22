@@ -2,7 +2,7 @@
 import styles from "./TestQuestion.module.css";
 
 // Hooks
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState, useEffect } from "react";
 
 // Icons
 import { BiImageAdd } from "react-icons/bi";
@@ -10,8 +10,6 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 
 // Components
-import { useEffect } from "react";
-
 import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
@@ -101,6 +99,7 @@ const TestQuestion: React.FC<Props> = ({
     if (setType === "MULTIPLA_ESCOLHA")
       checkboxSwitchEl.current!.checked = true;
   }, [setType]);
+  
 
   return (
     <div className={styles.question_container}>
@@ -111,7 +110,16 @@ const TestQuestion: React.FC<Props> = ({
             placeholder="Pergunta"
             value={initialData && initialData.enunciado}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleOnChange({ enunciado: e.target.value, tipo: selected })
+              handleOnChange({
+                enunciado: e.target.value,
+                image: {
+                  file: initialData?.image?.file
+                    ? initialData?.image?.file
+                    : null,
+                  url: initialData?.image?.url ? initialData.image?.url : "",
+                },
+                tipo: selected,
+              })
             }
           />
         </div>
@@ -141,7 +149,19 @@ const TestQuestion: React.FC<Props> = ({
                 ? { label: "opções", value: "UNICA_ESCOLHA" }
                 : { label: "dissertativa", value: "DISSERTATIVA" }
             }
-            handleOnChange={(value) => setSelected(value.value)}
+            handleOnChange={(value) => {
+              setSelected(value.value);
+              handleOnChange({
+                enunciado: initialData?.enunciado ? initialData.enunciado : "",
+                image: {
+                  file: initialData?.image?.file
+                    ? initialData.image.file
+                    : null,
+                  url: initialData?.image?.url ? initialData?.image?.url : "",
+                },
+                tipo: value.value,
+              });
+            }}
           />
         </div>
       </div>
@@ -297,6 +317,8 @@ const TestQuestion: React.FC<Props> = ({
                       ? "MULTIPLA_ESCOLHA"
                       : "UNICA_ESCOLHA"
                   );
+
+                  
                 }}
               >
                 Toggle

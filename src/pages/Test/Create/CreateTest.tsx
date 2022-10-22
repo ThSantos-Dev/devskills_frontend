@@ -2,6 +2,7 @@
 import styles from "./CreateTest.module.css";
 
 // Hooks
+import uuid from "react-uuid";
 
 // Components
 import { FormEvent, useState } from "react";
@@ -12,9 +13,10 @@ import TestQuestion, {
 } from "../../../components/shared/Test/Question/TestQuestion";
 import QuestionContainer from "../../../components/shared/Test/QuestionContainer/QuestionContainer";
 
-import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useEffect } from "react";
 import { storage } from "../../../firebase";
+import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
 
 // Interface
 interface Props {}
@@ -53,6 +55,10 @@ const CreateTest = (props: Props) => {
     ],
   });
 
+  // Controla a quantidade de imagens a serem enviadas para o firebase
+  const [totalImagesToUpload, setTotalImagesToUpload] = useState<number>(0);
+  const [totalImagesUploaded, setTotalImagesUploaded] = useState<number>(0);
+
   // Resgata os dadosda descrição
   const getDesciptionData = (data: {
     titulo: string;
@@ -89,6 +95,7 @@ const CreateTest = (props: Props) => {
   const deleteQuestion = (index: any) => {
     const fields = testData;
     fields.questoes!.splice(index, 1);
+    console.log(fields.questoes);
 
     setTestData({ ...fields });
   };
@@ -109,7 +116,6 @@ const CreateTest = (props: Props) => {
       enunciado: data.enunciado,
       tipo: data.tipo,
     };
-    console.log(fields.questoes![index]);
     setTestData({ ...fields });
   };
 
@@ -127,7 +133,7 @@ const CreateTest = (props: Props) => {
   ) => {
     const fields = testData;
     fields.questoes![indexQuestion]!.alternativas!.splice(indexAlternative, 1);
-    console.log(testData);
+
 
     setTestData({ ...fields });
   };
@@ -144,8 +150,6 @@ const CreateTest = (props: Props) => {
       correto:
         fields.questoes![indexQuestion].alternativas![indexAlternative].correto,
     };
-
-    console.log(fields.questoes![indexQuestion].alternativas);
 
     setTestData({ ...fields });
   };
@@ -252,40 +256,82 @@ const CreateTest = (props: Props) => {
       }
     }
 
-    console.log(fields.questoes![indexQuestion].alternativas);
-
     setTestData({ ...fields });
   };
 
+  //
   const handleOnSubmit = () => {
     const fields = testData;
 
-    // Realizando o upload das imagens para o firebase
-    fields.questoes!.map((questao, index) => {
-      if (!questao.image?.file) return;
-
-      const storageRef = ref(storage, `images/${questao.image.file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, questao.image.file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(progress + "%");
-        },
-        (error) => {
-          alert(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            fields.questoes![index].image!.url = url;
-            console.log(url);
-          });
-        }
+    if (
+      fields.questoes!.filter((questao) => (questao.image?.file ? true : false))
+        .length > 0
+    ) {
+      setTotalImagesToUpload(
+        fields.questoes!.filter((questao) =>
+          questao.image?.file ? true : false
+        ).length
       );
-    });
+
+      // Realizando o upload das imagens para o firebase
+      fields.questoes!.forEach((questao, index) => {
+        if (!questao.image?.file) return;
+
+        const storageRef = ref(storage, `images/${uuid()}`);
+        const uploadTask = uploadBytesResumable(storageRef, questao.image.file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(progress + "%");
+          },
+          (error) => {
+            alert(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              fields.questoes![index].image!.url = url;
+              setTotalImagesUploaded(totalImagesUploaded + 1);
+            });
+          }
+        );
+      });
+
+      return;
+    }
+
+    const testDataFormated: TTestRegister = {
+      ...fields,
+      id_criador: 1,
+      id_tipo: 1,
+      tipo_criador: "ADMIN",
+      tipo: "TEORICA",
+      questoes: fields.questoes!.map((questao) => ({
+        enunciado: questao.enunciado,
+        id_tipo: 2,
+        tipo: questao.tipo,
+        alternativas: questao.alternativas,
+        img_url: questao.image?.url || "",
+      })),
+    };
+
+    console.log("handle:", testDataFormated);
   };
+
+  // Zera os state
+  useEffect(() => {
+    setTotalImagesToUpload(0);
+    setTotalImagesUploaded(0);
+  }, []);
+
+  // Monitora se todas as imagens foram enviadas para o firebase
+  useEffect(() => {
+    if (totalImagesToUpload === totalImagesUploaded + 1) {
+      console.log("useEffect:", testData);
+    }
+  }, [testData, totalImagesToUpload, totalImagesUploaded]);
 
   return (
     <form

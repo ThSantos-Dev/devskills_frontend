@@ -5,7 +5,6 @@ import Accept from "./../../Accept/Accept";
 import SelectCustom from "./../../Form/Select/SelectCustom";
 import { useState } from "react";
 import Input from "../../Form/Input/Input";
-import { optionCSS } from "react-select/dist/declarations/src/components/Option";
 import { useDispatch, useSelector } from "react-redux";
 import { TSkill } from "../../../../types/devskills/skill/TSkill";
 import { getAll as getAllSkills } from "../../../../slices/common/skillSlice";
@@ -64,15 +63,8 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     (state: any) => state.skill
   );
 
-  // State responsável por armazenar os dados dos selects
-  const [selects, setSelects] = useState<TSkillsData>({
-    stacks: [],
-    skills: [],
-  });
-
   // State responsável por armazenar as skills filtradas pela stack
   const [skillFiltered, setSkillFiltered] = useState<TSkill[]>([]);
-
 
   // Buscando as Stacks e Skills
   useEffect(() => {
@@ -82,7 +74,7 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
 
   // Altera os dados das inputs
   const handleOnChange = (
-    value: string | { label: string; value: string }[],
+    value: string | TSelected[],
     name: string
   ) => {
     if (name !== 'stacks' && name !== 'skills') {
@@ -96,26 +88,26 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     if (name === "skills") {
       getData({
         ...inputs,
-        ids_habilidades: value.map((option: { label: string; value: string }) =>
+        ids_habilidades: value.map((option: TSelected) =>
           parseInt(option.value)
         ),
       });
       setInputs({
         ...inputs,
-        ids_habilidades: value.map((option: { label: string; value: string }) =>
+        ids_habilidades: value.map((option: TSelected) =>
           parseInt(option.value)
         ),
       });
     } else if (name === "stacks") {
       getData({
         ...inputs,
-        ids_stacks: value.map((option: { label: string; value: string }) =>
+        ids_stacks: value.map((option: TSelected) =>
           parseInt(option.value)
         ),
       });
       setInputs({
         ...inputs,
-        ids_stacks: value.map((option: { label: string; value: string }) =>
+        ids_stacks: value.map((option: TSelected) =>
           parseInt(option.value)
         ),
       });
@@ -136,7 +128,6 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     });
 
     setSkillFiltered(filtered);
-    console.log(filtered);
   }, [inputs.ids_stacks, skills, stacks]);
 
   return (
@@ -168,12 +159,23 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
               <Input
                 name="duracao"
                 type="time"
-                step={2}
                 handleOnChange={handleOnChange}
                 value={inputs.duracao}
+                min={"00:15:00"}
               />
 
-              <span>(HH:MM:SS)</span>
+              <span>
+                {inputs.duracao && (
+                  <>
+                    O desenvolvedor terá{" "}
+                    {parseInt(inputs.duracao.split(":")[0]) > 1
+                      ? `${inputs.duracao.split(":")[0]} horas e `
+                      : `${inputs.duracao.split(":")[0]} hora e `}
+                    {inputs.duracao.split(":")[1]} minutos para realizar o
+                    teste.
+                  </>
+                )}
+              </span>
             </div>
           )}
         </div>
@@ -187,6 +189,7 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             label="Stacks"
             isMulti={true}
             closeMenuOnSelect={false}
+            isLoading={stackLoading}
           />
 
           <SelectCustom
@@ -197,6 +200,7 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             label="Tecnologias"
             isMulti={true}
             closeMenuOnSelect={false}
+            isLoading={skillLoading}
           />
         </div>
       </div>

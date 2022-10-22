@@ -68,7 +68,6 @@ const TestAlternative: React.FC<Props> = ({
           value={text}
           placeholder="Insira uma alternativa..."
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            console.log(e.target.value);
             handleOnChange(e.target.value);
           }}
         />
