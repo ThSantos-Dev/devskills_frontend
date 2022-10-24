@@ -14,7 +14,7 @@ export default class TestService {
             if(res.status !== 201)
                 return {error: await res.json()}
 
-            return {message: "Prova cadastrada   com sucesso!"}
+            return {message: "Prova cadastrada com sucesso!"}
 
         } catch (error) {
             console.error(error)

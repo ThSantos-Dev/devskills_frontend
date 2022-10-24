@@ -17,6 +17,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useEffect } from "react";
 import { storage } from "../../../firebase";
 import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
+import { useDispatch } from "react-redux";
+import { create } from "../../../slices/common/testSlice";
 
 // Interface
 interface Props {}
@@ -52,12 +54,15 @@ const CreateTest = (props: Props) => {
 
     questoes: [
       { enunciado: "Minha questão", tipo: "DISSERTATIVA", alternativas: [] },
+      { enunciado:  "Teste", tipo: "MULTIPLA_ESCOLHA", alternativas: [] },
     ],
   });
 
   // Controla a quantidade de imagens a serem enviadas para o firebase
   const [totalImagesToUpload, setTotalImagesToUpload] = useState<number>(0);
   const [totalImagesUploaded, setTotalImagesUploaded] = useState<number>(0);
+
+  const dispatch = useDispatch<any>()
 
   // Resgata os dadosda descrição
   const getDesciptionData = (data: {
@@ -122,7 +127,7 @@ const CreateTest = (props: Props) => {
   // Adiciona uma alternativa em uma questão
   const addAternativeToSpecificOption = (index: any) => {
     const fields = testData;
-    fields.questoes![index]!.alternativas!.push({ texto: "", correto: null });
+    fields.questoes![index]!.alternativas!.push({ texto: "", correta: null });
     setTestData({ ...fields });
   };
 
@@ -147,8 +152,8 @@ const CreateTest = (props: Props) => {
     const fields = testData;
     fields.questoes![indexQuestion].alternativas![indexAlternative] = {
       texto: value,
-      correto:
-        fields.questoes![indexQuestion].alternativas![indexAlternative].correto,
+      correta:
+        fields.questoes![indexQuestion].alternativas![indexAlternative].correta,
     };
 
     setTestData({ ...fields });
@@ -167,14 +172,14 @@ const CreateTest = (props: Props) => {
       if (value === null) {
         const correctAlternatives = fields.questoes![
           indexQuestion
-        ].alternativas!.filter((alternative) => alternative.correto === true);
+        ].alternativas!.filter((alternative) => alternative.correta === true);
 
         if (correctAlternatives.length === 1) {
           // Alterando o valor de todas as alternativas para null
           const alternatives = fields.questoes![
             indexQuestion
           ].alternativas!.map((alternative) => {
-            return { texto: alternative.texto, correto: null };
+            return { texto: alternative.texto, correta: null };
           });
 
           // Atribuindo ao fields
@@ -185,14 +190,14 @@ const CreateTest = (props: Props) => {
             texto:
               fields.questoes![indexQuestion].alternativas![indexAlternative]
                 .texto,
-            correto: false,
+            correta: false,
           };
         }
       } else if (value) {
         // Alterando o valor de todas as alternativas para false
         const alternatives = fields.questoes![indexQuestion].alternativas!.map(
           (alternative) => {
-            return { texto: alternative.texto, correto: false };
+            return { texto: alternative.texto, correta: false };
           }
         );
 
@@ -204,21 +209,21 @@ const CreateTest = (props: Props) => {
           texto:
             fields.questoes![indexQuestion].alternativas![indexAlternative]
               .texto,
-          correto: value,
+          correta: value,
         };
       }
     } else {
       if (value === null) {
         const correctAlternatives = fields.questoes![
           indexQuestion
-        ].alternativas!.filter((alternative) => alternative.correto === true);
+        ].alternativas!.filter((alternative) => alternative.correta === true);
 
         if (correctAlternatives.length === 1) {
           // Alterando o valor de todas as alternativas para null
           const alternatives = fields.questoes![
             indexQuestion
           ].alternativas!.map((alternative) => {
-            return { texto: alternative.texto, correto: null };
+            return { texto: alternative.texto, correta: null };
           });
 
           // Atribuindo ao fields
@@ -229,7 +234,7 @@ const CreateTest = (props: Props) => {
             texto:
               fields.questoes![indexQuestion].alternativas![indexAlternative]
                 .texto,
-            correto: false,
+            correta: false,
           };
         }
       } else if (value) {
@@ -238,7 +243,7 @@ const CreateTest = (props: Props) => {
           (alternative) => {
             return {
               texto: alternative.texto,
-              correto: alternative.correto ? alternative.correto : false,
+              correta: alternative.correta ? alternative.correta : false,
             };
           }
         );
@@ -251,7 +256,7 @@ const CreateTest = (props: Props) => {
           texto:
             fields.questoes![indexQuestion].alternativas![indexAlternative]
               .texto,
-          correto: value,
+          correta: value,
         };
       }
     }
@@ -289,11 +294,12 @@ const CreateTest = (props: Props) => {
             console.log(progress + "%");
           },
           (error) => {
-            alert(error);
+            alert(error); 
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-              fields.questoes![index].image!.url = url;
+               fields.questoes![index].image!.url = url;
+               setTestData(fields)
               setTotalImagesUploaded(totalImagesUploaded + 1);
             });
           }
@@ -301,6 +307,8 @@ const CreateTest = (props: Props) => {
       });
 
       return;
+    
+    
     }
 
     const testDataFormated: TTestRegister = {
@@ -308,17 +316,18 @@ const CreateTest = (props: Props) => {
       id_criador: 1,
       id_tipo: 1,
       tipo_criador: "ADMIN",
-      tipo: "TEORICA",
+      tipo_prova: "TEORICA",
       questoes: fields.questoes!.map((questao) => ({
         enunciado: questao.enunciado,
-        id_tipo: 2,
+        id_tipo: 1,
         tipo: questao.tipo,
         alternativas: questao.alternativas,
         img_url: questao.image?.url || "",
       })),
+      duracao: fields.duracao + ":00",
     };
 
-    console.log("handle:", testDataFormated);
+    dispatch(create(testDataFormated));
   };
 
   // Zera os state
@@ -329,8 +338,24 @@ const CreateTest = (props: Props) => {
 
   // Monitora se todas as imagens foram enviadas para o firebase
   useEffect(() => {
-    if (totalImagesToUpload === totalImagesUploaded + 1) {
-      console.log("useEffect:", testData);
+    if (totalImagesToUpload > 0 && totalImagesToUpload === totalImagesUploaded ) {
+      
+    const testDataFormated: TTestRegister = {
+      ...testData,
+      id_criador: 1,
+      id_tipo: 1,
+      tipo_criador: "ADMIN",
+      tipo_prova: "TEORICA",
+      questoes: testData.questoes!.map((questao) => ({
+        enunciado: questao.enunciado,
+        id_tipo: 2,
+        tipo: questao.tipo,
+        alternativas: questao.alternativas,
+        img_url: questao.image?.url || "",
+      })),
+    };
+
+    dispatch(create(testDataFormated));
     }
   }, [testData, totalImagesToUpload, totalImagesUploaded]);
 

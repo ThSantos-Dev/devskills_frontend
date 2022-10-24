@@ -70,7 +70,23 @@ const RealizeTest: React.FC<Props> = () => {
           />
         </div>
 
-        <div className={styles.alternatives_container}>
+        <div className={`${styles.alternatives_container}  ${styles.single}`}>
+          <div className={styles.alternative}>
+            <button></button>
+            <p>Alternativa 1</p>
+          </div>
+          <div className={styles.alternative}>
+            <button></button>
+            <p>Alternativa 1</p>
+          </div>
+          <div className={`${styles.alternative} ${styles.selected}`}>
+            <button>
+              <AiOutlineCheck />
+            </button>
+            <p>Alternativa 1</p>
+          </div>
+        </div>
+        <div className={`${styles.alternatives_container}  ${styles.multiple}`}>
           <div className={styles.alternative}>
             <button></button>
             <p>Alternativa 1</p>

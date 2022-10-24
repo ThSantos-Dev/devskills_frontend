@@ -88,26 +88,36 @@
     width: 100%;
 }
 
-.alternatives_container {
+.alternatives_container     {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 .alternative {
     display: flex;
     gap: 15px;
     padding: 20px 20px;
+    align-items: center;
 
-    transition: all 0.3s;
+    background-color: var(--dark-container);
 }
 
-.alternative button {
+.alternatives_container.single .alternative button {
     width: 40px;
     height: 40px;
 
     border-radius: 100%;
-    border-color: var(--color-white-text);
+    border: 1px solid var(--color-white-text);
     background-color: transparent;
+}
+
+.alternatives_container.multiple .alternative button {
+
+}
+
+.alternative button {
+    all: unset;
 }
 
 .alternative p {
@@ -117,4 +127,5 @@
 .alternative:hover {
     outline: 1px solid var(--color-white-text);
     cursor: pointer;
+    background-color: #1b1b60;
 }

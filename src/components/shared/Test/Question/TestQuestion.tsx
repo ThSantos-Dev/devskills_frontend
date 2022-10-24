@@ -17,6 +17,8 @@ interface Props {
   setType?: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
   options?: TOptionData[];
   indexQuestion: any;
+  error?: boolean;
+  errorMessage?: string | null;
   initialData?: {
     enunciado: string;
     image?: { url?: string; file?: File | null };
@@ -53,7 +55,7 @@ export type TQuestionData = {
 
 export type TOptionData = {
   texto: string;
-  correto: boolean | null;
+  correta: boolean | null;
 };
 
 const TestQuestion: React.FC<Props> = ({
@@ -61,6 +63,8 @@ const TestQuestion: React.FC<Props> = ({
   options,
   initialData,
   indexQuestion,
+  error = false,
+  errorMessage = "Este campo é de preenchimento obrigatório!",
   handleOnChange,
   handleOnDelete,
   addAlternative,
@@ -99,7 +103,6 @@ const TestQuestion: React.FC<Props> = ({
     if (setType === "MULTIPLA_ESCOLHA")
       checkboxSwitchEl.current!.checked = true;
   }, [setType]);
-  
 
   return (
     <div className={styles.question_container}>
@@ -121,7 +124,10 @@ const TestQuestion: React.FC<Props> = ({
                 tipo: selected,
               })
             }
+            autoFocus={error ? true : false}
           />
+
+          {error && <span>{errorMessage}</span>}
         </div>
 
         <div className={styles.icon}>
@@ -228,7 +234,7 @@ const TestQuestion: React.FC<Props> = ({
                 <TestAlternative
                   key={indexAlternative}
                   type={selected}
-                  checked={option.correto}
+                  checked={option.correta}
                   text={option.texto}
                   handleOnChange={(value) =>
                     handleOnChangeAlternative(
@@ -265,7 +271,7 @@ const TestQuestion: React.FC<Props> = ({
                 <TestAlternative
                   key={indexAlternative}
                   type={selected}
-                  checked={option.correto}
+                  checked={option.correta}
                   text={option.texto}
                   handleOnChange={(value) =>
                     handleOnChangeAlternative(
@@ -317,8 +323,6 @@ const TestQuestion: React.FC<Props> = ({
                       ? "MULTIPLA_ESCOLHA"
                       : "UNICA_ESCOLHA"
                   );
-
-                  
                 }}
               >
                 Toggle

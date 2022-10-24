@@ -10,7 +10,7 @@ export type TTestRegister = {
   duracao: string;
 
   id_tipo?: number,
-  tipo: "TEORICA" | "PRATICA";
+  tipo_prova: "TEORICA" | "PRATICA";
   ids_habilidades: number[];
   ids_stacks: number[];
 
@@ -28,5 +28,5 @@ export type TQuestion = {
 
 export type TOption = {
   texto: string;
-  correto: boolean | null;
+  correta: boolean | null;
 }
