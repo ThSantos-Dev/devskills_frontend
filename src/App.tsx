@@ -1,7 +1,6 @@
 // Hooks
 import { useAuth } from "./hooks/useAuth";
 
-
 // Components
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -17,6 +16,7 @@ import CreateTest from "./pages/Test/Create/CreateTest";
 
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
+import RealizeTest from './pages/Dev/Test/Realize/RealizeTest';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -44,15 +44,16 @@ const App = () => {
           path="/dev/login"
           element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
+        <Route path="/dev/test/realize/:id" element={<RealizeTest />}/>
 
         {/* Routes of Company */}
         <Route path="/company/register" element={<CompanyRegister />} />
         <Route path="/company/login" element={<CompanyLogin />} />
       </Routes>
 
-      <ToastContainer limit={3}/>
+      <ToastContainer limit={3} />
     </BrowserRouter>
   );
 };
 
-export default App
+export default App;

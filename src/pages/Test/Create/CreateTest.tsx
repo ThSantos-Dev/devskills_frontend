@@ -259,10 +259,11 @@ const CreateTest = (props: Props) => {
     setTestData({ ...fields });
   };
 
-  //
+  // Resgata todos os dados e formata para enviar ao slice
   const handleOnSubmit = () => {
     const fields = testData;
 
+    // Verificando se há imagens nas questões para fazer o upload
     if (
       fields.questoes!.filter((questao) => (questao.image?.file ? true : false))
         .length > 0

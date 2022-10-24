@@ -15,6 +15,7 @@ import genderSlice from "./slices/common/genderSlice";
 import stackSlice from "./slices/common/stackSlice";
 import skillSlice from "./slices/common/skillSlice";
 import forgotPasswordSlice from "./slices/common/forgotPasswordSlice";
+import testSlice from "./slices/common/testSlice";
 
 export const store = configureStore({
   reducer: {
@@ -27,5 +28,6 @@ export const store = configureStore({
     stack: stackSlice,
     skill: skillSlice,
     forgotPassword: forgotPasswordSlice,
+    test: testSlice,
   },
 });
