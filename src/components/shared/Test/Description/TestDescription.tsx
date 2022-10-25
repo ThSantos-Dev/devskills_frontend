@@ -33,6 +33,7 @@ const TestDescription: React.FC<Props> = ({ getData }) => {
         type="text"
         name="titulo"
         value={inputs.titulo}
+        required
         placeholder="Título da prova"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           handleOnChange(e.target.value, e.target.name)

@@ -141,6 +141,8 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             label="Data de início"
             type="date"
             value={inputs.data_inicio}
+            required
+            min={Date.now()}
             handleOnChange={handleOnChange}
           />
           <Input
@@ -148,6 +150,7 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             label="Data de término"
             type="date"
             value={inputs.data_fim}
+            required
             handleOnChange={handleOnChange}
           />
 
@@ -159,6 +162,7 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
               <Input
                 name="duracao"
                 type="time"
+                required
                 handleOnChange={handleOnChange}
                 value={inputs.duracao}
                 min={"00:15:00"}

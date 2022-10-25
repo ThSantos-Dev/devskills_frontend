@@ -19,14 +19,18 @@ import { storage } from "../../../firebase";
 import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
 import { useDispatch } from "react-redux";
 import { create } from "../../../slices/common/testSlice";
+import Button from "../../../components/shared/Form/Button/Button";
 
 // Interface
 interface Props {}
 
-type TTestRegisterData = {
+export type TTestRegisterData = {
   titulo: string;
   descricao: string;
   link_repositorio?: string;
+
+
+  tipo_prova: "TEORICA" | "PRATICA";
 
   data_inicio: string;
   data_fim: string;
@@ -45,16 +49,17 @@ const CreateTest = (props: Props) => {
     descricao: "",
     link_repositorio: "",
 
+    tipo_prova: "TEORICA",
+
     data_inicio: "",
     data_fim: "",
     duracao: "",
 
-    ids_habilidades: [1, 2, 3],
-    ids_stacks: [2, 3, 5],
+    ids_habilidades: [],
+    ids_stacks: [],
 
     questoes: [
-      { enunciado: "Minha questão", tipo: "DISSERTATIVA", alternativas: [] },
-      { enunciado:  "Teste", tipo: "MULTIPLA_ESCOLHA", alternativas: [] },
+      {enunciado: "", tipo: "DISSERTATIVA", image: {file: null, url: ""}, alternativas: []}
     ],
   });
 
@@ -62,7 +67,7 @@ const CreateTest = (props: Props) => {
   const [totalImagesToUpload, setTotalImagesToUpload] = useState<number>(0);
   const [totalImagesUploaded, setTotalImagesUploaded] = useState<number>(0);
 
-  const dispatch = useDispatch<any>()
+  const dispatch = useDispatch<any>();
 
   // Resgata os dadosda descrição
   const getDesciptionData = (data: {
@@ -138,7 +143,6 @@ const CreateTest = (props: Props) => {
   ) => {
     const fields = testData;
     fields.questoes![indexQuestion]!.alternativas!.splice(indexAlternative, 1);
-
 
     setTestData({ ...fields });
   };
@@ -286,40 +290,42 @@ const CreateTest = (props: Props) => {
         const storageRef = ref(storage, `images/${uuid()}`);
         const uploadTask = uploadBytesResumable(storageRef, questao.image.file);
 
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(progress + "%");
-          },
-          (error) => {
-            alert(error); 
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-               fields.questoes![index].image!.url = url;
-               setTestData(fields)
-              setTotalImagesUploaded(totalImagesUploaded + 1);
-            });
-          }
-        );
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(progress + "%");
+            },
+            (error) => {
+              alert(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                fields.questoes![index].image!.url = url;
+                setTestData(fields);
+                setTotalImagesUploaded(totalImagesUploaded + 1);
+              });
+            }
+          );
+
       });
 
       return;
-    
-    
     }
 
-    const testDataFormated: TTestRegister = {
+    const testDataFormated = {
       ...fields,
-      id_criador: 1,
-      id_tipo: 1,
-      tipo_criador: "ADMIN",
-      tipo_prova: "TEORICA",
+
+      tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
       questoes: fields.questoes!.map((questao) => ({
         enunciado: questao.enunciado,
-        id_tipo: 1,
+        id_tipo:
+          questao.tipo === "DISSERTATIVA"
+            ? 3
+            : questao.tipo === "MULTIPLA_ESCOLHA"
+            ? 1
+            : 2,
         tipo: questao.tipo,
         alternativas: questao.alternativas,
         img_url: questao.image?.url || "",
@@ -330,6 +336,19 @@ const CreateTest = (props: Props) => {
     dispatch(create(testDataFormated));
   };
 
+  const [errors, setErrors] = useState<any>({
+    titulo: "",
+    descricao: "",
+    link_repositorio: "",
+
+    data_inicio: "",
+    data_fim: "",
+    duracao: "",
+
+    ids_habilidades: [],
+    ids_stacks: [],
+  });
+
   // Zera os state
   useEffect(() => {
     setTotalImagesToUpload(0);
@@ -338,24 +357,36 @@ const CreateTest = (props: Props) => {
 
   // Monitora se todas as imagens foram enviadas para o firebase
   useEffect(() => {
-    if (totalImagesToUpload > 0 && totalImagesToUpload === totalImagesUploaded ) {
-      
-    const testDataFormated: TTestRegister = {
+
+    console.log(totalImagesToUpload, totalImagesUploaded)
+
+    if (
+      totalImagesToUpload > 0 &&
+      totalImagesToUpload === totalImagesUploaded
+    ) {
+    const testDataFormated = {
       ...testData,
-      id_criador: 1,
-      id_tipo: 1,
-      tipo_criador: "ADMIN",
-      tipo_prova: "TEORICA",
+
+      tipo_prova: testData.link_repositorio ? "PRATICA" : "TEORICA",
       questoes: testData.questoes!.map((questao) => ({
         enunciado: questao.enunciado,
-        id_tipo: 2,
+        id_tipo:
+          questao.tipo === "DISSERTATIVA"
+            ? 3
+            : questao.tipo === "MULTIPLA_ESCOLHA"
+            ? 1
+            : 2,
         tipo: questao.tipo,
         alternativas: questao.alternativas,
         img_url: questao.image?.url || "",
       })),
+      duracao: testData.duracao + ":00",
     };
 
-    dispatch(create(testDataFormated));
+      setTotalImagesToUpload(0);
+      setTotalImagesUploaded(0);
+
+      dispatch(create(testDataFormated));
     }
   }, [testData, totalImagesToUpload, totalImagesUploaded]);
 
@@ -396,7 +427,7 @@ const CreateTest = (props: Props) => {
           ))}
       </QuestionContainer>
 
-      <input type="submit" value="enviar" />
+      <Button text="Cadastrar" color="solid_white" size="medium" />
     </form>
   );
 };

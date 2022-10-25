@@ -112,6 +112,7 @@ const TestQuestion: React.FC<Props> = ({
             type="text"
             placeholder="Pergunta"
             value={initialData && initialData.enunciado}
+            required
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handleOnChange({
                 enunciado: e.target.value,

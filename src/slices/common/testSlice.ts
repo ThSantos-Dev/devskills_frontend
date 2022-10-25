@@ -1,5 +1,6 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { TTestRegister } from "../../types/devskills/test/TTestRegister";
 import testService from './../../services/apiDevSkills/common/testService';
 
 interface ITestSlice {
@@ -23,9 +24,20 @@ const initialState: ITestSlice = {
 
 export const create = createAsyncThunk(
   "test/create",
-  async (data: any, thunkAPI) => {
+  async (test: any, thunkAPI) => {
     // Resgatando o token do usuário autenticado do Slice de auth
-   console.log(thunkAPI.getState())
+    const { auth }: any = thunkAPI.getState()
+
+    console.log(auth);
+
+    const data: TTestRegister = {
+      ...test,
+      id_criador: auth.user.data.idEmpresa,
+      tipo_criador: auth.user.data.type
+    }
+
+    console.log(data)
+    
 
     const res = await testService.create(data, "");
 

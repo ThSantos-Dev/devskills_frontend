@@ -9,7 +9,6 @@ export type TTestRegister = {
   data_fim: string;
   duracao: string;
 
-  id_tipo?: number,
   tipo_prova: "TEORICA" | "PRATICA";
   ids_habilidades: number[];
   ids_stacks: number[];
