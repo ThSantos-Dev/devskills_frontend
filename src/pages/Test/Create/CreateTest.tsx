@@ -13,7 +13,12 @@ import TestQuestion, {
 } from "../../../components/shared/Test/Question/TestQuestion";
 import QuestionContainer from "../../../components/shared/Test/QuestionContainer/QuestionContainer";
 
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useEffect } from "react";
 import { storage } from "../../../firebase";
 import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
@@ -28,7 +33,6 @@ export type TTestRegisterData = {
   titulo: string;
   descricao: string;
   link_repositorio?: string;
-
 
   tipo_prova: "TEORICA" | "PRATICA";
 
@@ -59,13 +63,14 @@ const CreateTest = (props: Props) => {
     ids_stacks: [],
 
     questoes: [
-      {enunciado: "", tipo: "DISSERTATIVA", image: {file: null, url: ""}, alternativas: []}
+      {
+        enunciado: "",
+        tipo: "DISSERTATIVA",
+        image: { file: null, url: "" },
+        alternativas: [],
+      },
     ],
   });
-
-  // Controla a quantidade de imagens a serem enviadas para o firebase
-  const [totalImagesToUpload, setTotalImagesToUpload] = useState<number>(0);
-  const [totalImagesUploaded, setTotalImagesUploaded] = useState<number>(0);
 
   const dispatch = useDispatch<any>();
 
@@ -277,118 +282,52 @@ const CreateTest = (props: Props) => {
       fields.questoes!.filter((questao) => (questao.image?.file ? true : false))
         .length > 0
     ) {
-      setTotalImagesToUpload(
-        fields.questoes!.filter((questao) =>
-          questao.image?.file ? true : false
-        ).length
-      );
+      // Controla a quantidade de imagens a serem enviadas para o firebase
+      let totalImagesToUpload = fields.questoes!.filter((questao) =>
+        questao.image?.file ? true : false
+      ).length;
+      let totalImagesUploaded = 0;
 
       // Realizando o upload das imagens para o firebase
-      fields.questoes!.forEach((questao, index) => {
+      fields.questoes!.forEach(async (questao, index) => {
         if (!questao.image?.file) return;
 
         const storageRef = ref(storage, `images/${uuid()}`);
-        const uploadTask = uploadBytesResumable(storageRef, questao.image.file);
+        await uploadBytes(storageRef, questao.image.file);
+        const url = await getDownloadURL(storageRef);
 
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log(progress + "%");
-            },
-            (error) => {
-              alert(error);
-            },
-            () => {
-              getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                fields.questoes![index].image!.url = url;
-                setTestData(fields);
-                setTotalImagesUploaded(totalImagesUploaded + 1);
-              });
-            }
-          );
+        if (url) {
+          totalImagesUploaded += 1;
+          fields.questoes![index].image!.url = url;
+        }
 
+        // Condicional que avalia o processo de upload chama o dispatch para envio dos dados
+        if (totalImagesToUpload === totalImagesUploaded) {
+          const testDataFormated = {
+            ...fields,
+
+            tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
+            questoes: fields.questoes!.map((questao) => ({
+              enunciado: questao.enunciado,
+              id_tipo:
+                questao.tipo === "DISSERTATIVA"
+                  ? 3
+                  : questao.tipo === "MULTIPLA_ESCOLHA"
+                  ? 1
+                  : 2,
+              tipo: questao.tipo,
+              alternativas: questao.alternativas,
+              img_url: questao.image?.url || "",
+            })),
+            duracao: fields.duracao + ":00",
+          };
+
+          console.log("final: ", testDataFormated);
+          dispatch(create(testDataFormated));
+        }
       });
-
-      return;
     }
-
-    const testDataFormated = {
-      ...fields,
-
-      tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
-      questoes: fields.questoes!.map((questao) => ({
-        enunciado: questao.enunciado,
-        id_tipo:
-          questao.tipo === "DISSERTATIVA"
-            ? 3
-            : questao.tipo === "MULTIPLA_ESCOLHA"
-            ? 1
-            : 2,
-        tipo: questao.tipo,
-        alternativas: questao.alternativas,
-        img_url: questao.image?.url || "",
-      })),
-      duracao: fields.duracao + ":00",
-    };
-
-    dispatch(create(testDataFormated));
   };
-
-  const [errors, setErrors] = useState<any>({
-    titulo: "",
-    descricao: "",
-    link_repositorio: "",
-
-    data_inicio: "",
-    data_fim: "",
-    duracao: "",
-
-    ids_habilidades: [],
-    ids_stacks: [],
-  });
-
-  // Zera os state
-  useEffect(() => {
-    setTotalImagesToUpload(0);
-    setTotalImagesUploaded(0);
-  }, []);
-
-  // Monitora se todas as imagens foram enviadas para o firebase
-  useEffect(() => {
-
-    console.log(totalImagesToUpload, totalImagesUploaded)
-
-    if (
-      totalImagesToUpload > 0 &&
-      totalImagesToUpload === totalImagesUploaded
-    ) {
-    const testDataFormated = {
-      ...testData,
-
-      tipo_prova: testData.link_repositorio ? "PRATICA" : "TEORICA",
-      questoes: testData.questoes!.map((questao) => ({
-        enunciado: questao.enunciado,
-        id_tipo:
-          questao.tipo === "DISSERTATIVA"
-            ? 3
-            : questao.tipo === "MULTIPLA_ESCOLHA"
-            ? 1
-            : 2,
-        tipo: questao.tipo,
-        alternativas: questao.alternativas,
-        img_url: questao.image?.url || "",
-      })),
-      duracao: testData.duracao + ":00",
-    };
-
-      setTotalImagesToUpload(0);
-      setTotalImagesUploaded(0);
-
-      dispatch(create(testDataFormated));
-    }
-  }, [testData, totalImagesToUpload, totalImagesUploaded]);
 
   return (
     <form
