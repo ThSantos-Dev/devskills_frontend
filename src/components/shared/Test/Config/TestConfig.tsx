@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import styles from "./TestConfig.module.css";
 import Accept from "./../../Accept/Accept";
@@ -12,6 +12,15 @@ import { getAll as getAllStacks } from "../../../../slices/common/stackSlice";
 import { selectFormat } from "../../../../utils/select-format";
 
 interface Props {
+  errors: {
+    skills: { error: boolean; message: string };
+    stacks: { error: boolean; message: string };
+    initialDate: { error: boolean; message: string };
+  };
+  setErrors(state: {
+    skills: { error: boolean; message: string };
+    stacks: { error: boolean; message: string };
+  }): void;
   getData(data: {
     data_inicio: string;
     data_fim: string;
@@ -39,7 +48,7 @@ type TSelected = {
   value: string;
 };
 
-const TestConfig: React.FC<Props> = ({ getData }) => {
+const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
   // Controla a exibição do relógio para definir duração
   const [showTime, setShowTime] = useState<boolean>(false);
 
@@ -51,6 +60,9 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     ids_stacks: [],
     ids_habilidades: [],
   });
+
+  // Referencia a input de data inicial 
+  const inputDateEl = useRef(null)
 
   // Instanciando o dispatch para ter acesso as funções do Redux
   const dispatch: any = useDispatch();
@@ -73,11 +85,8 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
   }, [dispatch]);
 
   // Altera os dados das inputs
-  const handleOnChange = (
-    value: string | TSelected[],
-    name: string
-  ) => {
-    if (name !== 'stacks' && name !== 'skills') {
+  const handleOnChange = (value: string | TSelected[], name: string) => {
+    if (name !== "stacks" && name !== "skills") {
       getData({ ...inputs, [name]: value });
       setInputs({ ...inputs, [name]: value });
       return;
@@ -101,15 +110,11 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     } else if (name === "stacks") {
       getData({
         ...inputs,
-        ids_stacks: value.map((option: TSelected) =>
-          parseInt(option.value)
-        ),
+        ids_stacks: value.map((option: TSelected) => parseInt(option.value)),
       });
       setInputs({
         ...inputs,
-        ids_stacks: value.map((option: TSelected) =>
-          parseInt(option.value)
-        ),
+        ids_stacks: value.map((option: TSelected) => parseInt(option.value)),
       });
     }
   };
@@ -130,6 +135,15 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
     setSkillFiltered(filtered);
   }, [inputs.ids_stacks, skills, stacks]);
 
+  useEffect(() => {
+
+    // VALIDANTE
+    if(errors.initialDate.error)
+      return 
+
+
+  }, [errors.initialDate])
+
   return (
     <div className={styles.config_container}>
       <h2>Configurações</h2>
@@ -142,14 +156,30 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             type="date"
             value={inputs.data_inicio}
             required
-            min={Date.now()}
+            min={
+              new Date(
+                new Date().getTime() - new Date().getTimezoneOffset() * 60000
+              )
+                .toISOString()
+                .split("T")[0]
+            }
             handleOnChange={handleOnChange}
+            error={errors.initialDate.error}
+            errorMessage={errors.initialDate.message}
+            autoFocus={errors.initialDate.error}
           />
           <Input
             name="data_fim"
             label="Data de término"
             type="date"
             value={inputs.data_fim}
+            min={
+              new Date(
+                new Date().getTime() - new Date().getTimezoneOffset() * 60000
+              )
+                .toISOString()
+                .split("T")[0]
+            }
             required
             handleOnChange={handleOnChange}
           />
@@ -194,6 +224,11 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             isMulti={true}
             closeMenuOnSelect={false}
             isLoading={stackLoading}
+            error={errors.stacks.error}
+            errorMessage={errors.stacks.message}
+            handleOnFocus={() =>
+              setErrors({ ...errors, stacks: { error: false, message: "" } })
+            }
           />
 
           <SelectCustom
@@ -205,6 +240,11 @@ const TestConfig: React.FC<Props> = ({ getData }) => {
             isMulti={true}
             closeMenuOnSelect={false}
             isLoading={skillLoading}
+            error={errors.skills.error}
+            errorMessage={errors.skills.message}
+            handleOnFocus={() =>
+              setErrors({ ...errors, skills: { error: false, message: "" } })
+            }
           />
         </div>
       </div>

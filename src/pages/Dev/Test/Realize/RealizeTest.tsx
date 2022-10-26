@@ -11,17 +11,62 @@ const RealizeTest: React.FC<Props> = () => {
   // Recupera o ID da prova
   const { id } = useParams<string>();
 
-  const [time, setTime] = useState<string>("00:00:00");
+  let tempo = 20
+  // let intervalId: any = null;
 
-  useEffect(() => {
-    setInterval(() => {
-      let hours = new Date().getHours();
-      let minutes = new Date().getMinutes();
-      let seconds = new Date().getSeconds();
+  // useEffect(() => {
+  //   let initialTime: any = time.split(":");
+  //   let date = new Date();
+  //   date.setHours(initialTime[0]);
+  //   date.setMinutes(initialTime[1]);
+  //   date.setSeconds(0);
+  //   console.log(date.getTime());
 
-      setTime(`${hours}:${minutes}:${seconds} `);
-    }, 1000);
-  }, []);
+  //   let i = 0;
+
+  //   intervalId = setInterval(() => {
+  //     console.log("i:", i);
+  //     console.log("conta:", date.getTime() - i);
+  //     setTime(new Date(date.getTime() - i).toLocaleTimeString());
+  //     i += 1000;
+  //   }, 1000);
+  // }, []);
+
+
+// function countdown() {
+//   // Se o tempo não for zerado
+//   if (tempo - 1 >= -1) {
+//     // Pega a parte inteira dos minutos
+//     let min : any = (tempo / 60);
+//     // Calcula os segundos restantes
+//     let seg: any = tempo % 60;
+//     // Formata o número menor que dez, ex: 08, 07, ...
+//     if (min < 10) {
+//       min = "0" + min;
+//       min = min.substr(0, 2);
+//     }
+//     if (seg <= 9) {
+//       seg = "0" + seg;
+//     }
+
+//     // Cria a variável para formatar no estilo hora/cronômetro
+//     console.log("00:" + min + ":" + seg);
+//     //JQuery pra setar o valor
+    
+
+//     // Define que a função será executada novamente em 1000ms = 1 segundo
+//   setTimeout(() => countdown(), 1000);
+
+//     // diminui o tempo
+//     tempo--;
+
+//     // Quando o contador chegar a zero faz esta ação
+//   } else {
+//     alert('encerrado')
+//   }
+// }
+
+
 
   return (
     <div className={styles.container}>
@@ -49,7 +94,7 @@ const RealizeTest: React.FC<Props> = () => {
 
         <div>
           <p>Tempo restante:</p>
-          <span>{time}</span>
+          <span>{}</span>
         </div>
       </div>
 

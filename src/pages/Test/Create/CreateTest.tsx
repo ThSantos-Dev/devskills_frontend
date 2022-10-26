@@ -13,21 +13,14 @@ import TestQuestion, {
 } from "../../../components/shared/Test/Question/TestQuestion";
 import QuestionContainer from "../../../components/shared/Test/QuestionContainer/QuestionContainer";
 
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { useEffect } from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 import { storage } from "../../../firebase";
-import { TTestRegister } from "../../../types/devskills/test/TTestRegister";
+
 import { useDispatch } from "react-redux";
 import { create } from "../../../slices/common/testSlice";
 import Button from "../../../components/shared/Form/Button/Button";
-
-// Interface
-interface Props {}
+import { toast } from "react-toastify";
 
 export type TTestRegisterData = {
   titulo: string;
@@ -46,7 +39,7 @@ export type TTestRegisterData = {
   questoes?: TQuestionData[];
 };
 
-const CreateTest = (props: Props) => {
+const CreateTest: React.FC = () => {
   // State responsável por armazenar os dados da prova
   const [testData, setTestData] = useState<TTestRegisterData>({
     titulo: "",
@@ -72,6 +65,14 @@ const CreateTest = (props: Props) => {
     ],
   });
 
+  // State de que controla os erros
+  const [errors, setErrors] = useState({
+    skills: { error: false, message: "" },
+    stacks: { error: false, message: "" },
+    initialDate: {error: false, message: "" },
+  });
+
+  // Instanciando o dispatch para ter acesso as funções do Redux
   const dispatch = useDispatch<any>();
 
   // Resgata os dadosda descrição
@@ -275,6 +276,9 @@ const CreateTest = (props: Props) => {
 
   // Resgata todos os dados e formata para enviar ao slice
   const handleOnSubmit = () => {
+    // Validando se as habiliades e stacks foram selecinadas
+    if (!handleValidate()) return;
+
     const fields = testData;
 
     // Verificando se há imagens nas questões para fazer o upload
@@ -319,14 +323,83 @@ const CreateTest = (props: Props) => {
               alternativas: questao.alternativas,
               img_url: questao.image?.url || "",
             })),
-            duracao: fields.duracao + ":00",
+            duracao: fields.duracao ? fields.duracao + ":00" : "",
           };
 
           console.log("final: ", testDataFormated);
           dispatch(create(testDataFormated));
         }
       });
+    } else {
+      const testDataFormated = {
+        ...fields,
+
+        tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
+        questoes: fields.questoes!.map((questao) => ({
+          enunciado: questao.enunciado,
+          id_tipo:
+            questao.tipo === "DISSERTATIVA"
+              ? 3
+              : questao.tipo === "MULTIPLA_ESCOLHA"
+              ? 1
+              : 2,
+          tipo: questao.tipo,
+          alternativas: questao.alternativas,
+          img_url: questao.image?.url || "",
+        })),
+        duracao: fields.duracao ? fields.duracao + ":00" : "",
+      };
+
+      console.log("final: ", testDataFormated);
+      dispatch(create(testDataFormated));
     }
+  };
+
+  // Validando se as stacks foram definidas
+  const handleValidate = (): boolean => {
+    setErrors({
+      skills: { error: false, message: "" },
+      stacks: { error: false, message: "" },
+      initialDate: { error: false, message: "" },
+    });
+
+    if(new Date(testData.data_inicio) > new Date(testData.data_fim)) {
+      toast.error("A data inicial não pode ser maior que a data final.")
+      setErrors({
+        ...errors,
+        initialDate: {
+          error: true,
+          message: "A data inicial não pode ser maior que a data final.",
+        },
+      });
+      return false
+    }
+
+    if (testData.ids_stacks.length === 0) {
+      toast.error("Você precisa selecionar ao menos uma stack.");
+      setErrors({
+        ...errors,
+        stacks: {
+          error: true,
+          message: "Você precisa selecionar ao menos uma stack.",
+        },
+      });
+      return false;
+    }
+
+    if (testData.ids_habilidades.length === 0) {
+      toast.error("Você precisa selecionar ao menos uma habilidade.");
+      setErrors({
+        ...errors,
+        skills: {
+          error: true,
+          message: "Você precisa selecionar ao menos uma habilidade.",
+        },
+      });
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -340,9 +413,9 @@ const CreateTest = (props: Props) => {
     >
       <TestDescription getData={getDesciptionData} />
 
-      <TestConfig getData={getConfigData} />
+      <TestConfig getData={getConfigData} errors={errors} setErrors={(state: any) => setErrors(state)}/>
 
-      <QuestionContainer addQuestion={addQuestion}>
+      <QuestionContainer addQuestion={addQuestion} showOptions={!testData.link_repositorio}>
         {testData.questoes &&
           testData.questoes.map((question, index) => (
             <TestQuestion
