@@ -1,9 +1,9 @@
-import React from "react";
+import { useRef } from "react";
 
 import styles from "./Alternative.module.css";
 
-import { AiOutlineCheck } from "react-icons/ai";
 import { useState } from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 
 interface Props {
   alternative: any;
@@ -12,25 +12,47 @@ interface Props {
   addResponse(): void;
 }
 
-const Alternative = ({ alternative, type , selected, addResponse }: Props) => {
+const Alternative = ({ alternative, type, selected, addResponse }: Props) => {
   const [checked, setChecked] = useState<boolean>(false);
 
+  const inputRadioEl = useRef<HTMLInputElement>(null);
+
   return (
-    <div
-      onClick={() => {
-        addResponse();
-        setChecked(!checked);
-      }}
-      className={`${styles.alternative} ${
-        type === "UNICA_ESCOLHA" ? styles.single : styles.multiple
-      }
-    ${checked ? styles.selected : ""}`}
-    >
-      <button>
-        <AiOutlineCheck />
-      </button>
-      <p>{alternative.opcao}</p>
-    </div>
+    <>
+      {type === "MULTIPLA_ESCOLHA" && (
+        <div
+          className={`${styles.alternative} ${styles.multiple} ${
+            checked ? styles.selected : ""
+          }`}
+          onClick={() => {
+            addResponse();
+            setChecked(!checked);
+          }}
+        >
+          <button>{checked && <AiOutlineCheck />}</button>
+          <p>{alternative.opcao}</p>
+        </div>
+      )}
+
+      {type === "UNICA_ESCOLHA" && (
+        <label className={`${styles.alternative} ${styles.single}  `}>
+          <div
+            onClick={() => {
+              addResponse();
+              setChecked(!checked);
+            }}
+          >
+            <input
+              ref={inputRadioEl}
+              type="radio"
+              name={`alternative-of-question-${alternative.idQuestaoProva}`}
+            />
+            <AiOutlineCheck className={styles.selectedIcon} />
+          </div>
+          <p>{alternative.opcao}</p>
+        </label>
+      )}
+    </>
   );
 };
 

@@ -7,9 +7,11 @@
 
   padding: 20px 40px 40px 40px;
   margin: auto;
+  margin-top:  10vh;
 
-  background-color: var(--dark-container);
   color: var(--color-white-text);
+  border-radius: 10px;
+  background-color: var(--dark-container);
 }
 
 .header {
@@ -67,6 +69,14 @@
   font-size: clamp(0.8rem, 5vw, 1rem);
 }
 
+.info_container button {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+
+  padding: clamp(.2rem, 5vw, .4rem) clamp(1rem, 5vw, 1.2rem);
+}
+
 .question {
   display: flex;
   flex-direction: column;
@@ -76,7 +86,7 @@
 }
 
 .question p {
-  font-size: clamp(1rem, 5vw, 1.5rem);
+  font-size: clamp(1rem, 5vw, 1.2rem);
   font-weight: 500;
   letter-spacing: 2px;
   line-height: clamp(1.4rem, 5vw, 2rem);
@@ -92,54 +102,62 @@
   gap: 5px;
 }
 
-.alternative {
+
+.pages_questions {
+  height: 90px;
+
+  position: relative;
+  overflow: hidden;
+
+}
+
+.pages_questions ul {
+  width: inherit;
+
+  position: absolute;
+  top: 40px;
+  overflow: hidden;
+  overflow-x: auto;
+
   display: flex;
-  gap: 15px;
-  padding: 20px 20px;
-  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
 
-  background-color: var(--dark-container);
+  padding: 10px 0px;
+
 }
 
-.alternatives_container.single .alternative button {
-  width: 40px;
-  height: 40px;
+.pages_questions li {
+  width: 30px;
+  height: 30px;
 
-  border-radius: 100%;
-  border: 1px solid var(--color-white-text);
-  background-color: transparent;
-}
-
-.alternative button svg {
-  font-size: clamp(0.8rem, 5vw, 1.3rem);
-}
-.alternative button {
-  all: unset;
-
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--color-white-text);
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.alternative p {
-  font-size: clamp(1.2rem, 5vw, 1.3rem);
-}
+  list-style: none;
+  cursor: pointer;
 
-.alternative:hover {
+  border-radius: 50%;
+  transition: all 0.3s;
   outline: 1px solid var(--color-white-text);
+}
+
+.pages_questions li:hover {
   cursor: pointer;
   background-color: #1b1b60;
 }
 
-.alternative.selected {
-  border: 2px solid #1bb69d;
-  color: white;
+.tab_selected {
+  color: #fff !important;
+  outline-color: #1bb69d !important;
+  background-color: #1bb69d;
 }
 
-.alternative.selected button {
-  border: 1px solid #1bb69d !important;
-  background-color: #1bb69d !important;
+.buttons_container {
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 40px;
+  border-top: 2px solid var(--color-white-text);
 }

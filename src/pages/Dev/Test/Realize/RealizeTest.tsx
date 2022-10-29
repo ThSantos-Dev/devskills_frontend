@@ -1,13 +1,13 @@
-import React, { MouseEvent, useEffect, useState } from "react";
-import { AiOutlineCheck } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
 import Input from "../../../../components/shared/Form/Input/Input";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
-import { TTestRealizeQuestionResponse } from "../../../../types/devskills/test/TTRealizeResponse";
 import Button from "./../../../../components/shared/Form/Button/Button";
 
 import styles from "./RealizeTest.module.css";
+import { toast } from "react-toastify";
+import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 
 interface Props {}
 
@@ -19,7 +19,7 @@ const RealizeTest: React.FC<Props> = () => {
     id: 76,
     data_inicio: "2022-10-28T00:00:00.000Z",
     data_fim: "2022-10-31T00:00:00.000Z",
-    duracao: "15:39:00",
+    duracao: "00:05:00",
     idEmpresa: 2,
     idProva: 149,
     prova: {
@@ -64,6 +64,454 @@ const RealizeTest: React.FC<Props> = () => {
             questaoProvaTipo: {
               tipo: "MULTIPLA_ESCOLHA",
               id: 1,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
+            },
+          },
+        },
+        {
+          id: 82,
+          idQuestaoProva: 108,
+          idProva: 149,
+          questaoProva: {
+            alternativaProva: [],
+            id: 108,
+            enunciado:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
+            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
+            questaoProvaTipo: {
+              tipo: "DISSERTATIVA",
+              id: 3,
             },
           },
         },
@@ -179,148 +627,202 @@ const RealizeTest: React.FC<Props> = () => {
       });
     }
 
-    console.log(responses);
-
     setResponseData(responses);
   };
 
+  // Timer countdown
+  const initialHours = parseInt(testData.duracao.split(":")[0]);
+  const initialMinutes = parseInt(testData.duracao.split(":")[1]);
+
+  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(
+    initialHours * 3600 + initialMinutes * 60
+  );
+
+  const hours = Math.floor(totalTimeInSeconds / 3600);
+  const minutes = Math.floor((totalTimeInSeconds / 60) % 60);
+  const seconds = Math.floor(totalTimeInSeconds % 60);
+
+  useEffect(() => {
+    if (totalTimeInSeconds === 300)
+      toast.warning(`Restam ${minutes} minutos para finalizar a prova.`);
+
+    if (totalTimeInSeconds === 60) {
+      toast.warning(`Resta ${minutes} minuto para finalizar a prova.`);
+    }
+
+    if (totalTimeInSeconds === 0) {
+      toast.error("Seu tempo acabou!");
+      return;
+    } else {
+      setTimeout(() => {
+        setTotalTimeInSeconds(totalTimeInSeconds - 1);
+      }, 1000);
+    }
+  }, [minutes, totalTimeInSeconds]);
+
+  // Tabs of questions
+  const [questionTab, setQuestionTab] = useState<any>(0);
+
+  const nextTabQuestion = () => {
+    let tab = questionTab + 1;
+    if (tab > responseData.length - 1) return;
+
+    setQuestionTab(tab);
+  };
+
+  const previousTabQuestion = () => {
+    let tab = questionTab - 1;
+    if (tab < 0) return;
+
+    setQuestionTab(tab);
+  };
+
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <img
-            src="https://anprotec.org.br/site/wp-content/uploads/2018/09/logo-senai-cor-1-300x191.jpg"
-            alt="senai"
-          />
-          <p>SENAI JANDIRA</p>
+    <Tabs
+      selectedTabClassName={styles.tab_selected}
+      selectedIndex={questionTab}
+      onSelect={(index) => setQuestionTab(index)}
+    >
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <div className={styles.logo}>
+            <img
+              src="https://anprotec.org.br/site/wp-content/uploads/2018/09/logo-senai-cor-1-300x191.jpg"
+              alt="senai"
+            />
+            <p>SENAI JANDIRA</p>
+          </div>
+
+          <div className={styles.progress}>
+            <p>Você concluiu 20% do teste.</p>
+            <progress max="100" value="20">
+              70%
+            </progress>
+          </div>
+        </header>
+
+        <div className={styles.pages_questions}>
+          <h3>Questões:</h3>
+
+          <TabList>
+            {testData &&
+              testData.prova.provasTodasQuestoes.map((_, index) => (
+                <>
+                  <Tab>{index + 1}</Tab>
+                </>
+              ))}
+          </TabList>
         </div>
 
-        <div className={styles.progress}>
-          <p>Você concluiu 20% do teste.</p>
-          <progress max="100" value="20">
-            70%
-          </progress>
-        </div>
-      </header>
+        <div className={styles.info_container}>
+          <div>
+            <Button color="solid_white" size="inherit" text="Salvar" />
+          </div>
 
-      <div className={styles.info_container}>
-        <div>
-          <p>Faltam 6 questões</p>
+          <div>
+            <p>Tempo restante:</p>
+            <span>{`${hours.toString().padStart(2, "0")}:${minutes
+              .toString()
+              .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</span>
+          </div>
         </div>
 
-        <div>
-          <p>Tempo restante:</p>
-          <span>{"00:15:00"}</span>
-        </div>
+        {testData &&
+          testData.prova.provasTodasQuestoes.map((question, index) => (
+            <TabPanel>
+              <div className={styles.question} key={question.idQuestaoProva}>
+                <p>{question.questaoProva.enunciado}</p>
+
+                {question.questaoProva.foto && (
+                  <div>
+                    <img src={question.questaoProva.foto} alt="ilustration" />
+                  </div>
+                )}
+
+                {question.questaoProva.questaoProvaTipo.tipo ===
+                  "DISSERTATIVA" && (
+                  <Input
+                    type="text"
+                    name="response"
+                    placeholder="Digite sua resposta"
+                  />
+                )}
+
+                {question.questaoProva.questaoProvaTipo.tipo ===
+                  "UNICA_ESCOLHA" && (
+                  <div
+                    className={`${styles.alternatives_container}  ${styles.single}`}
+                  >
+                    {question.questaoProva.alternativaProva.map(
+                      (alternative) => (
+                        <Alternative
+                          addResponse={() =>
+                            addResponse(
+                              question.idQuestaoProva,
+                              "UNICA_ESCOLHA",
+                              alternative.id
+                            )
+                          }
+                          alternative={alternative}
+                          key={alternative.id}
+                          type={"UNICA_ESCOLHA"}
+                          selected={false}
+                        />
+                      )
+                    )}
+                  </div>
+                )}
+
+                {question.questaoProva.questaoProvaTipo.tipo ===
+                  "MULTIPLA_ESCOLHA" && (
+                  <div
+                    className={`${styles.alternatives_container}  ${styles.multiple}`}
+                  >
+                    {question.questaoProva.alternativaProva.map(
+                      (alternative) => (
+                        <Alternative
+                          addResponse={() => {}}
+                          alternative={alternative}
+                          key={alternative.id}
+                          type={"MULTIPLA_ESCOLHA"}
+                          selected={false}
+                        />
+                      )
+                    )}
+                  </div>
+                )}
+
+                <div className={styles.buttons_container}>
+                  {index !== 0 && (
+                    <Button
+                      color="solid_white"
+                      size="small"
+                      text="Voltar"
+                      handleOnClick={previousTabQuestion}
+                    />
+                  )}
+
+                  {index !== testData.prova.provasTodasQuestoes.length - 1 ? (
+                    <Button
+                      color="solid_white"
+                      size="small"
+                      text="Próxima"
+                      handleOnClick={nextTabQuestion}
+                    />
+                  ) : (
+                    <Button
+                      color="solid_white"
+                      size="small"
+                      text="Finalizar"
+                      handleOnClick={() => console.log(responseData)}
+                    />
+                  )}
+                </div>
+              </div>
+            </TabPanel>
+          ))}
       </div>
-
-      {testData &&
-        testData.prova.provasTodasQuestoes.map((question, index) => (
-          <>
-            <div className={styles.question} key={question.idQuestaoProva}>
-              <p>{question.questaoProva.enunciado}</p>
-
-              {question.questaoProva.foto && (
-                <div>
-                  <img src={question.questaoProva.foto} alt="ilustration" />
-                </div>
-              )}
-
-              {question.questaoProva.questaoProvaTipo.tipo ===
-                "DISSERTATIVA" && (
-                <Input
-                  type="text"
-                  name="response"
-                  placeholder="Digite sua resposta"
-                />
-              )}
-
-              {question.questaoProva.questaoProvaTipo.tipo ===
-                "UNICA_ESCOLHA" && (
-                <div
-                  className={`${styles.alternatives_container}  ${styles.single}`}
-                >
-                  {question.questaoProva.alternativaProva.map((alternative) => (
-                    <div
-                      key={alternative.id}
-                      onClick={(e: MouseEvent<HTMLDivElement>) => {
-                        addResponse(
-                          question.idQuestaoProva,
-                          "UNICA_ESCOLHA",
-                          alternative.id
-                        );
-                      }}
-                      className={`${styles.alternative}`}
-                    >
-                      <button>
-                        <AiOutlineCheck />
-                      </button>
-                      <p>{alternative.opcao}</p>
-                    </div>
-                  ))}
-
-                  {question.questaoProva.alternativaProva.map((alternative) => (
-                    <Alternative
-                      addResponse={() =>
-                        addResponse(
-                          question.idQuestaoProva,
-                          "UNICA_ESCOLHA",
-                          alternative.id
-                        )
-                      }
-                      alternative={alternative}
-                      key={alternative.id}
-                      type={"UNICA_ESCOLHA"}
-                      selected={
-                        false
-                      }
-                    />
-                  ))}
-                </div>
-              )}
-
-              {question.questaoProva.questaoProvaTipo.tipo ===
-                "MULTIPLA_ESCOLHA" && (
-                <div
-                  className={`${styles.alternatives_container}  ${styles.multiple}`}
-                >
-                  {question.questaoProva.alternativaProva.map((alternative) => (
-                    <div
-                      key={alternative.id}
-                      className={`${styles.alternative} ${styles.selected}`}
-                    >
-                      <button
-                        onClick={() =>
-                          addResponse(
-                            question.idQuestaoProva,
-                            "MULTIPLA_ESCOLHA",
-                            alternative.id
-                          )
-                        }
-                      >
-                        <AiOutlineCheck />
-                      </button>
-                      <p>{alternative.opcao}</p>
-                    </div>
-                  ))}
-
-                  {question.questaoProva.alternativaProva.map((alternative) => (
-                    <Alternative
-                      addResponse={() => {}}
-                      alternative={alternative}
-                      key={alternative.id}
-                      type={"MULTIPLA_ESCOLHA"}
-                      selected={false}
-                    />
-                  ))}
-                </div>
-              )}
-
-              <Button color="solid_white" size="small" text="Próxima questão" />
-            </div>
-          </>
-        ))}
-    </div>
+    </Tabs>
   );
 };
 

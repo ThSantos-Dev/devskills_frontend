@@ -13,17 +13,14 @@
 .alternative button {
   all: unset;
 
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border: 1px solid var(--color-white-text);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.alternative p {
-  font-size: clamp(1.2rem, 5vw, 1.3rem);
-}
 
 .alternative:hover {
   outline: 1px solid var(--color-white-text);
@@ -41,11 +38,40 @@
   background-color: #1bb69d !important;
 }
 
-.alternative.single  button {
-  width: 40px;
-  height: 40px;
+.alternative.single div {
+  all: unset;
+
+  min-width: 40px;
+  min-height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border-radius: 100%;
   border: 1px solid var(--color-white-text);
   background-color: transparent;
+}
+
+.alternative.single input[type="radio"] {
+  all: unset;
+}
+
+.alternative.single:has([type="radio"]:checked) {
+  border: 2px solid #1bb69d;
+  color: white;
+}
+
+.alternative.single:has([type="radio"]:checked) div {
+  background-color: #1bb69d;
+  border: 1px solid #1bb69d;
+}
+
+.selectedIcon {
+  display: none;
+}
+
+.alternative.single:has([type="radio"]:checked) .selectedIcon {
+  display: block;
+  color: #fff;
 }
