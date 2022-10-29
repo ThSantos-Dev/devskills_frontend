@@ -1,0 +1,51 @@
+.alternative {
+  display: flex;
+  gap: 15px;
+  padding: 20px 20px;
+  align-items: center;
+
+  background-color: var(--dark-container);
+}
+
+.alternative button svg {
+  font-size: clamp(0.8rem, 5vw, 1.3rem);
+}
+.alternative button {
+  all: unset;
+
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-white-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alternative p {
+  font-size: clamp(1.2rem, 5vw, 1.3rem);
+}
+
+.alternative:hover {
+  outline: 1px solid var(--color-white-text);
+  cursor: pointer;
+  background-color: #1b1b60;
+}
+
+.alternative.selected {
+  border: 2px solid #1bb69d;
+  color: white;
+}
+
+.alternative.selected button {
+  border: 1px solid #1bb69d !important;
+  background-color: #1bb69d !important;
+}
+
+.alternative.single  button {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+  border: 1px solid var(--color-white-text);
+  background-color: transparent;
+}

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
 import Input from "../../../../components/shared/Form/Input/Input";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
 import { TTestRealizeQuestionResponse } from "../../../../types/devskills/test/TTRealizeResponse";
@@ -214,9 +215,9 @@ const RealizeTest: React.FC<Props> = () => {
       </div>
 
       {testData &&
-        testData.prova.provasTodasQuestoes.map((question) => (
+        testData.prova.provasTodasQuestoes.map((question, index) => (
           <>
-            <div className={styles.question}>
+            <div className={styles.question} key={question.idQuestaoProva}>
               <p>{question.questaoProva.enunciado}</p>
 
               {question.questaoProva.foto && (
@@ -240,20 +241,40 @@ const RealizeTest: React.FC<Props> = () => {
                   className={`${styles.alternatives_container}  ${styles.single}`}
                 >
                   {question.questaoProva.alternativaProva.map((alternative) => (
-                    <div className={`${styles.alternative} ${styles.selected}`}>
-                      <button
-                        onClick={() =>
-                          addResponse(
-                            question.idQuestaoProva,
-                            "UNICA_ESCOLHA",
-                            alternative.id
-                          )
-                        }
-                      >
+                    <div
+                      key={alternative.id}
+                      onClick={(e: MouseEvent<HTMLDivElement>) => {
+                        addResponse(
+                          question.idQuestaoProva,
+                          "UNICA_ESCOLHA",
+                          alternative.id
+                        );
+                      }}
+                      className={`${styles.alternative}`}
+                    >
+                      <button>
                         <AiOutlineCheck />
                       </button>
                       <p>{alternative.opcao}</p>
                     </div>
+                  ))}
+
+                  {question.questaoProva.alternativaProva.map((alternative) => (
+                    <Alternative
+                      addResponse={() =>
+                        addResponse(
+                          question.idQuestaoProva,
+                          "UNICA_ESCOLHA",
+                          alternative.id
+                        )
+                      }
+                      alternative={alternative}
+                      key={alternative.id}
+                      type={"UNICA_ESCOLHA"}
+                      selected={
+                        false
+                      }
+                    />
                   ))}
                 </div>
               )}
@@ -264,7 +285,10 @@ const RealizeTest: React.FC<Props> = () => {
                   className={`${styles.alternatives_container}  ${styles.multiple}`}
                 >
                   {question.questaoProva.alternativaProva.map((alternative) => (
-                    <div className={`${styles.alternative} ${styles.selected}`}>
+                    <div
+                      key={alternative.id}
+                      className={`${styles.alternative} ${styles.selected}`}
+                    >
                       <button
                         onClick={() =>
                           addResponse(
@@ -278,6 +302,16 @@ const RealizeTest: React.FC<Props> = () => {
                       </button>
                       <p>{alternative.opcao}</p>
                     </div>
+                  ))}
+
+                  {question.questaoProva.alternativaProva.map((alternative) => (
+                    <Alternative
+                      addResponse={() => {}}
+                      alternative={alternative}
+                      key={alternative.id}
+                      type={"MULTIPLA_ESCOLHA"}
+                      selected={false}
+                    />
                   ))}
                 </div>
               )}
