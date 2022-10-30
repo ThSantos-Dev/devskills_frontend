@@ -78,11 +78,18 @@
 }
 
 .question {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 30px;
 
   padding-top: 20px;
+}
+
+.active {
+  display: flex;
+}
+.inactive {
+  display: none;
 }
 
 .question p {
@@ -105,25 +112,15 @@
 
 .pages_questions {
   height: 90px;
-
-  position: relative;
-  overflow: hidden;
-
 }
 
 .pages_questions ul {
-  width: inherit;
-
-  position: absolute;
-  top: 40px;
-  overflow: hidden;
-  overflow-x: auto;
+  height: 100%;
+  width: 100%;
 
   display: flex;
-  justify-content: space-evenly;
-  gap: 10px;
-
-  padding: 10px 0px;
+  align-items: center;
+  gap: 20px;
 
 }
 
