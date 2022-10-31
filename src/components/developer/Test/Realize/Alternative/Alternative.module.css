@@ -60,6 +60,7 @@
 .alternative.single:has([type="radio"]:checked) {
   border: 2px solid #1bb69d;
   color: white;
+
 }
 
 .alternative.single:has([type="radio"]:checked) div {

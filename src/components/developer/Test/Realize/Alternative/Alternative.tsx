@@ -8,7 +8,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 interface Props {
   alternative: any;
   type: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
-  selected: boolean;
+  selected?: boolean;
   addResponse(): void;
 }
 
@@ -35,11 +35,10 @@ const Alternative = ({ alternative, type, selected, addResponse }: Props) => {
       )}
 
       {type === "UNICA_ESCOLHA" && (
-        <label className={`${styles.alternative} ${styles.single}  `}>
+        <label className={`${styles.alternative} ${styles.single}`}>
           <div
             onClick={() => {
               addResponse();
-              setChecked(!checked);
             }}
           >
             <input
