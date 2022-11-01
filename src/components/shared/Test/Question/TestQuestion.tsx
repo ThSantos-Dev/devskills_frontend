@@ -14,6 +14,7 @@ import SelectCustom from "../../Form/Select/SelectCustom";
 import TestAlternative from "../Alternative/TestAlternative";
 
 interface Props {
+  questionRefElDiv?: any;
   setType?: "DISSERTATIVA" | "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
   options?: TOptionData[];
   indexQuestion: any;
@@ -59,6 +60,7 @@ export type TOptionData = {
 };
 
 const TestQuestion: React.FC<Props> = ({
+  questionRefElDiv,
   setType,
   options,
   initialData,
@@ -105,7 +107,7 @@ const TestQuestion: React.FC<Props> = ({
   }, [setType]);
 
   return (
-    <div className={styles.question_container}>
+    <div className={styles.question_container} ref={questionRefElDiv}>
       <div className={styles.question_header}>
         <div className={styles.text}>
           <input
@@ -143,7 +145,7 @@ const TestQuestion: React.FC<Props> = ({
           </label>
         </div>
 
-        <div className="select_container">
+        <div className={styles.select_container}>
           <SelectCustom
             placeholder="Selecione"
             name="type_question"

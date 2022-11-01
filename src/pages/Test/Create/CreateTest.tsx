@@ -5,7 +5,7 @@ import styles from "./CreateTest.module.css";
 import uuid from "react-uuid";
 
 // Components
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import TestConfig from "../../../components/shared/Test/Config/TestConfig";
 import TestDescription from "../../../components/shared/Test/Description/TestDescription";
 import TestQuestion, {
@@ -69,8 +69,11 @@ const CreateTest: React.FC = () => {
   const [errors, setErrors] = useState({
     skills: { error: false, message: "" },
     stacks: { error: false, message: "" },
-    initialDate: {error: false, message: "" },
+    initialDate: { error: false, message: "" },
   });
+
+  // Refencia a ultima questao
+  const questionRefElDiv = useRef<HTMLDivElement>(null);
 
   // Instanciando o dispatch para ter acesso as funções do Redux
   const dispatch = useDispatch<any>();
@@ -105,9 +108,13 @@ const CreateTest: React.FC = () => {
         { enunciado: "", tipo: "DISSERTATIVA", alternativas: [] },
       ],
     });
+
+    setTimeout(() => {
+      questionRefElDiv.current?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
   };
 
-  // Remove uma questão
+  // Remove uma questão‰
   const deleteQuestion = (index: any) => {
     const fields = testData;
     fields.questoes!.splice(index, 1);
@@ -363,8 +370,8 @@ const CreateTest: React.FC = () => {
       initialDate: { error: false, message: "" },
     });
 
-    if(new Date(testData.data_inicio) > new Date(testData.data_fim)) {
-      toast.error("A data inicial não pode ser maior que a data final.")
+    if (new Date(testData.data_inicio) > new Date(testData.data_fim)) {
+      toast.error("A data inicial não pode ser maior que a data final.");
       setErrors({
         ...errors,
         initialDate: {
@@ -372,7 +379,7 @@ const CreateTest: React.FC = () => {
           message: "A data inicial não pode ser maior que a data final.",
         },
       });
-      return false
+      return false;
     }
 
     if (testData.ids_stacks.length === 0) {
@@ -413,9 +420,16 @@ const CreateTest: React.FC = () => {
     >
       <TestDescription getData={getDesciptionData} />
 
-      <TestConfig getData={getConfigData} errors={errors} setErrors={(state: any) => setErrors(state)}/>
+      <TestConfig
+        getData={getConfigData}
+        errors={errors}
+        setErrors={(state: any) => setErrors(state)}
+      />
 
-      <QuestionContainer addQuestion={addQuestion} showOptions={!testData.link_repositorio}>
+      <QuestionContainer
+        addQuestion={addQuestion}
+        showOptions={!testData.link_repositorio}
+      >
         {testData.questoes &&
           testData.questoes.map((question, index) => (
             <TestQuestion
@@ -435,6 +449,11 @@ const CreateTest: React.FC = () => {
                 handleOnSelectAlternativeCorrect
               }
               indexQuestion={index}
+              questionRefElDiv={
+                index === testData.questoes!.length - 1
+                  ? questionRefElDiv
+                  : null
+              }
             />
           ))}
       </QuestionContainer>

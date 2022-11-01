@@ -7,14 +7,19 @@
   background-color: var(--dark-container);
 }
 
+.alternative p {
+  font-size: clamp(.5rem, 4vw, 1.2rem);
+}
+
 .alternative button svg {
   font-size: clamp(0.8rem, 5vw, 1.3rem);
 }
 .alternative button {
   all: unset;
 
-  min-width: 40px;
-  min-height: 40px;
+  min-width: clamp(1rem, 5vw, 40px);
+  min-height: clamp(1rem, 5vw, 40px);
+  
   border: 1px solid var(--color-white-text);
   display: flex;
   align-items: center;
@@ -41,8 +46,8 @@
 .alternative.single div {
   all: unset;
 
-  min-width: 40px;
-  min-height: 40px;
+  min-width: clamp(1rem, 5vw, 40px);
+  min-height: clamp(1rem, 5vw, 40px);
 
   display: flex;
   justify-content: center;
@@ -75,4 +80,5 @@
 .alternative.single:has([type="radio"]:checked) .selectedIcon {
   display: block;
   color: #fff;
+
 }

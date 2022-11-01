@@ -61,8 +61,6 @@ const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
     ids_habilidades: [],
   });
 
-  // Referencia a input de data inicial 
-  const inputDateEl = useRef(null)
 
   // Instanciando o dispatch para ter acesso as funções do Redux
   const dispatch: any = useDispatch();

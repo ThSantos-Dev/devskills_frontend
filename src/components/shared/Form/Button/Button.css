@@ -45,7 +45,7 @@
 
   font-size: var(--font-small);
 
-  padding: 8px 30px;
+  padding: clamp(4px, 5vw, 6px) clamp(8px, 5vw, 30px) ;
 }
 
 .btn_size_inherit {
@@ -76,3 +76,4 @@
 .btn_size_small.icon svg {
   font-size: 2.9rem;
 }
+

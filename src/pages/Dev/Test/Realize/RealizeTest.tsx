@@ -321,7 +321,7 @@ const RealizeTest: React.FC<Props> = () => {
           <Button color="solid_white" size="inherit" text="Salvar" />
         </div>
 
-        <div>
+        <div className={styles.timer}>
           <p>Tempo restante:</p>
           <span>{`${hours.toString().padStart(2, "0")}:${minutes
             .toString()
@@ -337,6 +337,7 @@ const RealizeTest: React.FC<Props> = () => {
             }`}
             key={question.idQuestaoProva}
           >
+            <span>Questão {index + 1}</span>
             <p>{question.questaoProva.enunciado}</p>
 
             {question.questaoProva.foto && (
