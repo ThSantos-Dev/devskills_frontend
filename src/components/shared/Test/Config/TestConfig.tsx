@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import styles from "./TestConfig.module.css";
 import Accept from "./../../Accept/Accept";

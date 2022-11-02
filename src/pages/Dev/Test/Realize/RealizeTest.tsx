@@ -12,9 +12,11 @@ interface Props {}
 
 const RealizeTest: React.FC<Props> = () => {
   // Recupera o ID da prova
+  // eslint-disable-next-line
   const { id } = useParams<string>();
 
   // Virá da API
+  // eslint-disable-next-line
   const [testData, setTestData] = useState<TTestRealize>({
     id: 76,
     data_inicio: "2022-10-28T00:00:00.000Z",
