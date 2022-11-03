@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsFilterSquare } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 import TestDevSkillsCard from "../../../components/shared/Card/Test/DevSkills/TestDevSkillsCard";
 import SelectCustom from "./../../../components/shared/Form/Select/SelectCustom";
 import styles from "./ReadyProof.module.css";
@@ -48,10 +49,28 @@ const ReadyProof = (props: Props) => {
 
                 <div
                   className={styles.filter_text}
-                  onClick={() => setShowFilter(!showFilter)}
+                  onClick={() => {
+                    if (!showFilter) {
+                      setShowFilter(!showFilter);
+                      window.document.body.style.overflow = "hidden";
+                      return;
+                    }
+
+                    setShowFilter(!showFilter);
+                    window.document.body.style.overflow = "scroll";
+                  }}
                 >
-                  <BsFilterSquare />
-                  <span>Filtros</span>
+                  {showFilter ? (
+                    <>
+                      <IoClose title="Fechar" />
+                      <span>Fechar</span>
+                    </>
+                  ) : (
+                    <>
+                      <BsFilterSquare />
+                      <span>Filtros</span>
+                    </>
+                  )}
                 </div>
               </label>
             </div>

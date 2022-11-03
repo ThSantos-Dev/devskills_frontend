@@ -1,5 +1,6 @@
 .container {
   max-width: 450px;
+  flex: 1;
   height: 200px;
 
   color: var(--color-white-text);
