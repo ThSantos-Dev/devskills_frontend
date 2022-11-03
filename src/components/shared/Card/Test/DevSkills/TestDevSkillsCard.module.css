@@ -1,6 +1,6 @@
 .container {
   max-width: 450px;
-  min-height: 200px;
+  height: 200px;
 
   color: var(--color-white-text);
 
@@ -15,7 +15,7 @@
   box-shadow: 12px 7px 24px -3px rgba(0, 0, 0, 0.75);
 
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.02);
 }
 
 .image_container {

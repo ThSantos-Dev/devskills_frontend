@@ -1,0 +1,28 @@
+.container {
+    max-width: 1080px;
+    height: 500px;
+
+    margin: 20vh auto;
+    padding: 0px 80px;
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    overflow: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    stroke-width: none;
+
+    background-color: aqua;
+}
+
+.container::-webkit-scrollbar {
+    height: 0;
+}
+
+.slider_item {
+    width: 450px 1 0;
+
+    background-color: blue;
+}

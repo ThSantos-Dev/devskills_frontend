@@ -1,0 +1,185 @@
+.container {
+  max-width: 1440px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.container h1 {
+  color: var(--color-white-text);
+  font-size: clamp(1.8rem, 5vw, 2rem);
+
+  margin-bottom: 20px;
+}
+
+.container main {
+  width: inherit;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.cards_container {
+  max-width: 930px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+}
+
+.filter_container {
+  min-height: 100vh;
+  width: 245px;
+
+  position: relative;
+}
+
+.filter_content {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  position: sticky;
+  top: 2rem;
+}
+
+.radio_button_container,
+.select_container {
+  width: 100%;
+
+  color: var(--color-white-text) !important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 20px;
+
+  border-radius: 10px;
+  background-color: var(--dark-container);
+}
+
+.radio_button_container h3 {
+  font-weight: 500;
+}
+
+.radio_button label {
+  width: inherit;
+
+  display: flex;
+
+  cursor: pointer;
+}
+
+.radio_button label span {
+  font-weight: 300;
+  padding-left: 30px;
+}
+
+.radio_button input[type="radio"] {
+  height: 0;
+  width: 0;
+  position: relative;
+
+  transition: all 0.3s;
+}
+
+.radio_button input[type="radio"]::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+  top: 2px;
+
+  border-radius: 100%;
+  border: 0.5px solid var(--color-white-text);
+}
+
+.radio_button input[type="radio"]:checked:before {
+  border-color: #fff;
+}
+
+.radio_button input[type="radio"]:checked + span {
+  color: #fff;
+}
+
+.radio_button input[type="radio"]:checked::after {
+  content: "";
+
+  width: 12px;
+  height: 12px;
+
+  position: absolute;
+  top: 6.4px;
+  left: 4.5px;
+
+  border-radius: 100%;
+  background-color: #1bb69d;
+}
+
+/* Filter toggle */
+.toggle_button input[type="checkbox"] {
+  all: unset;
+  display: none;
+}
+
+.toggle_button input[type="checkbox"]:checked  + div {
+  background-color: red;
+}
+
+.toggle_button {
+  width: 100px;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter_text {
+  color: var(--color-white-text);
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 12px;
+  background-color: var(--dark-container);
+}
+
+.filter_text svg {
+  font-size: 1.8rem;
+}
+
+
+/* Media Querie */
+@media only screen and (max-width: 1230px) {
+
+  .filter_container {
+    position: fixed;
+    right: 0;
+
+    justify-content: flex-end;
+
+    background-color: red;
+  }
+
+  .cards_container {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (max-width: 728px) {
+  
+
+  .filter_content {
+    display: none;
+  }
+}

@@ -17,6 +17,7 @@ import CreateTest from "./pages/Test/Create/CreateTest";
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
 import RealizeTest from './pages/Dev/Test/Realize/RealizeTest';
+import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ReadyProof />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
@@ -44,7 +45,7 @@ const App = () => {
           path="/dev/login"
           element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
-        <Route path="/dev/test/realize/:id" element={<RealizeTest />}/>
+        <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
 
         {/* Routes of Company */}
         <Route path="/company/register" element={<CompanyRegister />} />
