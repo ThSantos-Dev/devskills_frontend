@@ -318,6 +318,7 @@ body.dark .home .text {
 
   .sidebar {
     width: 100%;
+    padding-bottom: 10vh;
   }
 
   .sidebar:not(.close)  header {
