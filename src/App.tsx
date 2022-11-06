@@ -18,6 +18,7 @@ import CreateTest from "./pages/Test/Create/CreateTest";
 import "react-toastify/dist/ReactToastify.min.css";
 import RealizeTest from './pages/Dev/Test/Realize/RealizeTest';
 import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
+import Sidebar from './components/shared/Layout/Sidebar/Sidebar';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
