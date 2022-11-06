@@ -6,8 +6,12 @@
 /* Media Querie */
 @media only screen and (max-width: 620px) {
     .container {
-        
         padding: 60px 0px 40px 85px;
-        
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .container {
+        padding: 120px 15px 40px;
     }
 }
