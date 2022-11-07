@@ -6,7 +6,7 @@ interface Props {}
 
 const ReadyProof = (props: Props) => {
   return (
-    <Container>
+    <Container filter={true}>
       <div className={styles.container}>
         <h1>Nossas provas</h1>
 

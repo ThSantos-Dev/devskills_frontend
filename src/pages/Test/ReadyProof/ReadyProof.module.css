@@ -1,5 +1,5 @@
 .container {
-  max-width: 1440px;
+  padding-right: 300px;
 }
 
 .container h1 {
@@ -17,11 +17,10 @@
 }
 
 .cards_container {
-  max-width: 930px;
-
   display: flex;
   flex-wrap: wrap;
   gap: 26px;
+
 }
 
 .cards_container > div {
@@ -29,6 +28,23 @@
 }
 
 /* Media Querie */
+@media only screen and (max-width: 1730px) {
+
+}
+
+@media only screen and (max-width: 1330px) {
+.container {
+  padding-right: 20px;
+}
+
+  .cards_container {
+    width: 100%;
+    align-items: center;
+  }
+
+
+}
+
 @media only screen and (max-width: 1230px) {
   .cards_container {
     width: 100%;

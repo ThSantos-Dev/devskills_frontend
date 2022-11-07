@@ -1,0 +1,148 @@
+.container {
+  max-width: 1080px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  padding: 40px;
+  margin: 10vh auto;
+
+  color: var(--color-white-text);
+  border-radius: 10px;
+  background-color: var(--dark-container);
+}
+
+.question {
+  max-width: 980px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  padding: 20px;
+  padding-bottom: 40px;
+  margin-bottom: 30px;
+
+  border-radius: 20px;
+  background-color: var(--dark-light-blue);
+}
+
+.active {
+  display: flex;
+}
+.inactive {
+  display: none;
+}
+
+.question > p {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: 2px;
+  line-height: clamp(1.4rem, 5vw, 2rem);
+}
+
+.question > span {
+  font-size: clamp(1rem, 5vw, 1.2rem);
+  font-weight: bold;
+}
+
+.question .image {
+  max-width: 920px;
+  align-self: center;
+}
+
+.question .image img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.alternatives_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pages_questions {
+  height: 90px;
+}
+
+.pages_questions ul {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pages_questions li {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  list-style: none;
+  cursor: pointer;
+
+  border-radius: 50%;
+  transition: all 0.3s;
+  outline: 1px solid var(--color-white-text);
+}
+
+.pages_questions li:hover {
+  cursor: pointer;
+  background-color: #1b1b60;
+}
+
+.tab_selected {
+  color: #fff !important;
+  outline-color: #1bb69d !important;
+  background-color: #1bb69d;
+}
+
+.buttons_container {
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 40px;
+  border-top: 2px solid var(--color-white-text);
+}
+
+.alternatives_container > div, .alternatives_container > label {
+  background-color: transparent !important;
+}
+
+/* Media Querie */
+@media only screen and (max-width: 468px) {
+  .container {
+    padding: 10px;
+    padding-top: 20px;
+    margin: 0;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+  .logo {
+    margin-bottom: 30px;
+  }
+
+  .info_container .timer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .buttons_container {
+    padding: 10vh 0;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .container {
+    margin-top: 0;
+  }
+}

@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import RealizeTest from './pages/Dev/Test/Realize/RealizeTest';
 import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
 import Sidebar from './components/shared/Layout/Sidebar/Sidebar';
+import Details from './pages/Test/Details/Details';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -31,7 +32,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ReadyProof />} />
+        <Route path="/" element={<Details />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
