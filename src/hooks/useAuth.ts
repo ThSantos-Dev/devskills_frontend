@@ -1,10 +1,12 @@
 // Hooks
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export const useAuth = () => {
   // Restando o dev do Redux
-  const { user, type } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
+
+  console.log("useAuth: " + user?.type);
 
   // State para valdiar se o usuário está autenticado ou não
   const [auth, setAuth] = useState<boolean>(false);
@@ -17,5 +19,5 @@ export const useAuth = () => {
     setLoading(false);
   }, [user]);
 
-  return { auth, loading, type };
+  return { auth, loading, type: user?.type };
 };

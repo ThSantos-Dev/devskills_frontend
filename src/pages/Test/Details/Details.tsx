@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import Container from "../../../components/shared/Layout/Container/Container";
 import Preview from "../../../components/shared/Test/Preview/Preview";
 import { TTestRealize } from "../../../types/devskills/test/TTestRealize";
@@ -115,10 +117,22 @@ const Details = (props: Props) => {
     },
   });
 
+  const navigate = useNavigate();
+
+  const handleApplyTest = () => {
+  }
+  // Implementar lógica para aplicação de Provas prontas
+
   return (
     <Container>
       <div className={styles.container}>
         <div className={styles.title_container}>
+          <div
+            onClick={() => navigate("/company/test/aplly")}
+            className={styles.icon}
+          >
+            <IoArrowBackCircleOutline />
+          </div>
           <h1>Detalhes da prova</h1>
           <Button color="solid_gray" size="small" text="Aplicar" />
         </div>

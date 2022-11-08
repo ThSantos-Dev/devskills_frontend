@@ -10,21 +10,25 @@ import CompanyLogin from "./pages/Company/Login/Login";
 import CompanyRegister from "./pages/Company/Register/Register";
 import DevLogin from "./pages/Dev/Login/Login";
 import DevRegister from "./pages/Dev/Register/Register";
-import Home from "./pages/Institutional/Home";
 import RetrievePassword from "./pages/RetrievePassword/RetrievePassword";
 import CreateTest from "./pages/Test/Create/CreateTest";
 
+// Pages of company
+import ComapanyHome from "./pages/Company/Home/Home";
+
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
-import RealizeTest from './pages/Dev/Test/Realize/RealizeTest';
+import RealizeTest from "./pages/Dev/Test/Realize/RealizeTest";
+import Details from "./pages/Test/Details/Details";
 import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
-import Sidebar from './components/shared/Layout/Sidebar/Sidebar';
-import Details from './pages/Test/Details/Details';
+
+
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
-  const { auth, loading } = useAuth();
-
+  const { auth, loading, type } = useAuth();
+  console.count("renderizações");
+  console.log("tipo: " + type);
   if (loading) {
     return <p>Carregando...</p>;
   }
@@ -47,11 +51,72 @@ const App = () => {
           path="/dev/login"
           element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
+        <Route path="/dev/home" element={<RealizeTest />} />
+        <Route path="/dev/profile" element={<RealizeTest />} />
+        <Route path="/dev/search" element={<RealizeTest />} />
+        <Route path="/dev/tests" element={<RealizeTest />} />
+        <Route path="/dev/notifications" element={<RealizeTest />} />
+        <Route path="/dev/exam" element={<RealizeTest />} />
+        <Route path="/dev/favorites" element={<RealizeTest />} />
         <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
 
         {/* Routes of Company */}
-        <Route path="/company/register" element={<CompanyRegister />} />
-        <Route path="/company/login" element={<CompanyLogin />} />
+        <Route
+          path="/company/register"
+          element={
+            auth && type === "COMPANY" ? (
+              <Navigate to="/company/home" />
+            ) : (
+              <CompanyRegister />
+            )
+          }
+        />
+        <Route
+          path="/company/login"
+          element={
+            auth && type === "COMPANY" ? (
+              <Navigate to="/company/home" />
+            ) : (
+              <CompanyLogin />
+            )
+          }
+        />
+        <Route
+          path="/company/home"
+          element={
+            auth && type === "COMPANY" ? (
+              <ComapanyHome />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/profile"
+          element={
+            auth && type === "COMPANY" ? (
+              <ComapanyHome />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/test/create"
+          element={
+            auth && type === "COMPANY" ? (
+              <CreateTest />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/test/aplly"
+          element={
+            auth && type === "COMPANY" ? <ReadyProof /> : <CompanyLogin />
+          }
+        />
       </Routes>
 
       <ToastContainer limit={3} />

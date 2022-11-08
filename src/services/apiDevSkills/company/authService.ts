@@ -31,6 +31,7 @@ export default class authService {
     const config = requestConfig("POST", data);
 
     try {
+      console.log(data);
       // Realizando a requisição para cadastrar umacompany
       const res: TRegisterResponse = await fetch(BASE_URL + "/company", config)
         .then((res) => res.json())
@@ -54,13 +55,10 @@ export default class authService {
         .then((res) => res.json())
         .catch((err) => err);
 
-      // Validando o retorno da API
-      if (res.token) localStorage.setItem("user", JSON.stringify(res));
-
       return res;
     } catch (error) {
       console.error(error);
-      return {error: "Não foi possível realizar a solicitação."}
+      return { error: "Não foi possível realizar a solicitação." };
     }
   }
 }

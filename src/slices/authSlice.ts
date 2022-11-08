@@ -20,6 +20,7 @@ const user: {
   type?: "DEVELOPER" | "COMPANY" | "ADMIN";
 } = JSON.parse(localStorage.getItem("user") || "{}");
 
+
 const initialState: IAuth = {
   user: user.token ? user : null,
   error: null,
@@ -43,8 +44,6 @@ export const login = createAsyncThunk(
       //  Chamando o service responsável por realizar o login do Desenvolvedor
       const res = await devAuthService.login(data.user);
 
-      console.log(res);
-
       // Validando a resposta do servidor
       if (res.error) {
         return thunkAPI.rejectWithValue(res.error);
@@ -55,14 +54,24 @@ export const login = createAsyncThunk(
     } else if (type === "COMPANY") {
       //  Chamando o service responsável por realizar o login da Empresa
       const res = await companyAuthService.login(data.user);
+      console.log(res);
 
       // Validando a resposta do servidor
       if (res.error) {
         return thunkAPI.rejectWithValue(res.error);
       }
 
+      const company = {
+        token: res.token,
+        id: res.data?.idEmpresa,
+        name: res.data?.nome,
+        type: "COMPANY",
+      };
+
+      localStorage.setItem("user", JSON.stringify(company));
+
       // Retornando o usuário cadastrado
-      return res;
+      return company;
     } else if (type === "ADMIN") {
       //  Chamando o service responsável por realizar o login do Administrador
       const res = await adminAuthService.login(data.user);
@@ -113,6 +122,8 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+
+        console.log(action.payload);
 
         state.success = action.payload.message || "Login realizado com sucesso";
         state.user = action.payload;

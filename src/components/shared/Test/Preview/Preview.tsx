@@ -12,7 +12,7 @@ interface Props {
 
 const Preview = ({ testData, buttonControll }: Props) => {
   return (
-    <>
+    <div>
       {testData &&
         testData.prova.provasTodasQuestoes.map((question, index) => (
           <div className={styles.question} key={question.idQuestaoProva}>
@@ -111,7 +111,7 @@ const Preview = ({ testData, buttonControll }: Props) => {
             )}
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

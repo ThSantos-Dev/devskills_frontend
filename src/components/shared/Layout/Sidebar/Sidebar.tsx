@@ -2,10 +2,14 @@ import { useLayoutEffect, useState } from "react";
 import styles from "./Sidebar.module.css";
 
 // Icons
+import { BiHomeAlt } from "react-icons/bi";
 import { BsBellFill } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { MdClass } from "react-icons/md";
+import { MdClass, MdFavoriteBorder } from "react-icons/md";
 import { RiFoldersFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./../../../../hooks/useAuth";
 
 interface Props {}
 
@@ -14,9 +18,50 @@ const Sidebar = (props: Props) => {
   const [sidebarClose, setSidebarClose] = useState<boolean>(true);
   const [modeText, setModeText] = useState<boolean>(true);
 
+  const { user } = useSelector((state: any) => state.auth);
+  const { auth, type } = useAuth();
+
+  // Configurando o menu que será exibido para cada um dos usuários
+  const devNavegation = [
+    { text: "Home", navigateTo: "/dev/home", icon: <BiHomeAlt /> },
+    { text: "Provas", navigateTo: "/dev/tests", icon: <RiFoldersFill /> },
+    {
+      text: "Notificações",
+      navigateTo: "/dev/notifications",
+      icon: <BsBellFill />,
+    },
+    { text: "Testes", navigateTo: "/dev/exam", icon: <MdClass /> },
+    { text: "Grupos", navigateTo: "/dev/groups", icon: <HiOutlineUserGroup /> },
+    { text: "Salvos", navigateTo: "/dev/groups", icon: <MdFavoriteBorder /> },
+  ];
+
+  const companyNavegation = [
+    { text: "Dashboard", navigateTo: "/company/home", icon: <BiHomeAlt /> },
+    { text: "Provas", navigateTo: "/company/tests", icon: <RiFoldersFill /> },
+    {
+      text: "Notificações",
+      navigateTo: "/company/notifications",
+      icon: <BsBellFill />,
+    },
+    {
+      text: "Grupos",
+      navigateTo: "/company/groups",
+      icon: <HiOutlineUserGroup />,
+    },
+  ];
+
   const bodyEl = document.body;
 
   useLayoutEffect(() => bodyEl.classList.add(styles.dark), [bodyEl]);
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+
+  if (!user) navigate("/company/login");
 
   return (
     <div>
@@ -35,8 +80,10 @@ const Sidebar = (props: Props) => {
             </span>
 
             <div className={`${styles.text} ${styles.logo_text}`}>
-              <span className={styles.name}>Naruto Xurucrack</span>
-              <span className={styles.profession}>@narutinho</span>
+              <span className={styles.name}>{user?.name || ""}</span>
+              {user.type === "DEV" && (
+                <span className={styles.tag_name}>@narutinho</span>
+              )}
             </div>
           </div>
 
@@ -57,88 +104,40 @@ const Sidebar = (props: Props) => {
             </li>
 
             <ul className="menu-links">
-              <li className="nav-link">
-                <a href="#">
-                  <i className={`${styles.icon} bx bx-home-alt `}></i>
+              {type === "DEV" &&
+                devNavegation.map((data) => (
+                  <li>
+                    <Link to={data.navigateTo}>
+                      <div className={styles.icon}>{data.icon}</div>
+                      <span className={`${styles.text} ${styles.nav_text}`}>
+                        {data.text}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
 
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Home
-                  </span>
-                </a>
-              </li>
-
-              <li className="nav-link">
-                <a href="#">
-                  {/* <i className={`${styles.icon} bx bx-bar-chart-alt-2`}></i> */}
-                  {/* <img
-                    src={IFolder}
-                    alt=""
-                    className={`${styles.icon} bx bx-home-alt `}
-                  /> */}
-                  <div className={styles.icon}>
-                    <RiFoldersFill />
-                  </div>
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Provas
-                  </span>
-                </a>
-              </li>
-
-              <li className="nav-link">
-                <a href="#">
-                  {/* <i className={`${styles.icon} bx bx-bell`}></i> */}
-                  <div className={styles.icon}>
-                    <BsBellFill />
-                  </div>
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Notificações
-                  </span>
-                </a>
-              </li>
-
-              <li className="nav-link">
-                <a href="#">
-                  {/* <i className={`${styles.icon} bx bx-pie-chart-alt`}></i> */}
-                  <div className={styles.icon}>
-                    <MdClass />
-                  </div>
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Testes
-                  </span>
-                </a>
-              </li>
-
-              <li className="nav-link">
-                <a href="#">
-                  <i className={`${styles.icon} bx bx-heart`}></i>
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Favoritos
-                  </span>
-                </a>
-              </li>
-
-              <li className="nav-link">
-                <a href="#">
-                  {/* <i className={`${styles.icon} bx bx-wallet`}></i> */}
-                  <div className={styles.icon}>
-                    <HiOutlineUserGroup />
-                  </div>
-                  <span className={`${styles.text} ${styles.nav_text}`}>
-                    Grupos
-                  </span>
-                </a>
-              </li>
+              {type === "COMPANY" &&
+                companyNavegation.map((data) => (
+                  <li>
+                    <Link to={data.navigateTo}>
+                      <div className={styles.icon}>{data.icon}</div>
+                      <span className={`${styles.text} ${styles.nav_text}`}>
+                        {data.text}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 
           <div className={styles.bottom_content}>
             <li className="">
-              <a href="#">
+              <div onClick={logout} className={styles.logout}>
                 <i className={`${styles.icon} bx bx-log-out`}></i>
                 <span className={`${styles.text} ${styles.nav_text}`}>
                   Logout
                 </span>
-              </a>
+              </div>
             </li>
 
             <li className={styles.mode}>
@@ -163,10 +162,6 @@ const Sidebar = (props: Props) => {
           </div>
         </div>
       </nav>
-
-      {/* <section className={styles.home}>
-        <div className={styles.text}>Dashboard Sidebar</div>
-      </section> */}
     </div>
   );
 };

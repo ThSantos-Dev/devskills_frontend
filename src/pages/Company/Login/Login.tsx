@@ -2,8 +2,8 @@
 import styles from "./Login.module.css";
 
 // Hooks
-import { FormEvent, useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import AuthContainer from "../../../components/shared/Auth/AuthContainer";
 import AuthHeader from "../../../components/shared/Auth/AuthHeader";
 import ForgotPassword from "../../../components/shared/ForgotPassword/ForgotPassword";
+import { useAuth } from "./../../../hooks/useAuth";
 import FormLogin, { TCompanyLoginData } from "./Form/FormLogin";
 
 const Login = () => {
@@ -28,13 +29,14 @@ const Login = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   // Recebendo os estados do Redux de autenticação
-  const {error, success } = useSelector((state: any) => state.auth)
+  const { error, success } = useSelector((state: any) => state.auth);
+  const { auth, loading, type } = useAuth();
 
   // Instanciando o Dispatch para poder utilizar as funções do Redux
   const dispatch = useDispatch<any>();
 
   // Permite redirecionar o usuário
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Realiza a requisição para o servidor
   const handleOnSubmit = (
@@ -54,12 +56,12 @@ const Login = () => {
 
   // Responsável por verifica se deu certo
   useEffect(() => {
-    if (success) {
+    if (success && auth) {
       toast.success(success, {
         autoClose: 3000,
       });
 
-      navigate("/company/home");
+      // navigate("/company/home");
     }
 
     if (error) {
@@ -67,7 +69,7 @@ const Login = () => {
         autoClose: 3000,
       });
     }
-  }, [error, navigate, success]);
+  }, [error, navigate, success, auth]);
 
   return (
     <>

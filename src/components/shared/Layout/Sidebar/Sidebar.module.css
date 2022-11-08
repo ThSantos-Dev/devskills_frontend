@@ -55,6 +55,7 @@ body.dark {
 }
 .sidebar.close {
   width: 88px;
+  z-index: 0;
 }
 
 /* ===== Reusable code - Here ===== */
@@ -121,7 +122,7 @@ body.dark {
   font-weight: 600;
 }
 
-.header .image_text .profession {
+.header .image_text .tag_name {
   font-size: 16px;
   margin-top: -2px;
   display: block;
@@ -245,6 +246,11 @@ body.dark .mode .sun_moon i.sun {
 }
 body.dark .mode .sun_moon i.moon {
   opacity: 0;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
 }
 
 .menu_bar .bottom_content .toggle_switch {

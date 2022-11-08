@@ -14,8 +14,6 @@
 }
 
 .question {
-  max-width: 980px;
-
   display: flex;
   flex-direction: column;
   gap: 30px;
