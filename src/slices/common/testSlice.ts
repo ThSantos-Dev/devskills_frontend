@@ -5,7 +5,7 @@ import testService from "./../../services/apiDevSkills/common/testService";
 
 interface ITestSlice {
   test: any;
-  tests: any[];
+  tests: any;
 
   error: any;
   success: any;
@@ -15,10 +15,10 @@ interface ITestSlice {
 // State inicial
 const initialState: ITestSlice = {
   test: null,
-  tests: [],
+  tests: {},
 
-  error: null,
-  success: null,
+  error: false,
+  success: false,
   loading: false,
 };
 
@@ -45,6 +45,17 @@ export const create = createAsyncThunk(
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
     return thunkAPI.fulfillWithValue(res.message);
+  }
+);
+
+export const getAllTemplates = createAsyncThunk(
+  "test/getAllTemplates",
+  async (_, thunkAPI) => {
+    const res = await testService.getAllTemplates();
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.data);
   }
 );
 
@@ -82,7 +93,7 @@ export const testSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = false;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -106,6 +117,29 @@ export const testSlice = createSlice({
 
         state.error = action.payload;
       })
+      // Get All Templates
+      .addCase(getAllTemplates.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllTemplates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = true;
+        state.test = {};
+        console.log("Testes prontos: ", action.payload);
+
+        state.tests = action.payload;
+      })
+      .addCase(getAllTemplates.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
       // Template
       .addCase(applyTemplate.pending, (state) => {
         state.loading = true;
@@ -117,13 +151,13 @@ export const testSlice = createSlice({
 
         state.success = action.payload;
         state.test = {};
-        state.tests = [];
+        state.tests = {};
       })
       .addCase(applyTemplate.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};
-        state.tests = [];
+        state.tests = {};
 
         state.error = action.payload;
       });

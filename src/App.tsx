@@ -19,10 +19,10 @@ import ComapanyHome from "./pages/Company/Home/Home";
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
 import RealizeTest from "./pages/Dev/Test/Realize/RealizeTest";
-import Details from "./pages/Test/Details/Details";
-import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
-
-
+import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
+import Templates from "./pages/Test/Templates/Templates";
+import { useEffect } from "react";
+import TestService from "./services/apiDevSkills/common/testService";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Details />} />
+        <Route path="/" element={<TemplateDetails />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
@@ -111,9 +111,15 @@ const App = () => {
           }
         />
         <Route
-          path="/company/test/aplly"
+          path="/company/test/templates"
           element={
-            auth && type === "COMPANY" ? <ReadyProof /> : <CompanyLogin />
+            auth && type === "COMPANY" ? <Templates /> : <CompanyLogin />
+          }
+        />
+        <Route
+          path="/company/test/templates/:id"
+          element={
+            auth && type === "COMPANY" ? <TemplateDetails /> : <p>aaaa</p>
           }
         />
       </Routes>

@@ -19,6 +19,19 @@ export default class TestService {
     }
   }
 
+  static async getAllTemplates(token?: string) {
+    try {
+      const res = await fetch(" http://localhost:3004/test-admin").then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return { error: "Não foi posssivel efetuar a busca de informações" };
+    }
+  }
+
   static async useTemplate(data: any, token: string): Promise<any> {
     const config = requestConfig("POST", data, token);
 
@@ -30,7 +43,7 @@ export default class TestService {
       return res;
     } catch (error) {
       console.error(error);
-      return {error: "Não foi possível concluir a solicitação."}
+      return { error: "Não foi possível concluir a solicitação." };
     }
   }
 }

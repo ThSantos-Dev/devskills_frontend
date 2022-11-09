@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoArrowBackCircleOutline, IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Container from "../../../components/shared/Layout/Container/Container";
 import TestConfig, {
@@ -10,12 +10,14 @@ import TestConfig, {
 import Preview from "../../../components/shared/Test/Preview/Preview";
 import { applyTemplate } from "../../../slices/common/testSlice";
 import { TTestRealize } from "../../../types/devskills/test/TTestRealize";
-import Button from "./../../../components/shared/Form/Button/Button";
-import styles from "./Details.module.css";
+import Button from "../../../components/shared/Form/Button/Button";
+import styles from "./TemplateDetails.module.css";
 
 interface Props {}
 
-const Details = (props: Props) => {
+const TemplateDetails = (props: Props) => {
+  const { id } = useParams();
+
   const [testData, setTestData] = useState<TTestRealize>({
     id: 1,
     data_inicio: "2022-10-28T00:00:00.000Z",
@@ -189,6 +191,8 @@ const Details = (props: Props) => {
         autoClose: 3000,
       });
 
+      console.log("entrei: ", success);
+
       navigate("/company/home");
     }
 
@@ -197,7 +201,7 @@ const Details = (props: Props) => {
         autoClose: 3000,
       });
     }
-  }, [success, error, navigate]);
+  }, [error, navigate, success]);
 
   return (
     <Container>
@@ -205,12 +209,12 @@ const Details = (props: Props) => {
         <div className={styles.title_container}>
           <div className={styles.title}>
             <div
-              onClick={() => navigate("/company/test/aplly")}
+              onClick={() => navigate("/company/test/templates")}
               className={styles.icon}
             >
               <IoArrowBackCircleOutline />
             </div>
-            <h1>Detalhes da prova</h1>
+            <h1>Detalhes da prova - {id}</h1>
           </div>
           <Button
             color="solid_white"
@@ -328,4 +332,4 @@ const Details = (props: Props) => {
   );
 };
 
-export default Details;
+export default TemplateDetails;

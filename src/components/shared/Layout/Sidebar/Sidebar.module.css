@@ -115,11 +115,15 @@ body.dark {
 .sidebar .header .logo_text {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .header .image_text .name {
   margin-top: 2px;
   font-size: 18px;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .header .image_text .tag_name {
@@ -327,7 +331,7 @@ body.dark .home .text {
     padding-bottom: 10vh;
   }
 
-  .sidebar:not(.close)  header {
+  .sidebar:not(.close) header {
     padding-bottom: 10px;
     border-bottom: 1px solid var(--toggle-color);
   }

@@ -7,6 +7,7 @@ interface Props {
   description: string;
   stack: string;
   icons: { url: string; name: string }[];
+  handleOnClick(): void;
 }
 
 const TestDevSkillsCard: React.FC<Props> = ({
@@ -14,9 +15,10 @@ const TestDevSkillsCard: React.FC<Props> = ({
   description,
   stack,
   icons,
+  handleOnClick,
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleOnClick}>
       <div className={styles.image_container}>
         <div className={styles.image}>
           <img src={Logo} alt="" />
@@ -34,8 +36,8 @@ const TestDevSkillsCard: React.FC<Props> = ({
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/2048px-Unofficial_JavaScript_logo_2.svg.png"
               alt=""
             /> */}
-            {icons.map((icon) => (
-              <img src={icon.url} alt={icon.name} />
+            {icons.map((icon, index) => (
+              <img key={index} src={icon.url} alt={icon.name} />
             ))}
           </div>
         </div>
