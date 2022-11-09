@@ -1,8 +1,14 @@
-import { useState } from "react";
-import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { IoArrowBackCircleOutline, IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Container from "../../../components/shared/Layout/Container/Container";
+import TestConfig, {
+  TTestConfigData,
+} from "../../../components/shared/Test/Config/TestConfig";
 import Preview from "../../../components/shared/Test/Preview/Preview";
+import { applyTemplate } from "../../../slices/common/testSlice";
 import { TTestRealize } from "../../../types/devskills/test/TTestRealize";
 import Button from "./../../../components/shared/Form/Button/Button";
 import styles from "./Details.module.css";
@@ -11,7 +17,7 @@ interface Props {}
 
 const Details = (props: Props) => {
   const [testData, setTestData] = useState<TTestRealize>({
-    id: 76,
+    id: 1,
     data_inicio: "2022-10-28T00:00:00.000Z",
     data_fim: "2022-10-31T00:00:00.000Z",
     duracao: "01:00:20",
@@ -117,24 +123,104 @@ const Details = (props: Props) => {
     },
   });
 
+  const [testConfig, setTestConfig] = useState<TTestConfigData>({
+    data_inicio: "",
+    data_fim: "",
+    duracao: "",
+    ids_stacks: [],
+    ids_habilidades: [],
+  });
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  // State de que controla os erros
+  const [errors, setErrors] = useState({
+    skills: { error: false, message: "" },
+    stacks: { error: false, message: "" },
+    initialDate: { error: false, message: "" },
+  });
+
   const navigate = useNavigate();
 
+  const { success, error } = useSelector((state: any) => state.test);
+  const dispatch = useDispatch<any>();
+
+  const handleValidate = (): boolean => {
+    setErrors({
+      ...errors,
+      initialDate: {
+        error: false,
+        message: "",
+      },
+    });
+
+    if (new Date(testConfig.data_inicio) > new Date(testConfig.data_fim)) {
+      toast.error("A data inicial não pode ser maior que a data final.");
+      setErrors({
+        ...errors,
+        initialDate: {
+          error: true,
+          message: "A data inicial não pode ser maior que a data final.",
+        },
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleApplyTest = () => {
-  }
+    if (!handleValidate()) return;
+
+    const data = {
+      id_prova: testData.id,
+      data_inicio: testConfig.data_inicio,
+      data_fim: testConfig.data_fim,
+      duracao: testConfig.duracao + ":00" || "",
+    };
+
+    dispatch(applyTemplate(data));
+  };
   // Implementar lógica para aplicação de Provas prontas
+
+  useEffect(() => {
+    if (success) {
+      toast.success(success, {
+        autoClose: 3000,
+      });
+
+      navigate("/company/home");
+    }
+
+    if (error) {
+      toast.error(error, {
+        autoClose: 3000,
+      });
+    }
+  }, [success, error, navigate]);
 
   return (
     <Container>
       <div className={styles.container}>
         <div className={styles.title_container}>
-          <div
-            onClick={() => navigate("/company/test/aplly")}
-            className={styles.icon}
-          >
-            <IoArrowBackCircleOutline />
+          <div className={styles.title}>
+            <div
+              onClick={() => navigate("/company/test/aplly")}
+              className={styles.icon}
+            >
+              <IoArrowBackCircleOutline />
+            </div>
+            <h1>Detalhes da prova</h1>
           </div>
-          <h1>Detalhes da prova</h1>
-          <Button color="solid_gray" size="small" text="Aplicar" />
+          <Button
+            color="solid_white"
+            size="small"
+            text="Aplicar"
+            onClick={() => {
+              setShowModal(true);
+              document.body.style.overflow = "hidden";
+            }}
+          />
         </div>
 
         <div className={styles.content_container}>
@@ -165,7 +251,7 @@ const Details = (props: Props) => {
                 <span>HTML5, CSS3 e JavaScript</span>
               </li>
               <li>
-                <h3>Última atualização em:</h3>
+                <h3>Criada em:</h3>
                 <span> 22/09/2022 ás 14:30:04</span>
               </li>
               <li>
@@ -189,6 +275,52 @@ const Details = (props: Props) => {
           <div className={styles.question_container}>
             <h2>Questões:</h2>
             <Preview testData={testData} buttonControll={false} />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={
+          !showModal
+            ? `${styles.modal_container} ${styles.close}`
+            : styles.modal_container
+        }
+      >
+        <div className={styles.modal}>
+          <div
+            className={styles.close}
+            onClick={() => {
+              setShowModal(false);
+              document.body.style.overflow = "auto";
+            }}
+          >
+            <IoClose title="Fechar" />
+          </div>
+
+          <h2>Estamos quase lá...</h2>
+          <TestConfig
+            readyProof={true}
+            errors={errors}
+            setErrors={(state: any) => setErrors(state)}
+            getData={(data) => setTestConfig({ ...testConfig, ...data })}
+          />
+
+          <div className={styles.button_container}>
+            <Button
+              color="solid_white"
+              size="small"
+              text="Cancelar"
+              onClick={() => {
+                setShowModal(false);
+                document.body.style.overflow = "auto";
+              }}
+            />
+            <Button
+              color="solid_white"
+              size="small"
+              text="Aplicar"
+              onClick={handleApplyTest}
+            />
           </div>
         </div>
       </div>

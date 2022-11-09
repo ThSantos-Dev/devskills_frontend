@@ -1,4 +1,5 @@
 .config_container {
+  color: var(--color-white-text);
   display: flex;
   background-color: var(--dark-container);
   margin-top: 20px;
@@ -44,8 +45,6 @@
 }
 
 @media only screen and (max-width: 1024px) {
-
-
   .config {
     flex-direction: column;
     gap: 40px;

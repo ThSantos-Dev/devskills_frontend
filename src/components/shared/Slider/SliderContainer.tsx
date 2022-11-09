@@ -10,7 +10,7 @@ const SliderContainer = ({ item }: Props) => {
     <div className={styles.container}>
       {item.map((a: any) => (
         <div className={styles.slider_item}>
-          <TestDevSkillsCard />
+          {/* <TestDevSkillsCard /> */}
         </div>
       ))}
     </div>

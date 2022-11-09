@@ -105,8 +105,8 @@ const Sidebar = (props: Props) => {
 
             <ul className="menu-links">
               {type === "DEV" &&
-                devNavegation.map((data) => (
-                  <li>
+                devNavegation.map((data, index) => (
+                  <li key={index}>
                     <Link to={data.navigateTo}>
                       <div className={styles.icon}>{data.icon}</div>
                       <span className={`${styles.text} ${styles.nav_text}`}>
@@ -117,8 +117,8 @@ const Sidebar = (props: Props) => {
                 ))}
 
               {type === "COMPANY" &&
-                companyNavegation.map((data) => (
-                  <li>
+                companyNavegation.map((data, index) => (
+                  <li key={index}>
                     <Link to={data.navigateTo}>
                       <div className={styles.icon}>{data.icon}</div>
                       <span className={`${styles.text} ${styles.nav_text}`}>

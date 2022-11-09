@@ -93,7 +93,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 0px 18px;
+  padding: 0px clamp(.8rem, 1vw, 1rem); 
 
   border-radius: 20px;
   background-color: var(--dark-pink);

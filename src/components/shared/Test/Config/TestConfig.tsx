@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
-
 import styles from "./TestConfig.module.css";
-import Accept from "./../../Accept/Accept";
-import SelectCustom from "./../../Form/Select/SelectCustom";
-import { useState } from "react";
-import Input from "../../Form/Input/Input";
+
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { TSkill } from "../../../../types/devskills/skill/TSkill";
+
 import { getAll as getAllSkills } from "../../../../slices/common/skillSlice";
 import { getAll as getAllStacks } from "../../../../slices/common/stackSlice";
+import { TSkill } from "../../../../types/devskills/skill/TSkill";
+
+import Input from "../../Form/Input/Input";
+import Accept from "./../../Accept/Accept";
+import SelectCustom from "./../../Form/Select/SelectCustom";
+
 import { selectFormat } from "../../../../utils/select-format";
 
 interface Props {
+  readyProof?: boolean;
   errors: {
     skills: { error: boolean; message: string };
     stacks: { error: boolean; message: string };
@@ -21,16 +24,10 @@ interface Props {
     skills: { error: boolean; message: string };
     stacks: { error: boolean; message: string };
   }): void;
-  getData(data: {
-    data_inicio: string;
-    data_fim: string;
-    duracao: string;
-    ids_stacks: number[];
-    ids_habilidades: number[];
-  }): void;
+  getData(data: TTestConfigData): void;
 }
 
-type TTestConfigData = {
+export type TTestConfigData = {
   data_inicio: string;
   data_fim: string;
   duracao: string;
@@ -48,7 +45,12 @@ type TSelected = {
   value: string;
 };
 
-const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
+const TestConfig: React.FC<Props> = ({
+  readyProof,
+  errors,
+  getData,
+  setErrors,
+}) => {
   // Controla a exibição do relógio para definir duração
   const [showTime, setShowTime] = useState<boolean>(false);
 
@@ -60,7 +62,6 @@ const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
     ids_stacks: [],
     ids_habilidades: [],
   });
-
 
   // Instanciando o dispatch para ter acesso as funções do Redux
   const dispatch: any = useDispatch();
@@ -78,9 +79,11 @@ const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
 
   // Buscando as Stacks e Skills
   useEffect(() => {
+    if (readyProof) return;
+
     dispatch(getAllSkills());
     dispatch(getAllStacks());
-  }, [dispatch]);
+  }, [dispatch, readyProof]);
 
   // Altera os dados das inputs
   const handleOnChange = (value: string | TSelected[], name: string) => {
@@ -134,13 +137,8 @@ const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
   }, [inputs.ids_stacks, skills, stacks]);
 
   useEffect(() => {
-
-    // VALIDANTE
-    if(errors.initialDate.error)
-      return 
-
-
-  }, [errors.initialDate])
+    if (errors.initialDate.error) return;
+  }, [errors.initialDate]);
 
   return (
     <div className={styles.config_container}>
@@ -212,39 +210,41 @@ const TestConfig: React.FC<Props> = ({ errors, getData, setErrors }) => {
           )}
         </div>
 
-        <div className={styles.skills_container}>
-          <SelectCustom
-            name="stacks"
-            options={stacks && selectFormat(stacks)}
-            handleOnChange={(value) => handleOnChange(value, "stacks")}
-            placeholder="Selecione"
-            label="Stacks"
-            isMulti={true}
-            closeMenuOnSelect={false}
-            isLoading={stackLoading}
-            error={errors.stacks.error}
-            errorMessage={errors.stacks.message}
-            handleOnFocus={() =>
-              setErrors({ ...errors, stacks: { error: false, message: "" } })
-            }
-          />
+        {!readyProof && (
+          <div className={styles.skills_container}>
+            <SelectCustom
+              name="stacks"
+              options={stacks && selectFormat(stacks)}
+              handleOnChange={(value) => handleOnChange(value, "stacks")}
+              placeholder="Selecione"
+              label="Stacks"
+              isMulti={true}
+              closeMenuOnSelect={false}
+              isLoading={stackLoading}
+              error={errors.stacks.error}
+              errorMessage={errors.stacks.message}
+              handleOnFocus={() =>
+                setErrors({ ...errors, stacks: { error: false, message: "" } })
+              }
+            />
 
-          <SelectCustom
-            name="skills"
-            options={skillFiltered && selectFormat(skillFiltered)}
-            handleOnChange={(value) => handleOnChange(value, "skills")}
-            placeholder="Selecione"
-            label="Tecnologias"
-            isMulti={true}
-            closeMenuOnSelect={false}
-            isLoading={skillLoading}
-            error={errors.skills.error}
-            errorMessage={errors.skills.message}
-            handleOnFocus={() =>
-              setErrors({ ...errors, skills: { error: false, message: "" } })
-            }
-          />
-        </div>
+            <SelectCustom
+              name="skills"
+              options={skillFiltered && selectFormat(skillFiltered)}
+              handleOnChange={(value) => handleOnChange(value, "skills")}
+              placeholder="Selecione"
+              label="Tecnologias"
+              isMulti={true}
+              closeMenuOnSelect={false}
+              isLoading={skillLoading}
+              error={errors.skills.error}
+              errorMessage={errors.skills.message}
+              handleOnFocus={() =>
+                setErrors({ ...errors, skills: { error: false, message: "" } })
+              }
+            />
+          </div>
+        )}
       </div>
     </div>
   );

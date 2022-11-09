@@ -6,6 +6,7 @@ import { BsGithub } from "react-icons/bs";
 import { ChangeEvent, useState } from "react";
 
 interface Props {
+  readProof?: boolean;
   getData(data: {
     titulo: string;
     descricao: string;
@@ -13,7 +14,7 @@ interface Props {
   }): void;
 }
 
-const TestDescription: React.FC<Props> = ({ getData }) => {
+const TestDescription: React.FC<Props> = ({ readProof, getData }) => {
   // Armazena os dados das inputs
   const [inputs, setInputs] = useState({
     titulo: "",
@@ -50,18 +51,20 @@ const TestDescription: React.FC<Props> = ({ getData }) => {
         }
       ></textarea>
 
-      <div className={styles.link_github}>
-        <BsGithub />
-        <input
-          type="text"
-          name="link_repositorio"
-          placeholder="link do github"
-          value={inputs.link_repositorio}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleOnChange(e.target.value, e.target.name)
-          }
-        />
-      </div>
+      {!readProof && (
+        <div className={styles.link_github}>
+          <BsGithub />
+          <input
+            type="text"
+            name="link_repositorio"
+            placeholder="link do github"
+            value={inputs.link_repositorio}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleOnChange(e.target.value, e.target.name)
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };

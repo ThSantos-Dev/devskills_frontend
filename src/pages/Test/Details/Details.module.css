@@ -20,29 +20,32 @@
   margin-bottom: 20px;
 }
 
+.title {
+  display: flex;
+  gap: 20px;
+}
+
 .title_container h1 {
   flex: 1;
   color: var(--color-white-text);
   font-size: clamp(1.8rem, 5vw, 2rem);
 }
 
-.title_container .icon svg{
+.title_container .icon svg {
   cursor: pointer;
-  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  z-index: 1000;
-
+  z-index: 10;
 }
 
 .title_container .icon:hover svg {
-  transition: all .3s ease;
-  color: #Fff;
+  transition: all 0.3s ease;
+  color: #fff;
 }
-
 
 .content_container header {
   padding: 20px;
@@ -111,4 +114,103 @@
 .question_container h2 {
   padding: 20px 0;
   align-self: flex-start;
+}
+
+/*  Modal  */
+
+.modal_container.close {
+  position: absolute;
+  left: 0;
+  top: -100vh;
+}
+
+.modal_container {
+  width: 100%;
+  height: 100vh;
+
+  color: var(--color-white-text);
+
+  padding: 10vh 40px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: grid;
+  place-items: center;
+
+  overflow: auto;
+
+  background-color: rgba(0, 0, 0, 0.491);
+  transition: all 0.3s ease;
+}
+
+.modal_container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.modal {
+  width: 70vw;
+  max-width: 920px;
+
+  position: relative;
+
+  padding: 40px;
+
+  border-radius: 20px;
+  background-color: var(--dark-container);
+}
+
+.modal > div:not(.close, .button_container) {
+  background-color: var(--dark-light-blue);
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+.close svg {
+  font-size: clamp(2rem, 5.3vw, 3rem);
+  color: var(--color-white-text);
+
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.close svg:hover {
+  color: white;
+  font-weight: bold;
+}
+
+.button_container {
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 2rem;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 560px) {
+  .title_container {
+    flex-direction: column;
+  }
+
+  .modal_container {
+    z-index: 1000;
+    margin: 0;
+    padding: 10vh 0px;
+  }
+  .modal {
+    width: calc(100% - 20px);
+    padding: 20px 12px;
+
+    border-radius: 10px;
+  }
+
+  .modal h2 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+  }
 }

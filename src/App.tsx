@@ -27,8 +27,7 @@ import ReadyProof from "./pages/Test/ReadyProof/ReadyProof";
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
   const { auth, loading, type } = useAuth();
-  console.count("renderizações");
-  console.log("tipo: " + type);
+
   if (loading) {
     return <p>Carregando...</p>;
   }

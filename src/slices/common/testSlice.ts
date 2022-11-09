@@ -1,7 +1,7 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TTestRegister } from "../../types/devskills/test/TTestRegister";
-import testService from './../../services/apiDevSkills/common/testService';
+import testService from "./../../services/apiDevSkills/common/testService";
 
 interface ITestSlice {
   test: any;
@@ -26,25 +26,47 @@ export const create = createAsyncThunk(
   "test/create",
   async (test: any, thunkAPI) => {
     // Resgatando o token do usuário autenticado do Slice de auth
-    const { auth }: any = thunkAPI.getState()
+    const { auth }: any = thunkAPI.getState();
 
     console.log(auth);
 
     const data: TTestRegister = {
       ...test,
-      id_criador: auth.user.data.idEmpresa,
-      tipo_criador: auth.user.data.type
-    }
+      // id_criador: auth.user.data.idEmpresa,
+      // tipo_criador: auth.user.data.type
+      id_criador: 1,
+      tipo_criador: "ADMIN",
+    };
 
-    console.log(data)
-    
+    console.log(data);
 
     const res = await testService.create(data, "");
 
-    if(res.error) 
-        return thunkAPI.rejectWithValue(res.error)
-    
-    return thunkAPI.fulfillWithValue(res.message)
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.message);
+  }
+);
+
+export const applyTemplate = createAsyncThunk(
+  "test/applyTemplate",
+  async (config: any, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    console.log(auth);
+
+    const data = {
+      id_empresa: auth.user.id,
+      ...config,
+    };
+
+    const res = await testService.useTemplate(data, auth.token);
+
+    if (res.error) {
+      return thunkAPI.rejectWithValue(res.error);
+    }
+
+    return thunkAPI.fulfillWithValue(res.message);
   }
 );
 
@@ -82,11 +104,31 @@ export const testSlice = createSlice({
         state.test = {};
         state.tests = [];
 
-        state.error = action.error;
+        state.error = action.payload;
+      })
+      // Template
+      .addCase(applyTemplate.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(applyTemplate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = action.payload;
+        state.test = {};
+        state.tests = [];
+      })
+      .addCase(applyTemplate.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = [];
+
+        state.error = action.payload;
       });
   },
 });
-
 
 // Exportanto o Slice
 export const { reset } = testSlice.actions;

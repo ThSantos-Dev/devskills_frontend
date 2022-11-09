@@ -51,11 +51,11 @@ body.dark {
   padding: 10px 14px;
   background: var(--sidebar-color);
   transition: var(--tran-05);
-  z-index: 100;
+  z-index: 1000;
 }
 .sidebar.close {
   width: 88px;
-  z-index: 0;
+  z-index: 1000;
 }
 
 /* ===== Reusable code - Here ===== */
