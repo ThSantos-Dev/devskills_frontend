@@ -21,7 +21,7 @@ export default class TestService {
 
   static async getAllTemplates(token?: string) {
     try {
-      const res = await fetch(" http://localhost:3004/test-admin").then(
+      const res = await fetch(BASE_URL + "/test/admin").then(
         (data) => data.json()
       );
 

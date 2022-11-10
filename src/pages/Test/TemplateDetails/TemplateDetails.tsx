@@ -3,6 +3,7 @@ import { IoArrowBackCircleOutline, IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Button from "../../../components/shared/Form/Button/Button";
 import Container from "../../../components/shared/Layout/Container/Container";
 import TestConfig, {
   TTestConfigData,
@@ -10,7 +11,6 @@ import TestConfig, {
 import Preview from "../../../components/shared/Test/Preview/Preview";
 import { applyTemplate } from "../../../slices/common/testSlice";
 import { TTestRealize } from "../../../types/devskills/test/TTestRealize";
-import Button from "../../../components/shared/Form/Button/Button";
 import styles from "./TemplateDetails.module.css";
 
 interface Props {}
@@ -232,24 +232,28 @@ const TemplateDetails = (props: Props) => {
             <h2>Informações gerais</h2>
 
             <ul className={styles.list_details}>
-              <li>
-                <h3>Quantidade de questões: </h3>
-                <div className={styles.question_info}>
-                  <div>
-                    <h4>Dissertativas:</h4>
-                    <span>3</span>
+              {!testData.prova.link_repositorio ? (
+                <li>
+                  <h3>Quantidade de questões: </h3>
+                  <div className={styles.question_info}>
+                    <div>
+                      <h4>Dissertativas:</h4>
+                      <span>3</span>
+                    </div>
+                    <div>
+                      <h4>Múltipla seleção:</h4>
+                      <span>5</span>
+                    </div>
+                    <div>
+                      <h4>Única escolha:</h4>
+                      <span>2</span>
+                    </div>
                   </div>
-                  <div>
-                    <h4>Múltipla seleção:</h4>
-                    <span>5</span>
-                  </div>
-                  <div>
-                    <h4>Única escolha:</h4>
-                    <span>2</span>
-                  </div>
-                </div>
-                <span>Total: 10</span>
-              </li>
+                  <span>Total: 10</span>
+                </li>
+              ) : (
+                <p>aaaaa</p>
+              )}
               <li>
                 <h3>Tecnologias:</h3>
                 <span>HTML5, CSS3 e JavaScript</span>

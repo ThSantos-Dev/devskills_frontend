@@ -1,6 +1,7 @@
 .container {
-  max-width: 450px;
   flex: 1;
+  max-width: 450px;
+  min-width: 300px;
   height: 200px;
 
   color: var(--color-white-text);
@@ -76,6 +77,11 @@
 
 .content p {
   font-size: clamp(0.4rem, 5vw, 0.8rem);
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .info_container {
@@ -93,7 +99,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 0px clamp(.8rem, 1vw, 1rem); 
+  padding: 0px clamp(0.8rem, 1vw, 1rem);
 
   border-radius: 20px;
   background-color: var(--dark-pink);

@@ -23,12 +23,13 @@
 .title {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .title_container h1 {
   flex: 1;
   color: var(--color-white-text);
-  font-size: clamp(1.8rem, 5vw, 2rem);
+  font-size: clamp(1.6rem, 5vw, 2rem);
 }
 
 .title_container .icon svg {
@@ -82,7 +83,7 @@
 }
 
 .list_details li p {
-  font-size: clamp(0.5rem, 5vw, 1rem);
+  font-size: clamp(0.5rem, 4vw, 1rem);
   line-height: 2rem;
   letter-spacing: 0.1rem;
 }
@@ -95,6 +96,8 @@
 .question_info {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .question_info div {
@@ -192,10 +195,12 @@
   padding-top: 2rem;
 }
 
+
 /* Media Queries */
 @media only screen and (max-width: 560px) {
   .title_container {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .modal_container {
