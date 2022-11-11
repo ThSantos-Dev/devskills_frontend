@@ -2,20 +2,101 @@
 import styles from "./Filter.module.css";
 
 // Hooks
-import { useState } from 'react';
+import { useState } from "react";
 
 // Icons
-import { IoClose } from 'react-icons/io5';
-import { BsFilterSquare } from 'react-icons/bs';
+import { BsFilterSquare } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 // Components
-import SelectCustom from './../../Form/Select/SelectCustom';
+import SelectCustom from "./../../Form/Select/SelectCustom";
 
-interface Props {}
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Filter = (props: Props) => {
+import { TSkill } from "../../../../types/devskills/skill/TSkill";
+import { getAll as getAllSkills } from "./../../../../slices/common/skillSlice";
+import { getAll as getAllStacks } from "./../../../../slices/common/stackSlice";
+import { selectFormat } from "./../../../../utils/select-format";
+
+interface Props {
+  getFilters(filters?: TSkillsData | null, type?: "PRATICA" | "TEORICA"): void;
+}
+
+type TSelected = {
+  label: string;
+  value: string;
+};
+
+export type TSkillsData = {
+  stacks: number[];
+  skills: number[];
+};
+
+const Filter: React.FC<Props> = ({ getFilters }) => {
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
+  const { skills, loading: skillLoading } = useSelector(
+    (state: any) => state.skill
+  );
+  const { stacks, loading: stackLoading } = useSelector(
+    (state: any) => state.stack
+  );
+  const dispatch = useDispatch<any>();
+
+  // State responsável por armazenar os dados dos selects
+  const [selects, setSelects] = useState<TSkillsData>({
+    stacks: [],
+    skills: [],
+  });
+
+  // State responsável por armazenar as skills filtradas pela stack
+  const [skillFiltered, setSkillFiltered] = useState<TSkill[]>([]);
+  const [typeOfTest, setTypeOfTest] = useState<"PRATICA" | "TEORICA">(
+    "TEORICA"
+  );
+
+  // Função responsável por alterar os do Selects a cada alteracao
+  const handleOnChange = (selecteds: TSelected[], input: string) => {
+    const selectedId = {
+      ...selects,
+      [input]: selecteds.map((select: TSelected) => parseInt(select.value)),
+    };
+
+    setSelects(selectedId);
+
+    getFilters({ ...selectedId });
+  };
+
+  // Buscando as Stacks e Skills
+  useEffect(() => {
+    dispatch(getAllSkills());
+    dispatch(getAllStacks());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Recuperando o valor dos Radio buttons
+  useEffect(() => {
+    getFilters(null, typeOfTest)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typeOfTest])
+
+  // Filtrando as skills com base nas stacks
+  useEffect(() => {
+    if (selects.stacks.length === 0 || !stacks) return;
+
+    let filtered: TSkill[] = [];
+
+    selects.stacks.map((idStack: number) => {
+      return (filtered = [
+        ...filtered,
+        ...skills.filter((skill: TSkill) => skill.idStack === idStack),
+      ]);
+    });
+
+    setSkillFiltered(filtered);
+    console.log(filtered);
+  }, [selects.stacks, skills, stacks]);
 
   return (
     <div
@@ -67,13 +148,22 @@ const Filter = (props: Props) => {
 
           <div className={styles.radio_button}>
             <label>
-              <input type="radio" name="type" />
+              <input
+                type="radio"
+                name="type"
+                defaultChecked={true}
+                onChange={() => setTypeOfTest("TEORICA")}
+              />
               <span>Teórica</span>
             </label>
           </div>
           <div className={styles.radio_button}>
             <label>
-              <input type="radio" name="type" />
+              <input
+                type="radio"
+                name="type"
+                onChange={() => setTypeOfTest("PRATICA")}
+              />
               <span>Prática</span>
             </label>
           </div>
@@ -82,40 +172,34 @@ const Filter = (props: Props) => {
         <div className={styles.select_container}>
           <SelectCustom
             label="Stacks"
-            handleOnChange={() => {}}
-            options={[
-              { label: "Back-end", value: "1" },
-              { label: "Front-end", value: "2" },
-              { label: "Mobile", value: "3" },
-              { label: "DBA", value: "4" },
-              { label: "DevOps", value: "5" },
-            ]}
+            handleOnChange={(selecteds: TSelected[]) =>
+              handleOnChange(selecteds, "stacks")
+            }
+            options={stacks && selectFormat(stacks)}
             name="stacks"
             placeholder="Selecione..."
             isMulti={true}
             closeMenuOnSelect={false}
+            isLoading={stackLoading}
           />
         </div>
         <div className={styles.select_container}>
           <SelectCustom
             label="Habilidades"
-            handleOnChange={() => {}}
-            options={[
-              { label: "JavaScript", value: "1" },
-              { label: "Java", value: "2" },
-              { label: "HTML5", value: "3" },
-              { label: "CSS3", value: "4" },
-              { label: "Python", value: "5" },
-            ]}
-            name="skill"
+            handleOnChange={(selecteds: TSelected[]) =>
+              handleOnChange(selecteds, "skills")
+            }
+            options={skillFiltered && selectFormat(skillFiltered)}
+            name="skills"
             placeholder="Selecione..."
             isMulti={true}
+            isLoading={skillLoading}
             closeMenuOnSelect={false}
           />
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Filter
+export default Filter;

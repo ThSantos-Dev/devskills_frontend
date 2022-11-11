@@ -1,56 +1,87 @@
 import styles from "./ChooseType.module.css";
 // Icons
 import { IoClose } from "react-icons/io5";
-import bookQuestionIcon from "../../../assets/icon/book-question.svg";
-import folderIcon from "../../../assets/icon/folder.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
+  content?: {
+    title: string;
+    description: string;
+    options: {
+      icon: JSX.Element | string;
+      label: string;
+      handleOnClick(): void;
+    }[];
+  };
+  closeButton?: boolean;
   show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ChooseType: React.FC<Props> = ({ show = false }) => {
+const ChooseType: React.FC<Props> = ({
+  content,
+  closeButton = true,
+  show = false,
+  setShow,
+}) => {
+
   if (show) {
-    document.body.style.overflowY = "hidden";
+    document.body.style.overflow = "hidden";
   }
 
   if (!show) {
-    document.body.style.overflowY = "scroll";
-    return <></>;
+    document.body.style.overflow = "auto";
   }
 
   return (
-    <div className={styles.container}>
+    <div
+      className={
+        !show ? `${styles.container} ${styles.close}` : styles.container
+      }
+    >
       <div className={styles.modal}>
-        <div className={styles.close}>
-          <IoClose />
-        </div>
+        {closeButton && (
+          <div className={styles.close} onClick={() => setShow(false)}>
+            <IoClose />
+          </div>
+        )}
 
         <div className={styles.content}>
-          <h1>Aplicação de Prova</h1>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
+          <h1>{content?.title}</h1>
+          <p>{content?.description}</p>
         </div>
 
         <div className={styles.choose_container}>
-          <div className={styles.choose_item_container}>
-            <div className={styles.choose_item_icon}>
-              <img src={folderIcon} alt="" />
+          {content?.options.map((choose) => (
+            <div
+              className={styles.choose_item_container}
+              onClick={choose.handleOnClick}
+            >
+              <div className={styles.choose_item_icon}>
+                {typeof choose.icon === "string" ? (
+                  <img src={choose.icon} alt="" />
+                ) : (
+                  choose.icon
+                )}
+              </div>
+              <span>{choose.label}</span>
             </div>
+          ))}
 
-            <span>Prova personalizada</span>
-          </div>
-
-          <div className={styles.choose_item_container}>
+          {/* 
+          <div
+            className={styles.choose_item_container}
+            onClick={() => {
+              navigate("/company/test/templates");
+              document.body.style.overflow = "auto";
+            }}
+          >
             <div className={styles.choose_item_icon}>
               <img src={bookQuestionIcon} alt="" />
             </div>
 
             <span>Nossas provas</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

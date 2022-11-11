@@ -7,6 +7,7 @@ interface Props {
   description: string;
   stack: string;
   icons: { url: string; name: string }[];
+  type: "PRATICA" | "TEORICA";
   handleOnClick(): void;
 }
 
@@ -15,6 +16,7 @@ const TestDevSkillsCard: React.FC<Props> = ({
   description,
   stack,
   icons,
+  type,
   handleOnClick,
 }) => {
   return (
@@ -23,7 +25,7 @@ const TestDevSkillsCard: React.FC<Props> = ({
         <div className={styles.image}>
           <img src={Logo} alt="" />
         </div>
-        {/* <span className={styles.info_text}>Estágio</span> */}
+        <span className={styles.info_text}>{type}</span>
       </div>
 
       <div className={styles.content}>

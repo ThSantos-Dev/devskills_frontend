@@ -191,8 +191,6 @@ const TemplateDetails = (props: Props) => {
         autoClose: 3000,
       });
 
-      console.log("entrei: ", success);
-
       navigate("/company/home");
     }
 
@@ -281,7 +279,9 @@ const TemplateDetails = (props: Props) => {
           </header>
 
           <div className={styles.question_container}>
-            <h2>Questões:</h2>
+            <div className={styles.title_container}>
+              <h2>Questões:</h2>
+            </div>
             <Preview testData={testData} buttonControll={false} />
           </div>
         </div>

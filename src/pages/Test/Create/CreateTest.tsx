@@ -17,10 +17,14 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { storage } from "../../../firebase";
 
+import { AiOutlineCode } from "react-icons/ai";
+import { MdOutlineSchool } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { create } from "../../../slices/common/testSlice";
-import Button from "../../../components/shared/Form/Button/Button";
 import { toast } from "react-toastify";
+import Button from "../../../components/shared/Form/Button/Button";
+import { create } from "../../../slices/common/testSlice";
+import ChooseType from "../ChooseType/ChooseType";
+import Container from "./../../../components/shared/Layout/Container/Container";
 
 export type TTestRegisterData = {
   titulo: string;
@@ -64,6 +68,37 @@ const CreateTest: React.FC = () => {
       },
     ],
   });
+
+  const [openModal, setOpenModal] = useState<boolean>(true);
+  const [typeOfTest, setTypeOfTest] = useState<"PRATICA" | "TEORICA">();
+
+  const modalContent = {
+    title: "Que tipo de desafio você deseja?",
+    description:
+      "Lorem Ipsum é simplesmente um texto fictício da indústria tipográfica e de impressão. Lorem Ipsum tem sido o texto fictício padrão da indústria desde os anos 1500, ",
+    options: [
+      {
+        icon: <AiOutlineCode />,
+        label: "Teste  prático",
+        handleOnClick: () => {
+          setTypeOfTest("PRATICA");
+          setOpenModal(false);
+          document.body.style.overflow = "auto";
+        },
+      },
+      {
+        icon: <MdOutlineSchool />,
+        label: "Teste teórico",
+        handleOnClick: () => {
+          setOpenModal(false)
+          setTypeOfTest("TEORICA");
+          setOpenModal(false);
+
+          document.body.style.overflow = "auto";
+        },
+      },
+    ],
+  };
 
   // State de que controla os erros
   const [errors, setErrors] = useState({
@@ -317,7 +352,7 @@ const CreateTest: React.FC = () => {
           const testDataFormated = {
             ...fields,
 
-            tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
+            tipo_prova: typeOfTest,
             questoes: fields.questoes!.map((questao) => ({
               enunciado: questao.enunciado,
               id_tipo:
@@ -341,7 +376,7 @@ const CreateTest: React.FC = () => {
       const testDataFormated = {
         ...fields,
 
-        tipo_prova: fields.link_repositorio ? "PRATICA" : "TEORICA",
+        tipo_prova: typeOfTest,
         questoes: fields.questoes!.map((questao) => ({
           enunciado: questao.enunciado,
           id_tipo:
@@ -410,56 +445,68 @@ const CreateTest: React.FC = () => {
   };
 
   return (
-    <form
-      className={styles.container}
-      onSubmit={(e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    <Container backTo="/company/mytests" title="Cadastro de prova">
+      <form
+        className={styles.container}
+        onSubmit={(e: FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
 
-        handleOnSubmit();
-      }}
-    >
-      <TestDescription getData={getDesciptionData} />
-
-      <TestConfig
-        getData={getConfigData}
-        errors={errors}
-        setErrors={(state: any) => setErrors(state)}
-      />
-
-      <QuestionContainer
-        addQuestion={addQuestion}
-        showOptions={!testData.link_repositorio}
+          handleOnSubmit();
+        }}
       >
-        {testData.questoes &&
-          testData.questoes.map((question, index) => (
-            <TestQuestion
-              setType={question.tipo}
-              key={index}
-              initialData={{
-                enunciado: question.enunciado,
-                image: question.image,
-              }}
-              options={question.alternativas && question.alternativas}
-              handleOnChange={(data) => handleOnChangeQuestion(data, index)}
-              handleOnDelete={() => deleteQuestion(index)}
-              addAlternative={() => addAternativeToSpecificOption(index)}
-              deleteQuestionAlternative={deleteQuestionAlternative}
-              handleOnChangeAlternative={handleOnChangeAlternative}
-              handleOnSelectAlternativeCorrect={
-                handleOnSelectAlternativeCorrect
-              }
-              indexQuestion={index}
-              questionRefElDiv={
-                index === testData.questoes!.length - 1
-                  ? questionRefElDiv
-                  : null
-              }
-            />
-          ))}
-      </QuestionContainer>
+        <TestDescription
+          getData={getDesciptionData}
+          readProof={typeOfTest === "TEORICA"}
+        />
 
-      <Button text="Cadastrar" color="solid_white" size="medium" />
-    </form>
+        <TestConfig
+          getData={getConfigData}
+          errors={errors}
+          setErrors={(state: any) => setErrors(state)}
+        />
+
+        <QuestionContainer
+          addQuestion={addQuestion}
+          showOptions={typeOfTest === "TEORICA"}
+        >
+          {testData.questoes &&
+            testData.questoes.map((question, index) => (
+              <TestQuestion
+                setType={question.tipo}
+                key={index}
+                initialData={{
+                  enunciado: question.enunciado,
+                  image: question.image,
+                }}
+                options={question.alternativas && question.alternativas}
+                handleOnChange={(data) => handleOnChangeQuestion(data, index)}
+                handleOnDelete={() => deleteQuestion(index)}
+                addAlternative={() => addAternativeToSpecificOption(index)}
+                deleteQuestionAlternative={deleteQuestionAlternative}
+                handleOnChangeAlternative={handleOnChangeAlternative}
+                handleOnSelectAlternativeCorrect={
+                  handleOnSelectAlternativeCorrect
+                }
+                indexQuestion={index}
+                questionRefElDiv={
+                  index === testData.questoes!.length - 1
+                    ? questionRefElDiv
+                    : null
+                }
+              />
+            ))}
+        </QuestionContainer>
+
+        <Button text="Cadastrar" color="solid_white" size="medium" />
+      </form>
+
+      <ChooseType
+        content={modalContent}
+        show={openModal}
+        setShow={setOpenModal}
+        closeButton={false}
+      />
+    </Container>
   );
 };
 

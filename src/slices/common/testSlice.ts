@@ -1,6 +1,8 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { TSkillsData } from "../../components/shared/Layout/Filter/Filter";
 import { TTestRegister } from "../../types/devskills/test/TTestRegister";
+import { filterTestQuery, TFilterTestData } from "../../utils/filter-query";
 import testService from "./../../services/apiDevSkills/common/testService";
 
 interface ITestSlice {
@@ -32,15 +34,13 @@ export const create = createAsyncThunk(
 
     const data: TTestRegister = {
       ...test,
-      // id_criador: auth.user.data.idEmpresa,
-      // tipo_criador: auth.user.data.type
-      id_criador: 1,
-      tipo_criador: "ADMIN",
+      id_criador: auth.user.id,
+      tipo_criador: auth.user.type,
     };
 
     console.log(data);
 
-    const res = await testService.create(data, "");
+    const res = await testService.create(data, auth.user.token);
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
@@ -52,6 +52,22 @@ export const getAllTemplates = createAsyncThunk(
   "test/getAllTemplates",
   async (_, thunkAPI) => {
     const res = await testService.getAllTemplates();
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
+export const filterTemplates = createAsyncThunk(
+  "test/filterTemplates",
+  async (data: TFilterTestData, thunkAPI) => {
+    // Resgatando usuário autenticado
+    const { auth }: any = thunkAPI.getState();
+
+    const filters = filterTestQuery(data);
+
+    const res = await testService.filterTemplates(filters, auth.user.token);
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
@@ -93,7 +109,7 @@ export const testSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = false;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -128,11 +144,33 @@ export const testSlice = createSlice({
 
         state.success = true;
         state.test = {};
-        console.log("Testes prontos: ", action.payload);
 
         state.tests = action.payload;
       })
       .addCase(getAllTemplates.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
+      // Filter Templates
+      .addCase(filterTemplates.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(filterTemplates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = true;
+        state.test = {};
+        console.log("Testes prontos filtrados: ", action.payload);
+
+        state.tests = action.payload;
+      })
+      .addCase(filterTemplates.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};

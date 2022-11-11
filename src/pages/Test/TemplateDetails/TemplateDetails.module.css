@@ -196,6 +196,15 @@
 }
 
 
+.question_container .title_container {
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+.question_container .title_container {
+  width: 100%;
+}
+
+
 /* Media Queries */
 @media only screen and (max-width: 560px) {
   .title_container {

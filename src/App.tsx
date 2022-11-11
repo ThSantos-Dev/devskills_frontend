@@ -23,6 +23,7 @@ import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import { useEffect } from "react";
 import TestService from "./services/apiDevSkills/common/testService";
+import MyTests from './pages/Company/MyTests/MyTests';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -95,6 +96,16 @@ const App = () => {
           element={
             auth && type === "COMPANY" ? (
               <ComapanyHome />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/mytests"
+          element={
+            auth && type === "COMPANY" ? (
+              <MyTests />
             ) : (
               <Navigate to="/company/login" />
             )

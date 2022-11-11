@@ -37,7 +37,11 @@ const Sidebar = (props: Props) => {
 
   const companyNavegation = [
     { text: "Dashboard", navigateTo: "/company/home", icon: <BiHomeAlt /> },
-    { text: "Provas", navigateTo: "/company/tests", icon: <RiFoldersFill /> },
+    {
+      text: "Provas",
+      navigateTo: "/company/mytests",
+      icon: <RiFoldersFill />,
+    },
     {
       text: "Notificações",
       navigateTo: "/company/notifications",

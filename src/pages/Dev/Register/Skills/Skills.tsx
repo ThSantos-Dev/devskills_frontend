@@ -66,7 +66,8 @@ const Skills: React.FC<Props> = ({ handleOnSubmit }) => {
   useEffect(() => {
     dispatch(getAllSkills());
     dispatch(getAllStacks());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Filtrando as skills com base nas stacks
   useEffect(() => {

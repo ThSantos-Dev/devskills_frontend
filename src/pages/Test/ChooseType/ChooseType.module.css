@@ -3,17 +3,24 @@
   min-height: 100vh;
 
   position: absolute;
+  right: 0;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
 
   display: grid;
   place-items: center;
 
   background-color: rgba(11, 11, 69, 0.3);
+
+  transition: all .3s ease;
+}
+
+.container.close {
+    top: -200vh;
 }
 
 .modal {
-  max-width: 1080px;
+  max-width: 70vw;
 
   color: var(--color-white-text);
 
@@ -58,12 +65,12 @@
 }
 
 .content h1 {
-    font-size: clamp(1.4rem, 4.3vw, 2rem);
+    font-size: clamp(1.4rem, 3vw, 2rem);
     font-weight: 800;
 }
 
 .content p {
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 1vw, 1.5rem);
 }
 
 .choose_container {
@@ -95,7 +102,7 @@
 }
 
 .choose_item_icon {
-    padding: clamp(.8rem, 7vw, 3.5rem);
+    padding: clamp(.8rem, 5vw, 3.5rem);
 
     border: 3px solid var(--color-white-text);
     border-radius: 20%;
@@ -104,12 +111,16 @@
 }
 
 .choose_item_container span {
-    font-size: clamp(.4rem, 3vw, 1.6rem);
+    font-size: clamp(.4rem, 2vw, 1.6rem);
 }
 
 .choose_item_icon img {
-    width: clamp(2rem, 6.5vw, 5rem);
+    width: clamp(2rem, 5.5vw, 5rem);
     height: inherit;
+}
+
+.choose_item_icon svg {
+    font-size: clamp(2rem, 5.5vw, 5rem);
 }
 
 /* Media Queries */
