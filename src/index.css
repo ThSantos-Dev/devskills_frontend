@@ -16,8 +16,6 @@
   --color-red-text: #530014;
   --color-blue-text: #153269;
 
-  
-
   /* Tema escurdo */
   --dark-grey: #312e4e;
   --dark-container: #0b0b3d;
@@ -27,14 +25,18 @@
   --dark-pink: #9e3c54;
   --dark-yellow: #daa05c;
 
+  --success-green: #1BB69D;
+
   --input-border-color: ;
   --input-placeholder-color: ;
   --input-placeholder-size: ;
   --input-value-color: ;
   --inout-value-size: ;
 
-  --select-background-dark: #45457B;
-  --select-background-multivalue: #8383A7;
+  --background-light-blue: #4166c6;
+
+  --select-background-dark: #45457b;
+  --select-background-multivalue: #8383a7;
 }
 
 body {

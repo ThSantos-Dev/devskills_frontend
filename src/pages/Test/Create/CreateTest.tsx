@@ -25,6 +25,9 @@ import Button from "../../../components/shared/Form/Button/Button";
 import { create } from "../../../slices/common/testSlice";
 import ChooseType from "../ChooseType/ChooseType";
 import Container from "./../../../components/shared/Layout/Container/Container";
+import { useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export type TTestRegisterData = {
   titulo: string;
@@ -44,6 +47,8 @@ export type TTestRegisterData = {
 };
 
 const CreateTest: React.FC = () => {
+  const [idToast, setIdToast] = useState<any>();
+
   // State responsável por armazenar os dados da prova
   const [testData, setTestData] = useState<TTestRegisterData>({
     titulo: "",
@@ -69,6 +74,8 @@ const CreateTest: React.FC = () => {
     ],
   });
 
+  const { success, error, loading } = useSelector((state: any) => state.test);
+
   const [openModal, setOpenModal] = useState<boolean>(true);
   const [typeOfTest, setTypeOfTest] = useState<"PRATICA" | "TEORICA">();
 
@@ -90,7 +97,7 @@ const CreateTest: React.FC = () => {
         icon: <MdOutlineSchool />,
         label: "Teste teórico",
         handleOnClick: () => {
-          setOpenModal(false)
+          setOpenModal(false);
           setTypeOfTest("TEORICA");
           setOpenModal(false);
 
@@ -443,6 +450,35 @@ const CreateTest: React.FC = () => {
 
     return true;
   };
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+
+    if (loading && !idToast) setIdToast(toast.loading("Processando..."));
+
+    if (success) {
+      toast.update(idToast, {
+        render: success,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      navigate("/company/mytests");
+    }
+
+    if (error) {
+      toast.update(idToast, {
+        render: error,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error, loading]);
 
   return (
     <Container backTo="/company/mytests" title="Cadastro de prova">

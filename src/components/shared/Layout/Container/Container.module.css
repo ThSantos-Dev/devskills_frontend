@@ -55,3 +55,10 @@
         padding: 120px 15px 40px;
     }
 }
+
+@media only screen and (max-width: 475px) {
+  .title_container {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}

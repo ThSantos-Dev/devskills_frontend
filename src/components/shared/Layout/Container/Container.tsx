@@ -2,16 +2,19 @@ import styles from "./Container.module.css";
 
 import Sidebar from "../Sidebar/Sidebar";
 import Filter, { TSkillsData } from "./../Filter/Filter";
-import { IoArrowBackCircleOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
-import Button from './../../Form/Button/Button';
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import Button from "./../../Form/Button/Button";
+import * as CSS from "csstype";
 
 interface Props {
   title?: string;
   filter?: boolean;
   backTo?: string;
-  button?: {show: boolean, text: string, handleOnClick(): void};
+  button?: { show: boolean; text: string; handleOnClick(): void };
   getFilters?(filters?: TSkillsData | null, type?: "PRATICA" | "TEORICA"): void;
+
+  styleTitleContainer?: CSS.Properties;
   children: JSX.Element | JSX.Element[];
 }
 
@@ -21,17 +24,17 @@ const Container: React.FC<Props> = ({
   button,
   backTo,
   getFilters,
+  styleTitleContainer,
   children,
-}) => { 
-  const navigate = useNavigate()
-
+}) => {
+  const navigate = useNavigate();
 
   return (
     <div>
       <Sidebar />
 
       <main className={styles.container}>
-        <div className={styles.title_container}>
+        <div className={styles.title_container} style={styleTitleContainer}>
           <div className={styles.title}>
             {backTo && (
               <div onClick={() => navigate(backTo!)} className={styles.icon}>

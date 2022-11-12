@@ -1,0 +1,75 @@
+.bar {
+  max-width: 640px;
+
+  margin: auto;
+
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#bar_buttons {
+  width: inherit;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+#bar_buttons button {
+  color: var(--color-white-text);
+  font-size: 1.3rem;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0.3rem;
+
+  border: 2px solid var(--color-white-text);
+  border-radius: 100%;
+
+  cursor: pointer;
+  transition: 0.4s;
+
+  background-color: var(--dark-container);
+}
+
+#bar_buttons button:hover,
+#bar_buttons .current_page {
+  color: var(--dark-container);
+  background-color: var(--color-white-text);
+}
+
+.buttons_container {
+  width: 100%;
+  height: inherit;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 40px;
+}
+
+.buttons_container .button,
+.buttons_container .current_page {
+  min-width: 60px;
+  height: 60px;
+
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* Responsividade */
+@media only screen and (max-width: 464px) {
+  #bar_buttons {
+    gap: 20px;
+  }
+
+  #bar_buttons .buttons_container {
+    justify-content: center;
+    gap: 15px;
+  }
+}

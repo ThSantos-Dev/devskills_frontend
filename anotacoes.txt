@@ -3,3 +3,18 @@ magalu@email.com
 47.960.950/0001-21
 
 Node.JS | Restante API | Serviço de backend de notícias - Implementar um serviço de backend de notícias criado em Node.JS com Vanilla JS incluindo autorização de escrita e Restante APIs.
+
+
+Ferramentas
+VSCode, Figma, Azure, AzureDevOps, Clockify, Git, GitHub, Postman, Insominia
+
+Linguagens
+JavaScript, TypeScript
+
+Libs / Frameworks
+React.js, Redux, Node.js, Express
+
+API externa
+ NodeMailer
+ Firebase
+ Brasil API

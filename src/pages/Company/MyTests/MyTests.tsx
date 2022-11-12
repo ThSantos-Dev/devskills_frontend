@@ -1,18 +1,20 @@
+import styles from "./MyTests.module.css";
+
 import { useState } from "react";
 import Container from "../../../components/shared/Layout/Container/Container";
 import ChooseType from "../../Test/ChooseType/ChooseType";
-import Button from "./../../../components/shared/Form/Button/Button";
 
+import { useNavigate } from "react-router-dom";
 import bookQuestionIcon from "../../../assets/icon/book-question.svg";
 import folderIcon from "../../../assets/icon/folder.svg";
-import { useNavigate } from 'react-router-dom';
+import PagenationBar from "../../../components/shared/Layout/Pagination/PagenationBar";
 
 interface Props {}
 
 const MyTests = (props: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   const modalContent = {
     title: "Aplicação de prova",
@@ -39,13 +41,43 @@ const MyTests = (props: Props) => {
   };
 
   return (
-    <Container filter={false}>
-      <Button
-        color="solid_white"
-        size="medium"
-        text="Criar prova"
-        handleOnClick={() => setOpenModal(true)}
+    <Container
+      filter={true}
+      getFilters={() => {}}
+      title="Suas provas"
+      button={{
+        show: true,
+        text: "Aplicar",
+        handleOnClick: () => setOpenModal(true),
+      }}
+      styleTitleContainer={{ maxWidth: "1400px" }}
+    >
+      <div className={styles.cards_container}>
+        {[1, 2, 3, 4, 5, 6, 7].map((_, index) => (
+          <div className={styles.card} key={index}>
+            <h2>Prova de Python</h2>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled i
+            </p>
+
+            <div className={styles.card_info}>
+              <span>Ativa</span>
+              <span>Até 20/09</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <PagenationBar
+        numberOfPages={20}
+        numberOfButtons={3}
+        page={1}
+        redirectTo="/company/home"
       />
+
       <ChooseType
         show={openModal}
         setShow={setOpenModal}

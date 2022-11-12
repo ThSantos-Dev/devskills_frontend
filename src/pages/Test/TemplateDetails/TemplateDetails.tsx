@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoArrowBackCircleOutline, IoClose } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -79,7 +79,7 @@ const TemplateDetails = (props: Props) => {
       id_prova: test.id,
       data_inicio: testConfig.data_inicio,
       data_fim: testConfig.data_fim,
-      duracao: testConfig.duracao + ":00" || "",
+      duracao: testConfig.duracao ? +testConfig.duracao + ":00" : null,
     };
 
     dispatch(applyTemplate(data));
@@ -120,31 +120,17 @@ const TemplateDetails = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error, loading]);
 
+  if (!test?.provas) return <p>Carregando...</p>;
+
   return (
-    <Container>
+    <Container
+      backTo="/company/test/templates"
+      title={`Detalhes da prova - ${
+        test.provas.titulo ? test.provas.titulo : ""
+      }`}
+    >
       {test.provas && (
         <div className={styles.container}>
-          <div className={styles.title_container}>
-            <div className={styles.title}>
-              <div
-                onClick={() => navigate("/company/test/templates")}
-                className={styles.icon}
-              >
-                <IoArrowBackCircleOutline />
-              </div>
-              <h1>Detalhes da prova - {test?.provas.titulo || ""}</h1>
-            </div>
-            <Button
-              color="solid_white"
-              size="small"
-              text="Aplicar"
-              onClick={() => {
-                setShowModal(true);
-                document.body.style.overflow = "hidden";
-              }}
-            />
-          </div>
-
           <div className={styles.content_container}>
             <header>
               <h2>Informações gerais</h2>
@@ -226,7 +212,20 @@ const TemplateDetails = (props: Props) => {
               <div className={styles.title_container}>
                 <h2>Questões:</h2>
               </div>
+
               <Preview testData={test} buttonControll={false} />
+
+              <div className={styles.button_container}>
+                <Button
+                  color="solid_white"
+                  size="small"
+                  text="Aplicar"
+                  onClick={() => {
+                    setShowModal(true);
+                    document.body.style.overflow = "hidden";
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

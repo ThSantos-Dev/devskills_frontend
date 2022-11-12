@@ -1,7 +1,6 @@
 import styles from "./ChooseType.module.css";
 // Icons
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   content?: {
@@ -24,7 +23,6 @@ const ChooseType: React.FC<Props> = ({
   show = false,
   setShow,
 }) => {
-
   if (show) {
     document.body.style.overflow = "hidden";
   }
@@ -52,8 +50,9 @@ const ChooseType: React.FC<Props> = ({
         </div>
 
         <div className={styles.choose_container}>
-          {content?.options.map((choose) => (
+          {content?.options.map((choose, index) => (
             <div
+              key={index}
               className={styles.choose_item_container}
               onClick={choose.handleOnClick}
             >

@@ -118,11 +118,15 @@
   padding: 20px 0;
   align-self: flex-start;
 }
+.question_container .button_container {
+  align-self: flex-end;
+  margin-bottom: 60px;
+}
 
 /*  Modal  */
 
 .modal_container.close {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: -100vh;
 }
@@ -135,7 +139,7 @@
 
   padding: 10vh 40px;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
