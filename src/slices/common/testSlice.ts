@@ -1,7 +1,7 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TSkillsData } from "../../components/shared/Layout/Filter/Filter";
 import { TTestRegister } from "../../types/devskills/test/TTestRegister";
+import { TTestTemplateDetails } from "../../types/devskills/test/TTestTemplateDetails";
 import { filterTestQuery, TFilterTestData } from "../../utils/filter-query";
 import testService from "./../../services/apiDevSkills/common/testService";
 
@@ -72,6 +72,21 @@ export const filterTemplates = createAsyncThunk(
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
     return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
+export const getTemplateById = createAsyncThunk(
+  "test/getTemplateById",
+  async (id: string, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    const res = await testService.getTemplateById(id, auth.user.token);
+
+    console.log(res);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue<TTestTemplateDetails>(res.data);
   }
 );
 
@@ -178,7 +193,27 @@ export const testSlice = createSlice({
 
         state.error = action.payload;
       })
-      // Template
+      // Get details of template
+      .addCase(getTemplateById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getTemplateById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.test = action.payload;
+        state.tests = {};
+      })
+      .addCase(getTemplateById.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
+      // Apply Template
       .addCase(applyTemplate.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -188,8 +223,6 @@ export const testSlice = createSlice({
         state.error = null;
 
         state.success = action.payload;
-        state.test = {};
-        state.tests = {};
       })
       .addCase(applyTemplate.rejected, (state, action) => {
         state.loading = false;

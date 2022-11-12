@@ -36,14 +36,29 @@ export default class TestService {
     const config = requestConfig("GET", undefined, token);
 
     try {
-      const res = await fetch(BASE_URL + "/test/admin?" + filters, config).then((data) =>
-        data.json()
+      const res = await fetch(BASE_URL + "/test/admin?" + filters, config).then(
+        (data) => data.json()
       );
 
       return res;
     } catch (error) {
       console.log(error);
       return { error: "Não foi possível concluir a solicitação." };
+    }
+  }
+
+  static async getTemplateById(id: string, token?: string) {
+    const config = requestConfig("GET", undefined, token);
+
+    try {
+      const res = fetch(BASE_URL + "/test/admin/" + id, config).then((data) =>
+        data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return {error: "Não foi possível concluir a solicitação."}
     }
   }
 

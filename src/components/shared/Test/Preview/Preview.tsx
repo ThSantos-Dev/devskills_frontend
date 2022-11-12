@@ -1,20 +1,20 @@
 import styles from "./Preview.module.css";
 
-import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
+import { TTestTemplateDetails } from "../../../../types/devskills/test/TTestTemplateDetails";
 import Alternative from "../../../developer/Test/Realize/Alternative/Alternative";
 import Button from "../../Form/Button/Button";
 import Input from "./../../Form/Input/Input";
 
 interface Props {
-  testData: TTestRealize;
+  testData: TTestTemplateDetails;
   buttonControll: boolean;
 }
 
 const Preview = ({ testData, buttonControll }: Props) => {
   return (
-    <div>
+    <div className={styles.container}>
       {testData &&
-        testData.prova.provasTodasQuestoes.map((question, index) => (
+        testData.provas.provasTodasQuestoes.map((question, index) => (
           <div className={styles.question} key={question.idQuestaoProva}>
             <span>Questão {index + 1}</span>
             <p>{question.questaoProva.enunciado}</p>
@@ -92,7 +92,7 @@ const Preview = ({ testData, buttonControll }: Props) => {
                   />
                 )}
 
-                {index !== testData.prova.provasTodasQuestoes.length - 1 ? (
+                {index !== testData.provas.provasTodasQuestoes.length - 1 ? (
                   <Button
                     color="solid_white"
                     size="small"

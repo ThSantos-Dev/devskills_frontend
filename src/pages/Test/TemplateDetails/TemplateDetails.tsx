@@ -9,8 +9,11 @@ import TestConfig, {
   TTestConfigData,
 } from "../../../components/shared/Test/Config/TestConfig";
 import Preview from "../../../components/shared/Test/Preview/Preview";
-import { applyTemplate } from "../../../slices/common/testSlice";
-import { TTestRealize } from "../../../types/devskills/test/TTestRealize";
+import {
+  applyTemplate,
+  getTemplateById,
+} from "../../../slices/common/testSlice";
+import { TTestTemplateDetails } from "../../../types/devskills/test/TTestTemplateDetails";
 import styles from "./TemplateDetails.module.css";
 
 interface Props {}
@@ -18,112 +21,13 @@ interface Props {}
 const TemplateDetails = (props: Props) => {
   const { id } = useParams();
 
-  const [testData, setTestData] = useState<TTestRealize>({
-    id: 1,
-    data_inicio: "2022-10-28T00:00:00.000Z",
-    data_fim: "2022-10-31T00:00:00.000Z",
-    duracao: "01:00:20",
-    idEmpresa: 2,
-    idProva: 149,
-    prova: {
-      id: 149,
-      titulo: "Prova teórica",
-      descricao:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      ativo: true,
-      link_repositorio: "",
-      ultima_atualizacao: null,
-      idProvaTipo: 1,
-      provasTodasQuestoes: [
-        {
-          id: 81,
-          idQuestaoProva: 107,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 41,
-                idQuestaoProva: 107,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 42,
-                idQuestaoProva: 107,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 43,
-                idQuestaoProva: 107,
-              },
-            ],
-            id: 107,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fe8e2ba0-810-f605-30a0-756db138b6f?alt=media&token=68480ae2-fc78-4251-9ebe-8febc07cf86c",
-            questaoProvaTipo: {
-              tipo: "MULTIPLA_ESCOLHA",
-              id: 1,
-            },
-          },
-        },
-        {
-          id: 82,
-          idQuestaoProva: 108,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [],
-            id: 108,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
-            questaoProvaTipo: {
-              tipo: "DISSERTATIVA",
-              id: 3,
-            },
-          },
-        },
-        {
-          id: 83,
-          idQuestaoProva: 109,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 23,
-                idQuestaoProva: 109,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 432,
-                idQuestaoProva: 109,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 12,
-                idQuestaoProva: 109,
-              },
-            ],
-            id: 109,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2F4ffb1a2-78b8-52d-d543-14fa2b8327a?alt=media&token=dd6a3084-af5d-4baf-8ac4-8990b5bbac95",
-            questaoProvaTipo: {
-              tipo: "UNICA_ESCOLHA",
-              id: 2,
-            },
-          },
-        },
-      ],
-    },
-  });
+  const [idToast, setIdToast] = useState<any>();
+
+  const { test, success, loading, error } = useSelector<
+    any,
+    { test: TTestTemplateDetails; loading: boolean; success: any; error: any }
+  >((state: any) => state.test);
+  const dispatch = useDispatch<any>();
 
   const [testConfig, setTestConfig] = useState<TTestConfigData>({
     data_inicio: "",
@@ -143,9 +47,6 @@ const TemplateDetails = (props: Props) => {
   });
 
   const navigate = useNavigate();
-
-  const { success, error } = useSelector((state: any) => state.test);
-  const dispatch = useDispatch<any>();
 
   const handleValidate = (): boolean => {
     setErrors({
@@ -175,7 +76,7 @@ const TemplateDetails = (props: Props) => {
     if (!handleValidate()) return;
 
     const data = {
-      id_prova: testData.id,
+      id_prova: test.id,
       data_inicio: testConfig.data_inicio,
       data_fim: testConfig.data_fim,
       duracao: testConfig.duracao + ":00" || "",
@@ -183,109 +84,153 @@ const TemplateDetails = (props: Props) => {
 
     dispatch(applyTemplate(data));
   };
-  // Implementar lógica para aplicação de Provas prontas
 
   useEffect(() => {
+    if (!id) return;
+
+    dispatch(getTemplateById(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  useEffect(() => {
+    if (!testConfig.data_inicio) return;
+
+    if (loading && !idToast) setIdToast(toast.loading("Processando..."));
+
     if (success) {
-      toast.success(success, {
+      toast.update(idToast, {
+        render: success,
+        type: "success",
+        isLoading: false,
         autoClose: 3000,
       });
 
-      navigate("/company/home");
+      navigate("/company/mytests");
     }
 
     if (error) {
-      toast.error(error, {
+      toast.update(idToast, {
+        render: error,
+        type: "error",
+        isLoading: false,
         autoClose: 3000,
       });
     }
-  }, [error, navigate, success]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error, loading]);
 
   return (
     <Container>
-      <div className={styles.container}>
-        <div className={styles.title_container}>
-          <div className={styles.title}>
-            <div
-              onClick={() => navigate("/company/test/templates")}
-              className={styles.icon}
-            >
-              <IoArrowBackCircleOutline />
+      {test.provas && (
+        <div className={styles.container}>
+          <div className={styles.title_container}>
+            <div className={styles.title}>
+              <div
+                onClick={() => navigate("/company/test/templates")}
+                className={styles.icon}
+              >
+                <IoArrowBackCircleOutline />
+              </div>
+              <h1>Detalhes da prova - {test?.provas.titulo || ""}</h1>
             </div>
-            <h1>Detalhes da prova - {id}</h1>
+            <Button
+              color="solid_white"
+              size="small"
+              text="Aplicar"
+              onClick={() => {
+                setShowModal(true);
+                document.body.style.overflow = "hidden";
+              }}
+            />
           </div>
-          <Button
-            color="solid_white"
-            size="small"
-            text="Aplicar"
-            onClick={() => {
-              setShowModal(true);
-              document.body.style.overflow = "hidden";
-            }}
-          />
-        </div>
 
-        <div className={styles.content_container}>
-          <header>
-            <h2>Informações gerais</h2>
+          <div className={styles.content_container}>
+            <header>
+              <h2>Informações gerais</h2>
 
-            <ul className={styles.list_details}>
-              {!testData.prova.link_repositorio ? (
+              <ul className={styles.list_details}>
+                {!test?.provas.link_repositorio ? (
+                  <li>
+                    <h3>Quantidade de questões: </h3>
+                    <div className={styles.question_info}>
+                      <div>
+                        <h4>Dissertativas:</h4>
+                        <span>
+                          {
+                            test?.provas.provasTodasQuestoes.filter(
+                              (question) =>
+                                question.questaoProva.questaoProvaTipo.tipo ===
+                                "DISSERTATIVA"
+                            ).length
+                          }
+                        </span>
+                      </div>
+                      <div>
+                        <h4>Múltipla seleção:</h4>
+                        <span>
+                          {
+                            test?.provas.provasTodasQuestoes.filter(
+                              (question) =>
+                                question.questaoProva.questaoProvaTipo.tipo ===
+                                "MULTIPLA_ESCOLHA"
+                            ).length
+                          }
+                        </span>
+                      </div>
+                      <div>
+                        <h4>Única escolha:</h4>
+                        <span>
+                          {
+                            test?.provas.provasTodasQuestoes.filter(
+                              (question) =>
+                                question.questaoProva.questaoProvaTipo.tipo ===
+                                "UNICA_ESCOLHA"
+                            ).length
+                          }
+                        </span>
+                      </div>
+                    </div>
+                    <span>
+                      Total: {test?.provas.provasTodasQuestoes.length}
+                    </span>
+                  </li>
+                ) : (
+                  <p>aaaaa</p>
+                )}
                 <li>
-                  <h3>Quantidade de questões: </h3>
-                  <div className={styles.question_info}>
-                    <div>
-                      <h4>Dissertativas:</h4>
-                      <span>3</span>
-                    </div>
-                    <div>
-                      <h4>Múltipla seleção:</h4>
-                      <span>5</span>
-                    </div>
-                    <div>
-                      <h4>Única escolha:</h4>
-                      <span>2</span>
-                    </div>
-                  </div>
-                  <span>Total: 10</span>
+                  <h3>Tecnologias:</h3>
+                  <span>
+                    {test?.provas.provaHabilidade
+                      .map(
+                        (skill: { habilidade: { nome: string } }) =>
+                          skill.habilidade.nome
+                      )
+                      .toString()
+                      .replaceAll(",", ", ")}
+                    .
+                  </span>
                 </li>
-              ) : (
-                <p>aaaaa</p>
-              )}
-              <li>
-                <h3>Tecnologias:</h3>
-                <span>HTML5, CSS3 e JavaScript</span>
-              </li>
-              <li>
-                <h3>Criada em:</h3>
-                <span> 22/09/2022 ás 14:30:04</span>
-              </li>
-              <li>
-                <h3>Descrição sugerida: </h3>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s with
-                  the release of Letraset sheets containing Lorem Ipsum
-                  passages, and more recently with desktop publishing software
-                  like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
-              </li>
-            </ul>
-          </header>
+                <li>
+                  <h3>Aplicada por:</h3>
+                  <span>{test?.provas.provaAndamento.length} empresas</span>
+                </li>
+                <li>
+                  <h3>Descrição: </h3>
+                  <p>{test?.provas.descricao}</p>
+                </li>
+              </ul>
+            </header>
 
-          <div className={styles.question_container}>
-            <div className={styles.title_container}>
-              <h2>Questões:</h2>
+            <div className={styles.question_container}>
+              <div className={styles.title_container}>
+                <h2>Questões:</h2>
+              </div>
+              <Preview testData={test} buttonControll={false} />
             </div>
-            <Preview testData={testData} buttonControll={false} />
           </div>
         </div>
-      </div>
+      )}
 
       <div
         className={
