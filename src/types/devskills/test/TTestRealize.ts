@@ -1,3 +1,7 @@
+// export interface Root {
+//   data: Data;
+// }
+
 export type TTestRealize = {
   id: number;
   data_inicio: string;
@@ -27,20 +31,21 @@ export type TProvasTodasQuest = {
 }
 
 export type TQuestaoProva = {
-  alternativaProva: TAlternativaProva[];
   id: number;
   enunciado: string;
   foto: string;
+  idQuestaoProvaTipo: number;
+  alternativaProva: TAlternativaProva[];
   questaoProvaTipo: TQuestaoProvaTipo;
 }
 
 export type TAlternativaProva = {
-  opcao: string;
   id: number;
   idQuestaoProva: number;
+  opcao: string;
 }
 
-export interface TQuestaoProvaTipo {
-  tipo: "DISSERTATIVA" | "MULTIPLA_ESCOLHA" | "UNICA_ESCOLHA";
+export type TQuestaoProvaTipo = {
   id: number;
+  tipo: string;
 }

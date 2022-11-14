@@ -112,6 +112,19 @@ export const applyTemplate = createAsyncThunk(
   }
 );
 
+export const getToRealizeById = createAsyncThunk(
+  "test/getToRealizeById",
+  async (id: number, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    const res = await testService.getToRealizeById(id, auth.user.token);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
 export const testSlice = createSlice({
   name: "testSlice",
   initialState,
@@ -225,6 +238,28 @@ export const testSlice = createSlice({
         state.success = action.payload;
       })
       .addCase(applyTemplate.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
+      // getToRealizeById
+      .addCase(getToRealizeById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getToRealizeById.fulfilled, (state, action) => {
+        state.success = true;
+        state.loading = false;
+        state.error = null;
+
+        state.test = action.payload;
+        state.tests = {}
+
+      })
+      .addCase(getToRealizeById.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};

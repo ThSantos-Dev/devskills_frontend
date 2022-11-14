@@ -58,7 +58,7 @@ export default class TestService {
       return res;
     } catch (error) {
       console.error(error);
-      return {error: "Não foi possível concluir a solicitação."}
+      return { error: "Não foi possível concluir a solicitação." };
     }
   }
 
@@ -68,6 +68,21 @@ export default class TestService {
     try {
       const res = await fetch(BASE_URL + "/test/template", config).then(
         (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return { error: "Não foi possível concluir a solicitação." };
+    }
+  }
+
+  static async getToRealizeById(id: number, token: string): Promise<any> {
+    const config = requestConfig("GET", undefined, token)
+
+    try {
+      const res = await fetch(BASE_URL + "/developer/test/" + id, config).then((data) =>
+        data.json()
       );
 
       return res;

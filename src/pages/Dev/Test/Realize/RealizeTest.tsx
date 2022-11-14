@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
-import Input from "../../../../components/shared/Form/Input/Input";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
-import Button from "./../../../../components/shared/Form/Button/Button";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getToRealizeById } from "../../../../slices/common/testSlice";
+
+import Countdown from "react-countdown-simple";
+import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
+import Button from "./../../../../components/shared/Form/Button/Button";
+import Input from "./../../../../components/shared/Form/Input/Input";
 import styles from "./RealizeTest.module.css";
-import { toast } from "react-toastify";
 
 interface Props {}
 
@@ -15,118 +18,16 @@ const RealizeTest: React.FC<Props> = () => {
   // eslint-disable-next-line
   const { id } = useParams<string>();
 
-  // Virá da API
-  // eslint-disable-next-line
-  const [testData, setTestData] = useState<TTestRealize>({
-    id: 76,
-    data_inicio: "2022-10-28T00:00:00.000Z",
-    data_fim: "2022-10-31T00:00:00.000Z",
-    duracao: "01:00:20",
-    idEmpresa: 2,
-    idProva: 149,
-    prova: {
-      id: 149,
-      titulo: "Prova teórica",
-      descricao:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      ativo: true,
-      link_repositorio: "",
-      ultima_atualizacao: null,
-      idProvaTipo: 1,
-      provasTodasQuestoes: [
-        {
-          id: 81,
-          idQuestaoProva: 107,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 41,
-                idQuestaoProva: 107,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 42,
-                idQuestaoProva: 107,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 43,
-                idQuestaoProva: 107,
-              },
-            ],
-            id: 107,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fe8e2ba0-810-f605-30a0-756db138b6f?alt=media&token=68480ae2-fc78-4251-9ebe-8febc07cf86c",
-            questaoProvaTipo: {
-              tipo: "MULTIPLA_ESCOLHA",
-              id: 1,
-            },
-          },
-        },
-        {
-          id: 82,
-          idQuestaoProva: 108,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [],
-            id: 108,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2Fcfe4408-56c7-d65f-330f-2553b62ad7f?alt=media&token=a3f72ed0-80c3-4ae8-866e-a3c60139ffb5",
-            questaoProvaTipo: {
-              tipo: "DISSERTATIVA",
-              id: 3,
-            },
-          },
-        },
-        {
-          id: 83,
-          idQuestaoProva: 109,
-          idProva: 149,
-          questaoProva: {
-            alternativaProva: [
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 23,
-                idQuestaoProva: 109,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 432,
-                idQuestaoProva: 109,
-              },
-              {
-                opcao:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
-                id: 12,
-                idQuestaoProva: 109,
-              },
-            ],
-            id: 109,
-            enunciado:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled ",
-            foto: "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2F4ffb1a2-78b8-52d-d543-14fa2b8327a?alt=media&token=dd6a3084-af5d-4baf-8ac4-8990b5bbac95",
-            questaoProvaTipo: {
-              tipo: "UNICA_ESCOLHA",
-              id: 2,
-            },
-          },
-        },
-      ],
-    },
-  });
+  const { test, success, error, loading } = useSelector<
+    any,
+    { test: TTestRealize; success: boolean; error: boolean; loading: boolean }
+  >((state) => state.test);
+
+  const [timer, setTimer] = useState<string>("");
 
   // Cria um array com as respostas do usuário
   const [responseData, setResponseData] = useState<any[]>(
-    testData.prova.provasTodasQuestoes.map((question: any) => {
+    test?.prova.provasTodasQuestoes.map((question: any) => {
       if (question.questaoProva.questaoProvaTipo.tipo !== "DISSERTATIVA") {
         return {
           id_questao: question.idQuestaoProva,
@@ -148,8 +49,34 @@ const RealizeTest: React.FC<Props> = () => {
           resposta: "",
         };
       }
-    })
+    }) || []
   );
+
+  const dispatch = useDispatch<any>();
+
+  // Busca os dados da prova
+  useEffect(() => {
+    if (!id) return;
+
+    dispatch(getToRealizeById(parseInt(id)));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  useEffect(() => {
+    if (!test?.duracao) return;
+
+    const hours = parseInt(test.duracao.split(":")[0]);
+    const minutes = parseInt(test.duracao.split(":")[1]);
+
+    setTimer(
+      new Date(
+        new Date().setSeconds(
+          new Date().getSeconds() + hours * 3600 + minutes * 60
+        )
+      ).toISOString()
+    );
+  }, [test]);
 
   // Armazena o progresso do usuário
   const [testProgress, setTestProgress] = useState<number>(0);
@@ -233,36 +160,6 @@ const RealizeTest: React.FC<Props> = () => {
     setResponseData(responses);
   };
 
-  // Timer countdown
-  const initialHours = parseInt(testData.duracao.split(":")[0]);
-  const initialMinutes = parseInt(testData.duracao.split(":")[1]);
-
-  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(
-    initialHours * 3600 + initialMinutes * 60
-  );
-
-  const hours = Math.floor(totalTimeInSeconds / 3600);
-  const minutes = Math.floor((totalTimeInSeconds / 60) % 60);
-  const seconds = Math.floor(totalTimeInSeconds % 60);
-
-  useEffect(() => {
-    if (totalTimeInSeconds === 300)
-      toast.warning(`Restam ${minutes} minutos para finalizar a prova.`);
-
-    if (totalTimeInSeconds === 60) {
-      toast.warning(`Resta ${minutes} minuto para finalizar a prova.`);
-    }
-
-    if (totalTimeInSeconds === 0) {
-      toast.error("Seu tempo acabou!");
-      return;
-    } else {
-      setTimeout(() => {
-        setTotalTimeInSeconds(totalTimeInSeconds - 1);
-      }, 1000);
-    }
-  }, [minutes, totalTimeInSeconds]);
-
   // Tabs of questions
   const [questionTab, setQuestionTab] = useState<any>(0);
 
@@ -305,8 +202,8 @@ const RealizeTest: React.FC<Props> = () => {
         <h3>Questões:</h3>
 
         <ul>
-          {testData &&
-            testData.prova.provasTodasQuestoes.map((_, index) => (
+          {test &&
+            test.prova.provasTodasQuestoes.map((_, index) => (
               <li
                 key={index}
                 className={questionTab === index ? styles.tab_selected : ""}
@@ -325,14 +222,26 @@ const RealizeTest: React.FC<Props> = () => {
 
         <div className={styles.timer}>
           <p>Tempo restante:</p>
-          <span>{`${hours.toString().padStart(2, "0")}:${minutes
+          {/* <span>{`${hours.toString().padStart(2, "0")}:${minutes
             .toString()
-            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</span>
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</span> */}
+          {timer && (
+            <Countdown
+              targetDate={timer}
+              renderer={({ days, hours, minutes, seconds }) => (
+                <span className={styles.countdown}>{`${hours.toString().padStart(2, "0")}:${minutes
+                  .toString()
+                  .padStart(2, "0")}:${seconds
+                  .toString()
+                  .padStart(2, "0")}`}</span>
+              )}
+            />
+          )}
         </div>
       </div>
 
-      {testData &&
-        testData.prova.provasTodasQuestoes.map((question, index) => (
+      {test &&
+        test.prova.provasTodasQuestoes.map((question, index) => (
           <div
             className={`${styles.question} ${
               questionTab === index ? styles.active : styles.inactive
@@ -415,7 +324,7 @@ const RealizeTest: React.FC<Props> = () => {
                 />
               )}
 
-              {index !== testData.prova.provasTodasQuestoes.length - 1 ? (
+              {index !== test.prova.provasTodasQuestoes.length - 1 ? (
                 <Button
                   color="solid_white"
                   size="small"
