@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Import - Styles
-import styles from "./MovieRow.module.css";
+import styles from "./SliderContainer.module.css";
 
 // Import - icons
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -14,11 +14,12 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 // Props
 type Props = {
-  title: string;
-  items: any[];
+  totalCards: number;
+  widthOfCard: number;
+  children: JSX.Element[];
 };
 
-const MovieRow = ({ title, items }: Props) => {
+const SliderContainer = ({ totalCards, widthOfCard, children }: Props) => {
   // State que armazena as informações de Margin atual
   const [margin, setMargin] = useState(0);
 
@@ -42,7 +43,7 @@ const MovieRow = ({ title, items }: Props) => {
     let newMargin = margin - Math.round(window.innerWidth / 2);
 
     // Largura da lista
-    let widthList = items.results!.length * 150;
+    let widthList = totalCards * widthOfCard + totalCards * 80;
 
     // Verificando se a largura que quero avançar é maior que a da lista
     if (window.innerWidth - widthList > newMargin) {
@@ -52,16 +53,9 @@ const MovieRow = ({ title, items }: Props) => {
     setMargin(newMargin);
   };
 
-  // Função que lida com o clique no item
-  const handleClickItem = (id: number) => {
-    // Redirecionando o usuário para a página de maiores detalhes do filme
-    navigate(`/movie/${id}`);
-  };
 
   return (
     <div className={styles.row}>
-      <h2>{title}</h2>
-
       {/* Controles */}
       <div className={styles.left} onClick={handleLeftArrow}>
         <FiChevronLeft />
@@ -75,25 +69,19 @@ const MovieRow = ({ title, items }: Props) => {
         <div
           className={styles.list}
           style={{
-            width: items.results!.length * 150,
+            width: totalCards * widthOfCard,
             marginLeft: margin,
           }}
         >
           {
             // Validação para verificar se há filmes
-            items.results &&
-              items.results.map((item: any) => (
+            children.length > 0 &&
+              children.map((item: any, index) => (
                 <div
                   className={styles.item}
-                  onClick={() => handleClickItem(item.id!)}
-                  key={item.id}
+                  key={index}
                 >
-                  <MovieCard
-                    movie={item}
-                    key={item.id}
-                    showLink={false}
-                    slider={true}
-                  />
+                  {item}
                 </div>
               ))
           }
@@ -103,4 +91,4 @@ const MovieRow = ({ title, items }: Props) => {
   );
 };
 
-export default MovieRow;
+export default SliderContainer;

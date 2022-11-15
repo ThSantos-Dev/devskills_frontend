@@ -3,6 +3,7 @@ import CardCompany from "../../../components/developer/Card/Company/CardCompany"
 import CardCompetency from "../../../components/developer/Card/Competency/CardCompetency";
 import CardSearchTest from "../../../components/developer/Card/SearchTest/CardSearchTest";
 import Container from "../../../components/shared/Layout/Container/Container";
+import SliderContainer from "./../../../components/shared/Slider/SliderContainer";
 import styles from "./Search.module.css";
 
 interface Props {}
@@ -20,36 +21,38 @@ const Search = (props: Props) => {
         </div>
 
         <div className={styles.cards_container}>
-          <CardCompany
-            name="senai JADNIRA"
-            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
-            place="Jandira, SP"
-            handleOnClick={() => {}}
-          />
-          <CardCompany
-            name="senai Barueri"
-            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
-            place="Jandira, SP"
-            handleOnClick={() => {}}
-          />
-          <CardCompany
-            name="senai Barueri"
-            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
-            place="Jandira, SP"
-            handleOnClick={() => {}}
-          />
-          <CardCompany
-            name="senai Barueri"
-            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
-            place="Jandira, SP"
-            handleOnClick={() => {}}
-          />
-          <CardCompany
-            name="senai Barueri"
-            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
-            place="Jandira, SP"
-            handleOnClick={() => {}}
-          />
+          <SliderContainer totalCards={5} widthOfCard={450}>
+            <CardCompany
+              name="senai JADNIRA"
+              img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+              place="Jandira, SP"
+              handleOnClick={() => {}}
+            />
+            <CardCompany
+              name="senai Barueri"
+              img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+              place="Jandira, SP"
+              handleOnClick={() => {}}
+            />
+            <CardCompany
+              name="senai Barueri"
+              img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+              place="Jandira, SP"
+              handleOnClick={() => {}}
+            />
+            <CardCompany
+              name="senai Barueri"
+              img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+              place="Jandira, SP"
+              handleOnClick={() => {}}
+            />
+            <CardCompany
+              name="senai Barueri"
+              img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+              place="Jandira, SP"
+              handleOnClick={() => {}}
+            />
+          </SliderContainer>
         </div>
       </div>
 
@@ -62,7 +65,7 @@ const Search = (props: Props) => {
           </span>
         </div>
 
-        <div className={styles.cards_container}>
+        <SliderContainer totalCards={4} widthOfCard={250}>
           <CardCompetency
             title="JavaScript - Iniciante"
             img_url="https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4"
@@ -95,7 +98,7 @@ const Search = (props: Props) => {
                             metus tincidunt felis egestas consequat. Sed ultrices ut magna nec"
             handleOnClick={() => {}}
           />
-        </div>
+        </SliderContainer>
       </div>
 
       <div className={styles.result_container}>
@@ -107,7 +110,7 @@ const Search = (props: Props) => {
           </span>
         </div>
 
-        <div className={styles.cards_container}>
+        <SliderContainer totalCards={4} widthOfCard={450} >
           <CardSearchTest
             title="Prova de PHP"
             description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
@@ -176,7 +179,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
           />
-        </div>
+        </SliderContainer>
       </div>
     </Container>
   );

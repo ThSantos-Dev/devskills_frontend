@@ -30,8 +30,8 @@ const CardSearchTest: React.FC<Props> = ({
         <p>{description}</p>
         <span className={styles.info}>{stack}</span>
         <div className={styles.icons_container}>
-          {icons.map((url) => (
-            <img src={url} alt="icone" />
+          {icons.map((url, index) => (
+            <img key={index} src={url} alt="icone" />
           ))}
         </div>
       </div>
