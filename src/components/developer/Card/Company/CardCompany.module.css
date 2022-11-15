@@ -1,0 +1,84 @@
+/* Empresa */
+.card_company {
+    min-width: 450px;
+    height: 140px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 22px 20px;
+
+    border-radius: 50px;
+    background-color: var(--dark-background);
+}
+
+.image_container {
+    width: 90px;
+    height: 90px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    object-fit: cover;
+
+}
+
+.image_container img {
+    width: inherit;
+    
+    border-radius: 100%;
+}
+
+.image_container .icon {
+    font-size: 2rem;
+    font-weight: 300;
+
+    position: absolute;
+    top: -10px;
+    right: 2px;
+}
+
+.card_company .content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding-top: 10px;
+}
+
+.card_company .content h3 {
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    font-weight: 400;
+}
+
+.card_company .content .info {
+    width: 100%;
+
+    font-size: clamp(.8rem, 5vw, 1rem);
+    font-weight: 200;
+
+    display: flex;
+    gap: 10px;
+}
+
+.card_company .content .info button {
+    all: unset;
+
+    font-weight: 500;
+    font-size: clamp(.5em, 5vw, .7rem);
+    color: var(--color-white-text);
+
+
+    padding: 6px 22px;
+
+    border-radius: 10px;
+    background-color: var(--dark-pink);
+}
+

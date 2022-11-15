@@ -1,0 +1,75 @@
+
+/* Competency Test */
+.card_competency_test {
+  min-width: 250px;
+  max-width: 250px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 25px 44px 20px 10px;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 12px;
+  background-color: var(--dark-background);
+}
+
+.card_competency_test .icon {
+  width: 40px;
+  height: 125px;
+
+  position: absolute;
+  top: -30px;
+  right: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: rotate(-45deg);
+
+  background-color: var(--dark-extra-light-blue);
+}
+
+.card_competency_test .icon img {
+  width: 30px;
+  height: 30px;
+
+  transform: rotate(45deg);
+
+  object-fit: cover;
+}
+
+.card_competency_test h3 {
+  font-size: clamp(0.8rem, 5vw, 1rem);
+}
+
+.card_competency_test p {
+  font-size: clamp(0.4rem, 5vw, 0.8rem);
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  margin-bottom: 20px;
+}
+
+.card_competency_test button {
+  all: unset;
+  width: max-content;
+
+  color: #000;
+  font-weight: bold;
+  font-size: clamp(0.4rem, 5vw, 0.8rem);
+
+  align-self: flex-end;
+
+  padding: 5px clamp(1rem, 5vw, 1.5rem);
+
+  border-radius: 8px;
+  background-color: var(--dark-extra-light-blue);
+}

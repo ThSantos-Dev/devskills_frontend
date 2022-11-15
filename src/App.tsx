@@ -24,6 +24,7 @@ import Templates from "./pages/Test/Templates/Templates";
 import { useEffect } from "react";
 import TestService from "./services/apiDevSkills/common/testService";
 import MyTests from './pages/Company/MyTests/MyTests';
+import Search from './pages/Dev/Search/Search';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -53,7 +54,7 @@ const App = () => {
         />
         <Route path="/dev/home" element={<RealizeTest />} />
         <Route path="/dev/profile" element={<RealizeTest />} />
-        <Route path="/dev/search" element={<RealizeTest />} />
+        <Route path="/dev/search" element={<Search />} />
         <Route path="/dev/tests" element={<RealizeTest />} />
         <Route path="/dev/notifications" element={<RealizeTest />} />
         <Route path="/dev/exam" element={<RealizeTest />} />

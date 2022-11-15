@@ -1,13 +1,17 @@
 import styles from "./MyTests.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../../../components/shared/Layout/Container/Container";
 import ChooseType from "../../Test/ChooseType/ChooseType";
 
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import bookQuestionIcon from "../../../assets/icon/book-question.svg";
 import folderIcon from "../../../assets/icon/folder.svg";
 import PagenationBar from "../../../components/shared/Layout/Pagination/PagenationBar";
+import { TSkillsData } from "../../Dev/Register/Skills/Skills";
+import { getAllOfCompany } from "./../../../slices/common/testSlice";
+import { TTestOfCompany } from "./../../../types/devskills/test/TTestOfCompany";
 
 interface Props {}
 
@@ -40,10 +44,42 @@ const MyTests = (props: Props) => {
     ],
   };
 
+  const [page, setPage] = useState<number>(1);
+  const { tests, loading } = useSelector<
+    any,
+    { tests: TTestOfCompany[]; loading: boolean }
+  >((state: any) => state.test);
+
+  const dispatch = useDispatch<any>();
+
+  const [filtersData, setFiltersData] = useState<TSkillsData>({
+    skills: [],
+    stacks: [],
+  });
+
+  const [typeOfTest, setTypeOfTest] = useState<"PRATICA" | "TEORICA">(
+    "TEORICA"
+  );
+
+  useEffect(() => {
+    dispatch(getAllOfCompany());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   dispatch(filterTemplates({ ...filtersData, type: typeOfTest, page }));
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [filtersData, typeOfTest]);
+
   return (
     <Container
       filter={true}
-      getFilters={() => {}}
+      getFilters={(ids, type) => {
+        if (ids) setFiltersData(ids);
+
+        if (type) setTypeOfTest(type);
+      }}
       title="Suas provas"
       button={{
         show: true,
@@ -53,22 +89,20 @@ const MyTests = (props: Props) => {
       styleTitleContainer={{ maxWidth: "1400px" }}
     >
       <div className={styles.cards_container}>
-        {[1, 2, 3, 4, 5, 6, 7].map((_, index) => (
-          <div className={styles.card} key={index}>
-            <h2>Prova de Python</h2>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled i
-            </p>
+        {tests.length > 0 &&
+          tests.map((test, index) => (
+            <div className={styles.card} key={index}>
+              <h2>{test.prova.titulo}</h2>
+              <p>{test.prova.descricao}</p>
 
-            <div className={styles.card_info}>
-              <span>Ativa</span>
-              <span>Até 20/09</span>
+              <div className={styles.card_info}>
+                <span>{}</span>
+                <span>
+                  Até {new Date(test.data_fim).toLocaleDateString("pt-BR")}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       <PagenationBar

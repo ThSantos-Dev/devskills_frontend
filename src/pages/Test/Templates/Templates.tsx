@@ -54,6 +54,8 @@ const Templates = (props: Props) => {
           <div className={styles.cards_container}>
             {tests.results &&
               tests.results.map((value: any, index: any) => (
+                
+
                 <TestDevSkillsCard
                   key={index}
                   description={value.provas.descricao}
@@ -68,8 +70,11 @@ const Templates = (props: Props) => {
                     navigate("/company/test/templates/" + value.provas.id);
                     dispatch(reset());
                   }}
+
+                  
                 />
               ))}
+
           </div>
         </main>
       </div>

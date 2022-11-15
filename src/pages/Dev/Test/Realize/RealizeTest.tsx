@@ -222,13 +222,11 @@ const RealizeTest: React.FC<Props> = () => {
 
         <div className={styles.timer}>
           <p>Tempo restante:</p>
-          {/* <span>{`${hours.toString().padStart(2, "0")}:${minutes
-            .toString()
-            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</span> */}
+
           {timer && (
             <Countdown
               targetDate={timer}
-              renderer={({ days, hours, minutes, seconds }) => (
+              renderer={({ hours, minutes, seconds }) => (
                 <span className={styles.countdown}>{`${hours.toString().padStart(2, "0")}:${minutes
                   .toString()
                   .padStart(2, "0")}:${seconds

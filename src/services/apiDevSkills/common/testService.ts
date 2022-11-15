@@ -32,6 +32,21 @@ export default class TestService {
     }
   }
 
+  static async getAllOfCompany(token: string) {
+    const config = requestConfig("GET", undefined, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/company/tests", config).then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return { error: "Não foi possivel concluir a sua solicitação." };
+    }
+  }
+
   static async filterTemplates(filters: string, token?: string) {
     const config = requestConfig("GET", undefined, token);
 
@@ -78,11 +93,11 @@ export default class TestService {
   }
 
   static async getToRealizeById(id: number, token: string): Promise<any> {
-    const config = requestConfig("GET", undefined, token)
+    const config = requestConfig("GET", undefined, token);
 
     try {
-      const res = await fetch(BASE_URL + "/developer/test/" + id, config).then((data) =>
-        data.json()
+      const res = await fetch(BASE_URL + "/developer/test/" + id, config).then(
+        (data) => data.json()
       );
 
       return res;

@@ -48,6 +48,21 @@ export const create = createAsyncThunk(
   }
 );
 
+export const getAllOfCompany = createAsyncThunk(
+  "test/getAllOfCompany",
+  async (_, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    const res = await testService.getAllOfCompany(auth.user.token);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    console.log(res);
+
+    return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
 export const getAllTemplates = createAsyncThunk(
   "test/getAllTemplates",
   async (_, thunkAPI) => {
@@ -121,7 +136,7 @@ export const getToRealizeById = createAsyncThunk(
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
-    return thunkAPI.fulfillWithValue(res.data);
+    return thunkAPI.fulfillWithValue(res);
   }
 );
 
@@ -158,6 +173,28 @@ export const testSlice = createSlice({
         state.success = null;
         state.test = {};
         state.tests = [];
+
+        state.error = action.payload;
+      })
+      // getAllOfCompany
+      .addCase(getAllOfCompany.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllOfCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = true;
+        state.test = {};
+
+        state.tests = action.payload;
+      })
+      .addCase(getAllOfCompany.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
 
         state.error = action.payload;
       })
@@ -256,8 +293,7 @@ export const testSlice = createSlice({
         state.error = null;
 
         state.test = action.payload;
-        state.tests = {}
-
+        state.tests = {};
       })
       .addCase(getToRealizeById.rejected, (state, action) => {
         state.loading = false;

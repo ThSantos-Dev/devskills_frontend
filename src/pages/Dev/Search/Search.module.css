@@ -1,0 +1,29 @@
+.result_container {
+  max-width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 30px 20px;
+  margin-bottom: 40px;
+
+  border-radius: 20px;
+  background-color: var(--dark-container);
+}
+
+.header {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.cards_container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  overflow: auto;
+}
+
