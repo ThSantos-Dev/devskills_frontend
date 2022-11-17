@@ -36,14 +36,44 @@ export default class TestService {
     const config = requestConfig("GET", undefined, token);
 
     try {
-      const res = await fetch(BASE_URL + "/company/tests", config).then(
+      const res = await fetch(BASE_URL + "/company/tests", config);
+
+      if (res.status === 401) throw new Error();
+
+      return await res.json();
+    } catch (error) {
+      console.error(error);
+      return { error: "Não foi possivel concluir a sua solicitação." };
+    }
+  }
+
+  static async filterAllOfCompany(filters: string, token: string) {
+    const config = requestConfig("GET", undefined, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/test/admin?" + filters, config).then(
         (data) => data.json()
       );
 
       return res;
     } catch (error) {
-      console.error(error);
-      return { error: "Não foi possivel concluir a sua solicitação." };
+      console.log(error);
+      return { error: "Não foi possível concluir a solicitação." };
+    }
+  }
+
+  static async filterTestOfCompany(filters: string, token: string) {
+    const config = requestConfig("GET", undefined, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/company/tests?" + filters, config).then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      return { error: "Não foi possível concluir a solicitação." };
     }
   }
 

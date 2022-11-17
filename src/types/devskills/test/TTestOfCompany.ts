@@ -10,6 +10,7 @@ export type TTestOfCompany = {
 
 export type TProva = {
   id: number;
+  ativo: boolean;
   titulo: string;
   descricao: string;
   provaTipo: TProvaTipo;

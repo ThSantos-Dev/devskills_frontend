@@ -57,7 +57,7 @@ export const login = createAsyncThunk(
       console.log(res);
 
       // Validando a resposta do servidor
-      if (res.error) {
+      if (res.error || !res.token) {
         return thunkAPI.rejectWithValue(res.error);
       }
 
@@ -112,7 +112,7 @@ export const authSlice = createSlice({
         state.success = true;
         state.error = null;
 
-        state.user = null;
+        state.user = {};
       })
       // Login
       .addCase(login.pending, (state) => {

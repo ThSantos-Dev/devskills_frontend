@@ -1,6 +1,5 @@
 // Import - Hooks
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Import - Styles
 import styles from "./SliderContainer.module.css";
@@ -22,9 +21,6 @@ type Props = {
 const SliderContainer = ({ totalCards, widthOfCard, children }: Props) => {
   // State que armazena as informações de Margin atual
   const [margin, setMargin] = useState(0);
-
-  // Utilizando hook para redirecionar o usuário
-  const navigate = useNavigate();
 
   // Função que lida com o clique do botão esquerdo - Voltar/Anterior
   const handleLeftArrow = () => {

@@ -55,7 +55,9 @@ export const getAllOfCompany = createAsyncThunk(
 
     const res = await testService.getAllOfCompany(auth.user.token);
 
-    if (res.error) return thunkAPI.rejectWithValue(res.error);
+    if (res.error) {
+      return thunkAPI.rejectWithValue(res.error);
+    }
 
     console.log(res);
 
@@ -83,6 +85,22 @@ export const filterTemplates = createAsyncThunk(
     const filters = filterTestQuery(data);
 
     const res = await testService.filterTemplates(filters, auth.user.token);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
+export const filterTestOfCompany = createAsyncThunk(
+  "test/filterTestOfCompany",
+  async (data: TFilterTestData, thunkAPI) => {
+    // Resgatando usuário autenticado
+    const { auth }: any = thunkAPI.getState();
+
+    const filters = filterTestQuery(data);
+
+    const res = await testService.filterTestOfCompany(filters, auth.user.token);
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
@@ -235,7 +253,22 @@ export const testSlice = createSlice({
 
         state.tests = action.payload;
       })
-      .addCase(filterTemplates.rejected, (state, action) => {
+      // Filter tests of company
+      .addCase(filterTestOfCompany.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(filterTestOfCompany.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = true;
+        state.test = {};
+        console.log("Seus Testes filtrados: ", action.payload);
+
+        state.tests = action.payload;
+      })
+      .addCase(filterTestOfCompany.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};

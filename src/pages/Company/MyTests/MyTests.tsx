@@ -10,7 +10,7 @@ import bookQuestionIcon from "../../../assets/icon/book-question.svg";
 import folderIcon from "../../../assets/icon/folder.svg";
 import PagenationBar from "../../../components/shared/Layout/Pagination/PagenationBar";
 import { TSkillsData } from "../../Dev/Register/Skills/Skills";
-import { getAllOfCompany } from "./../../../slices/common/testSlice";
+import { filterTestOfCompany, getAllOfCompany } from "./../../../slices/common/testSlice";
 import { TTestOfCompany } from "./../../../types/devskills/test/TTestOfCompany";
 
 interface Props {}
@@ -66,11 +66,11 @@ const MyTests = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(filterTemplates({ ...filtersData, type: typeOfTest, page }));
+  useEffect(() => {
+    dispatch(filterTestOfCompany({ ...filtersData, type: typeOfTest, page }));
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [filtersData, typeOfTest]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtersData, typeOfTest]);
 
   return (
     <Container
@@ -96,7 +96,7 @@ const MyTests = (props: Props) => {
               <p>{test.prova.descricao}</p>
 
               <div className={styles.card_info}>
-                <span>{}</span>
+                <span>{test.prova.ativo ? "Ativa" : "Inativa"}</span>
                 <span>
                   Até {new Date(test.data_fim).toLocaleDateString("pt-BR")}
                 </span>

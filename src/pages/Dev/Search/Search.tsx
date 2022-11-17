@@ -110,7 +110,143 @@ const Search = (props: Props) => {
           </span>
         </div>
 
-        <SliderContainer totalCards={4} widthOfCard={450} >
+        <SliderContainer totalCards={12} widthOfCard={450}>
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
+          <CardSearchTest
+            title="Prova de PHP"
+            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+          feugiat urna. Maecenas eget elementum urna, quis gravida felisfeugiat
+          urnafeugiat urna..."
+            img_url="https://www.comotrabalhar.org/wp-content/uploads/2017/12/logo-SENAI-SP.png"
+            stack="Front-end"
+            type="Prática"
+            icons={[
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+              "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
+            ]}
+          />
           <CardSearchTest
             title="Prova de PHP"
             description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
