@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import TestService from "./services/apiDevSkills/common/testService";
 import MyTests from './pages/Company/MyTests/MyTests';
 import Search from './pages/Dev/Search/Search';
+import ApplicationOverview from "./pages/Test/ApplicationOverview/ApplicationOverview";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -117,6 +118,16 @@ const App = () => {
           element={
             auth && type === "COMPANY" ? (
               <CreateTest />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/test/applicate/:id"
+          element={
+            auth && type === "COMPANY" ? (
+              <ApplicationOverview />
             ) : (
               <Navigate to="/company/login" />
             )

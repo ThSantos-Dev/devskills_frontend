@@ -10,8 +10,12 @@ import bookQuestionIcon from "../../../assets/icon/book-question.svg";
 import folderIcon from "../../../assets/icon/folder.svg";
 import PagenationBar from "../../../components/shared/Layout/Pagination/PagenationBar";
 import { TSkillsData } from "../../Dev/Register/Skills/Skills";
-import { filterTestOfCompany, getAllOfCompany } from "./../../../slices/common/testSlice";
+import {
+  filterTestOfCompany,
+  getAllOfCompany,
+} from "./../../../slices/common/testSlice";
 import { TTestOfCompany } from "./../../../types/devskills/test/TTestOfCompany";
+import { reset } from "../../../slices/common/testSlice";
 
 interface Props {}
 
@@ -31,6 +35,8 @@ const MyTests = (props: Props) => {
         handleOnClick: () => {
           navigate("/company/test/create");
           document.body.style.overflow = "auto";
+
+          dispatch(reset());
         },
       },
       {
@@ -39,6 +45,8 @@ const MyTests = (props: Props) => {
         handleOnClick: () => {
           navigate("/company/test/templates");
           document.body.style.overflow = "auto";
+
+          dispatch(reset());
         },
       },
     ],
@@ -105,12 +113,12 @@ const MyTests = (props: Props) => {
           ))}
       </div>
 
-      <PagenationBar
+      {/* <PagenationBar
         numberOfPages={20}
         numberOfButtons={3}
         page={1}
         redirectTo="/company/home"
-      />
+      /> */}
 
       <ChooseType
         show={openModal}

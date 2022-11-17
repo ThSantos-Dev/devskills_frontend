@@ -22,7 +22,7 @@ import { MdOutlineSchool } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Button from "../../../components/shared/Form/Button/Button";
-import { create } from "../../../slices/common/testSlice";
+import { create, reset } from "../../../slices/common/testSlice";
 import ChooseType from "../ChooseType/ChooseType";
 import Container from "./../../../components/shared/Layout/Container/Container";
 import { useSelector } from "react-redux";
@@ -452,6 +452,7 @@ const CreateTest: React.FC = () => {
   };
 
   const navigate = useNavigate()
+
 
   useEffect(() => {
 
