@@ -1,0 +1,172 @@
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+header.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 5vh;
+  padding: 20px 15px;
+
+  border-radius: 10px;
+  background-color: var(--dark-light-blue);
+}
+
+.content .title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content .title_container button {
+  font-size: clamp(0.8rem, 5vw, 1rem) !important;
+  border: none;
+
+  transform: scale(0.9);
+}
+
+.content .title_container button:hover {
+  border: none;
+
+  outline: 1px solid var(--color-white-text);
+}
+
+.content p {
+  font-size: clamp(0.6rem, 5vw, 1rem);
+}
+
+.content .info {
+  width: max-content;
+
+  font-size: clamp(0.6rem, 5vw, 1rem);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 6px 10px;
+
+  outline: 1px solid var(--color-white-text);
+}
+
+.content .info span {
+  align-self: flex-end;
+}
+
+.content .info svg {
+  font-size: clamp(0.9rem, 5vw, 1.3rem);
+}
+
+/* Content */
+.content_container {
+
+}
+
+/* Nav */
+.sidebar_container {
+  border-bottom: 4px solid var(--color-white-text);
+}
+
+.sidebar_container ul{
+  display: flex;
+  gap: 60px;
+}
+
+.sidebar_container li {
+  all: unset;
+
+  font-size: clamp(1rem, 5vw, 1.8rem);
+  font-weight: 700;
+
+  position: relative;
+
+  padding: 2px 5px;
+}
+
+.sidebar_container li.active {
+  color: var(--dark-yellow);
+}
+
+.sidebar_container li.active::after {
+  width: calc(100% + 50%);
+  height: 4px;
+
+  content: "";
+  display: block;
+
+  position: absolute;
+  left: -4px;
+  bottom: -4px;
+
+
+  background-color: var(--dark-yellow);
+}
+
+.sidebar_container li.active::after:not(nth-child(1)) {
+  width: calc(100% + 50%);
+  height: 4px;
+
+  content: "";
+  display: block;
+
+  position: absolute;
+  left: -4px;
+  bottom: -4px;
+
+  transform: translateX(-15%);
+
+  background-color: var(--dark-yellow);
+}
+
+.sections_container {
+  width: 100%;
+  min-height: 100vh;
+
+  position: relative;
+  overflow: hidden;
+
+  transition: all 0.5s ease-in-out;
+}
+
+.sections_container section {
+  width: 100%;
+  min-height: 600px;
+
+  position: absolute;
+  top: 20px;
+
+  transition: all 0.5s ease-in-out;
+
+  display: flex;
+}
+
+.general {
+  left: 200%;
+
+  background-color: red;
+}
+
+.personal {
+  left: 200%;
+
+  background-color: aquamarine;
+}
+
+.ranking {
+  left: 200%;
+
+  background-color: bisque;
+}
+
+.general.active, .personal.active, .ranking.active {
+  left: 0;
+}
+
+
+
+
+
+

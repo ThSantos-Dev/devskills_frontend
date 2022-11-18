@@ -14,11 +14,11 @@ import {
   getTemplateById,
 } from "../../../slices/common/testSlice";
 import { TTestTemplateDetails } from "../../../types/devskills/test/TTestTemplateDetails";
-import styles from "./TemplateDetails.module.css";
+import styles from "./ApplicationDetails.module.css";
 
 interface Props {}
 
-const TemplateDetails = (props: Props) => {
+const ApplicationDetails = (props: Props) => {
   const { id } = useParams();
 
   const [idToast, setIdToast] = useState<any>();
@@ -184,7 +184,11 @@ const TemplateDetails = (props: Props) => {
                 ) : (
                   <p>
                     Repositório no GitHub{" "}
-                    <a href={test.provas.link_repositorio} target={"_blank"} rel="noreferrer">
+                    <a
+                      href={test.provas.link_repositorio}
+                      target={"_blank"}
+                      rel="noreferrer"
+                    >
                       {test.provas.link_repositorio}
                     </a>
                   </p>
@@ -285,4 +289,4 @@ const TemplateDetails = (props: Props) => {
   );
 };
 
-export default TemplateDetails;
+export default ApplicationDetails;
