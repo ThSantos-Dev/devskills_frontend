@@ -8,14 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import bookQuestionIcon from "../../../assets/icon/book-question.svg";
 import folderIcon from "../../../assets/icon/folder.svg";
-import PagenationBar from "../../../components/shared/Layout/Pagination/PagenationBar";
+import { reset } from "../../../slices/common/testSlice";
 import { TSkillsData } from "../../Dev/Register/Skills/Skills";
 import {
   filterTestOfCompany,
   getAllOfCompany,
 } from "./../../../slices/common/testSlice";
 import { TTestOfCompany } from "./../../../types/devskills/test/TTestOfCompany";
-import { reset } from "../../../slices/common/testSlice";
 
 interface Props {}
 
@@ -99,7 +98,11 @@ const MyTests = (props: Props) => {
       <div className={styles.cards_container}>
         {tests.length > 0 &&
           tests.map((test, index) => (
-            <div className={styles.card} key={index}>
+            <div
+              className={styles.card}
+              key={index}
+              onClick={() => navigate("/company/test/applicate/" + test.id)}
+            >
               <h2>{test.prova.titulo}</h2>
               <p>{test.prova.descricao}</p>
 
