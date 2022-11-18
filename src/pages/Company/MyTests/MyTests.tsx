@@ -109,7 +109,8 @@ const MyTests = (props: Props) => {
               <div className={styles.card_info}>
                 <span>{test.prova.ativo ? "Ativa" : "Inativa"}</span>
                 <span>
-                  Até {new Date(test.data_fim).toLocaleDateString("pt-BR")}
+                  Até{" "}
+                  {test.data_fim.split("T")[0].split("-").reverse().join("/")}
                 </span>
               </div>
             </div>

@@ -35,7 +35,7 @@ export const create = createAsyncThunk(
     const data: TTestRegister = {
       ...test,
       id_criador: auth.user.id,
-      tipo_criador: auth.user.type,
+      tipo_criador: auth.user.type === "COMPANY" ? "EMPRESA" : "ADMIN",
     };
 
     console.log(data);
