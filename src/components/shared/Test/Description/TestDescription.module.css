@@ -11,24 +11,16 @@
   background-color: var(--dark-container);
 }
 
-.description_container > input {
-  font-size: clamp(1.6rem, 8vw, 2rem);
-  color: var(--color-white-text);
-
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  transition: all 0.3s;
-}
-
-.description_container > input:hover,
-.description_container > input:focus {
+.description_container .title > input:hover,
+.description_container .title > input:focus {
   outline: 1px solid var(--color-white-text);
 }
 
 .description_container textarea {
   all: unset;
-  height: 100px;
+  height: 100%;
+  resize: none;
+
   font-size: clamp(1.2rem, 5vw, 1.5rem);
 }
 
@@ -43,8 +35,8 @@
 
 .link_github {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
 }
 
 .link_github svg {
@@ -62,4 +54,51 @@
   border-radius: 5px;
   border: 1px solid var(--color-white-text);
   background: transparent;
+}
+
+.link_github .content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title,
+.description,
+.link_github {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding-bottom: 40px;
+
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+.description_container .title input,
+.description textarea {
+  all: unset;
+
+  max-width: 100%;
+
+  font-size: clamp(0.8rem, 8vw, 1.4rem);
+  font-weight: 300;
+  color: var(--color-white-text);
+
+  padding: 10px 15px;
+
+  border: 0;
+  outline: 0;
+  transition: all 0.3s;
+
+  border-radius: 5px;
+  border: 1px solid var(--color-white-text);
+  background: transparent;
+}
+
+.description textarea {
+  width: inherit;
+  height: 280px;
+
+  overflow-wrap: break-word;
+  resize: none;
 }

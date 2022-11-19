@@ -26,7 +26,7 @@ import { create, reset } from "../../../slices/common/testSlice";
 import ChooseType from "../ChooseType/ChooseType";
 import Container from "./../../../components/shared/Layout/Container/Container";
 import { useSelector } from "react-redux";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export type TTestRegisterData = {
@@ -330,6 +330,16 @@ const CreateTest: React.FC = () => {
 
     const fields = testData;
 
+    if (typeOfTest === "PRATICA") {
+      dispatch(
+        create({
+          ...fields,
+          duracao: fields.duracao ? fields.duracao + ":00" : "",
+          questoes: [{ id_tipo: 3, tipo: "DISSERTATIVA", enunciado: "Insira o link do repositório para avaliação.", img_url: "" }],
+        })
+      );
+    }
+
     // Verificando se há imagens nas questões para fazer o upload
     if (
       fields.questoes!.filter((questao) => (questao.image?.file ? true : false))
@@ -451,11 +461,9 @@ const CreateTest: React.FC = () => {
     return true;
   };
 
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   useEffect(() => {
-
     if (loading && !idToast) setIdToast(toast.loading("Processando..."));
 
     if (success) {
@@ -502,37 +510,39 @@ const CreateTest: React.FC = () => {
           setErrors={(state: any) => setErrors(state)}
         />
 
-        <QuestionContainer
-          addQuestion={addQuestion}
-          showOptions={typeOfTest === "TEORICA"}
-        >
-          {testData.questoes &&
-            testData.questoes.map((question, index) => (
-              <TestQuestion
-                setType={question.tipo}
-                key={index}
-                initialData={{
-                  enunciado: question.enunciado,
-                  image: question.image,
-                }}
-                options={question.alternativas && question.alternativas}
-                handleOnChange={(data) => handleOnChangeQuestion(data, index)}
-                handleOnDelete={() => deleteQuestion(index)}
-                addAlternative={() => addAternativeToSpecificOption(index)}
-                deleteQuestionAlternative={deleteQuestionAlternative}
-                handleOnChangeAlternative={handleOnChangeAlternative}
-                handleOnSelectAlternativeCorrect={
-                  handleOnSelectAlternativeCorrect
-                }
-                indexQuestion={index}
-                questionRefElDiv={
-                  index === testData.questoes!.length - 1
-                    ? questionRefElDiv
-                    : null
-                }
-              />
-            ))}
-        </QuestionContainer>
+        {typeOfTest === "TEORICA" && (
+          <QuestionContainer
+            addQuestion={addQuestion}
+            showOptions={typeOfTest === "TEORICA"}
+          >
+            {testData.questoes &&
+              testData.questoes.map((question, index) => (
+                <TestQuestion
+                  setType={question.tipo}
+                  key={index}
+                  initialData={{
+                    enunciado: question.enunciado,
+                    image: question.image,
+                  }}
+                  options={question.alternativas && question.alternativas}
+                  handleOnChange={(data) => handleOnChangeQuestion(data, index)}
+                  handleOnDelete={() => deleteQuestion(index)}
+                  addAlternative={() => addAternativeToSpecificOption(index)}
+                  deleteQuestionAlternative={deleteQuestionAlternative}
+                  handleOnChangeAlternative={handleOnChangeAlternative}
+                  handleOnSelectAlternativeCorrect={
+                    handleOnSelectAlternativeCorrect
+                  }
+                  indexQuestion={index}
+                  questionRefElDiv={
+                    index === testData.questoes!.length - 1
+                      ? questionRefElDiv
+                      : null
+                  }
+                />
+              ))}
+          </QuestionContainer>
+        )}
 
         <Button text="Cadastrar" color="solid_white" size="medium" />
       </form>

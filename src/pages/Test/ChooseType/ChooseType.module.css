@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
 
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
   z-index: 1000;
