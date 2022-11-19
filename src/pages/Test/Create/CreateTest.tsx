@@ -17,17 +17,16 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { storage } from "../../../firebase";
 
+import { useEffect } from "react";
 import { AiOutlineCode } from "react-icons/ai";
 import { MdOutlineSchool } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "../../../components/shared/Form/Button/Button";
-import { create, reset } from "../../../slices/common/testSlice";
+import { create } from "../../../slices/common/testSlice";
 import ChooseType from "../ChooseType/ChooseType";
 import Container from "./../../../components/shared/Layout/Container/Container";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export type TTestRegisterData = {
   titulo: string;
@@ -112,6 +111,11 @@ const CreateTest: React.FC = () => {
     skills: { error: false, message: "" },
     stacks: { error: false, message: "" },
     initialDate: { error: false, message: "" },
+  });
+
+  const [questionError, setQuestionError] = useState({
+    indexError: -1,
+    message: "",
   });
 
   // Refencia a ultima questao
@@ -335,7 +339,14 @@ const CreateTest: React.FC = () => {
         create({
           ...fields,
           duracao: fields.duracao ? fields.duracao + ":00" : "",
-          questoes: [{ id_tipo: 3, tipo: "DISSERTATIVA", enunciado: "Insira o link do repositório para avaliação.", img_url: "" }],
+          questoes: [
+            {
+              id_tipo: 3,
+              tipo: "DISSERTATIVA",
+              enunciado: "Insira o link do repositório para avaliação.",
+              img_url: "",
+            },
+          ],
         })
       );
     }
@@ -458,6 +469,33 @@ const CreateTest: React.FC = () => {
       return false;
     }
 
+    // Verificando se as questões que envolvem alternativas, foram selecionadas alguma como correta
+    const isValid = testData.questoes?.find((question, index) => {
+      if (question.tipo !== "DISSERTATIVA") {
+        if (
+          question!.alternativas!.filter(
+            (alternative) => typeof alternative.correta === "boolean"
+          ).length === 0
+        ) {
+          setQuestionError({
+            indexError: index,
+            message: `Nosso sistema permite a correção automática deste tipo de questão. Por favor selecione ${
+              question.tipo === "MULTIPLA_ESCOLHA"
+                ? "1 (uma) ou mais alternativas."
+                : " a alternativa correta."
+            }`,
+          });
+
+          return true;
+        }
+      }
+    });
+
+    if (isValid) {
+      setTimeout(() => setQuestionError({ indexError: -1, message: "" }), 3000);
+      return false;
+    }
+
     return true;
   };
 
@@ -518,6 +556,8 @@ const CreateTest: React.FC = () => {
             {testData.questoes &&
               testData.questoes.map((question, index) => (
                 <TestQuestion
+                  error={questionError.indexError === index}
+                  errorMessage={questionError.message}
                   setType={question.tipo}
                   key={index}
                   initialData={{

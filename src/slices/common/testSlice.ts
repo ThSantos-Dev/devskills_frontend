@@ -1,5 +1,6 @@
 // Redux
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { TStartTest } from "../../types/devskills/test/TStartTest";
 import { TTestRegister } from "../../types/devskills/test/TTestRegister";
 import { TTestTemplateDetails } from "../../types/devskills/test/TTestTemplateDetails";
 import { filterTestQuery, TFilterTestData } from "../../utils/filter-query";
@@ -154,7 +155,27 @@ export const getToRealizeById = createAsyncThunk(
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
-    return thunkAPI.fulfillWithValue(res);
+    return thunkAPI.fulfillWithValue(res.data);
+  }
+);
+
+export const startTest = createAsyncThunk(
+  "test/startTest",
+  async (idTest: number, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    const config: TStartTest = {
+      id_usuario: auth.user.id,
+      id_prova_andamento: idTest,
+      finalizada: false,
+      data_inicio: new Date().toISOString(),
+    };
+
+    const res = await testService.startTest(config, auth.user.token);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
+    return thunkAPI.fulfillWithValue(res.message);
   }
 );
 
@@ -329,6 +350,28 @@ export const testSlice = createSlice({
         state.tests = {};
       })
       .addCase(getToRealizeById.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
+      // startTest
+      .addCase(startTest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(startTest.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = action.payload;
+
+        state.test = {};
+        state.tests = {};
+      })
+      .addCase(startTest.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};

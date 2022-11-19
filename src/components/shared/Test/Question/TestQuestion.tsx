@@ -2,7 +2,7 @@
 import styles from "./TestQuestion.module.css";
 
 // Hooks
-import React, { ChangeEvent, useRef, useState, useEffect } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
 // Icons
 import { BiImageAdd } from "react-icons/bi";
@@ -83,6 +83,7 @@ const TestQuestion: React.FC<Props> = ({
 
   // Reeferencias aos elementos
   const inputFileEl = useRef<HTMLInputElement>(null);
+  const inputTitleEl = useRef<HTMLInputElement>(null);
   const checkboxSwitchEl = useRef<HTMLInputElement>(null);
 
   // Função que lida com a foto
@@ -106,6 +107,8 @@ const TestQuestion: React.FC<Props> = ({
       checkboxSwitchEl.current!.checked = true;
   }, [setType]);
 
+  if (error) inputTitleEl.current?.focus();
+
   return (
     <div className={styles.question_container} ref={questionRefElDiv}>
       <div className={styles.question_header}>
@@ -115,6 +118,7 @@ const TestQuestion: React.FC<Props> = ({
             placeholder="Pergunta"
             value={initialData && initialData.enunciado}
             required
+            ref={inputTitleEl}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handleOnChange({
                 enunciado: e.target.value,
@@ -127,10 +131,7 @@ const TestQuestion: React.FC<Props> = ({
                 tipo: selected,
               })
             }
-            autoFocus={error ? true : false}
           />
-
-          {error && <span>{errorMessage}</span>}
         </div>
 
         <div className={styles.icon}>
@@ -174,6 +175,12 @@ const TestQuestion: React.FC<Props> = ({
           />
         </div>
       </div>
+
+      {error && (
+        <div className={styles.error}>
+          <span>{errorMessage}</span>
+        </div>
+      )}
 
       <div className={styles.question_body}>
         {initialData && initialData?.image?.file && (

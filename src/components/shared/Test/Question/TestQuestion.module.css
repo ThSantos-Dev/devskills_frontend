@@ -51,6 +51,13 @@
   gap: 40px;
 }
 
+.error {
+  color: var(--dark-pink);
+  font-weight: bold;
+
+  margin-top: -20px;
+}
+
 .question_body > p {
   max-width: 740px;
   border-bottom: dotted 2px;

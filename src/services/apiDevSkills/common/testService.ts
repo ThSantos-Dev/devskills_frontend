@@ -1,3 +1,4 @@
+import { TStartTest } from "../../../types/devskills/test/TStartTest";
 import { requestConfig } from "./../../../utils/request-config";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -66,9 +67,10 @@ export default class TestService {
     const config = requestConfig("GET", undefined, token);
 
     try {
-      const res = await fetch(BASE_URL + "/company/tests?" + filters, config).then(
-        (data) => data.json()
-      );
+      const res = await fetch(
+        BASE_URL + "/company/tests?" + filters,
+        config
+      ).then((data) => data.json());
 
       return res;
     } catch (error) {
@@ -127,6 +129,21 @@ export default class TestService {
 
     try {
       const res = await fetch(BASE_URL + "/developer/test/" + id, config).then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return { error: "Não foi possível concluir a solicitação." };
+    }
+  }
+
+  static async startTest(data: TStartTest, token: string): Promise<any> {
+    const config = requestConfig("POST", data, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/developer/userTest", config).then(
         (data) => data.json()
       );
 
