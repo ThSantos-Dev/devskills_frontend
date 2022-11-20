@@ -16,9 +16,14 @@ type TDevLoginResponse = {
   error?: string;
   message?: string;
 
-  id?: number;
-  type?: "DEVELOPER";
   token?: string;
+  type?: "DEVELOPER";
+  userInfo?: {
+    id?: number;
+    fotoPerfil: string;
+    tag: string;
+    name: string;
+  };
 };
 
 export default class authService {
@@ -53,17 +58,11 @@ export default class authService {
       const res: TDevLoginResponse = await fetch(
         BASE_URL + "/developer/login",
         config
-      )
-        .then((res) => {
-          if (res.status === 401)
-            return { error: "Usuário ou senha inválidas." };
+      ).then((res) => {
+        if (res.status === 401) return { error: "Usuário ou senha inválidas." };
 
-          return res.json();
-        })
-        .catch((err) => err);
-
-      // Validando o retorno da API
-      if (res.token) localStorage.setItem("user", JSON.stringify(res));
+        return res.json();
+      });
 
       return res;
     } catch (error) {

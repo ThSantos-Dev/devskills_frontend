@@ -313,6 +313,7 @@ const CreateTest: React.FC = () => {
 
         // Atribuindo ao fields
         fields.questoes![indexQuestion].alternativas = alternatives;
+        fields.questoes![indexQuestion].tipo = "MULTIPLA_ESCOLHA";
 
         // Atribuindo o value passado para a alternativa especifica
         fields.questoes![indexQuestion].alternativas![indexAlternative] = {

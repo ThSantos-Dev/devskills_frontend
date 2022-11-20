@@ -26,6 +26,7 @@ import TestService from "./services/apiDevSkills/common/testService";
 import MyTests from './pages/Company/MyTests/MyTests';
 import Search from './pages/Dev/Search/Search';
 import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
+import DetailsTest from './pages/Dev/Test/Details/DetailsTest';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -53,13 +54,14 @@ const App = () => {
           path="/dev/login"
           element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
-        <Route path="/dev/home" element={<RealizeTest />} />
-        <Route path="/dev/profile" element={<RealizeTest />} />
+        {/* <Route path="/dev/home" element={<RealizeTest />} /> */}
+        {/* <Route path="/dev/profile" element={<RealizeTest />} /> */}
         <Route path="/dev/search" element={<Search />} />
-        <Route path="/dev/tests" element={<RealizeTest />} />
-        <Route path="/dev/notifications" element={<RealizeTest />} />
-        <Route path="/dev/exam" element={<RealizeTest />} />
-        <Route path="/dev/favorites" element={<RealizeTest />} />
+        {/* <Route path="/dev/tests" element={<RealizeTest />} /> */}
+        {/* <Route path="/dev/notifications" element={<RealizeTest />} /> */}
+        {/* <Route path="/dev/exam" element={<RealizeTest />} /> */}
+        {/* <Route path="/dev/favorites" element={<RealizeTest />} /> */}
+        <Route path="/dev/test/:id" element={<DetailsTest />} />
         <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
 
         {/* Routes of Company */}

@@ -153,4 +153,19 @@ export default class TestService {
       return { error: "Não foi possível concluir a solicitação." };
     }
   }
+
+  static async finishTest(data: any, token: string) {
+    const config = requestConfig("POST", data, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/developer/answerTest", config).then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.log(error)
+      return { error: "Não foi possível concluir a solicitação" };
+    }
+  }
 }

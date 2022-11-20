@@ -175,6 +175,50 @@ export const startTest = createAsyncThunk(
 
     if (res.error) return thunkAPI.rejectWithValue(res.error);
 
+    return thunkAPI.fulfillWithValue(res);
+  }
+);
+
+export const finishTest = createAsyncThunk(
+  "test/finishTest",
+  async (data: any, thunkAPI) => {
+    const { auth }: any = thunkAPI.getState();
+
+    const testData = {
+      id_prova_usuario: parseInt(data.idTest),
+      finalizada: true,
+      data_entrega: new Date().toISOString().split("T")[0],
+      respostas: [
+        ...data.responses.map((question: any) => {
+          if (question?.resposta)
+            return {
+              id_questao: question.id_questao,
+              resposta: question.resposta,
+            };
+
+          if (question.tipo === "UNICA_ESCOLHA")
+            return {
+              id_questao: question.id_questao,
+              id_alternativa: question.id_alternativa,
+            };
+
+          return {
+            id_questao: question.id_questao,
+
+            id_alternativa: question.id_alternativa
+              .filter((alternative: any) => alternative.selected === true)
+              .map((filtered: any) => filtered.id_alternativa),
+          };
+        }),
+      ],
+    };
+
+    console.log("slice: ", testData);
+
+    const res = await testService.finishTest(testData, auth.user.token);
+
+    if (res.error) return thunkAPI.rejectWithValue(res.error);
+
     return thunkAPI.fulfillWithValue(res.message);
   }
 );
@@ -372,6 +416,28 @@ export const testSlice = createSlice({
         state.tests = {};
       })
       .addCase(startTest.rejected, (state, action) => {
+        state.loading = false;
+        state.success = null;
+        state.test = {};
+        state.tests = {};
+
+        state.error = action.payload;
+      })
+      // finishTest
+      .addCase(finishTest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(finishTest.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.success = action.payload;
+
+        state.test = {};
+        state.tests = {};
+      })
+      .addCase(finishTest.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
         state.test = {};

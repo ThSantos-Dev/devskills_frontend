@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getToRealizeById, reset } from "../../../../slices/common/testSlice";
+import {
+  finishTest,
+  getToRealizeById,
+} from "../../../../slices/common/testSlice";
 
 import Countdown from "react-countdown-simple";
 import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
 import Button from "./../../../../components/shared/Form/Button/Button";
 import Input from "./../../../../components/shared/Form/Input/Input";
+
+import { useQuery } from "../../../../hooks/useQuery";
 import styles from "./RealizeTest.module.css";
-import { startTest } from "./../../../../slices/common/testSlice";
 
 interface Props {}
 
@@ -18,6 +22,7 @@ const RealizeTest: React.FC<Props> = () => {
   // Recupera o ID da prova
   // eslint-disable-next-line
   const { id } = useParams<string>();
+  const query = useQuery();
 
   const { test, success, error, loading } = useSelector<
     any,
@@ -31,28 +36,17 @@ const RealizeTest: React.FC<Props> = () => {
 
   const dispatch = useDispatch<any>();
 
+  // Busca os dados da prova
   useEffect(() => {
-    dispatch(reset());
-    
-    if (!id) return;
-    dispatch(startTest(parseInt(id)));
-    
+    console.count("aaaaaaaaaaaaaaa");
+
+    dispatch(getToRealizeById(parseInt(id!)));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Busca os dados da prova
-  useEffect(() => {
-    if (!id) return;
-
-    dispatch(getToRealizeById(parseInt(id)));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
   useEffect(() => {
     if (!test?.duracao || !test.prova) return;
-
-    console.log(test);
 
     const hours = parseInt(test.duracao.split(":")[0]);
     const minutes = parseInt(test.duracao.split(":")[1]);
@@ -74,10 +68,11 @@ const RealizeTest: React.FC<Props> = () => {
     );
 
     setResponseData(
-      test?.prova.provasTodasQuestoes.map((question: any) => {
+      test!.prova.provasTodasQuestoes.map((question: any) => {
         if (question.questaoProva.questaoProvaTipo.tipo !== "DISSERTATIVA") {
           return {
             id_questao: question.idQuestaoProva,
+            tipo: question.questaoProva.questaoProvaTipo.tipo,
             id_alternativa:
               question.questaoProva.questaoProvaTipo.tipo === "UNICA_ESCOLHA"
                 ? 0
@@ -177,6 +172,17 @@ const RealizeTest: React.FC<Props> = () => {
 
     setQuestionTab(tab);
     handleProgress();
+  };
+
+  const handleOnSubmit = () => {
+    console.log(query.get("idUserTest"));
+
+    dispatch(
+      finishTest({
+        idTest: query.get("idUserTest"),
+        responses: [...responseData],
+      })
+    );
   };
 
   return (
@@ -339,7 +345,7 @@ const RealizeTest: React.FC<Props> = () => {
                       color="solid_white"
                       size="small"
                       text="Finalizar"
-                      handleOnClick={() => console.log(responseData)}
+                      handleOnClick={handleOnSubmit}
                     />
                   )}
                 </div>

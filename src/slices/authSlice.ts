@@ -44,10 +44,21 @@ export const login = createAsyncThunk(
       //  Chamando o service responsável por realizar o login do Desenvolvedor
       const res = await devAuthService.login(data.user);
 
+
       // Validando a resposta do servidor
       if (res.error) {
         return thunkAPI.rejectWithValue(res.error);
       }
+
+      const user = {
+        token: res.token,
+        id: res.userInfo!.id,
+        name: res.userInfo!.name,
+        type: "DEVELOPER",
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+
 
       // Retornando o usuário cadastrado
       return res;
