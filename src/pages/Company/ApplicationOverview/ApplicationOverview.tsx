@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Button from "../../../components/shared/Form/Button/Button";
@@ -138,13 +139,11 @@ const ApplicationOverview = (props: Props) => {
                 <div className={styles.question_dissertation}>
                   <header>
                     <div className={styles.question_title}>
-                      <span>Descreva JavaScript</span>
+                      <h3>Descreva JavaScript</h3>
                     </div>
 
                     <div className={styles.correct_container}>
-                      <label>
-                        <input type="checkbox" name="" id="" />
-                      </label>
+                      <button className={styles.selected}><AiOutlineCheck /></button>
                       <span>Correto</span>
                     </div>
                   </header>

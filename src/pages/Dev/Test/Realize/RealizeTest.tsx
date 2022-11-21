@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import Input from "./../../../../components/shared/Form/Input/Input";
 
 import { useQuery } from "../../../../hooks/useQuery";
 import styles from "./RealizeTest.module.css";
+import { toast } from "react-toastify";
 
 interface Props {}
 
@@ -22,6 +23,7 @@ const RealizeTest: React.FC<Props> = () => {
   // Recupera o ID da prova
   // eslint-disable-next-line
   const { id } = useParams<string>();
+  const [idToast, setIdToast] = useState<any>();
   const query = useQuery();
 
   const { test, success, error, loading } = useSelector<
@@ -29,12 +31,15 @@ const RealizeTest: React.FC<Props> = () => {
     { test: TTestRealize; success: boolean; error: boolean; loading: boolean }
   >((state) => state.test);
 
+  const [sendTest, setSendTest] = useState(false);
+
   const [timer, setTimer] = useState<string>("");
 
   // Cria um array com as respostas do usuário
   const [responseData, setResponseData] = useState<any[]>([]);
 
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
 
   // Busca os dados da prova
   useEffect(() => {
@@ -44,26 +49,9 @@ const RealizeTest: React.FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    if (!test?.duracao || !test.prova) return;
+    if(error && !sendTest) return navigate("/dev/home")
 
-    const hours = parseInt(test.duracao.split(":")[0]);
-    const minutes = parseInt(test.duracao.split(":")[1]);
-
-    console.log(
-      new Date(
-        new Date().setSeconds(
-          new Date().getSeconds() + hours * 3600 + minutes * 60
-        )
-      ).toISOString()
-    );
-
-    setTimer(
-      new Date(
-        new Date().setSeconds(
-          new Date().getSeconds() + hours * 3600 + minutes * 60
-        )
-      ).toISOString()
-    );
+    if (!test?.prova.provasTodasQuestoes) return;
 
     setResponseData(
       test!.prova.provasTodasQuestoes.map((question: any) => {
@@ -91,7 +79,53 @@ const RealizeTest: React.FC<Props> = () => {
         }
       })
     );
-  }, [test]);
+
+    if (!test?.duracao) return;
+
+    const hours = parseInt(test.duracao.split(":")[0]);
+    const minutes = parseInt(test.duracao.split(":")[1]);
+
+    setTimer(
+      new Date(
+        new Date().setSeconds(
+          new Date().getSeconds() + hours * 3600 + minutes * 60
+        )
+      ).toISOString()
+    );
+
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [test, error]);
+
+  useEffect(() => {
+    if (!sendTest) return;
+
+    if (loading && !idToast) setIdToast(toast.loading("Processando..."));
+
+    if (success) {
+      toast.update(idToast, {
+        render: success,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      navigate("/dev/mytests");
+    }
+
+    if (error) {
+      toast.update(idToast, {
+        render: error,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      navigate("/dev/mytests");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
 
   // Armazena o progresso do usuário
   const [testProgress, setTestProgress] = useState<number>(0);
@@ -102,9 +136,32 @@ const RealizeTest: React.FC<Props> = () => {
 
     console.log(responseData);
 
-    responseData.forEach((response) => {});
+    responseData.forEach((question) => {
+      if (question?.resposta && question?.resposta.trim().length > 0) {
+        console.log("entrei 01");
+        return (numberOfResponses += 1);
+      }
+
+      if (question.id_alternativa?.length > 0) {
+        console.log(question);
+        if (
+          question.id_alternativa.filter(
+            (alternative: any) => alternative.selected === true
+          ).length > 0
+        ) {
+          console.log("entrei 02");
+          return (numberOfResponses += 1);
+        }
+      }
+
+      if (question?.id_alternativa?.length < 1) {
+        console.log("entrei 03", question?.id_alternativa);
+        return (numberOfResponses += 1);
+      }
+    });
 
     console.log(percentOfQuestion, numberOfResponses);
+    console.log("responseData", responseData);
 
     setTestProgress(percentOfQuestion * numberOfResponses);
   };
@@ -175,6 +232,8 @@ const RealizeTest: React.FC<Props> = () => {
   const handleOnSubmit = () => {
     console.log(query.get("idUserTest"));
 
+    setSendTest(true);
+
     dispatch(
       finishTest({
         idTest: query.get("idUserTest"),
@@ -185,7 +244,7 @@ const RealizeTest: React.FC<Props> = () => {
 
   return (
     <>
-      {test?.prova ? (
+      {responseData && test?.prova ? (
         <div className={styles.container}>
           <header className={styles.header}>
             <div className={styles.logo}>

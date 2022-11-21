@@ -24,7 +24,7 @@ const Sidebar = (props: Props) => {
   // Configurando o menu que será exibido para cada um dos usuários
   const devNavegation = [
     { text: "Home", navigateTo: "/dev/home", icon: <BiHomeAlt /> },
-    { text: "Provas", navigateTo: "/dev/tests", icon: <RiFoldersFill /> },
+    { text: "Provas", navigateTo: "/dev/mytests", icon: <RiFoldersFill /> },
     {
       text: "Notificações",
       navigateTo: "/dev/notifications",
@@ -108,7 +108,7 @@ const Sidebar = (props: Props) => {
             </li>
 
             <ul className="menu-links">
-              {type === "DEV" &&
+              {type === "DEVELOPER" &&
                 devNavegation.map((data, index) => (
                   <li key={index}>
                     <Link to={data.navigateTo}>

@@ -187,7 +187,7 @@ export const finishTest = createAsyncThunk(
     const testData = {
       id_prova_usuario: parseInt(data.idTest),
       finalizada: true,
-      data_entrega: new Date().toISOString().split("T")[0],
+      data_entrega: new Date().toISOString(),
       respostas: [
         ...data.responses.map((question: any) => {
           if (question?.resposta)
@@ -427,6 +427,7 @@ export const testSlice = createSlice({
       .addCase(finishTest.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = null;
       })
       .addCase(finishTest.fulfilled, (state, action) => {
         state.loading = false;
@@ -440,10 +441,8 @@ export const testSlice = createSlice({
       .addCase(finishTest.rejected, (state, action) => {
         state.loading = false;
         state.success = null;
-        state.test = {};
-        state.tests = {};
 
-        state.error = action.payload;
+        state.error = action.payload; 
       });
   },
 });

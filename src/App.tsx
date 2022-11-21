@@ -27,6 +27,7 @@ import MyTests from './pages/Company/MyTests/MyTests';
 import Search from './pages/Dev/Search/Search';
 import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
 import DetailsTest from './pages/Dev/Test/Details/DetailsTest';
+import DevHome from "./pages/Dev/Home/Home";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -54,10 +55,10 @@ const App = () => {
           path="/dev/login"
           element={!auth ? <DevLogin /> : <Navigate to="/dev/home" />}
         />
-        {/* <Route path="/dev/home" element={<RealizeTest />} /> */}
+        <Route path="/dev/home" element={<DevHome />} />
         {/* <Route path="/dev/profile" element={<RealizeTest />} /> */}
         <Route path="/dev/search" element={<Search />} />
-        {/* <Route path="/dev/tests" element={<RealizeTest />} /> */}
+        {/* <Route path="/dev/mytests" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/notifications" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/exam" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/favorites" element={<RealizeTest />} /> */}

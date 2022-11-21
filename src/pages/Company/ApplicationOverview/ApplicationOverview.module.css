@@ -283,50 +283,33 @@ header.content {
   gap: 10px;
 }
 
-.question_dissertation .correct_container input[type="checkbox"] {
+.question_dissertation .correct_container button {
   all: unset;
 
-  width: 1.4rem;
-  height: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  display: block;
-  position: relative;
-
+  padding: 4px;
   outline: 1px solid var(--color-white-text);
 }
 
-.question_dissertation .correct_container input[type="checkbox"]:checked {
+.question_dissertation .correct_container button.selected {
   background-color: var(--success-green);
 }
 
-.question_dissertation .correct_container input[type="checkbox"]:checked:after {
-  content: "";
-  width: 15px;
-  height: 3px;
-  position: absolute;
-  top: 48%;
-  right: 0.98px;
-  transform: rotate(142deg);
-  background-color: var(--color-white-text);
-}
-
-.question_dissertation .correct_container input[type="checkbox"]:checked::before {
-  content: "";
-  width: 5.3px;
-  height: 3px;
-  position: absolute;
-  top: 57%;
-  left: 4px;
-  background-color: var(--color-white-text);
-  transform: rotate(45deg);
-}
-
 .personal .container .question_dissertation header h3 {
-  font-size: clamp(0.8rem, 5vw, 1.2rem);
+  font-size: clamp(1rem, 5vw, 1.4rem);
 }
 
-.question_dissertation .response {
+.question_dissertation .response p {
   font-size: clamp(0.8rem, 5vw, 1.2rem);
+  font-weight: 200;
+
+  padding: 15px;
+
+  border-radius: 8px;
+  background-color: var(--dark-background);
 }
 
 /* Ranking */
