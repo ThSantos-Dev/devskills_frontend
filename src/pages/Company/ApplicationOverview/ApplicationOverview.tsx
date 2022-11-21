@@ -142,10 +142,21 @@ const ApplicationOverview = (props: Props) => {
                     </div>
 
                     <div className={styles.correct_container}>
-                      <input type="checkbox" name="" id="" />
+                      <label>
+                        <input type="checkbox" name="" id="" />
+                      </label>
                       <span>Correto</span>
                     </div>
                   </header>
+
+                  <div className={styles.response}>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Voluptate, assumenda sit. Sed repellendus minus
+                      dignissimos rerum quasi! Numquam, doloribus atque cumque
+                      ea eius sunt dolorum tempora quis. Quaerat, nostrum porro?
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>

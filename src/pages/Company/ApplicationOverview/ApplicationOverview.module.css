@@ -62,7 +62,6 @@ header.content {
 
 /* Content */
 .content_container {
-
 }
 
 /* Nav */
@@ -70,7 +69,7 @@ header.content {
   border-bottom: 4px solid var(--color-white-text);
 }
 
-.sidebar_container ul{
+.sidebar_container ul {
   display: flex;
   gap: 60px;
 }
@@ -100,7 +99,6 @@ header.content {
   position: absolute;
   left: -4px;
   bottom: -4px;
-
 
   background-color: var(--dark-yellow);
 }
@@ -143,7 +141,6 @@ header.content {
   display: flex;
 }
 
-
 /* Geral */
 .general {
   left: 200%;
@@ -177,8 +174,8 @@ header.content {
 .personal header .control {
   height: 100%;
 
-  font-size: clamp(.8rem, 5vw, 1.3rem);
-  
+  font-size: clamp(0.8rem, 5vw, 1.3rem);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,7 +186,6 @@ header.content {
 
   display: flex;
   gap: 40px;
-
 }
 
 .personal header .content .position {
@@ -201,7 +197,6 @@ header.content {
   align-items: center;
 
   background-color: var(--dark-background);
-
 }
 
 .personal header .content .position input {
@@ -211,7 +206,7 @@ header.content {
   height: 100%;
 
   text-align: center;
-  font-size: clamp(.8rem, 5vw, 1.4rem);
+  font-size: clamp(0.8rem, 5vw, 1.4rem);
   font-weight: 600;
 
   display: flex;
@@ -224,20 +219,21 @@ header.content {
 .personal header .content .name {
   flex: 1;
 
-  font-size: clamp(.8rem, 5vw, 1.2rem);
+  font-size: clamp(0.8rem, 5vw, 1.2rem);
 
   display: flex;
   align-items: center;
 
-  padding: 0px  20px;
+  padding: 0px 20px;
 
   background-color: var(--dark-background);
 }
 
-.personal header .content .time, .personal header .content .correct_percentage {
+.personal header .content .time,
+.personal header .content .correct_percentage {
   flex: content 0 0;
 
-  font-size: clamp(.8rem, 5vw, 1.2rem);
+  font-size: clamp(0.8rem, 5vw, 1.2rem);
   font-weight: 500;
 
   display: flex;
@@ -257,9 +253,81 @@ header.content {
   width: 100%;
 
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: clamp(1rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+
+  background-color: var(--dark-container);
 }
 
+.personal .container .question_dissertation header {
+  display: flex;
+  align-items: center;
+
+  padding: 0;
+
+  background-color: transparent;
+}
+
+.question_dissertation .question_title {
+  flex: 60% 0 0;
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+.question_dissertation .correct_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.question_dissertation .correct_container input[type="checkbox"] {
+  all: unset;
+
+  width: 1.4rem;
+  height: 1.4rem;
+
+  display: block;
+  position: relative;
+
+  outline: 1px solid var(--color-white-text);
+}
+
+.question_dissertation .correct_container input[type="checkbox"]:checked {
+  background-color: var(--success-green);
+}
+
+.question_dissertation .correct_container input[type="checkbox"]:checked:after {
+  content: "";
+  width: 15px;
+  height: 3px;
+  position: absolute;
+  top: 48%;
+  right: 0.98px;
+  transform: rotate(142deg);
+  background-color: var(--color-white-text);
+}
+
+.question_dissertation .correct_container input[type="checkbox"]:checked::before {
+  content: "";
+  width: 5.3px;
+  height: 3px;
+  position: absolute;
+  top: 57%;
+  left: 4px;
+  background-color: var(--color-white-text);
+  transform: rotate(45deg);
+}
+
+.personal .container .question_dissertation header h3 {
+  font-size: clamp(0.8rem, 5vw, 1.2rem);
+}
+
+.question_dissertation .response {
+  font-size: clamp(0.8rem, 5vw, 1.2rem);
+}
 
 /* Ranking */
 .ranking {
@@ -268,12 +336,8 @@ header.content {
   background-color: bisque;
 }
 
-.general.active, .personal.active, .ranking.active {
+.general.active,
+.personal.active,
+.ranking.active {
   left: 0;
 }
-
-
-
-
-
-

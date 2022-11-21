@@ -1,5 +1,5 @@
 magalu@email.com
-    Teste@123
+Teste@123
 47.960.950/0001-21
 
 Node.JS | Restante API | Serviço de backend de notícias - Implementar um serviço de backend de notícias criado em Node.JS com Vanilla JS incluindo autorização de escrita e Restante APIs.

@@ -38,8 +38,6 @@ const RealizeTest: React.FC<Props> = () => {
 
   // Busca os dados da prova
   useEffect(() => {
-    console.count("aaaaaaaaaaaaaaa");
-
     dispatch(getToRealizeById(parseInt(id!)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
