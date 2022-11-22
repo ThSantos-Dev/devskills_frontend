@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlineCheck } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { IoCloseSharp } from "react-icons/io5";
 import Button from "../../../components/shared/Form/Button/Button";
 import Container from "../../../components/shared/Layout/Container/Container";
 import styles from "./ApplicationOverview.module.css";
+import Personal from "./Tabs/Personal";
 
 type Props = {};
 
@@ -102,63 +104,7 @@ const ApplicationOverview = (props: Props) => {
               <h2>Overview</h2>
             </section>
 
-            <section
-              className={`${styles.personal} ${
-                showTab.personal ? styles.active : ""
-              }`}
-            >
-              <header>
-                <div className={styles.control}>
-                  <FaChevronLeft />
-                </div>
-
-                <div className={styles.content}>
-                  <div className={styles.position}>
-                    <input type="number" name="" id="" maxLength={1} />
-                  </div>
-
-                  <div className={styles.name}>
-                    <span>Thales Santos da Silva</span>
-                  </div>
-
-                  <div className={styles.time}>
-                    <span>00:32:00</span>
-                  </div>
-
-                  <div className={styles.correct_percentage}>
-                    <span>80%</span>
-                  </div>
-                </div>
-
-                <div className={styles.control}>
-                  <FaChevronRight />
-                </div>
-              </header>
-
-              <div className={styles.container}>
-                <div className={styles.question_dissertation}>
-                  <header>
-                    <div className={styles.question_title}>
-                      <h3>Descreva JavaScript</h3>
-                    </div>
-
-                    <div className={styles.correct_container}>
-                      <button className={styles.selected}><AiOutlineCheck /></button>
-                      <span>Correto</span>
-                    </div>
-                  </header>
-
-                  <div className={styles.response}>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Voluptate, assumenda sit. Sed repellendus minus
-                      dignissimos rerum quasi! Numquam, doloribus atque cumque
-                      ea eius sunt dolorum tempora quis. Quaerat, nostrum porro?
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <Personal show={showTab.personal} />
 
             <section
               className={`${styles.ranking} ${

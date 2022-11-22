@@ -1,0 +1,105 @@
+.question_choose {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: clamp(1rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+
+  border-radius: 8px;
+  background-color: var(--dark-container);
+}
+
+.question_choose header {
+  display: flex;
+  align-items: center;
+
+  padding: 0;
+
+  background-color: transparent;
+}
+
+.question_choose .question_title {
+  flex: 60% 0 0;
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+/* Questão de única escolha */
+.question_choose .correct_container.correct,
+.question_choose .correct_container.incorrect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  font-weight: bold;
+}
+
+.question_choose .correct_container.correct {
+  color: var(--success-green);
+}
+
+.question_choose .correct_container.incorrect {
+  color: var(--dark-pink);
+}
+
+.question_choose .correct_container svg {
+  font-size: clamp(1rem, 5vw, 1.4rem);
+}
+
+.question_choose .response_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding-top: 30px;
+}
+
+.question_choose .response_container.single .alternative,
+.question_choose .response_container.multiple .alternative {
+  width: 90%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.question_choose .response_container.multiple .alternative p,
+.question_choose .response_container.single .alternative p {
+  width: inherit;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+.question_choose .response_container.multiple .alternative .icon,
+.question_choose .response_container.single .alternative .icon {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px;
+
+  border: 1px solid var(--color-white-text);
+  border-radius: 100%;
+}
+
+.question_choose .response_container.multiple .alternative .icon {
+  border-radius: 0;
+}
+
+.question_choose .response_container.multiple .alternative.correct .icon,
+.question_choose .response_container.single .alternative.correct .icon {
+  border-color: var(--success-green-dark-70);
+  background-color: var(--success-green-dark-70);
+}
+
+.question_choose .response_container.multiple .alternative.incorrect .icon,
+.question_choose .response_container.single .alternative.incorrect .icon {
+  border-color: var(--dark-pink);
+  background-color: var(--dark-pink);
+}
