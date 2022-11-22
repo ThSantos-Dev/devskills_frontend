@@ -7,14 +7,15 @@ import Button from "../../../components/shared/Form/Button/Button";
 import Container from "../../../components/shared/Layout/Container/Container";
 import styles from "./ApplicationOverview.module.css";
 import Personal from "./Tabs/Personal";
+import Ranking from "./Tabs/Ranking";
 
 type Props = {};
 
 const ApplicationOverview = (props: Props) => {
   const [showTab, setShowTab] = useState({
     general: false,
-    personal: true,
-    ranking: false,
+    personal: false,
+    ranking: true,
   });
 
   const handleShowTab = (tab: "general" | "personal" | "ranking") => {
@@ -96,23 +97,17 @@ const ApplicationOverview = (props: Props) => {
           </nav>
 
           <div className={styles.sections_container}>
-            <section
+            {/* <section
               className={`${styles.general} ${
                 showTab.general ? styles.active : ""
               }`}
             >
               <h2>Overview</h2>
-            </section>
+            </section> */}
 
             <Personal show={showTab.personal} />
 
-            <section
-              className={`${styles.ranking} ${
-                showTab.ranking ? styles.active : ""
-              }`}
-            >
-              <h2>Todos os candidatos</h2>
-            </section>
+            <Ranking show={showTab.ranking} />
           </div>
         </div>
       </div>

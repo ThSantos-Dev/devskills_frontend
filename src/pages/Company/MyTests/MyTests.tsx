@@ -54,7 +54,7 @@ const MyTests = (props: Props) => {
   const [page, setPage] = useState<number>(1);
   const { tests, loading } = useSelector<
     any,
-    { tests: TTestOfCompany[]; loading: boolean }
+    { tests: TTestOfCompany; loading: boolean }
   >((state: any) => state.test);
 
   const dispatch = useDispatch<any>();
@@ -96,8 +96,8 @@ const MyTests = (props: Props) => {
       styleTitleContainer={{ maxWidth: "1400px" }}
     >
       <div className={styles.cards_container}>
-        {tests.length > 0 &&
-          tests.map((test, index) => (
+        {tests?.results?.length > 0 &&
+          tests.results.map((test, index) => (
             <div
               className={styles.card}
               key={index}
