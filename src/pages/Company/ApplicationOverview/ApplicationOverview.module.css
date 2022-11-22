@@ -134,13 +134,6 @@ header.content {
   background-color: red;
 }
 
-/* Individual */
-.personal {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 
 /* Ranking */
 .ranking {

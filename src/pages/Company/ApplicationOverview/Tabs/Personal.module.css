@@ -1,5 +1,9 @@
 /* Individual */
 .personal {
+  display: none;
+}
+
+.personal.active {
   display: flex;
   flex-direction: column;
   gap: 20px;
