@@ -10,10 +10,79 @@
   gap: 20px;
 }
 
+/* Filtros */
+.filter_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  gap: 10px;
+
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-white-text);
+}
+
+.filter h3 {
+  flex: 100% 0 0;
+}
+
+.filter .inputs {
+  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  padding-top: 4px;
+}
+
+
+.filter input[type="number"] {
+  all: unset;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  outline: 1px solid var(--color-white-text);
+
+  background-color: var(--dark-light-blue);
+}
+
+.radio_container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.radio_container label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.radio_container label input {
+  width: 1.2rem;
+  height: 1.2rem;
+
+}
+
 /* Tabela */
 .table_container table {
   min-width: 100%;
   border-collapse: collapse;
+
+  transition: all 0.3s ease !important;
 }
 
 .table_container table .profile {
@@ -26,15 +95,27 @@
 
 .table_container table thead tr {
   height: 60px;
+  transition: all 0.3s ease;
+
   background-color: var(--dark-blue);
 }
 
+.table_container table thead th {
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
+}
+
+.table_container table thead th:nth-last-child(1),
+.table_container table tbody td:nth-last-child(1) {
+  padding-right: 20px;
+}
+
 .table_container table tbody tr:hover {
-  background-color: var(--dark-yellow);
+  background-color: var(--dark-grey) !important;
 }
 
 .table_container table tbody td {
   text-align: center;
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
 }
 
 .table_container table .profile img {
@@ -44,16 +125,26 @@
   object-fit: cover;
 
   border-radius: 100%;
+
+  cursor: pointer;
 }
 
 .table_container table .actions div {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 10px;
 }
 
 .table_container table .actions .icon svg {
   font-size: clamp(1.2rem, 5vw, 1.5rem);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.table_container table .actions .icon:hover svg {
+  color: #fff;
+  transform: scale(1.1);
 }
 
 .table_container table .actions span {

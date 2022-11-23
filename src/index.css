@@ -55,6 +55,43 @@ body {
   background-color: var(--dark-background);
 }
 
+body.light {
+  /* Cores de Texto */
+  --color-white-text: #1f1b1b;
+  --color-black-text: #000410;
+  --color-red-text: #530014;
+  --color-blue-text: #153269;
+
+  /* Tema escurdo */
+  --dark-grey: #8581af;
+  --dark-container: #0b0b3d;
+  --dark-background: #d4d4e7;
+  --dark-light-blue: #a1b2ee;
+  --dark-extra-light-blue: #708FDE;
+  --dark-blue: #495e93;
+  --dark-pink: #9e3c54;
+  --dark-yellow: #ff9318;
+
+  --success-green: #1BB69D;
+
+  /* opacidade */
+  --success-green-dark-70: #1bb69cdf;
+  --dark-pink-dark-70: #9e3c55c9;
+
+
+
+  --input-border-color: ;
+  --input-placeholder-color: ;
+  --input-placeholder-size: ;
+  --input-value-color: ;
+  --inout-value-size: ;
+
+  --background-light-blue: #4166c6;
+
+  --select-background-dark: #45457b;
+  --select-background-multivalue: #8383a7;
+}
+
 a {
   font-size: 1.2rem;
   font-weight: 700;

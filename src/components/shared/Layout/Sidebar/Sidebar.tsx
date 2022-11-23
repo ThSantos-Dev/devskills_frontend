@@ -56,7 +56,22 @@ const Sidebar = (props: Props) => {
 
   const bodyEl = document.body;
 
-  useLayoutEffect(() => bodyEl.classList.add(styles.dark), [bodyEl]);
+  useLayoutEffect(() => {
+    const theme = JSON.parse(localStorage.getItem("theme")!) || null;
+    console.log(theme);
+
+    if (!theme || theme.value === "dark") {
+      localStorage.removeItem("theme");
+      localStorage.setItem("theme", JSON.stringify({ value: "dark" }));
+      bodyEl.classList.remove("light");
+      return bodyEl.classList.add(styles.dark);
+    }
+
+    localStorage.setItem("theme", JSON.stringify({ value: "light" }));
+    bodyEl.classList.add("light");
+    bodyEl.classList.remove(styles.dark);
+    setModeText(false);
+  }, [bodyEl]);
 
   const navigate = useNavigate();
 
@@ -157,6 +172,22 @@ const Sidebar = (props: Props) => {
                 className={styles.toggle_switch}
                 onClick={() => {
                   bodyEl.classList.toggle(styles.dark);
+                  bodyEl.classList.toggle("light");
+
+                  localStorage.removeItem("theme");
+
+                  if (modeText) {
+                    localStorage.setItem(
+                      "theme",
+                      JSON.stringify({ value: "light" })
+                    );
+                  } else {
+                    localStorage.setItem(
+                      "theme",
+                      JSON.stringify({ value: "dark" })
+                    );
+                  }
+
                   setModeText(!modeText);
                 }}
               >
