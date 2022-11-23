@@ -1,0 +1,63 @@
+.modal_container {
+  width: 100%;
+  min-height: 100vh;
+
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+
+  display: grid;
+  place-items: center;
+
+  background-color: rgba(11, 11, 69, 0.3);
+
+  transition: all 0.3s ease;
+}
+
+.modal_container.close {
+  top: -200vh;
+}
+
+.modal {
+  width: 70vw;
+  height: 80vh;
+  overflow: auto;
+
+  color: var(--color-white-text);
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  padding: clamp(2rem, 5vw, 115px) clamp(3rem, 5vw, 130px);
+  margin: 20px;
+
+  background-color: var(--dark-container);
+}
+
+.modal::-webkit-scrollbar {
+  width: 0;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+.close svg {
+  font-size: clamp(2rem, 5.3vw, 3rem);
+
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.close svg:hover {
+  color: white;
+  font-weight: bold;
+
+  transform: scale(1.2);
+}

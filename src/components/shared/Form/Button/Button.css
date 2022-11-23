@@ -26,7 +26,7 @@
   cursor: pointer;
   color: var(--color-white);
 
-  border: 1px solid var(--color-white);
+  outline: 1px solid var(--color-white);
   background-color: var(--bg-color-blue);
 }
 
