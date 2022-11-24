@@ -4,55 +4,61 @@ import { IoCloseSharp } from "react-icons/io5";
 import { AiOutlineCheck } from "react-icons/ai";
 
 interface Props {
+  title: string;
+  alternatives: { text: string; correct: boolean; selected: boolean }[];
+  correct: boolean ;
+  img_url?: string;
   type: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
 }
 
-const Choose = ({ type }: Props) => {
+const Choose = ({ title, type, alternatives, correct, img_url }: Props) => {
   return (
     <div className={styles.question_choose}>
       <header>
         <div className={styles.question_title}>
-          <h3>O que é um array?</h3>
+          <h3>{title}</h3>
         </div>
 
-        <div className={`${styles.correct_container} ${styles.incorrect}`}>
-          <AiOutlineCheck />
-          <span>Errou</span>
+        <div
+          className={`${styles.correct_container} ${
+            correct ? styles.correct : styles.incorrect
+          }`}
+        >
+          {correct ? (
+            <>
+              {" "}
+              <AiOutlineCheck />
+              <span>Acertou</span>
+            </>
+          ) : (
+            <>
+              {" "}
+              <IoCloseSharp />
+              <span>Errou</span>
+            </>
+          )}
         </div>
       </header>
+
+      {img_url && (
+        <div className={styles.image}>
+          <img src={img_url} alt="" />
+        </div>
+      )}
 
       <div
         className={`${styles.response_container} ${
           type === "MULTIPLA_ESCOLHA" ? styles.multiple : styles.single
         }`}
       >
-        <div className={`${styles.alternative} ${styles.correct}`}>
-          <span className={styles.icon}>
-            <AiOutlineCheck />
-          </span>
-          <p>
-            Lorem inpsum dolor sit emet a num sei o que mais lá com iso e aquilo
-            outro
-          </p>
-        </div>
-        <div className={`${styles.alternative} ${styles.incorrect}`}>
-          <span className={styles.icon}>
-            <IoCloseSharp />
-          </span>
-          <p>
-            Lorem inpsum dolor sit emet a num sei o que mais lá com iso e aquilo
-            outro
-          </p>
-        </div>
-        <div className={`${styles.alternative}`}>
-          <span className={styles.icon}>
-            <IoCloseSharp />
-          </span>
-          <p>
-            Lorem inpsum dolor sit emet a num sei o que mais lá com iso e aquilo
-            outro
-          </p>
-        </div>
+        {alternatives.map((alternative) => (
+          <div className={`${styles.alternative} ${styles.correct}`}>
+            <span className={styles.icon}>
+              {alternative.correct ? <AiOutlineCheck /> : <IoCloseSharp />}
+            </span>
+            <p>{alternative.text}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

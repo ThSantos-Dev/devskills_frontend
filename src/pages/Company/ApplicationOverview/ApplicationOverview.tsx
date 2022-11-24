@@ -14,8 +14,8 @@ type Props = {};
 const ApplicationOverview = (props: Props) => {
   const [showTab, setShowTab] = useState({
     general: false,
-    personal: false,
-    ranking: true,
+    personal: true,
+    ranking: false,
   });
 
   const handleShowTab = (tab: "general" | "personal" | "ranking") => {
@@ -105,9 +105,9 @@ const ApplicationOverview = (props: Props) => {
               <h2>Overview</h2>
             </section> */}
 
-            <Personal show={showTab.personal} />
+            {showTab.personal && <Personal show={showTab.personal} />}
 
-            <Ranking show={showTab.ranking} />
+            {showTab.ranking && <Ranking show={showTab.ranking} />}
           </div>
         </div>
       </div>

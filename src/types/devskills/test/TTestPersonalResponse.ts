@@ -1,7 +1,7 @@
-export type TData = {
+export type TTestPersonalResponse = {
   totalResults: number;
   result: TResult;
-}
+};
 
 export type TResult = {
   idProvaAndamento: number;
@@ -21,10 +21,10 @@ export type TCandidato = {
 export type TQuest = {
   id: number;
   enunciado: string;
-  tipo: string;
+  tipo: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA" | "DISSERTATIVA";
   alternativas?: TAlternativa[];
   resposta?: TResposta;
-}
+};
 
 export type TAlternativa = {
   id: number;
