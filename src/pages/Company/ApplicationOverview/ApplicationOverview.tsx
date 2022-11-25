@@ -14,8 +14,8 @@ type Props = {};
 const ApplicationOverview = (props: Props) => {
   const [showTab, setShowTab] = useState({
     general: false,
-    personal: true,
-    ranking: false,
+    personal: false,
+    ranking: true,
   });
 
   const handleShowTab = (tab: "general" | "personal" | "ranking") => {

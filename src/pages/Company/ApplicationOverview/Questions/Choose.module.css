@@ -95,11 +95,11 @@
 .question_choose .response_container.multiple .alternative.correct .icon,
 .question_choose .response_container.single .alternative.correct .icon {
   border-color: var(--success-green-dark-70);
-  background-color: var(--success-green-dark-70);
+  background-color: var(--success-green-dark-70) !important;
 }
 
 .question_choose .response_container.multiple .alternative.incorrect .icon,
 .question_choose .response_container.single .alternative.incorrect .icon {
   border-color: var(--dark-pink);
-  background-color: var(--dark-pink);
+  background-color: var(--dark-pink) !important;
 }

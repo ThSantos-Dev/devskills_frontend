@@ -13,19 +13,25 @@
 /* Filtros */
 .filter_container {
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
 }
 
+.filter_container h2 {
+  flex: 100% 0 0;
+}
+
 .filter {
+  flex: calc(100% / 3 - 60px) 0 0;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
 
   gap: 10px;
 
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--color-white-text);
+  border-right: 1px solid var(--color-white-text);
 }
 
 .filter h3 {
@@ -75,6 +81,14 @@
   width: 1.2rem;
   height: 1.2rem;
 }
+
+.button_container {
+  flex: 1;
+
+ display: flex;
+ justify-content: flex-end;
+}
+
 
 /* Tabela */
 .table_container table {

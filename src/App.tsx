@@ -23,10 +23,10 @@ import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import { useEffect } from "react";
 import TestService from "./services/apiDevSkills/common/testService";
-import MyTests from './pages/Company/MyTests/MyTests';
-import Search from './pages/Dev/Search/Search';
+import MyTests from "./pages/Company/MyTests/MyTests";
+import Search from "./pages/Dev/Search/Search";
 import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
-import DetailsTest from './pages/Dev/Test/Details/DetailsTest';
+import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
 import DevHome from "./pages/Dev/Home/Home";
 
 const App = () => {
@@ -116,7 +116,7 @@ const App = () => {
             )
           }
         />
-        <Route
+        {/* <Route
           path="/company/test/create"
           element={
             auth && type === "COMPANY" ? (
@@ -125,7 +125,9 @@ const App = () => {
               <Navigate to="/company/login" />
             )
           }
-        />
+        /> */}
+
+        <Route path="/company/test/create" element={<CreateTest />} />
         <Route
           path="/company/test/applicate/:id"
           element={

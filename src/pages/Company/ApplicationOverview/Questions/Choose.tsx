@@ -6,7 +6,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 interface Props {
   title: string;
   alternatives: { text: string; correct: boolean; selected: boolean }[];
-  correct: boolean ;
+  correct: boolean;
   img_url?: string;
   type: "UNICA_ESCOLHA" | "MULTIPLA_ESCOLHA";
 }
@@ -52,7 +52,13 @@ const Choose = ({ title, type, alternatives, correct, img_url }: Props) => {
         }`}
       >
         {alternatives.map((alternative) => (
-          <div className={`${styles.alternative} ${styles.correct}`}>
+          <div
+            className={`${styles.alternative} ${
+              alternative.correct && alternative.selected
+                ? styles.correct
+                : styles.incorrect
+            }`}
+          >
             <span className={styles.icon}>
               {alternative.correct ? <AiOutlineCheck /> : <IoCloseSharp />}
             </span>

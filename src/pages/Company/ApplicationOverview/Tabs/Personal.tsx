@@ -58,7 +58,12 @@ const Personal = ({ show }: Props) => {
 
             <div className={styles.content}>
               <div className={styles.position}>
-                <input type="number" name="" id="" maxLength={1} />
+                <input
+                  type="number"
+                  value={indexCandidate}
+                  id=""
+                  maxLength={1}
+                />
               </div>
 
               <div className={styles.name}>
@@ -92,13 +97,18 @@ const Personal = ({ show }: Props) => {
                 ) : (
                   <Choose
                     title={question.enunciado}
-                    correct={false}
+                    correct={
+                      question.alternativas!.filter(
+                        (alternative) =>
+                          alternative.selecionada &&
+                          alternative.correta === true
+                      ).length > 0
+                    }
                     alternatives={question.alternativas!.map((alternative) => ({
                       text: alternative.texto,
                       correct: alternative.correta,
                       selected: alternative.selecionada,
                     }))}
-
                     type={question.tipo}
                   />
                 )}

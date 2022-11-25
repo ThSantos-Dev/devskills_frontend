@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { AiOutlineException, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { MdMoreHoriz } from "react-icons/md";
 import { RiMailAddFill } from "react-icons/ri";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
 import Modal from "../../../../components/shared/Layout/Modal/Modal";
@@ -31,7 +32,6 @@ const Ranking: React.FC<Props> = ({ show }) => {
 
   return (
     <section className={`${styles.container} ${show ? styles.active : ""}`}>
-      <h2>Listagem de candidatos</h2>
       <div className={styles.filter_container}>
         <h2>Filtros</h2>
 
@@ -181,13 +181,12 @@ const Ranking: React.FC<Props> = ({ show }) => {
           </div>
         </div>
 
-        <Button
-          color="solid_white"
-          size="small"
-          text="Aplicar"
-          style={{ alignSelf: "end" }}
-        />
+        <div className={styles.button_container}>
+          <Button color="solid_white" size="small" text="Aplicar" />
+        </div>
       </div>
+
+      <h2>Listagem de candidatos</h2>
 
       <div className={styles.table_container}>
         <table>
@@ -196,8 +195,9 @@ const Ranking: React.FC<Props> = ({ show }) => {
               <th>Posição</th>
               <th>Perfil</th>
               <th>Nome</th>
-              <th>E-mail</th>
+              <th>Duração</th>
               <th>Pontuação</th>
+              <th>Localidade</th>
               <th>Status</th>
               <th>Ações</th>
             </tr>
@@ -211,27 +211,28 @@ const Ranking: React.FC<Props> = ({ show }) => {
                 <img
                   src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
                   alt="profile"
+                  title="Ver perfil"
                 />
               </td>
-              <td className={styles.name}>
+              <td className={styles.text}>
                 <span>Thales Santos da Silva</span>
               </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
+              <td className={styles.text}>
+                <span>00:43:23</span>
               </td>
-              <td className={styles.score}>
+              <td className={styles.text}>
                 <span>80%</span>
               </td>
-              <td className={styles.status}>
+              <td className={styles.text}>
+                <span>Jandira, SP</span>
+              </td>
+              <td className={styles.text}>
                 <span>Aguardando correção</span>
               </td>
               <td className={styles.actions}>
                 <div>
                   <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
+                    <MdMoreHoriz title="Mais ações"/>
                   </span>
                 </div>
               </td>
@@ -247,25 +248,25 @@ const Ranking: React.FC<Props> = ({ show }) => {
                   title="Ver perfil"
                 />
               </td>
-              <td className={styles.name}>
+              <td className={styles.text}>
                 <span>Thales Santos da Silva</span>
               </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
+              <td className={styles.text}>
+                <span>00:43:23</span>
               </td>
-              <td className={styles.score}>
+              <td className={styles.text}>
                 <span>80%</span>
               </td>
-              <td className={styles.status}>
+              <td className={styles.text}>
+                <span>Jandira, SP</span>
+              </td>
+              <td className={styles.text}>
                 <span>Aguardando correção</span>
               </td>
               <td className={styles.actions}>
                 <div>
                   <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
+                    <MdMoreHoriz title="Mais ações"/>
                   </span>
                 </div>
               </td>
@@ -278,291 +279,28 @@ const Ranking: React.FC<Props> = ({ show }) => {
                 <img
                   src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
                   alt="profile"
+                  title="Ver perfil"
                 />
               </td>
-              <td className={styles.name}>
+              <td className={styles.text}>
                 <span>Thales Santos da Silva</span>
               </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
+              <td className={styles.text}>
+                <span>00:43:23</span>
               </td>
-              <td className={styles.score}>
+              <td className={styles.text}>
                 <span>80%</span>
               </td>
-              <td className={styles.status}>
+              <td className={styles.text}>
+                <span>Jandira, SP</span>
+              </td>
+              <td className={styles.text}>
                 <span>Aguardando correção</span>
               </td>
               <td className={styles.actions}>
                 <div>
                   <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                />
-              </td>
-              <td className={styles.name}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.email}>
-                <span>taleshb1039@gmail.com</span>
-              </td>
-              <td className={styles.score}>
-                <span>80%</span>
-              </td>
-              <td className={styles.status}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <AiOutlineUsergroupAdd title="Adicionar a um grupo" />
-                  </span>
-                  <span className={styles.icon}>
-                    <RiMailAddFill title="Entrar em contato" />
+                    <MdMoreHoriz title="Mais ações"/>
                   </span>
                 </div>
               </td>

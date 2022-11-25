@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Dissertative.module.css";
 import { IoCloseSharp } from "react-icons/io5";
+import { AiOutlineCheck } from 'react-icons/ai';
 
 interface Props {
   text: string;
@@ -22,17 +23,27 @@ const Dissertative: React.FC<Props> = ({
           <h3>{text}</h3>
         </div>
 
-        <div className={styles.correct_container}>
-          <button title="Alternar">
-            {/* <AiOutlineCheck /> */}
-            <IoCloseSharp />
-          </button>
-          <span>{correct ? "Correta" : "Incorreta"}</span>
-        </div>
+        {correct === null ? (
+          <></>
+        ) : correct ? (
+          <div className={styles.correct_container}>
+            <button title="Alternar">
+              <AiOutlineCheck />
+            </button>
+            <span>Correta</span>
+          </div>
+        ) : (
+          <div className={styles.correct_container}>
+            <button title="Alternar">
+              <IoCloseSharp />
+            </button>
+            <span>Incorreta</span>
+          </div>
+        )}
       </header>
 
       <div className={styles.image}>
-        <img src={img_url} alt="" />
+        <img src={img_url} alt="Ilustration" />
       </div>
 
       <div className={styles.response}>
