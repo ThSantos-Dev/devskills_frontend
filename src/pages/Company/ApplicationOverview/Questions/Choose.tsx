@@ -51,8 +51,9 @@ const Choose = ({ title, type, alternatives, correct, img_url }: Props) => {
           type === "MULTIPLA_ESCOLHA" ? styles.multiple : styles.single
         }`}
       >
-        {alternatives.map((alternative) => (
+        {alternatives.map((alternative, index) => (
           <div
+            key={index}
             className={`${styles.alternative} ${
               alternative.correct && alternative.selected
                 ? styles.correct

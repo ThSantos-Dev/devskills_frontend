@@ -144,7 +144,7 @@ const Ranking: React.FC<Props> = ({ show }) => {
           </div>
         </div>
 
-        <div className={styles.filter}>
+        <div className={`${styles.filter} ${styles.status}`}>
           <h3>Status</h3>
 
           <div className={styles.radio_container}>

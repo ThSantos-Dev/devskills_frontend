@@ -30,8 +30,44 @@ const Personal = ({ show }: Props) => {
     (state) => state.auth
   );
 
+  const [correctionData, setCorrectionData] = useState<any>();
+
+  const handleCorrectionResponse = (idQuestion: number, correct: boolean) => {
+    const correction = correctionData.questoesCorrigidas.map(
+      (question: any) => {
+        if (question.id_questao === idQuestion) {
+          return {
+            id_questao: idQuestion,
+            correta: correct,
+          };
+        }
+
+        return question;
+      }
+    );
+
+    setCorrectionData({ ...correctionData, questoesCorrigidas: correction });
+  };
+
+  const handleSubmitCorrectionData = async () => {
+    const res = await candidatesService.sendCorrection(
+      currentCandidate!.result.idProvaAndamento,
+      correctionData,
+      auth.user.token
+    );
+
+    console.log(res);
+
+    if(res.error)
+      return toast.error(res.error);
+
+    if(res.success)
+      return toast.success(res.message);
+    
+  };
+
   useEffect(() => {
-    if (indexCandidate === 0) return;
+    if (indexCandidate === 0)  return;
 
     candidatesService
       .getByIndex(parseInt(idTest!), indexCandidate, auth.user.token)
@@ -40,19 +76,39 @@ const Personal = ({ show }: Props) => {
 
         if (res.error) return toast.error(res.error);
 
-        setCurrentCandidate(res.data);
+        let data: TTestPersonalResponse = res.data;
+        setCorrectionData({
+          id_prova_usuario: data.result.candidato[0].idProvaUsuario,
+          questoesCorrigidas: data.result.candidato[0].questoes
+            .filter((question) => question.tipo === "DISSERTATIVA")
+            .map((question) => {
+              return {
+                id_questao: question.id,
+                correta: null,
+              };
+            }),
+        });
+
+        setCurrentCandidate(data);
       })
       .catch((error) => console.error(error));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [indexCandidate]);
 
+  useEffect(() => {
+    console.log("correção: ", correctionData);
+  }, [correctionData]);
+
   return (
     <section className={`${styles.personal} ${show ? styles.active : ""}`}>
       {currentCandidate?.result?.candidato ? (
         <>
           <header>
-            <div className={styles.control}>
+            <div
+              className={styles.control}
+              onClick={() => setIndexCandidate(indexCandidate - 1)}
+            >
               <FaChevronLeft />
             </div>
 
@@ -62,7 +118,7 @@ const Personal = ({ show }: Props) => {
                   type="number"
                   value={indexCandidate}
                   id=""
-                  maxLength={1}
+                  max={currentCandidate.totalResults}
                 />
               </div>
 
@@ -81,39 +137,50 @@ const Personal = ({ show }: Props) => {
               </div>
             </div>
 
-            <div className={styles.control}>
+            <div
+              className={styles.control}
+              onClick={() => setIndexCandidate(indexCandidate + 1)}
+            >
               <FaChevronRight />
             </div>
           </header>
           <div className={styles.container}>
-            {currentCandidate.result.candidato[0].questoes.map((question) => (
-              <>
-                {question.tipo === "DISSERTATIVA" ? (
-                  <Dissertative
-                    correct={null}
-                    response={question.resposta!.texto}
-                    text={question.enunciado}
-                  />
-                ) : (
-                  <Choose
-                    title={question.enunciado}
-                    correct={
-                      question.alternativas!.filter(
-                        (alternative) =>
-                          alternative.selecionada &&
-                          alternative.correta === true
-                      ).length > 0
-                    }
-                    alternatives={question.alternativas!.map((alternative) => ({
-                      text: alternative.texto,
-                      correct: alternative.correta,
-                      selected: alternative.selecionada,
-                    }))}
-                    type={question.tipo}
-                  />
-                )}
-              </>
-            ))}
+            {currentCandidate.result.candidato[0].questoes.map(
+              (question, index) => (
+                <>
+                  {question.tipo === "DISSERTATIVA" ? (
+                    <Dissertative
+                      key={index}
+                      id={question.id}
+                      correct={null}
+                      handleCorrectionResponse={handleCorrectionResponse}
+                      response={question.resposta!.texto}
+                      text={question.enunciado}
+                    />
+                  ) : (
+                    <Choose
+                      key={index}
+                      title={question.enunciado}
+                      correct={
+                        question.alternativas!.filter(
+                          (alternative) =>
+                            alternative.selecionada &&
+                            alternative.correta === true
+                        ).length > 0
+                      }
+                      alternatives={question.alternativas!.map(
+                        (alternative) => ({
+                          text: alternative.texto,
+                          correct: alternative.correta,
+                          selected: alternative.selecionada,
+                        })
+                      )}
+                      type={question.tipo}
+                    />
+                  )}
+                </>
+              )
+            )}
 
             {/* <Dissertative /> */}
             {/* <Choose type="UNICA_ESCOLHA" /> */}
@@ -125,6 +192,7 @@ const Personal = ({ show }: Props) => {
             color="solid_white"
             text="Salvar"
             submit={true}
+            handleOnClick={handleSubmitCorrectionData}
             style={{ alignSelf: "flex-end" }}
           />
         </>

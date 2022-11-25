@@ -1,20 +1,24 @@
 import React from "react";
 import styles from "./Dissertative.module.css";
 import { IoCloseSharp } from "react-icons/io5";
-import { AiOutlineCheck } from 'react-icons/ai';
+import { AiOutlineCheck } from "react-icons/ai";
 
 interface Props {
+  id: number;
   text: string;
   response: string;
   correct: boolean | null;
   img_url?: string;
+  handleCorrectionResponse(idQuestion: number, correct: boolean): void;
 }
 
 const Dissertative: React.FC<Props> = ({
+  id,
   text,
   response,
   correct,
   img_url,
+  handleCorrectionResponse,
 }) => {
   return (
     <div className={styles.question_dissertation}>
@@ -55,11 +59,22 @@ const Dissertative: React.FC<Props> = ({
 
         <div className={styles.input_radio_container}>
           <label className={styles.choose_radio}>
-            <input type="radio" name="correct" required />
+            <input
+              type="radio"
+              name="correct"
+              required
+              onClick={() => handleCorrectionResponse(id, true)}
+            />
             <span>Correta</span>
           </label>
           <label className={styles.choose_radio}>
-            <input type="radio" name="correct" id="" required />
+            <input
+              type="radio"
+              name="correct"
+              id=""
+              required
+              onClick={() => handleCorrectionResponse(id, false)}
+            />
             <span>Incorreta</span>
           </label>
         </div>

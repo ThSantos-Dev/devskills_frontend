@@ -34,6 +34,10 @@
   border-right: 1px solid var(--color-white-text);
 }
 
+.filter.status {
+  border-right: none;
+}
+
 .filter h3 {
   flex: 100% 0 0;
 }
@@ -85,10 +89,9 @@
 .button_container {
   flex: 1;
 
- display: flex;
- justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
-
 
 /* Tabela */
 .table_container table {
@@ -237,19 +240,15 @@ h1.styles.title_modal {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  
+
   padding: 4px 12px;
   outline: 1px solid var(--color-white-text);
 }
 
-.dev_content .profile_img .ranking svg{
-  font-size: clamp(.8rem, 5vw, 1.4rem);
+.dev_content .profile_img .ranking svg {
+  font-size: clamp(0.8rem, 5vw, 1.4rem);
   cursor: default;
 }
-
-
-
-
 
 .info_modal .content {
   display: flex;
