@@ -1,9 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { AiOutlineException, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { MdMoreHoriz } from "react-icons/md";
-import { RiMailAddFill } from "react-icons/ri";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { BsFillPersonCheckFill } from "react-icons/bs";
+import { HiUserGroup } from "react-icons/hi";
+import {
+  MdMoreHoriz,
+  MdOutlineAttachEmail,
+  MdOutlinePersonOff,
+} from "react-icons/md";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
-import Modal from "../../../../components/shared/Layout/Modal/Modal";
+import ChooseType from "../../../Test/ChooseType/ChooseType";
 import Button from "./../../../../components/shared/Form/Button/Button";
 import styles from "./Ranking.module.css";
 
@@ -24,7 +29,10 @@ const Ranking: React.FC<Props> = ({ show }) => {
     status: "all",
   });
 
-  const [showModalEmail, setShowModalEmail] = useState<boolean>(true);
+  const [showModalCondition, setShowModalCondition] = useState<boolean>(true);
+  const [showModalAproved, setShowModalAproved] = useState<boolean>(false);
+  const [showModalAprovedGroup, setShowModalAprovedGroup] =
+    useState<boolean>(false);
 
   useEffect(() => {
     console.log(filters);
@@ -203,248 +211,125 @@ const Ranking: React.FC<Props> = ({ show }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                  title="Ver perfil"
-                />
-              </td>
-              <td className={styles.text}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.text}>
-                <span>00:43:23</span>
-              </td>
-              <td className={styles.text}>
-                <span>80%</span>
-              </td>
-              <td className={styles.text}>
-                <span>Jandira, SP</span>
-              </td>
-              <td className={styles.text}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <MdMoreHoriz title="Mais ações"/>
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                  title="Ver perfil"
-                />
-              </td>
-              <td className={styles.text}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.text}>
-                <span>00:43:23</span>
-              </td>
-              <td className={styles.text}>
-                <span>80%</span>
-              </td>
-              <td className={styles.text}>
-                <span>Jandira, SP</span>
-              </td>
-              <td className={styles.text}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <MdMoreHoriz title="Mais ações"/>
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className={styles.position}>
-                <span>1</span>
-              </td>
-              <td className={styles.profile}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt="profile"
-                  title="Ver perfil"
-                />
-              </td>
-              <td className={styles.text}>
-                <span>Thales Santos da Silva</span>
-              </td>
-              <td className={styles.text}>
-                <span>00:43:23</span>
-              </td>
-              <td className={styles.text}>
-                <span>80%</span>
-              </td>
-              <td className={styles.text}>
-                <span>Jandira, SP</span>
-              </td>
-              <td className={styles.text}>
-                <span>Aguardando correção</span>
-              </td>
-              <td className={styles.actions}>
-                <div>
-                  <span className={styles.icon}>
-                    <MdMoreHoriz title="Mais ações"/>
-                  </span>
-                </div>
-              </td>
-            </tr>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(
+              (candidate, index) => (
+                <tr key={index}>
+                  <td className={styles.position} data-label="Posição:">
+                    <span>1</span>
+                  </td>
+                  <td className={styles.profile} data-label="#1">
+                    <img
+                      src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                      alt="profile"
+                      title="Ver perfil"
+                    />
+                    <span className={styles.name}>Thales Santos da Silva</span>
+                  </td>
+                  <td
+                    className={`${styles.text} ${styles.name}`}
+                    data-label="Nome:"
+                  >
+                    <span>Thales Santos da Silva</span>
+                  </td>
+                  <td className={styles.text} data-label="Duração:">
+                    <span>00:43:23</span>
+                  </td>
+                  <td className={styles.text} data-label="Pontuação:">
+                    <span>80%</span>
+                  </td>
+                  <td className={styles.text} data-label="Localidade:">
+                    <span>Jandira, SP</span>
+                  </td>
+                  <td className={styles.text} data-label="Status:">
+                    <span>Aguardando correção</span>
+                  </td>
+                  <td className={styles.actions} data-label="Ação:">
+                    <div>
+                      <span className={styles.icon}>
+                        <MdMoreHoriz title="Mais ações" />
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       </div>
 
-      <Modal show={showModalEmail} setShow={setShowModalEmail}>
-        <div className={styles.info_modal}>
-          <h1 className={styles.title_modal}>Envio de e-mail</h1>
+      <ChooseType
+        show={showModalCondition}
+        setShow={setShowModalCondition}
+        closeButton={true}
+        content={{
+          title: "Defina a situalção do candidato(s)",
+          description:
+            "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+          options: [
+            {
+              icon: <MdOutlinePersonOff />,
+              label: "Reprovado",
+              handleOnClick: () => {},
+            },
+            {
+              icon: <BsFillPersonCheckFill />,
+              label: "Aprovado",
+              handleOnClick: () => {
+                setShowModalCondition(false);
+                setShowModalAproved(true);
+              },
+            },
+          ],
+        }}
+      />
 
-          <div className={styles.dev_info}>
-            <h2>Informações do candidato</h2>
-
-            <div className={styles.dev_content}>
-              <div className={styles.profile_img}>
-                <img
-                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                  alt=""
-                />
-
-                <div>
-                  <span className={styles.name}>Naruto Zurucrack</span>
-                  <span className={styles.email}>
-                    narutuxurumaki@nohaku.com
-                  </span>
-                </div>
-
-                <span className={styles.ranking}>
-                  <AiOutlineException /> <span>70%</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam
-            asperiores doloremque non ex aut excepturi dicta ab! Blanditiis iste
-            eveniet, exercitationem quaerat architecto id soluta mollitia nisi
-            consectetur, fugiat tenetur.
-          </p>
-
-          <div className={styles.content}>
-            <h2>Seus modelos</h2>
-            <details>
-              <summary>Aprovados</summary>
-              <div className={styles.models}>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-              </div>
-            </details>
-            <details>
-              <summary>Reprovados</summary>
-              <div className={styles.models}>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-                <div className={styles.model_email}>
-                  <h3>Seu título</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Earum, fuga exercitationem harum, dolorum maxime maiores
-                    fugit quaerat laboriosam officia natus nostrum dicta dolores
-                    explicabo necessitatibus architecto labore neque tempora.
-                    Quia.
-                  </p>
-
-                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
-                    <Button color="solid_white" size="small" text="Enviar" />
-                  </a>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <a href="mailto:candidato@email.com">Enviar e-mail personalizado.</a>
-        </div>
-      </Modal>
+      <ChooseType
+        show={showModalAproved}
+        setShow={setShowModalAproved}
+        closeButton={true}
+        content={{
+          title: "Defina a situalção do candidato(s)",
+          description:
+            "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+          options: [
+            {
+              icon: <AiOutlineUsergroupAdd />,
+              label: "Adicionar a um grupo",
+              handleOnClick: () => {
+                setShowModalAproved(false);
+                setShowModalAprovedGroup(true);
+              },
+            },
+            {
+              icon: <MdOutlineAttachEmail />,
+              label: "Entrar em contato",
+              handleOnClick: () => {},
+            },
+          ],
+        }}
+      />
+      <ChooseType
+        show={showModalAprovedGroup}
+        setShow={setShowModalAprovedGroup}
+        closeButton={true}
+        content={{
+          title: "Defina a situalção do candidato(s)",
+          description:
+            "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+          options: [
+            {
+              icon: <HiUserGroup />,
+              label: "Adicionar a existente",
+              handleOnClick: () => {},
+            },
+            {
+              icon: <AiOutlineUsergroupAdd />,
+              label: "Formar novo grupo",
+              handleOnClick: () => {},
+            },
+          ],
+        }}
+      />
     </section>
   );
 };

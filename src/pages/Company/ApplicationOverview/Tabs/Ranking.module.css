@@ -319,3 +319,98 @@ h1.styles.title_modal {
   color: var(--dark-background);
   background-color: var(--color-white-text);
 }
+
+.table_container table td.profile .name {
+  display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+  .table_container table thead {
+    display: none;
+  }
+
+  .table_container table tr {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 40px 0;
+
+    border-radius: 18px;
+    border: 1px solid var(--color-white-text);
+
+    transform: scale(0.9);
+  }
+
+  .table_container table td {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    text-align: right !important;
+
+    padding: 10px 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted var(--color-white-text);
+  }
+
+  .table_container table td.profile {
+    position: relative;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .table_container table td.position {
+    display: none !important;
+  }
+
+  .table_container table td.name {
+    display: none;
+  }
+
+  .table_container table td.profile .name {
+    display: block;
+  }
+
+  .table_container table td.profile img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .table_container table td.position {
+    display: flex;
+    align-items: center;
+
+    padding: 10px 30px;
+
+    border-bottom: 1px solid var(--color-white-text);
+  }
+
+  .table_container table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  .table_container table td.profile::before {
+    position: absolute;
+    top: 20px;
+    right: 42%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+
+
+    border-radius: 100%;
+
+    background-color: blueviolet;
+  }
+
+
+  .table_container table td.actions {
+    display: none;
+  }
+}

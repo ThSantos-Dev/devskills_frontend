@@ -1,132 +1,136 @@
-        <div className={styles.question_dissertation}>
-          <header>
-            <div className={styles.question_title}>
-              <h3>Descreva JavaScript</h3>
-            </div>
+      <Modal show={showModalEmail} setShow={setShowModalEmail}>
+        <div className={styles.info_modal}>
+          <h1 className={styles.title_modal}>Envio de e-mail</h1>
 
-            <div className={styles.correct_container}>
-              <button title="Alternar">
-                {/* <AiOutlineCheck /> */}
-                <IoCloseSharp />
-              </button>
-              <span>Incorreta</span>
-            </div>
-          </header>
+          <div className={styles.dev_info}>
+            <h2>Informações do candidato</h2>
 
-          <div className={styles.image}>
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/images%2F6c622fa-0015-4ae5-dc17-2280eac756bf?alt=media&token=80f21200-e0cf-47de-a89a-476320a285c2"
-              alt=""
-            />
+            <div className={styles.dev_content}>
+              <div className={styles.profile_img}>
+                <img
+                  src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                  alt=""
+                />
+
+                <div>
+                  <span className={styles.name}>Naruto Zurucrack</span>
+                  <span className={styles.email}>
+                    narutuxurumaki@nohaku.com
+                  </span>
+                </div>
+
+                <span className={styles.ranking}>
+                  <AiOutlineException /> <span>70%</span>
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className={styles.response}>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Voluptate, assumenda sit. Sed repellendus minus dignissimos rerum
-              quasi! Numquam, doloribus atque cumque ea eius sunt dolorum
-              tempora quis. Quaerat, nostrum porro?
-            </p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam
+            asperiores doloremque non ex aut excepturi dicta ab! Blanditiis iste
+            eveniet, exercitationem quaerat architecto id soluta mollitia nisi
+            consectetur, fugiat tenetur.
+          </p>
+
+          <div className={styles.content}>
+            <h2>Seus modelos</h2>
+            <details>
+              <summary>Aprovados</summary>
+              <div className={styles.models}>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+              </div>
+            </details>
+            <details>
+              <summary>Reprovados</summary>
+              <div className={styles.models}>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+                <div className={styles.model_email}>
+                  <h3>Seu título</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Earum, fuga exercitationem harum, dolorum maxime maiores
+                    fugit quaerat laboriosam officia natus nostrum dicta dolores
+                    explicabo necessitatibus architecto labore neque tempora.
+                    Quia.
+                  </p>
+
+                  <a href="mailto:emailcandidato@email.com?subject=minhadescricao&body=minha mensagem personalizada">
+                    <Button color="solid_white" size="small" text="Enviar" />
+                  </a>
+                </div>
+              </div>
+            </details>
           </div>
 
-          <form className={styles.handle_choose}>
-            <h3>A resposta está</h3>
-
-            <div className={styles.input_radio_container}>
-              <label className={styles.choose_radio}>
-                <input type="radio" name="correct" required />
-                <span>Correta</span>
-              </label>
-              <label className={styles.choose_radio}>
-                <input type="radio" name="correct" id="" required />
-                <span>Incorreta</span>
-              </label>
-            </div>
-          </form>
+          <a href="mailto:candidato@email.com">Enviar e-mail personalizado.</a>
         </div>
-
-        <div className={styles.question_choose}>
-          <header>
-            <div className={styles.question_title}>
-              <h3>O que é um array?</h3>
-            </div>
-
-            <div className={`${styles.correct_container} ${styles.correct}`}>
-              <AiOutlineCheck />
-              <span>Acertou</span>
-            </div>
-          </header>
-
-          <div className={`${styles.response_container} ${styles.single}`}>
-            <div className={`${styles.alternative} ${styles.correct}`}>
-              <span className={styles.icon}>
-                <AiOutlineCheck />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-            <div className={`${styles.alternative} ${styles.incorrect}`}>
-              <span className={styles.icon}>
-                <IoCloseSharp />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-            <div className={`${styles.alternative}`}>
-              <span className={styles.icon}>
-                <IoCloseSharp />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.question_choose}>
-          <header>
-            <div className={styles.question_title}>
-              <h3>O que é um array?</h3>
-            </div>
-
-            <div className={`${styles.correct_container} ${styles.incorrect}`}>
-              <AiOutlineCheck />
-              <span>Errou</span>
-            </div>
-          </header>
-
-          <div className={`${styles.response_container} ${styles.multiple}`}>
-            <div className={`${styles.alternative} ${styles.correct}`}>
-              <span className={styles.icon}>
-                <AiOutlineCheck />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-            <div className={`${styles.alternative} ${styles.incorrect}`}>
-              <span className={styles.icon}>
-                <IoCloseSharp />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-            <div className={`${styles.alternative}`}>
-              <span className={styles.icon}>
-                <IoCloseSharp />
-              </span>
-              <p>
-                Lorem inpsum dolor sit emet a num sei o que mais lá com iso e
-                aquilo outro
-              </p>
-            </div>
-          </div>
-        </div>
+      </Modal>

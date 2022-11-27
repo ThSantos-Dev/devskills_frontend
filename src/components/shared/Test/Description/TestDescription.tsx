@@ -38,6 +38,8 @@ const TestDescription: React.FC<Props> = ({ readProof, getData }) => {
           name="titulo"
           value={inputs.titulo}
           required
+          minLength={10}
+          maxLength={50}
           placeholder="Título da prova"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             handleOnChange(e.target.value, e.target.name)
