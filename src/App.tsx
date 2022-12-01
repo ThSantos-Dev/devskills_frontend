@@ -40,7 +40,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TemplateDetails />} />
+        <Route path="/" element={<ComapanyHome />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
