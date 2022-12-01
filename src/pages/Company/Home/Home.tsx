@@ -7,6 +7,7 @@ import { getAllOfCompany } from "../../../slices/common/testSlice";
 import { TTestOfCompany } from "../../../types/devskills/test/TTestOfCompany";
 import CardMyTest from "./../../../components/company/Card/CardMyTest";
 import SelectCustom from "./../../../components/shared/Form/Select/SelectCustom";
+import styles from "./Home.module.css";
 
 interface Props {}
 
@@ -26,15 +27,15 @@ const Home = (props: Props) => {
   return (
     <Container title="Criar Grupo" backTo="/company/mygroups">
       <>
-        {tests?.results?.length > 0 ? (
+        {true ? (
           <>
             {" "}
-            <div className="container">
-              <div className="group_config">
-                <div className="group_description">
+            <div className={styles.container}>
+              <div className={styles.group_config}>
+                <div className={styles.group_description}>
                   <h2>Descrição</h2>
 
-                  <div className="description">
+                  <div className={styles.description}>
                     <textarea
                       name=""
                       id=""
@@ -44,28 +45,28 @@ const Home = (props: Props) => {
                     ></textarea>
                   </div>
                 </div>
-                <div className="group_team">
+                <div className={styles.group_team}>
                   <h2>Integrantes</h2>
 
-                  <div className="content">
-                    <div className="search_bar">
-                      <input type="text" className="" />
+                  <div className={styles.content}>
+                    <div className={styles.search_bar}>
+                      <input type="text" className={styles.seila } />
 
-                      <div className="icon">
+                      <div className={styles.icon}>
                         <RiSearch2Line />
                       </div>
                     </div>
-                    <div className="team_container">
-                      <div className="info_container">
-                        <div className="image">
+                    <div className={styles.team_container}>
+                      <div className={styles.info_container}>
+                        <div className={styles.image}>
                           <img
                             src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
                             alt=""
                           />
                         </div>
-                        <div className="info">
+                        <div className={styles.info}>
                           <span>thales@email.com</span>
-                          <div className="icon">
+                          <div className={styles.icon}>
                             <IoClose />
                           </div>
                         </div>
@@ -75,7 +76,7 @@ const Home = (props: Props) => {
                 </div>
               </div>
 
-              <div className="test_relation_container">
+              {/* <div className="test_relation_container">
                 <div className="select_container">
                   <SelectCustom
                     handleOnChange={() => {}}
@@ -94,7 +95,7 @@ const Home = (props: Props) => {
                     <CardMyTest test={test} />
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
           </>
         ) : (
