@@ -22,6 +22,7 @@
   border-radius: 8px;
   background-color: var(--color-white);
 }
+
 .btn_color_solid_white:hover:enabled {
   cursor: pointer;
   color: var(--color-white);

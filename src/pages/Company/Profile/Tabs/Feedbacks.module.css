@@ -1,9 +1,11 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 .card {
+  flex: calc(100% / 3 - 20px) 0 1;
   max-width: 530px;
 
   display: flex;
@@ -89,7 +91,7 @@
   align-items: flex-end;
   font-size: 3rem;
   font-weight: 400;
-  transform: translate(-18px, 20px) rotate(-12deg);
+  transform: translate(-18px, 20px) rotate(-10deg);
 }
 
 .card .content p {
@@ -105,4 +107,26 @@
   overflow: hidden;
 
   margin-bottom: 10px;
+}
+
+/* Media Querie  */
+@media only screen and (max-width: 1310px) {
+    .card {
+        flex: calc(100% / 2 - 20px) 0 0;
+    }
+}
+
+@media only screen and (max-width: 978px) {
+    .card {
+        flex: calc(100% - 20px) 0 0;    
+        max-width: none;
+
+        flex-direction: column;
+        gap: 10px;
+
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+
 }

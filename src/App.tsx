@@ -18,20 +18,18 @@ import ComapanyHome from "./pages/Company/Home/Home";
 
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
+import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
+import CreateGroup from "./pages/Company/CreateGroup/CreateGroup";
+import CompanyMyGroups from "./pages/Company/MyGroups/MyGroups";
+import MyTests from "./pages/Company/MyTests/MyTests";
+import CompanyProfile from "./pages/Company/Profile/Profile";
+import DevHome from "./pages/Dev/Home/Home";
+import Search from "./pages/Dev/Search/Search";
+import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
 import RealizeTest from "./pages/Dev/Test/Realize/RealizeTest";
+import Home from "./pages/Institutional/Home";
 import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
-import { useEffect } from "react";
-import TestService from "./services/apiDevSkills/common/testService";
-import MyTests from "./pages/Company/MyTests/MyTests";
-import Search from "./pages/Dev/Search/Search";
-import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
-import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
-import DevHome from "./pages/Dev/Home/Home";
-import Home from "./pages/Institutional/Home";
-import CompanyMyGroups from './pages/Company/MyGroups/MyGroups';
-import CreateGroup from './pages/Company/CreateGroup/CreateGroup';
-import CompanyProfile from './pages/Company/Profile/Profile';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -45,7 +43,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* <Route path="/" element={<ComapanyHome />} /> */}
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />

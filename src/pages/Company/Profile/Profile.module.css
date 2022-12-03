@@ -23,8 +23,8 @@
 }
 
 .media .image {
-  width: 180px;
-  height: 180px;
+  width: clamp(130px, 5vw, 180px);
+  height: clamp(130px, 5vw, 180px);
 
   display: flex;
   justify-content: center;
@@ -78,18 +78,18 @@
 }
 
 .info p {
-  font-size: clamp(0.6rem, 2.3vw, 1.2rem);
+  font-size: clamp(0.8rem, 2.3vw, 1.2rem);
 }
 
 /* Nav Tabs */
 .sidebar_container {
   border-bottom: 4px solid var(--color-white-text);
-   margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .sidebar_container ul {
   display: flex;
-  gap: 60px;
+  gap: clamp(1rem, 5vw, 8.5rem);
 }
 
 .sidebar_container li {
@@ -146,15 +146,14 @@
   transition: all 0.5s ease-in-out;
 }
 
-
 /* Media Queries */
-@media only screen  and (max-width: 725px) {
-    .container header {
-      flex-direction: column;
-    }
+@media only screen and (max-width: 725px) {
+  .container header {
+    flex-direction: column;
+  }
 
-    .container header .media {
-      display: flex;
-      align-items: center;
-    }
+  .container header .media {
+    display: flex;
+    align-items: center;
+  }
 }

@@ -6,8 +6,9 @@ import { BsGithub, BsInstagram } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Container from "./../../../components/shared/Layout/Container/Container";
+import Feedbacks from "./Tabs/Feedbacks";
 import ListTests from "./Tabs/ListTests";
-import Feedbacks from './Tabs/Feedbacks';
+import Photos from "./Tabs/Photos";
 
 interface Props {}
 
@@ -82,7 +83,7 @@ const Profile = (props: Props) => {
                 user.type === "COMPANY" ? styles.show : ""
               }`}
             >
-              <Button color="solid_gray" size="small" text="Editar" />
+              <Button color="solid_white" size="small" text="Editar" />
             </div>
 
             <h2>{user.name}</h2>
@@ -124,6 +125,7 @@ const Profile = (props: Props) => {
 
           {showTab.tests && <ListTests />}
           {showTab.feedbacks && <Feedbacks />}
+          {showTab.photos && <Photos />}
         </div>
       </div>
     </Container>
