@@ -177,7 +177,7 @@ const Home = (props: Props) => {
                   <span className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
                 </div>
                 <div className={styles.planButton}>
-                  <span className={styles.registertxt}>Cadastre-se</span>
+                  <span className={styles.registertxt}>Assinar</span>
                 </div>
               </div>
             </div>
@@ -205,7 +205,7 @@ const Home = (props: Props) => {
                   <span className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
                 </div>
                 <div className={styles.planButton}>
-                  <span className={styles.registertxt}>Cadastre-se</span>
+                  <span className={styles.registertxt}>Assinar</span>
                 </div>
               </div>
             </div>
@@ -233,7 +233,7 @@ const Home = (props: Props) => {
                   <span className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
                 </div>
                 <div className={styles.planButton}>
-                  <span className={styles.registertxt}>Cadastre-se</span>
+                  <span className={styles.registertxt}>Assinar</span>
                 </div>
               </div>
             </div>

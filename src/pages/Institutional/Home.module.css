@@ -131,6 +131,11 @@
     font-size: clamp(0.5rem, 1vw, 1.5rem); 
 }
 
+.registertxt {
+    color: #fff;
+    font-weight: 600;
+}
+
 .secondSection {
     padding-top: 4vh;
     width: 100%;
