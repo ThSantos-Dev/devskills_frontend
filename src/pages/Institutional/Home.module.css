@@ -1,0 +1,178 @@
+.container {
+    background-color: var(--extra-dark-blue);
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    width: 100%;
+    background-color: var(--extra-dark-blue);
+    height: 8vh;
+    border-bottom: 1.5px solid #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4%;
+    padding-right: 2%;
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
+.navtext {
+    width: 100%;
+    height: 8vh;
+    border-bottom: 1.5px solid #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.navtxt {
+    color: #fff;
+    font-size: clamp(0.5rem, 2vw, 1rem); 
+    cursor: pointer;
+}
+
+
+.loginOption {
+    background-color: var(--light-pink);
+    padding: 0.5% 2% 0.5% 2%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.main {
+    padding-top: 8vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.firstSection {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.firstSectionArticle {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageContainer {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    justify-content: flex-end;
+}
+
+.peopleImage {
+    width: 90%;
+    right: 0;
+}
+
+.firstSectionTitleContainer {
+    flex-direction: column;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.firstSectionTitle {
+    color: #fff;
+    font-weight: 600;
+    font-size: clamp(1rem, 6vw, 5rem); 
+}
+
+.firstSectionTitleDecored {
+    color: var(--dark-yellow);
+    font-weight: 600;
+      font-size: clamp(1rem, 6vw, 5rem); 
+}
+
+.description {
+    color: #fff;
+    font-size: clamp(1rem, 4vw, 2rem); 
+}
+
+.descriptionContainer {
+    width: 80%;
+}
+
+.registerbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 2vh 0 2vh 0;
+    min-width: 100px;
+    width: 12vw;
+    height: 7vh;
+    border-radius: 10px;
+    background-color: var(--light-pink);
+}
+
+.registerText {
+    color: #fff;
+    font-size: clamp(0.5rem, 1vw, 1.5rem); 
+}
+
+.secondSection {
+    padding-top: 4vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondSectionTitle {
+    color: #fff;
+    font-size: clamp(0.8rem, 3vw, 2rem);
+    text-align: center; 
+    margin-bottom: 2vh;
+}
+
+.skillsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+.skillCard {
+    min-width: 140px;
+    min-height: 50px;
+    width: 15vw;
+    height: 8vh;
+    max-height: 70px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.skillText {
+    color: #fff;
+    font-size: clamp(0.8rem, 2vw, 2rem);
+}
