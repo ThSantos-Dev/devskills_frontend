@@ -19,7 +19,7 @@ const Sidebar = (props: Props) => {
   const [modeText, setModeText] = useState<boolean>(true);
 
   const { user } = useSelector((state: any) => state.auth);
-  const { auth, type } = useAuth();
+  const { auth, type }: { auth: any; type: string } = useAuth();
 
   // Configurando o menu que será exibido para cada um dos usuários
   const devNavegation = [
@@ -49,7 +49,7 @@ const Sidebar = (props: Props) => {
     },
     {
       text: "Grupos",
-      navigateTo: "/company/groups",
+      navigateTo: "/company/mygroups",
       icon: <HiOutlineUserGroup />,
     },
   ];
@@ -90,7 +90,10 @@ const Sidebar = (props: Props) => {
         }
       >
         <header className={styles.header}>
-          <div className={styles.image_text}>
+          <div
+            className={styles.image_text}
+            onClick={() => navigate(`/${type.toLowerCase()}/profile`)}
+          >
             <span className={styles.image}>
               <img
                 src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"

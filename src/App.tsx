@@ -29,6 +29,9 @@ import ApplicationOverview from "./pages/Company/ApplicationOverview/Application
 import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
 import DevHome from "./pages/Dev/Home/Home";
 import Home from "./pages/Institutional/Home";
+import CompanyMyGroups from './pages/Company/MyGroups/MyGroups';
+import CreateGroup from './pages/Company/CreateGroup/CreateGroup';
+import CompanyProfile from './pages/Company/Profile/Profile';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -102,7 +105,7 @@ const App = () => {
           path="/company/profile"
           element={
             auth && type === "COMPANY" ? (
-              <ComapanyHome />
+              <CompanyProfile />
             ) : (
               <Navigate to="/company/login" />
             )
@@ -118,7 +121,7 @@ const App = () => {
             )
           }
         />
-        {/* <Route
+        <Route
           path="/company/test/create"
           element={
             auth && type === "COMPANY" ? (
@@ -127,9 +130,30 @@ const App = () => {
               <Navigate to="/company/login" />
             )
           }
-        /> */}
+        />
 
-        <Route path="/company/test/create" element={<CreateTest />} />
+        <Route
+          path="/company/mygroups"
+          element={
+            auth && type === "COMPANY" ? (
+              <CompanyMyGroups />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+
+        <Route
+          path="/company/groups/create"
+          element={
+            auth && type === "COMPANY" ? (
+              <CreateGroup />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+
         <Route
           path="/company/test/applicate/:id"
           element={

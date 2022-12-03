@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { HiUserAdd } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { RiSearch2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "../../../components/shared/Layout/Container/Container";
 import { getAllOfCompany } from "../../../slices/common/testSlice";
-import { TTestOfCompany } from "../../../types/devskills/test/TTestOfCompany";
+import {
+  TResult,
+  TTestOfCompany,
+} from "../../../types/devskills/test/TTestOfCompany";
 import CardMyTest from "./../../../components/company/Card/CardMyTest";
 import SelectCustom from "./../../../components/shared/Form/Select/SelectCustom";
 import styles from "./Home.module.css";
@@ -12,6 +15,10 @@ import styles from "./Home.module.css";
 interface Props {}
 
 const Home = (props: Props) => {
+  const [selectedTests, setSelectedTests] = useState<
+    { data: TResult; selected: boolean }[]
+  >([]);
+
   const { tests, loading } = useSelector<
     any,
     { tests: TTestOfCompany; loading: boolean }
@@ -19,15 +26,40 @@ const Home = (props: Props) => {
 
   const dispatch = useDispatch<any>();
 
+  const handleAddTest = (selecteds: { label: string; value: string }[]) => {
+    const filteredTests = selectedTests.map((test) => {
+      if (
+        selecteds.filter((item) => test.data.prova.id === parseInt(item.value))
+          .length > 0
+      ) {
+        return { ...test, selected: true };
+      }
+
+      return { ...test, selected: false };
+    });
+
+    console.log(filteredTests);
+
+    setSelectedTests(filteredTests);
+  };
+
   useEffect(() => {
     dispatch(getAllOfCompany());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!tests?.results) return;
+
+    setSelectedTests([
+      ...tests.results.map((test) => ({ data: test, selected: false })),
+    ]);
+  }, [tests]);
+
   return (
     <Container title="Criar Grupo" backTo="/company/mygroups">
       <>
-        {true ? (
+        {tests?.results ? (
           <>
             {" "}
             <div className={styles.container}>
@@ -50,10 +82,10 @@ const Home = (props: Props) => {
 
                   <div className={styles.content}>
                     <div className={styles.search_bar}>
-                      <input type="text" className={styles.seila } />
+                      <input type="text" className={styles.seila} />
 
                       <div className={styles.icon}>
-                        <RiSearch2Line />
+                        <HiUserAdd title="Adicionar" />
                       </div>
                     </div>
                     <div className={styles.team_container}>
@@ -64,11 +96,33 @@ const Home = (props: Props) => {
                             alt=""
                           />
                         </div>
-                        <div className={styles.info}>
-                          <span>thales@email.com</span>
-                          <div className={styles.icon}>
-                            <IoClose />
-                          </div>
+                        <span className={styles.info}>thales@email.com</span>
+                        <div className={styles.icon}>
+                          <IoClose />
+                        </div>
+                      </div>
+                      <div className={styles.info_container}>
+                        <div className={styles.image}>
+                          <img
+                            src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                            alt=""
+                          />
+                        </div>
+                        <span className={styles.info}>thales@email.com</span>
+                        <div className={styles.icon}>
+                          <IoClose />
+                        </div>
+                      </div>
+                      <div className={styles.info_container}>
+                        <div className={styles.image}>
+                          <img
+                            src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                            alt=""
+                          />
+                        </div>
+                        <span className={styles.info}>thales@email.com</span>
+                        <div className={styles.icon}>
+                          <IoClose />
                         </div>
                       </div>
                     </div>
@@ -76,10 +130,11 @@ const Home = (props: Props) => {
                 </div>
               </div>
 
-              {/* <div className="test_relation_container">
-                <div className="select_container">
+              <div className={styles.test_relation_container}>
+                <h2>Provas relacionadas</h2>
+
+                <div className={styles.select_container}>
                   <SelectCustom
-                    handleOnChange={() => {}}
                     name="allTests"
                     placeholder="Selecione"
                     options={tests.results.map((test) => {
@@ -88,14 +143,26 @@ const Home = (props: Props) => {
                         value: test.prova.id.toString(),
                       };
                     })}
+                    isMulti={true}
+                    closeMenuOnSelect={false}
+                    handleOnChange={(value) => {
+                      handleAddTest(value);
+                    }}
                   />
                 </div>
-                <div className="tests_container">
-                  {tests.results.map((test) => (
-                    <CardMyTest test={test} />
-                  ))}
+
+                <div className={styles.tests_container}>
+                  {selectedTests ? (
+                    selectedTests
+                      .filter((test) => test.selected === true)
+                      .map((test) => (
+                        <CardMyTest test={test.data} key={test.data.id} />
+                      ))
+                  ) : (
+                    <p>Nenhuma prova relacionada.</p>
+                  )}
                 </div>
-              </div> */}
+              </div>
             </div>
           </>
         ) : (
