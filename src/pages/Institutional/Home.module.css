@@ -1,0 +1,390 @@
+.container {
+    background-color: var(--extra-dark-blue);
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+}
+
+.navbar {
+    width: 100%;
+    background-color: var(--extra-dark-blue);
+    height: 8vh;
+    border-bottom: 1.5px solid #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4%;
+    padding-right: 2%;
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
+.navtext {
+    width: 100%;
+    height: 8vh;
+    border-bottom: 1.5px solid #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.navtxt {
+    color: #fff;
+    font-size: clamp(0.5rem, 2vw, 1rem); 
+    cursor: pointer;
+}
+
+
+.loginOption {
+    background-color: var(--light-pink);
+    padding: 0.5% 2% 0.5% 2%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.main {
+    padding-top: 8vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.firstSection {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.firstSectionArticle {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageContainer {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    justify-content: flex-end;
+}
+
+.peopleImage {
+    width: 90%;
+    right: 0;
+}
+
+.firstSectionTitleContainer {
+    flex-direction: column;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.firstSectionTitle {
+    color: #fff;
+    font-weight: 600;
+    font-size: clamp(1rem, 6vw, 5rem); 
+}
+
+.firstSectionTitleDecored {
+    color: var(--dark-yellow);
+    font-weight: 600;
+      font-size: clamp(1rem, 6vw, 5rem); 
+}
+
+.des {
+    color: #fff;
+    font-size: clamp(1rem, 4vw, 2rem); 
+}
+
+.desContainer {
+    width: 80%;
+}
+
+.registerbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 2vh 0 2vh 0;
+    min-width: 100px;
+    width: 12vw;
+    height: 7vh;
+    border-radius: 10px;
+    background-color: var(--light-pink);
+}
+
+.registerText {
+    color: #fff;
+    font-size: clamp(0.5rem, 1vw, 1.5rem); 
+}
+
+.registertxt {
+    color: #fff;
+    font-weight: 600;
+}
+
+.secondSection {
+    padding-top: 4vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondSectionTitle {
+    color: #fff;
+    font-size: clamp(0.8rem, 3vw, 2rem);
+    text-align: center; 
+    margin-bottom: 2vh;
+}
+
+.skillsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+.skillCard {
+    min-width: 140px;
+    min-height: 50px;
+    width: 15vw;
+    height: 8vh;
+    max-width: 300px;
+    max-height: 70px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #fff;
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.skillText {
+    color: #fff;
+    font-size: clamp(0.8rem, 1.7vw, 2rem);
+}
+
+.imageSecondSectionContainer {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.peoplesImage {
+    width: 50%;
+}
+
+.thirdSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.thirdSectionTitle {
+    color: #fff;
+    font-size: clamp(0.8rem, 1.7vw, 2rem);
+    margin: 4vh 0 4vh 0;
+}
+
+.thirdSectionCardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.thirdSectionCard {
+    width: 30vw;
+    padding: 1.5vw;
+    min-width: 350px;
+    min-height: 700px;
+    max-width: 500px;
+    background-color: var(--dark-purple);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.thirCardTitle {
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    color: #fff;
+    font-weight: 700;
+}
+
+.thirCardDescription {
+    font-size: clamp(1.2rem, 2vw, 1.7rem);
+    color: #fff;
+    text-align: center;
+}
+
+.peoplethird {
+    width: 100%;
+}
+
+.quarterSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.descriptionQuarterContainer {
+    width: 85%;
+    margin: 5vh;
+
+    border-left: 3px solid var(--light-pink);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 2vw
+}
+
+.descriptionQuarterText {
+    font-size: clamp(1.3rem, 1.5vw, 2.5rem);
+    color: #fff;
+    font-weight: 500;
+}
+
+.plansContainer {
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 20vw;
+    min-width: 300px
+}
+
+.plantitle {
+    color: #fff;
+    font-size: clamp(1.3rem, 1.5vw, 2.5rem);
+}
+
+.planDescriptionContainer {
+    min-width: 350px;
+    width: 100%;
+    height: auto;
+    padding: 2vw;
+    display: flex;
+    border-radius: 20px;
+    background-color: #fff;
+    flex-direction: column;
+    gap: 10px;  
+    align-items: center;
+    justify-content: space-around;
+}
+
+.descriptionContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.descriptionitem {
+    width: 30px;
+    height: 30px;
+    background-color: var(--dark-yellow);
+    border-radius: 100px;
+    margin: 10px;
+
+}
+
+.description {
+    font-size: clamp(1.2rem, 2vw, 1rem);
+    color: black;
+}
+
+.descriptionItemContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planButton {
+    background-color: var(--light-pink);
+    min-width: 140px;
+    min-height: 60px;
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 15%;
+}
+
+.footer {
+    margin-top: 10vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 20vh;
+    background-color: var(--bg-footer);
+}
+
+.footerItem {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 280px;
+}
+
+.footerItemTitle {
+    color: #fff; 
+    font-size: 30px;
+}
+
+.sac {
+    font-size: 20px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: #fff;
+}
+
+.socialContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

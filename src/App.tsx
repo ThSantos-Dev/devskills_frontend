@@ -28,6 +28,7 @@ import Search from "./pages/Dev/Search/Search";
 import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
 import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
 import DevHome from "./pages/Dev/Home/Home";
+import Home from "./pages/Institutional/Home";
 import CompanyMyGroups from './pages/Company/MyGroups/MyGroups';
 import CreateGroup from './pages/Company/CreateGroup/CreateGroup';
 import CompanyProfile from './pages/Company/Profile/Profile';
@@ -43,7 +44,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ComapanyHome />} />
+        {/* <Route path="/" element={<ComapanyHome />} /> */}
+        <Route path="/home" element={<Home />} />
 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
