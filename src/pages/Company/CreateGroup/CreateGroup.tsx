@@ -146,7 +146,7 @@ const CreateGroup = (props: Props) => {
                       />
                       <datalist id="list">
                         {listOfDevs &&
-                          listOfDevs.map((item) => (
+                          listOfDevs.filter((item) => item.selected === false).map((item) => (
                             <option
                               key={item.data.id}
                               value={item.data.email}

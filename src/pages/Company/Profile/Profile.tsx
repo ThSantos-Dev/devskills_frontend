@@ -1,18 +1,56 @@
 import styles from "./Profile.module.css";
 
+import { useState } from "react";
 import { AiFillLinkedin, AiOutlineGlobal } from "react-icons/ai";
 import { BsGithub, BsInstagram } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Container from "./../../../components/shared/Layout/Container/Container";
+import ListTests from "./Tabs/ListTests";
+import Feedbacks from './Tabs/Feedbacks';
 
 interface Props {}
 
 const Profile = (props: Props) => {
   const { user } = useSelector((state: any) => state.auth);
 
+  const [showTab, setShowTab] = useState({
+    tests: false,
+    feedbacks: true,
+    photos: false,
+  });
+
+  const handleShowTab = (tab: "tests" | "feedbacks" | "photos") => {
+    switch (tab) {
+      case "tests":
+        setShowTab({
+          tests: true,
+          feedbacks: false,
+          photos: false,
+        });
+        break;
+      case "feedbacks":
+        setShowTab({
+          tests: false,
+          feedbacks: true,
+          photos: false,
+        });
+        break;
+      case "photos":
+        setShowTab({
+          tests: false,
+          feedbacks: false,
+          photos: true,
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
-    <Container title="Perfil" backTo="/company/home">
+    <Container title="Perfil" backTo={`/${user.type}/home`}>
       <div className={styles.container}>
         <header>
           <div className={styles.media}>
@@ -39,7 +77,11 @@ const Profile = (props: Props) => {
           </div>
 
           <div className={styles.info}>
-            <div className={styles.button_container}>
+            <div
+              className={`${styles.button_container} ${
+                user.type === "COMPANY" ? styles.show : ""
+              }`}
+            >
               <Button color="solid_gray" size="small" text="Editar" />
             </div>
 
@@ -55,6 +97,34 @@ const Profile = (props: Props) => {
             </p>
           </div>
         </header>
+
+        <div className={styles.content_container}>
+          <nav className={styles.sidebar_container}>
+            <ul>
+              <li
+                onClick={() => handleShowTab("tests")}
+                className={showTab.tests ? styles.active : ""}
+              >
+                Provas
+              </li>
+              <li
+                onClick={() => handleShowTab("feedbacks")}
+                className={showTab.feedbacks ? styles.active : ""}
+              >
+                Avaliações
+              </li>
+              <li
+                onClick={() => handleShowTab("photos")}
+                className={showTab.photos ? styles.active : ""}
+              >
+                Galeria
+              </li>
+            </ul>
+          </nav>
+
+          {showTab.tests && <ListTests />}
+          {showTab.feedbacks && <Feedbacks />}
+        </div>
       </div>
     </Container>
   );
