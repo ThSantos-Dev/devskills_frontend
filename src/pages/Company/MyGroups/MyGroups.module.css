@@ -1,0 +1,254 @@
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.container > header {
+  margin-bottom: 40px;
+}
+
+.container > header p {
+  font-size: clamp(1rem, 5vw, 1.3rem);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 30px;
+
+  margin-bottom: 40px;
+}
+
+.actions .search_bar {
+  width: 250px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  border-radius: 12px;
+
+  padding: 0px 10px;
+
+  outline: 1px solid var(--color-white-text);
+}
+
+.actions .search_bar input {
+  all: unset;
+
+  flex: 1;
+
+  font-size: clamp(0.6rem, 5vw, 1rem);
+  font-weight: 300;
+}
+
+.actions .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.4rem;
+}
+
+.actions .button_container button {
+  border-radius: 6px !important;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.actions .button_container button:hover {
+  background-color: var(--color-white-text);
+}
+
+/* Table */
+.table_container table {
+  min-width: 100%;
+  border-collapse: collapse;
+
+  transition: all 0.3s ease !important;
+}
+
+.table_container table .profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 18px 0;
+}
+
+.table_container table thead tr {
+  height: 60px;
+
+  text-transform: uppercase;
+  text-align: center;
+
+  transition: all 0.3s ease;
+
+  background-color: var(--dark-blue);
+}
+
+.table_container table thead th {
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
+}
+
+/* .table_container table thead th:nth-child(1),
+.table_container table tbody td:nth-child(1) {
+  padding-left: 35px;
+} */
+
+.table_container table tbody tr {
+  height: 4rem;
+}
+
+.table_container table tbody tr:hover {
+  background-color: var(--dark-grey) !important;
+}
+
+.table_container table tbody td {
+  text-align: center;
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
+}
+
+/* .table_container table tbody td:nth-child(2) span {
+  padding-left: 20%;
+} */
+
+.table_container table .profile img {
+  width: clamp(1rem, 5vw, 3rem);
+  height: clamp(1rem, 5vw, 3rem);
+
+  object-fit: cover;
+
+  border-radius: 100%;
+
+  cursor: pointer;
+}
+
+.table_container table .actions div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.table_container table .icon svg {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.table_container table .icon:hover svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.table_container table tbody tr:nth-child(even) {
+  background-color: var(--dark-light-blue);
+}
+
+.table_container table td span.status {
+  width: max-content;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 4px 12px;
+  margin: auto;
+
+  font-size: clamp(0.8rem, 5vw, 1rem);
+  font-weight: bold;
+  text-transform: capitalize;
+
+  border-radius: 10px;
+}
+
+.table_container table td span.status.active {
+  background-color: var(--dark-blue);
+}
+
+.table_container table td span.status.inative {
+  background-color: var(--dark-pink);
+}
+
+.table_container table td span.status::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+}
+
+.table_container table td span.status.active {
+  color: var(--dark-background);
+}
+.table_container table td span.status.active::before {
+  background-color: var(--dark-background);
+}
+
+.table_container table td span.status.inative {
+  color: var(--dark-pink-extra);
+}
+.table_container table td span.status.inative::before {
+  background-color: var(--dark-pink-extra);
+}
+
+
+/* Media Querie */
+@media only screen and (max-width: 1024px) {
+  .table_container table thead {
+    display: none;
+  }
+
+  .table_container table tr {
+    width: 100%;
+    height: max-content !important;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 40px 0;
+
+    border-radius: 18px;
+    border: 1px solid var(--color-white-text);
+
+    transform: scale(0.95);
+  }
+
+  .table_container table td {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    text-align: right !important;
+
+    padding: 10px 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted var(--color-white-text);
+  }
+
+  .table_container table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .table_container table tr td:nth-last-child(1) {
+    border: none;
+    padding-bottom: 0px;
+  }
+
+  .table_container table td span.status {
+    margin: 0;
+  }
+}

@@ -60,8 +60,6 @@ export const getAllOfCompany = createAsyncThunk(
       return thunkAPI.rejectWithValue(res.error);
     }
 
-    console.log(res);
-
     return thunkAPI.fulfillWithValue(res.data);
   }
 );
