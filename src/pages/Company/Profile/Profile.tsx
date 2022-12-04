@@ -14,11 +14,12 @@ interface Props {}
 
 const Profile = (props: Props) => {
   const { user } = useSelector((state: any) => state.auth);
+  const [companyData, setCompanyData] = useState();
 
   const [showTab, setShowTab] = useState({
     tests: false,
-    feedbacks: true,
-    photos: false,
+    feedbacks: false,
+    photos: true,
   });
 
   const handleShowTab = (tab: "tests" | "feedbacks" | "photos") => {

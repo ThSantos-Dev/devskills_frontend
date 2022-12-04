@@ -53,7 +53,7 @@
 }
 
 .image_container .remove_photo:hover {
-    font-weight: bold;
+  font-weight: bold;
   background-color: var(--dark-extra-light-blue);
 }
 
@@ -72,6 +72,64 @@
 /* .photos_container .image_container:hover {
   transform: scale(1.1);
 } */
+
+/* Modal */
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal_content p {
+  font-size: clamp(0.8rem, 5vw, 1.2rem);
+  font-weight: 300;
+
+  margin-bottom: 20px;
+}
+
+.modal_content .content {
+  display: flex;
+  gap: 30px;
+}
+
+.modal_content .content .image_preview {
+  width: 40%;
+  height: 300px;
+
+  outline: 1px dotted var(--color-white-text);
+}
+
+.image_preview label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+}
+
+.image_preview label input[type="file"] {
+  display: none;
+}
+
+.image_preview label img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.modal_content .content .fields {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.modal_content .content .fields button {
+  align-self: flex-end;
+}
 
 @media only screen and (max-width: 1280px) {
   .photos_container {
