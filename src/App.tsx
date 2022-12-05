@@ -23,6 +23,7 @@ import CreateGroup from "./pages/Company/CreateGroup/CreateGroup";
 import CompanyMyGroups from "./pages/Company/MyGroups/MyGroups";
 import MyTests from "./pages/Company/MyTests/MyTests";
 import CompanyProfile from "./pages/Company/Profile/Profile";
+import CompanyEditProfile from "./pages/Company/EditProfile/EditProfile";
 import DevHome from "./pages/Dev/Home/Home";
 import Search from "./pages/Dev/Search/Search";
 import DetailsTest from "./pages/Dev/Test/Details/DetailsTest";
@@ -104,6 +105,16 @@ const App = () => {
           element={
             auth && type === "COMPANY" ? (
               <CompanyProfile />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+        <Route
+          path="/company/profile/edit"
+          element={
+            auth && type === "COMPANY" ? (
+              <CompanyEditProfile />
             ) : (
               <Navigate to="/company/login" />
             )

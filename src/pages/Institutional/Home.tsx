@@ -19,6 +19,7 @@ import peopleconclusion from "../../assets/img/conclusionpeople.svg";
 import ig from "../../assets/img/ig.svg";
 import zao from "../../assets/img/zao.svg";
 import linkedin from "../../assets/img/linkedin.svg";
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -26,12 +27,12 @@ const Home = (props: Props) => {
   return (
     <div className={styles.container}>
       <nav className={styles.navbar}>
-        <a href="#dev" className={styles.navtxt}>
+        <Link to="/dev/login" className={styles.navtxt}>
           Sou desenvolvedor
-        </a>
-        <a href="#empresa" className={styles.navtxt}>
+        </Link>
+        <Link to="/company/login" className={styles.navtxt}>
           Sou empresa
-        </a>
+        </Link>
         <div className={styles.loginOption}>
           <span className={styles.navtxt}>cadastro/login</span>
         </div>

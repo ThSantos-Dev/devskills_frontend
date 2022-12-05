@@ -9,12 +9,14 @@ import Container from "./../../../components/shared/Layout/Container/Container";
 import Feedbacks from "./Tabs/Feedbacks";
 import ListTests from "./Tabs/ListTests";
 import Photos from "./Tabs/Photos";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
 const Profile = (props: Props) => {
   const { user } = useSelector((state: any) => state.auth);
   const [companyData, setCompanyData] = useState();
+  const navigate = useNavigate();
 
   const [showTab, setShowTab] = useState({
     tests: false,
@@ -84,7 +86,12 @@ const Profile = (props: Props) => {
                 user.type === "COMPANY" ? styles.show : ""
               }`}
             >
-              <Button color="solid_white" size="small" text="Editar" />
+              <Button
+                color="solid_white"
+                size="small"
+                text="Editar"
+                onClick={() => navigate("/company/profile/edit")}
+              />
             </div>
 
             <h2>{user.name}</h2>
