@@ -98,7 +98,7 @@ const Skills: React.FC<Props> = ({ handleOnSubmit }) => {
           <SelectCustom
             name="stacks"
             label="Stack(s)"
-            placeholder="Selelcione"
+            placeholder="Selecione"
             options={stacks && selectFormat(stacks)}
             isMulti={true}
             isLoading={stackLoading}
@@ -112,7 +112,7 @@ const Skills: React.FC<Props> = ({ handleOnSubmit }) => {
           <SelectCustom
             name="skills"
             label="Tecnologias"
-            placeholder="Selelcione"
+            placeholder="Selecione"
             options={skillFiltered && selectFormat(skillFiltered)}
             isMulti={true}
             isLoading={skillLoading}

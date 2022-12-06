@@ -31,6 +31,7 @@ import RealizeTest from "./pages/Dev/Test/Realize/RealizeTest";
 import Home from "./pages/Institutional/Home";
 import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
+import CompanyGroupDetails from './pages/Company/GroupDetails/GroupDetails';
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -157,6 +158,17 @@ const App = () => {
           element={
             auth && type === "COMPANY" ? (
               <CreateGroup />
+            ) : (
+              <Navigate to="/company/login" />
+            )
+          }
+        />
+
+        <Route
+          path="/company/groups/:id"
+          element={
+            auth && type === "COMPANY" ? (
+              <CompanyGroupDetails />
             ) : (
               <Navigate to="/company/login" />
             )
