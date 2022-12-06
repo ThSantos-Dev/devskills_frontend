@@ -102,7 +102,7 @@ const App = () => {
           }
         />
         <Route
-          path="/company/profile"
+          path="/company/profile/:id"
           element={
             auth && type === "COMPANY" ? (
               <CompanyProfile />
@@ -112,7 +112,7 @@ const App = () => {
           }
         />
         <Route
-          path="/company/profile/edit"
+          path="/company/profile/:id/edit"
           element={
             auth && type === "COMPANY" ? (
               <CompanyEditProfile />

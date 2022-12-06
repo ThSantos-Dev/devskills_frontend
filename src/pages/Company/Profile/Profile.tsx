@@ -1,21 +1,25 @@
-import styles from "./Profile.module.css";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillLinkedin, AiOutlineGlobal } from "react-icons/ai";
 import { BsGithub, BsInstagram } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
+import { TCompanyInfo } from "../../../types/devskills/company/TCompanyInfo";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Container from "./../../../components/shared/Layout/Container/Container";
+import styles from "./Profile.module.css";
 import Feedbacks from "./Tabs/Feedbacks";
 import ListTests from "./Tabs/ListTests";
 import Photos from "./Tabs/Photos";
-import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
 const Profile = (props: Props) => {
+  const { id } = useParams();
+
   const { user } = useSelector((state: any) => state.auth);
-  const [companyData, setCompanyData] = useState();
+  const [companyData, setCompanyData] = useState<TCompanyInfo>();
   const navigate = useNavigate();
 
   const [showTab, setShowTab] = useState({
@@ -53,89 +57,101 @@ const Profile = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (!id) return;
+
+    CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
+      console.log(res);
+
+      if (res.error) return toast.error(res.error);
+
+      setCompanyData(res.data);
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Container title="Perfil" backTo={`/${user.type}/home`}>
-      <div className={styles.container}>
-        <header>
-          <div className={styles.media}>
-            <div className={styles.image}>
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/profile%2Fcompany%2Fimages.png?alt=media&token=efbf8b57-af50-4f49-8101-21492fd04d9e"
-                alt="logo"
+      {companyData ? (
+        <div className={styles.container}>
+          <header>
+            <div className={styles.media}>
+              <div className={styles.image}>
+                <img src={companyData.logo} alt={companyData.nome_fantasia} />
+              </div>
+              <div className={styles.icons}>
+                <span className={styles.icon}>
+                  <AiOutlineGlobal />
+                </span>
+                <span className={styles.icon}>
+                  <AiFillLinkedin />
+                </span>
+                <span className={styles.icon}>
+                  <BsGithub />
+                </span>
+                <span className={styles.icon}>
+                  <BsInstagram />
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.info}>
+              <div
+                className={`${styles.button_container} ${
+                  user.type === "COMPANY" ? styles.show : ""
+                }`}
+              >
+                <Button
+                  color="solid_white"
+                  size="small"
+                  text="Editar"
+                  onClick={() => navigate(`/company/profile/${user.id}/edit`)}
+                />
+              </div>
+
+              <h2>{companyData.nome_fantasia}</h2>
+              <p>{companyData.biografia}</p>
+            </div>
+          </header>
+
+          <div className={styles.content_container}>
+            <nav className={styles.sidebar_container}>
+              <ul>
+                <li
+                  onClick={() => handleShowTab("tests")}
+                  className={showTab.tests ? styles.active : ""}
+                >
+                  Provas
+                </li>
+                <li
+                  onClick={() => handleShowTab("feedbacks")}
+                  className={showTab.feedbacks ? styles.active : ""}
+                >
+                  Avaliações
+                </li>
+                <li
+                  onClick={() => handleShowTab("photos")}
+                  className={showTab.photos ? styles.active : ""}
+                >
+                  Galeria
+                </li>
+              </ul>
+            </nav>
+
+            {showTab.tests && (
+              <ListTests
+                tests={companyData.provaAndamento}
+                logo={companyData.logo}
               />
-            </div>
-            <div className={styles.icons}>
-              <span className={styles.icon}>
-                <AiOutlineGlobal />
-              </span>
-              <span className={styles.icon}>
-                <AiFillLinkedin />
-              </span>
-              <span className={styles.icon}>
-                <BsGithub />
-              </span>
-              <span className={styles.icon}>
-                <BsInstagram />
-              </span>
-            </div>
+            )}
+            {showTab.feedbacks && <Feedbacks />}
+            {showTab.photos && <Photos />}
           </div>
-
-          <div className={styles.info}>
-            <div
-              className={`${styles.button_container} ${
-                user.type === "COMPANY" ? styles.show : ""
-              }`}
-            >
-              <Button
-                color="solid_white"
-                size="small"
-                text="Editar"
-                onClick={() => navigate("/company/profile/edit")}
-              />
-            </div>
-
-            <h2>{user.name}</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Asperiores similique, alias facere deserunt fugiat aut sit id eos
-              corrupti natus harum ullam expedita placeat maiores soluta totam
-              repudiandae blanditiis repellat! Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Asperiores similique, alias facere
-              deserunt fugiat aut sit id eos corrupti natus harum ullam expedita
-              placeat maiores soluta totam repudiandae blanditiis repellat!
-            </p>
-          </div>
-        </header>
-
-        <div className={styles.content_container}>
-          <nav className={styles.sidebar_container}>
-            <ul>
-              <li
-                onClick={() => handleShowTab("tests")}
-                className={showTab.tests ? styles.active : ""}
-              >
-                Provas
-              </li>
-              <li
-                onClick={() => handleShowTab("feedbacks")}
-                className={showTab.feedbacks ? styles.active : ""}
-              >
-                Avaliações
-              </li>
-              <li
-                onClick={() => handleShowTab("photos")}
-                className={showTab.photos ? styles.active : ""}
-              >
-                Galeria
-              </li>
-            </ul>
-          </nav>
-
-          {showTab.tests && <ListTests />}
-          {showTab.feedbacks && <Feedbacks />}
-          {showTab.photos && <Photos />}
         </div>
-      </div>
+      ) : (
+        <p>Carregando...</p>
+      )}
     </Container>
   );
 };

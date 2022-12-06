@@ -21,11 +21,14 @@
 }
 
 .photos_container {
-  column-count: 5;
-  column-gap: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .photos_container .image_container {
+  flex: calc(100% / 5 - 40px) 0 0;
+
   display: flex;
   flex-direction: column;
 
@@ -106,7 +109,6 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
 }
 
 .image_preview label input[type="file"] {
@@ -132,13 +134,13 @@
 }
 
 @media only screen and (max-width: 1280px) {
-  .photos_container {
-    column-count: 3;
+  .photos_container .image_container {
+    flex: calc(100% / 3 - 20px) 0 0;
   }
 }
 
 @media only screen and (max-width: 425px) {
-  .photos_container {
-    column-count: 2;
+  .photos_container .image_container {
+    flex: calc(100% / 2 - 20px) 0 0;
   }
 }

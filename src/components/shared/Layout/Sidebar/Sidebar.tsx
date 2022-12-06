@@ -92,7 +92,7 @@ const Sidebar = (props: Props) => {
         <header className={styles.header}>
           <div
             className={styles.image_text}
-            onClick={() => navigate(`/${type.toLowerCase()}/profile`)}
+            onClick={() => navigate(`/${type.toLowerCase()}/profile/${user.id}`)}
           >
             <span className={styles.image}>
               <img

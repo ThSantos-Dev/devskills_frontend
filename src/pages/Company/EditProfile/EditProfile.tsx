@@ -1,6 +1,6 @@
 import styles from "./EditProfile.module.css";
 
-import { FormEvent, ChangeEvent, useRef, useState } from "react";
+import { FormEvent, ChangeEvent, useRef, useState, useEffect } from "react";
 import { AiFillLinkedin, AiOutlineGlobal } from "react-icons/ai";
 import { BsFillTelephoneFill, BsGithub, BsInstagram } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
@@ -8,10 +8,39 @@ import { IoIosMail } from "react-icons/io";
 import Container from "../../../components/shared/Layout/Container/Container";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Input from "./../../../components/shared/Form/Input/Input";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { TCompanyInfo } from "../../../types/devskills/company/TCompanyInfo";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
+import { toast } from 'react-toastify';
 
 interface Props {}
 
 const EditProfile = (props: Props) => {
+
+  const { id } = useParams();
+
+  const { user } = useSelector((state: any) => state.auth);
+  const [companyData, setCompanyData] = useState<TCompanyInfo>();
+
+  const [formFields, setFormFields] = useState({
+    email: "",
+    telphone1: "",
+    telphone2: "",
+    logo: "",
+
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+
+    description: "",
+
+    instagram: "",
+    github: "",
+    linkedin: "",
+    website: "",
+  })
+
   const [showPasswordArea, setShowPasswordArea] = useState<boolean>(false);
   const [previwProfileImage, setPreviwProfileImage] = useState<File>();
 
@@ -23,8 +52,22 @@ const EditProfile = (props: Props) => {
     }
   };
 
+   useEffect(() => {
+     if (!id) return;
+
+     CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
+       console.log(res);
+
+       if (res.error) return toast.error(res.error);
+
+       setCompanyData(res.data);
+     });
+
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
   return (
-    <Container backTo="/company/profile" title="Editar perfil">
+    <Container backTo={`/company/profile/${user.id}`} title="Editar perfil">
       <form
         className={styles.container}
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -42,10 +85,10 @@ const EditProfile = (props: Props) => {
               />
               <img
                 src={
+                  companyData?.logo ||
                   (previwProfileImage
                     ? URL.createObjectURL(previwProfileImage)
-                    : "") ||
-                  "https://archive.org/download/no-photo-available/no-photo-available.png"
+                    : "")
                 }
                 alt=""
               />
@@ -65,7 +108,7 @@ const EditProfile = (props: Props) => {
           </div>
 
           <div className={styles.contact_container}>
-            <h2>Nome da empresa</h2>
+            <h2>{companyData?.nome_fantasia}</h2>
 
             <div className={styles.info}>
               <label htmlFor="email">E-mail</label>
@@ -78,6 +121,7 @@ const EditProfile = (props: Props) => {
                   name="email"
                   id=""
                   placeholder="Digite seu e-mail"
+                  value={formFields.email}
                   required
                 />
               </div>
@@ -95,6 +139,7 @@ const EditProfile = (props: Props) => {
                   mask={"(00) 0000-0000"}
                   type="text"
                   placeholder={"(00) 0000-0000"}
+                  value={formFields.telphone1}
                   required
                 />
               </div>
@@ -108,6 +153,7 @@ const EditProfile = (props: Props) => {
                   name="contact2"
                   type="text"
                   mask={"(00) 0000-0000"}
+                  value={formFields.telphone2}
                   placeholder={"(00) 0000-0000"}
                 />
               </div>
@@ -143,6 +189,7 @@ const EditProfile = (props: Props) => {
                 type="password"
                 placeholder="Senha atual"
                 label="Senha atual"
+                value={formFields.currentPassword}
               />
 
               <Input
@@ -150,12 +197,14 @@ const EditProfile = (props: Props) => {
                 type="password"
                 placeholder="Nova senha"
                 label="Senha atual"
+                value={formFields.password}
               />
               <Input
                 name="confirmNewPassword"
                 type="password"
                 placeholder="Confirme a senha"
                 label="Confirmação de senha"
+                value={formFields.currentPassword}
               />
 
               <Button
@@ -187,7 +236,11 @@ const EditProfile = (props: Props) => {
               <BsInstagram />
             </span>
 
-            <Input name="instagram" placeholder={"Instagram"} />
+            <Input
+              name="instagram"
+              placeholder={"Instagram"}
+              value={formFields.instagram}
+            />
           </div>
 
           <div className={styles.input_container}>
@@ -195,7 +248,11 @@ const EditProfile = (props: Props) => {
               <BsGithub />
             </span>
 
-            <Input name="github" placeholder={"GitHub"} />
+            <Input
+              name="github"
+              placeholder={"GitHub"}
+              value={formFields.github}
+            />
           </div>
 
           <div className={styles.input_container}>
@@ -203,14 +260,22 @@ const EditProfile = (props: Props) => {
               <AiFillLinkedin />
             </span>
 
-            <Input name="social_media1" placeholder={"Linkedin"} />
+            <Input
+              name="social_media1"
+              placeholder={"Linkedin"}
+              value={formFields.linkedin}
+            />
           </div>
           <div className={styles.input_container}>
             <span className={styles.icon}>
               <AiOutlineGlobal />
             </span>
 
-            <Input name="social_media1" placeholder={"Website"} />
+            <Input
+              name="social_media1"
+              placeholder={"Website"}
+              value={formFields.linkedin}
+            />
           </div>
         </section>
 
