@@ -141,7 +141,7 @@
   flex-direction: column;
   gap: 16px;
 
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .password_area .button_container {
@@ -179,7 +179,7 @@
 }
 
 .password_area .button_container .icon.up svg {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .password_content {
@@ -193,7 +193,24 @@
 }
 
 .password_content.show {
-    height: auto;
+  height: auto;
+}
+
+/* Endereço */
+.address_container {
+  flex-direction: column;
+}
+
+.address_container p {
+  font-size: clamp(0.8rem, 4vw, 1.2rem);
+
+  margin-top: -20px;
+}
+
+.form_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 /* Descrição */
@@ -214,9 +231,8 @@
 
   width: 100%;
   height: 30vh;
-  
 
-  font-size: clamp(.8rem, 4vw, 1.4rem);
+  font-size: clamp(0.8rem, 4vw, 1.4rem);
 
   border: none;
   resize: none;
@@ -297,8 +313,8 @@
 }
 
 @media only screen and (max-width: 425px) {
-    .info_geral_container .input_container input {
-        padding-right: 0 !important;
-        min-width: none;
-    }
+  .info_geral_container .input_container input {
+    padding-right: 0 !important;
+    min-width: none;
+  }
 }

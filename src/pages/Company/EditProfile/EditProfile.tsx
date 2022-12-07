@@ -13,6 +13,10 @@ import CompanyService from "../../../services/apiDevSkills/company/companyServic
 import { TCompanyInfo } from "../../../types/devskills/company/TCompanyInfo";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Input from "./../../../components/shared/Form/Input/Input";
+import { storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
+import uuid from "react-uuid";
 
 interface Props {}
 
@@ -31,6 +35,14 @@ const EditProfile = (props: Props) => {
     currentPassword: "",
     newPassword: "",
     confirmNewPassword: "",
+
+    street: "",
+    district: "",
+    number_street: "",
+    complement: "",
+    city_name: "",
+    state_name: "",
+    zip_code: "",
 
     description: "",
 
@@ -55,6 +67,46 @@ const EditProfile = (props: Props) => {
     setFormFields({ ...formFields, [input]: value });
   };
 
+
+  const handleUpdateAdrress = async () => {
+    
+  }
+
+  const handleOnSubmit = async () => {
+
+    let logo_url = "";
+
+    if(previwProfileImage) {
+      const storageRef = ref(storage, `images/${uuid()}`);
+      await uploadBytes(storageRef, previwProfileImage);
+      logo_url = await getDownloadURL(storageRef);
+    }
+
+    const dataFormated = {
+      idTelefone: companyData?.empresaTelefone[0].id,
+      idLogin: companyData?.LoginEmpresa[0].id,
+      cnpj: companyData?.cnpj,
+      senha: formFields.newPassword,
+      confirmar_senha: formFields.confirmNewPassword,
+      email: formFields.email,
+      nome_fantasia: companyData?.nome_fantasia,
+      biografia: formFields.description,
+      logo: logo_url || formFields.logo,
+      ddd: formFields.telphone1.slice(0, 1),
+      numero_telefone: formFields.telphone1.slice(2),
+      logradouro: formFields.state_name,
+      bairro: formFields.district,
+      numero_rua: formFields.number_street,
+      nome_cidade: formFields.city_name,
+      nome_estado: formFields.state_name
+    }
+
+    CompanyService.updateProfile(dataFormated, user.token).then((res) => {
+      console.log(res);
+    })
+
+  };
+
   useEffect(() => {
     if (!id) return;
 
@@ -66,15 +118,25 @@ const EditProfile = (props: Props) => {
       const data: TCompanyInfo = res.data;
 
       setFormFields({
-        email: "",
+        email: data.email,
         logo: data.logo || "",
         telphone1: `${data.empresaTelefone[0].ddd} ${data.empresaTelefone[0].numero}`,
         telphone2: data.empresaTelefone[1]
           ? `${data.empresaTelefone[1]?.ddd} ${data.empresaTelefone[1]?.numero}`
           : "",
+
         currentPassword: "",
         newPassword: "",
         confirmNewPassword: "",
+
+        street: data.enderecoEmpresa.logradouro,
+        district: data.enderecoEmpresa.bairro,
+        number_street: data.enderecoEmpresa.numero,
+        complement: data.enderecoEmpresa.complemento,
+        city_name: data.enderecoEmpresa.cidade.nome,
+        state_name: data.enderecoEmpresa.cidade.estado.nome,
+        zip_code: data.enderecoEmpresa.cep,
+
         description: data.biografia,
         github: "",
         instagram: "",
@@ -94,6 +156,7 @@ const EditProfile = (props: Props) => {
         className={styles.container}
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
           e.preventDefault();
+          handleOnSubmit();
         }}
       >
         <section className={styles.info_geral_container}>
@@ -246,6 +309,53 @@ const EditProfile = (props: Props) => {
               />
             </div>
           </div>
+        </section>
+
+        <section className={styles.address_container}>
+          <h2>Endereço</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti,
+            eum consectetur illum praesentium reiciendis ratione repellat a!
+            Voluptatibus reiciendis repellendus facere exercitationem fugit
+            recusandae impedit laudantium maxime, tenetur nostrum nulla!
+          </p>
+
+          <div className={styles.form_group}>
+            <Input
+              name="zip_code"
+              label="CEP"
+              placeholder="00000-000"
+              mask="00000-000"
+              value={formFields.zip_code}
+              disabled
+            />
+            <Input
+              name="addressNumber"
+              label="Número"
+              placeholder="00A"
+              value={formFields.number_street}
+              disabled
+            />
+
+            <Input
+              name="complement"
+              label="Complemento"
+              placeholder="Bloco C22"
+              handleOnChange={handleInputChange}
+              value={formFields.complement}
+            />
+          </div>
+
+          <Input
+            name="address"
+            label="Endereço"
+            placeholder="Alameda Java Green"
+            value={`${formFields.street}, ${formFields.district} - ${formFields.city_name}, ${formFields.state_name}.`}
+            disabled
+          />
+
+          <Button text="Atualizar" color="solid_white" size="small" />
         </section>
 
         <section className={styles.description_container}>
