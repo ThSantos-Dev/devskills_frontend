@@ -1,23 +1,22 @@
 import styles from "./EditProfile.module.css";
 
-import { FormEvent, ChangeEvent, useRef, useState, useEffect } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiFillLinkedin, AiOutlineGlobal } from "react-icons/ai";
 import { BsFillTelephoneFill, BsGithub, BsInstagram } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Container from "../../../components/shared/Layout/Container/Container";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
+import { TCompanyInfo } from "../../../types/devskills/company/TCompanyInfo";
 import Button from "./../../../components/shared/Form/Button/Button";
 import Input from "./../../../components/shared/Form/Input/Input";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { TCompanyInfo } from "../../../types/devskills/company/TCompanyInfo";
-import CompanyService from "../../../services/apiDevSkills/company/companyService";
-import { toast } from 'react-toastify';
 
 interface Props {}
 
 const EditProfile = (props: Props) => {
-
   const { id } = useParams();
 
   const { user } = useSelector((state: any) => state.auth);
@@ -30,8 +29,8 @@ const EditProfile = (props: Props) => {
     logo: "",
 
     currentPassword: "",
-    password: "",
-    confirmPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
 
     description: "",
 
@@ -39,7 +38,7 @@ const EditProfile = (props: Props) => {
     github: "",
     linkedin: "",
     website: "",
-  })
+  });
 
   const [showPasswordArea, setShowPasswordArea] = useState<boolean>(false);
   const [previwProfileImage, setPreviwProfileImage] = useState<File>();
@@ -52,19 +51,42 @@ const EditProfile = (props: Props) => {
     }
   };
 
-   useEffect(() => {
-     if (!id) return;
+  const handleInputChange = (value: string, input: string) => {
+    setFormFields({ ...formFields, [input]: value });
+  };
 
-     CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
-       console.log(res);
+  useEffect(() => {
+    if (!id) return;
 
-       if (res.error) return toast.error(res.error);
+    CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
+      console.log(res);
 
-       setCompanyData(res.data);
-     });
+      if (res.error) return toast.error(res.error);
 
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+      const data: TCompanyInfo = res.data;
+
+      setFormFields({
+        email: "",
+        logo: data.logo || "",
+        telphone1: `${data.empresaTelefone[0].ddd} ${data.empresaTelefone[0].numero}`,
+        telphone2: data.empresaTelefone[1]
+          ? `${data.empresaTelefone[1]?.ddd} ${data.empresaTelefone[1]?.numero}`
+          : "",
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+        description: data.biografia,
+        github: "",
+        instagram: "",
+        linkedin: "",
+        website: "",
+      });
+
+      setCompanyData(res.data);
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container backTo={`/company/profile/${user.id}`} title="Editar perfil">
@@ -85,10 +107,9 @@ const EditProfile = (props: Props) => {
               />
               <img
                 src={
-                  companyData?.logo ||
-                  (previwProfileImage
+                  previwProfileImage
                     ? URL.createObjectURL(previwProfileImage)
-                    : "")
+                    : formFields?.logo
                 }
                 alt=""
               />
@@ -122,6 +143,9 @@ const EditProfile = (props: Props) => {
                   id=""
                   placeholder="Digite seu e-mail"
                   value={formFields.email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange(e.target.value, "email")
+                  }
                   required
                 />
               </div>
@@ -135,11 +159,12 @@ const EditProfile = (props: Props) => {
                   <BsFillTelephoneFill />
                 </span>
                 <Input
-                  name="contact1"
+                  name="telphone1"
                   mask={"(00) 0000-0000"}
                   type="text"
                   placeholder={"(00) 0000-0000"}
                   value={formFields.telphone1}
+                  handleOnChange={handleInputChange}
                   required
                 />
               </div>
@@ -150,10 +175,11 @@ const EditProfile = (props: Props) => {
                 </span>
 
                 <Input
-                  name="contact2"
+                  name="telphone2"
                   type="text"
                   mask={"(00) 0000-0000"}
                   value={formFields.telphone2}
+                  handleOnChange={handleInputChange}
                   placeholder={"(00) 0000-0000"}
                 />
               </div>
@@ -190,6 +216,7 @@ const EditProfile = (props: Props) => {
                 placeholder="Senha atual"
                 label="Senha atual"
                 value={formFields.currentPassword}
+                handleOnChange={handleInputChange}
               />
 
               <Input
@@ -197,14 +224,16 @@ const EditProfile = (props: Props) => {
                 type="password"
                 placeholder="Nova senha"
                 label="Senha atual"
-                value={formFields.password}
+                value={formFields.newPassword}
+                handleOnChange={handleInputChange}
               />
               <Input
                 name="confirmNewPassword"
                 type="password"
                 placeholder="Confirme a senha"
                 label="Confirmação de senha"
-                value={formFields.currentPassword}
+                value={formFields.confirmNewPassword}
+                handleOnChange={handleInputChange}
               />
 
               <Button
@@ -223,7 +252,16 @@ const EditProfile = (props: Props) => {
           <h2>Descrição</h2>
 
           <div className={styles.description}>
-            <textarea cols={30} rows={10} maxLength={540} required></textarea>
+            <textarea
+              cols={30}
+              rows={10}
+              maxLength={540}
+              required
+              value={formFields.description}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                handleInputChange(e.target.value, "description")
+              }
+            ></textarea>
           </div>
           <span>(máximo: 540 caracteres)</span>
         </section>
@@ -240,6 +278,7 @@ const EditProfile = (props: Props) => {
               name="instagram"
               placeholder={"Instagram"}
               value={formFields.instagram}
+              handleOnChange={handleInputChange}
             />
           </div>
 
@@ -252,6 +291,7 @@ const EditProfile = (props: Props) => {
               name="github"
               placeholder={"GitHub"}
               value={formFields.github}
+              handleOnChange={handleInputChange}
             />
           </div>
 
@@ -261,9 +301,10 @@ const EditProfile = (props: Props) => {
             </span>
 
             <Input
-              name="social_media1"
+              name="linkedin"
               placeholder={"Linkedin"}
               value={formFields.linkedin}
+              handleOnChange={handleInputChange}
             />
           </div>
           <div className={styles.input_container}>
@@ -272,9 +313,10 @@ const EditProfile = (props: Props) => {
             </span>
 
             <Input
-              name="social_media1"
+              name="website"
               placeholder={"Website"}
-              value={formFields.linkedin}
+              value={formFields.website}
+              handleOnChange={handleInputChange}
             />
           </div>
         </section>

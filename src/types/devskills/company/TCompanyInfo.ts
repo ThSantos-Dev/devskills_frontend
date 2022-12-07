@@ -1,6 +1,7 @@
 export type TCompanyInfo = {
   id: number;
   nome_fantasia: string;
+  email: string;
   logo: string;
   biografia: string;
   empresaTelefone: TEmpresaTelefone[];
@@ -9,12 +10,12 @@ export type TCompanyInfo = {
   provaAndamento: TProvaAndamento[];
   fotosAmbiente: TFotosAmbiente[];
   Seguidores: TSeguidore[];
-}
+};
 
 export type TEmpresaTelefone = {
   numero: string;
   ddd: string;
-}
+};
 
 export type TEnderecoEmpresa = {
   logradouro: string;
@@ -23,31 +24,31 @@ export type TEnderecoEmpresa = {
   complemento: string;
   numero: string;
   cidade: TCidade;
-}
+};
 
 export type TCidade = {
   nome: string;
   estado: TEstado;
-}
+};
 
 export type TEstado = {
   nome: string;
-}
+};
 
 export type TProvaAndamento = {
   prova: TProva;
-}
+};
 
 export type TProva = {
   id: number;
   titulo: string;
   descricao: string;
   provaHabilidade: TProvaHabilidade[];
-}
+};
 
 export type TProvaHabilidade = {
   habilidade: THabilidade;
-}
+};
 
 export type THabilidade = {
   id: number;
@@ -55,22 +56,22 @@ export type THabilidade = {
   icone: string;
   ativo: boolean;
   stack: TStack;
-}
+};
 
 export type TStack = {
   id: number;
   nome: string;
-}
+};
 
 export type TFotosAmbiente = {
   id: number;
   foto: string;
   legenda: string;
-}
+};
 
 export type TSeguidore = {
   usuario: TUsuario;
-}
+};
 
 export type TUsuario = {
   id: number;
@@ -89,4 +90,4 @@ export type TUsuario = {
   idGenero: number;
   createdAt: string;
   updatedAt: string;
-}
+};
