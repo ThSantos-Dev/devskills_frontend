@@ -17,6 +17,8 @@ import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import uuid from "react-uuid";
+import CNPJService from "../../../services/apiBrasil/CNPJService";
+import CEPService from "./../../../services/apiBrasil/CEPService";
 
 interface Props {}
 
@@ -54,6 +56,7 @@ const EditProfile = (props: Props) => {
 
   const [showPasswordArea, setShowPasswordArea] = useState<boolean>(false);
   const [previwProfileImage, setPreviwProfileImage] = useState<File>();
+  const [loadingAdrress, setLoadingAdress] = useState<boolean>(false);
 
   const inputFileEl = useRef<HTMLInputElement>(null);
 
@@ -67,17 +70,36 @@ const EditProfile = (props: Props) => {
     setFormFields({ ...formFields, [input]: value });
   };
 
+  const handleUpdateAdrress = () => {
+    setLoadingAdress(true)
 
-  const handleUpdateAdrress = async () => {
-    
-  }
+    CNPJService.search(companyData!.cnpj).then(async (data) => {
+      if (typeof data === "boolean") return;
+
+      CEPService.search(data.cep).then((address) => {
+        if (typeof address === "boolean") return;
+
+        setFormFields({
+          ...formFields,
+          complement: data.complemento,
+          city_name: address.city,
+          district: address.neighborhood,
+          zip_code: address.cep,
+          state_name: address.state,
+        });
+
+
+        toast.success("Busca realizada com sucesso")
+        setLoadingAdress(false);
+      });
+    });
+  };
 
   const handleOnSubmit = async () => {
-
     let logo_url = "";
 
-    if(previwProfileImage) {
-      const storageRef = ref(storage, `images/${uuid()}`);
+    if (previwProfileImage) {
+      const storageRef = ref(storage, `profile/company/${uuid()}`);
       await uploadBytes(storageRef, previwProfileImage);
       logo_url = await getDownloadURL(storageRef);
     }
@@ -86,7 +108,7 @@ const EditProfile = (props: Props) => {
       idTelefone: companyData?.empresaTelefone[0].id,
       idLogin: companyData?.LoginEmpresa[0].id,
       cnpj: companyData?.cnpj,
-      senha: formFields.newPassword,
+      senha: formFields.newPassword || "",
       confirmar_senha: formFields.confirmNewPassword,
       email: formFields.email,
       nome_fantasia: companyData?.nome_fantasia,
@@ -98,13 +120,14 @@ const EditProfile = (props: Props) => {
       bairro: formFields.district,
       numero_rua: formFields.number_street,
       nome_cidade: formFields.city_name,
-      nome_estado: formFields.state_name
-    }
+      nome_estado: formFields.state_name,
+    };
 
     CompanyService.updateProfile(dataFormated, user.token).then((res) => {
-      console.log(res);
-    })
+      if (res.error) return toast.error(res.error);
 
+      toast.success(res.message);
+    });
   };
 
   useEffect(() => {

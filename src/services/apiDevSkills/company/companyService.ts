@@ -31,4 +31,31 @@ export default class CompanyService {
       return { error: "Algo deu errado!" };
     }
   }
+
+  static async createPhoto(data: any, token: string) {
+    const config = requestConfig("POST", data, token);
+
+    try {
+      const res = await fetch(BASE_URL + "/company/photos", config).then(
+        (res) => res.json()
+      );
+
+      return res;
+    } catch (error) {
+      console.error(error);
+      return { error: "Algo deu errado!" };
+    }
+  }
+
+  static async deletePhoto(id: number, token: string) {
+    const config = requestConfig("DELETE", undefined, token);
+
+    try {
+      const res = await fetch(BASE_URL + `/company/photos/${id}`, config).then(
+        (data) => data.json()
+      );
+
+      return res;
+    } catch (error) {}
+  }
 }

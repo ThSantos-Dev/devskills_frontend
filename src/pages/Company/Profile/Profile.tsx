@@ -57,7 +57,7 @@ const Profile = (props: Props) => {
     }
   };
 
-  useEffect(() => {
+  const searchCompanyData = () => {
     if (!id) return;
 
     CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
@@ -67,7 +67,11 @@ const Profile = (props: Props) => {
 
       setCompanyData(res.data);
     });
+  };
 
+  useEffect(() => {
+    if (!id) return;
+    searchCompanyData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -146,7 +150,12 @@ const Profile = (props: Props) => {
               />
             )}
             {showTab.feedbacks && <Feedbacks />}
-            {showTab.photos && <Photos />}
+            {showTab.photos && (
+              <Photos
+                photos={companyData.fotosAmbiente}
+                handleUpdateData={searchCompanyData}
+              />
+            )}
           </div>
         </div>
       ) : (

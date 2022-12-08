@@ -32,6 +32,7 @@ import Home from "./pages/Institutional/Home";
 import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import CompanyGroupDetails from './pages/Company/GroupDetails/GroupDetails';
+import TestDetails from "./pages/Test/Details/Details";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -183,6 +184,12 @@ const App = () => {
             ) : (
               <Navigate to="/company/login" />
             )
+          }
+        />
+        <Route
+          path="/company/test/details/:id"
+          element={
+            auth && type === "COMPANY" ? <TestDetails /> : <CompanyLogin />
           }
         />
         <Route

@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import adminAuthService from "../services/apiDevSkills/admin/authService";
 import companyAuthService from "../services/apiDevSkills/company/authService";
 import devAuthService from "../services/apiDevSkills/dev/authService";
+import { Navigate } from "react-router-dom";
 
 export interface IAuth {
   user: any;
@@ -19,7 +20,6 @@ const user: {
   id?: string;
   type?: "DEVELOPER" | "COMPANY" | "ADMIN";
 } = JSON.parse(localStorage.getItem("user") || "{}");
-
 
 const initialState: IAuth = {
   user: user.token ? user : null,
@@ -44,7 +44,6 @@ export const login = createAsyncThunk(
       //  Chamando o service responsável por realizar o login do Desenvolvedor
       const res = await devAuthService.login(data.user);
 
-
       // Validando a resposta do servidor
       if (res.error) {
         return thunkAPI.rejectWithValue(res.error);
@@ -56,9 +55,8 @@ export const login = createAsyncThunk(
         name: res.userInfo!.name,
         type: "DEVELOPER",
       };
-
+      
       localStorage.setItem("user", JSON.stringify(user));
-
 
       // Retornando o usuário cadastrado
       return res;
@@ -100,6 +98,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("user");
+  Navigate({ to: "/" });
 });
 
 // Criando slice para manipular os estados
