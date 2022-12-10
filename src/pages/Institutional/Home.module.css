@@ -33,7 +33,7 @@
 
 .navtxt {
     color: #fff;
-    font-size: clamp(0.5rem, 2vw, 1rem); 
+    font-size: clamp(.8rem, 5vw, 1.2rem); 
     cursor: pointer;
 }
 
@@ -43,6 +43,7 @@
     padding: 0.5% 2% 0.5% 2%;
     border-radius: 10px;
     cursor: pointer;
+    text-transform: uppercase;
 }
 
 .main {
@@ -95,13 +96,13 @@
 .firstSectionTitle {
     color: #fff;
     font-weight: 600;
-    font-size: clamp(1rem, 6vw, 5rem); 
+    font-size: clamp(1rem, 5vw, 4rem); 
 }
 
 .firstSectionTitleDecored {
     color: var(--dark-yellow);
     font-weight: 600;
-      font-size: clamp(1rem, 6vw, 5rem); 
+    font-size: clamp(1.4rem, 5vw, 4.2rem); 
 }
 
 .des {

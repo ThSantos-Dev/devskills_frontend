@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
@@ -8,15 +8,17 @@ import {
   MdOutlinePersonOff,
 } from "react-icons/md";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
+import { TCandidatesRanking } from "../../../../types/devskills/test/TCandidatesRanking";
 import ChooseType from "../../../Test/ChooseType/ChooseType";
 import Button from "./../../../../components/shared/Form/Button/Button";
 import styles from "./Ranking.module.css";
 
 interface Props {
   show: boolean;
+  data: TCandidatesRanking[];
 }
 
-const Ranking: React.FC<Props> = ({ show }) => {
+const Ranking: React.FC<Props> = ({ show, data }) => {
   const [filters, setFilters] = useState({
     score: {
       between: { minValue: 1, maxValue: 100 },
@@ -33,10 +35,6 @@ const Ranking: React.FC<Props> = ({ show }) => {
   const [showModalAproved, setShowModalAproved] = useState<boolean>(false);
   const [showModalAprovedGroup, setShowModalAprovedGroup] =
     useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
 
   return (
     <section className={`${styles.container} ${show ? styles.active : ""}`}>
@@ -211,48 +209,51 @@ const Ranking: React.FC<Props> = ({ show }) => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(
-              (candidate, index) => (
-                <tr key={index}>
-                  <td className={styles.position} data-label="Posição:">
-                    <span>1</span>
-                  </td>
-                  <td className={styles.profile} data-label="#1">
-                    <img
-                      src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                      alt="profile"
-                      title="Ver perfil"
-                    />
-                    <span className={styles.name}>Thales Santos da Silva</span>
-                  </td>
-                  <td
-                    className={`${styles.text} ${styles.name}`}
-                    data-label="Nome:"
-                  >
-                    <span>Thales Santos da Silva</span>
-                  </td>
-                  <td className={styles.text} data-label="Duração:">
-                    <span>00:43:23</span>
-                  </td>
-                  <td className={styles.text} data-label="Pontuação:">
-                    <span>80%</span>
-                  </td>
-                  <td className={styles.text} data-label="Localidade:">
-                    <span>Jandira, SP</span>
-                  </td>
-                  <td className={styles.text} data-label="Status:">
-                    <span>Aguardando correção</span>
-                  </td>
-                  <td className={styles.actions} data-label="Ação:">
-                    <div>
-                      <span className={styles.icon}>
-                        <MdMoreHoriz title="Mais ações" />
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              )
-            )}
+            {data.map((item, index) => (
+              <tr key={index}>
+                <td className={styles.position} data-label="Posição:">
+                  <span>{index + 1}</span>
+                </td>
+                <td className={styles.profile} data-label="#1">
+                  <img
+                    src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                    alt="profile"
+                    title="Ver perfil"
+                  />
+                  <span className={styles.name}>{item.candidato.nome}</span>
+                </td>
+                <td
+                  className={`${styles.text} ${styles.name}`}
+                  data-label="Nome:"
+                >
+                  <span>{item.candidato.nome}</span>
+                </td>
+                <td className={styles.text} data-label="Duração:">
+                  <span>{item.duracao}</span>
+                </td>
+                <td className={styles.text} data-label="Pontuação:">
+                  <span>{item.pontuacao}%</span>
+                </td>
+                <td className={styles.text} data-label="Localidade:">
+                  <span>
+                    {item.candidato.localidade.estado},{" "}
+                    {item.candidato.localidade.cidade}
+                  </span>
+                </td>
+                <td className={styles.text} data-label="Status:">
+                  <span>
+                    {item.corrigida ? "Corrigida" : "Aguardando correção"}
+                  </span>
+                </td>
+                <td className={styles.actions} data-label="Ação:">
+                  <div>
+                    <span className={styles.icon}>
+                      <MdMoreHoriz title="Mais ações" />
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

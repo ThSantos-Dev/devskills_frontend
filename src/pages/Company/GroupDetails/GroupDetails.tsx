@@ -4,9 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdMoreHoriz } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import CardMyTest from "../../../components/company/Card/CardMyTest";
 import Container from "../../../components/shared/Layout/Container/Container";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
 import { getAllOfCompany } from "../../../slices/common/testSlice";
+import {
+  TGetAllGroupCompany,
+  TProvaGrupo,
+} from "../../../types/devskills/company/TGetAllGroupCompany";
 import {
   TResult,
   TTestOfCompany,
@@ -15,6 +21,8 @@ import {
 interface Props {}
 
 const GroupDetails = (props: Props) => {
+  const { id } = useParams();
+
   const [showListCandidates, setShowListCandidates] = useState<boolean>(false);
 
   const [selectedTests, setSelectedTests] = useState<
@@ -25,6 +33,9 @@ const GroupDetails = (props: Props) => {
     any,
     { tests: TTestOfCompany; loading: boolean }
   >((state: any) => state.test);
+  const { user } = useSelector((state: any) => state.auth);
+
+  const [groupData, setGroupData] = useState<TProvaGrupo>();
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<any>();
@@ -47,7 +58,26 @@ const GroupDetails = (props: Props) => {
   };
 
   useEffect(() => {
+    if (!id) return;
+
     dispatch(getAllOfCompany());
+
+    CompanyService.getAllGroups(user.id, user.token).then((res) => {
+      if (res.error) return;
+
+      const data: TGetAllGroupCompany = res.data;
+
+      console.log(
+        data.provaAndamento[0].provaGrupo.find(
+          (item) => item.grupo.id === parseInt(id)
+        )
+      );
+      setGroupData(
+        data.provaAndamento[0].provaGrupo.find(
+          (item) => item.grupo.id === parseInt(id)
+        )
+      );
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -66,17 +96,12 @@ const GroupDetails = (props: Props) => {
         <section className={styles.content_container}>
           <div className={styles.content}>
             <h2>Nome do grupo</h2>
-            <span>Seleção de desenvolvedor front-end</span>
+            <span>{groupData?.grupo.nome}</span>
           </div>
 
           <div className={styles.content}>
             <h2>Descrição do grupo</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-              porro. Sunt illum id ipsum facilis modi doloribus nobis sequi cum
-              optio hic corrupti eaque blanditiis dolorem impedit, voluptas
-              praesentium assumenda!
-            </p>
+            <p>{groupData?.grupo.descricao}</p>
           </div>
         </section>
 
@@ -111,7 +136,7 @@ const GroupDetails = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3, 4].map((candidate, index) => (
+                {groupData?.grupo.grupoUsuario.map((candidate, index) => (
                   <tr key={index}>
                     <td className={styles.position} data-label="Posição:">
                       <span>1</span>
@@ -123,21 +148,21 @@ const GroupDetails = (props: Props) => {
                         title="Ver perfil"
                       />
                       <span className={styles.name}>
-                        Thales Santos da Silva
+                        {candidate.usuario.nome}
                       </span>
                     </td>
                     <td
                       className={`${styles.text} ${styles.name}`}
                       data-label="Nome:"
                     >
-                      <span>Thales Santos da Silva</span>
+                      <span>{candidate.usuario.nome}</span>
                     </td>
                     <td className={styles.text} data-label="E-mail">
-                      <span>thales@email.com</span>
+                      <span>{candidate.usuario.email}</span>
                     </td>
 
                     <td className={styles.text} data-label="Localidade:">
-                      <span>Jandira, SP</span>
+                      <span>{candidate.usuario.EnderecoUsuario}</span>
                     </td>
                     <td className={styles.text} data-label="Status:">
                       <span>Pendente</span>

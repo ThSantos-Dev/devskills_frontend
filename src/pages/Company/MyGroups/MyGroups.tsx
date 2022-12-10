@@ -1,14 +1,31 @@
+import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { RiMoreFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/shared/Form/Button/Button";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
+import { TGetAllGroupCompany } from "../../../types/devskills/company/TGetAllGroupCompany";
 import Container from "./../../../components/shared/Layout/Container/Container";
 import styles from "./MyGroups.module.css";
 
 interface Props {}
 
 const MyGroups = (props: Props) => {
+  const [groupsData, setGroupsData] = useState<TGetAllGroupCompany>();
+
   const navigate = useNavigate();
+
+  const { user } = useSelector((state: any) => state.auth);
+
+  useEffect(() => {
+    CompanyService.getAllGroups(user.id, user.token).then((res) => {
+      if (res.error) return;
+
+
+      setGroupsData(res.data);
+    });
+  }, []);
 
   return (
     <Container title="Meus grupos" backTo="/company/mygroups">
@@ -46,75 +63,46 @@ const MyGroups = (props: Props) => {
               <tr>
                 <th>Nome</th>
                 <th>Participantes</th>
-                <th>Data da Criação</th>
                 <th>Status</th>
                 <th>Detalhes</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td data-label="nome">
-                  <span>SENAI JANDIRA</span>
-                </td>
-                <td data-label="Participantes">
-                  <span>4</span>
-                </td>
-                <td data-label="Data de Criação">
-                  <span>02/12/2022</span>
-                </td>
-                <td data-label="status">
-                  <span className={`${styles.status} ${styles.active}`}>
-                    Ativa
-                  </span>
-                </td>
-                <td data-label="detalhes">
-                  <div className={styles.icon}>
-                    <RiMoreFill />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td data-label="nome">
-                  <span>SENAI JANDIRA</span>
-                </td>
-                <td data-label="Participantes">
-                  <span>4</span>
-                </td>
-                <td data-label="Data de Criação">
-                  <span>02/12/2022</span>
-                </td>
-                <td data-label="status">
-                  <span className={`${styles.status} ${styles.inative}`}>
-                    Inativa
-                  </span>
-                </td>
-                <td data-label="detalhes">
-                  <div className={styles.icon}>
-                    <RiMoreFill />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td data-label="nome">
-                  <span>SENAI JANDIRA</span>
-                </td>
-                <td data-label="Participantes">
-                  <span>4</span>
-                </td>
-                <td data-label="Data de Criação">
-                  <span>02/12/2022</span>
-                </td>
-                <td data-label="status">
-                  <span className={`${styles.status} ${styles.inative}`}>
-                    Inativa
-                  </span>
-                </td>
-                <td data-label="detalhes">
-                  <div className={styles.icon}>
-                    <RiMoreFill />
-                  </div>
-                </td>
-              </tr>
+              {groupsData ? (
+                groupsData.provaAndamento.map((item) => (
+                  <tr
+                    onClick={() => navigate(`/company/groups/${item.grupo.id}`)}
+                  >
+                    <td data-label="nome">
+                      <span>{item.grupo.nome}</span>
+                    </td>
+                    <td data-label="Participantes">
+                      <span>{item.grupo._count.grupoUsuario}</span>
+                    </td>
+
+                    <td data-label="status">
+                      <span
+                        className={`${styles.status} ${
+                          item.grupo.status ? styles.active : styles.inative
+                        }`}
+                      >
+                        {item.grupo.status ? "Ativo" : "Inativo"}
+                      </span>
+                    </td>
+                    <td data-label="detalhes">
+                      <div className={styles.icon}>
+                        <RiMoreFill />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4}>
+                    <p>Nenhum Grupo Cadastrado.</p>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

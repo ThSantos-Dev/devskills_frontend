@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { AiFillCloseCircle, AiOutlineCheck } from "react-icons/ai";
+import { useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { IoCloseSharp } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Button from "../../../components/shared/Form/Button/Button";
 import Container from "../../../components/shared/Layout/Container/Container";
+import TestService from "../../../services/apiDevSkills/common/testService";
+import { TCandidatesRanking } from "../../../types/devskills/test/TCandidatesRanking";
+import { TTestApplicateDetails } from "../../../types/devskills/test/TTestApplicateDetails";
 import styles from "./ApplicationOverview.module.css";
 import Personal from "./Tabs/Personal";
 import Ranking from "./Tabs/Ranking";
@@ -12,6 +14,13 @@ import Ranking from "./Tabs/Ranking";
 type Props = {};
 
 const ApplicationOverview = (props: Props) => {
+  const { id } = useParams();
+
+  const { user } = useSelector((state: any) => state.auth);
+
+  const [testInfo, setTestInfo] = useState<TTestApplicateDetails>();
+  const [candidates, setCandidates] = useState<TCandidatesRanking[]>();
+
   const [showTab, setShowTab] = useState({
     general: false,
     personal: false,
@@ -47,6 +56,24 @@ const ApplicationOverview = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (!id) return;
+
+    TestService.getTestApplicate(parseInt(id), user.token).then((res) => {
+      if (res.error) return;
+
+      setTestInfo(res.data);
+    });
+
+    TestService.getCandidatesRanking(parseInt(id), user.token).then((res) => {
+      if (res.error) return;
+
+      setCandidates(res.data);
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   return (
     <Container
       filter={false}
@@ -56,19 +83,42 @@ const ApplicationOverview = (props: Props) => {
       <div className={styles.container}>
         <header className={styles.content}>
           <div className={styles.title_container}>
-            <h2>Prova de Java</h2>
+            <h2>{testInfo?.titulo}</h2>
             <Button color="solid_white" size="small" text="Detalhes" />
           </div>
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel pretium
-            lorem porta laoreet sit. Id risus, erat at lacus non cursus
-            convallis blandit et. Commodo scelerisque nulla ultricies cursus.
-            Cursus tristique cras habitant tristique risus, et ac quisque.
-          </p>
+          <p>{testInfo?.descricao}</p>
+
+          <div className="info_container">
+            <h3>Stacks:</h3>
+            <span>
+              {testInfo?.provaStacks
+                .map((item) => item.nome)
+                .toString()
+                .replace(",", ", ")}
+              .
+            </span>
+          </div>
+
+          <div className="info_container">
+            <h3>Tecnologias:</h3>
+            <span>
+              {testInfo?.provaHabilidades
+                .map((item) => item.nome)
+                .toString()
+                .replace(",", ", ")}
+              .
+            </span>
+          </div>
 
           <p className={styles.info}>
-            <BsFillPersonFill /> <span>500 candidatos</span>
+            <BsFillPersonFill />{" "}
+            <span>
+              {testInfo?.totalCandidatos} candidato
+              {testInfo?.totalCandidatos && testInfo?.totalCandidatos > 1
+                ? "s"
+                : ""}
+            </span>
           </p>
         </header>
 
@@ -107,11 +157,12 @@ const ApplicationOverview = (props: Props) => {
 
             {showTab.personal && <Personal show={showTab.personal} />}
 
-            {showTab.ranking && <Ranking show={showTab.ranking} />}
+            {showTab.ranking && candidates && (
+              <Ranking show={showTab.ranking} data={candidates} />
+            )}
           </div>
         </div>
       </div>
-      
     </Container>
   );
 };
