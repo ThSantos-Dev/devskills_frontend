@@ -1,10 +1,9 @@
-import React from "react";
-import styles from "./CardMyTest.module.css";
 import { useNavigate } from "react-router-dom";
 import { TResult } from "../../../types/devskills/test/TTestOfCompany";
+import styles from "./CardMyTest.module.css";
 
 interface Props {
-  test: TResult;
+  test: TResult | any;
 }
 
 const CardMyTest = ({ test }: Props) => {

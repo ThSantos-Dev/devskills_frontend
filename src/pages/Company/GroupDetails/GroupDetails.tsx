@@ -9,10 +9,7 @@ import CardMyTest from "../../../components/company/Card/CardMyTest";
 import Container from "../../../components/shared/Layout/Container/Container";
 import CompanyService from "../../../services/apiDevSkills/company/companyService";
 import { getAllOfCompany } from "../../../slices/common/testSlice";
-import {
-  TGetAllGroupCompany,
-  TProvaGrupo,
-} from "../../../types/devskills/company/TGetAllGroupCompany";
+import { TGetGrouDetails } from "../../../types/devskills/company/TGetGroupDetails";
 import {
   TResult,
   TTestOfCompany,
@@ -35,7 +32,7 @@ const GroupDetails = (props: Props) => {
   >((state: any) => state.test);
   const { user } = useSelector((state: any) => state.auth);
 
-  const [groupData, setGroupData] = useState<TProvaGrupo>();
+  const [groupData, setGroupData] = useState<TGetGrouDetails>();
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<any>();
@@ -62,21 +59,13 @@ const GroupDetails = (props: Props) => {
 
     dispatch(getAllOfCompany());
 
-    CompanyService.getAllGroups(user.id, user.token).then((res) => {
+    CompanyService.getGroupDetails(id, user.token).then((res) => {
       if (res.error) return;
 
-      const data: TGetAllGroupCompany = res.data;
+      const data: TGetGrouDetails = res.data[0];
 
-      console.log(
-        data.provaAndamento[0].provaGrupo.find(
-          (item) => item.grupo.id === parseInt(id)
-        )
-      );
-      setGroupData(
-        data.provaAndamento[0].provaGrupo.find(
-          (item) => item.grupo.id === parseInt(id)
-        )
-      );
+      console.log(data);
+      setGroupData(data);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,12 +85,12 @@ const GroupDetails = (props: Props) => {
         <section className={styles.content_container}>
           <div className={styles.content}>
             <h2>Nome do grupo</h2>
-            <span>{groupData?.grupo.nome}</span>
+            <span>{groupData?.nome}</span>
           </div>
 
           <div className={styles.content}>
             <h2>Descrição do grupo</h2>
-            <p>{groupData?.grupo.descricao}</p>
+            <p>{groupData?.descricao}</p>
           </div>
         </section>
 
@@ -136,46 +125,53 @@ const GroupDetails = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {groupData?.grupo.grupoUsuario.map((candidate, index) => (
-                  <tr key={index}>
-                    <td className={styles.position} data-label="Posição:">
-                      <span>1</span>
-                    </td>
-                    <td className={styles.profile} data-label="#1">
-                      <img
-                        src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                        alt="profile"
-                        title="Ver perfil"
-                      />
-                      <span className={styles.name}>
-                        {candidate.usuario.nome}
-                      </span>
-                    </td>
-                    <td
-                      className={`${styles.text} ${styles.name}`}
-                      data-label="Nome:"
-                    >
-                      <span>{candidate.usuario.nome}</span>
-                    </td>
-                    <td className={styles.text} data-label="E-mail">
-                      <span>{candidate.usuario.email}</span>
-                    </td>
-
-                    <td className={styles.text} data-label="Localidade:">
-                      <span>{candidate.usuario.EnderecoUsuario}</span>
-                    </td>
-                    <td className={styles.text} data-label="Status:">
-                      <span>Pendente</span>
-                    </td>
-                    <td className={styles.actions} data-label="Ação:">
-                      <div>
-                        <span className={styles.icon}>
-                          <MdMoreHoriz title="Mais ações" />
+                {groupData?.grupoUsuario &&
+                  groupData?.grupoUsuario.map((candidate, index) => (
+                    <tr key={index}>
+                      <td className={styles.position} data-label="Posição:">
+                        <span>1</span>
+                      </td>
+                      <td className={styles.profile} data-label="#1">
+                        <img
+                          src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                          alt="profile"
+                          title="Ver perfil"
+                        />
+                        <span className={styles.name}>
+                          {candidate.usuario.nome}
                         </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td
+                        className={`${styles.text} ${styles.name}`}
+                        data-label="Nome:"
+                      >
+                        <span>{candidate.usuario.nome}</span>
+                      </td>
+                      <td className={styles.text} data-label="E-mail">
+                        <span>{candidate.usuario.email}</span>
+                      </td>
+
+                      <td className={styles.text} data-label="Localidade:">
+                        <span>
+                          {candidate.usuario.EnderecoUsuario[0]?.cidade.nome},{" "}
+                          {
+                            candidate.usuario.EnderecoUsuario[0]?.cidade.estado
+                              .nome
+                          }
+                        </span>
+                      </td>
+                      <td className={styles.text} data-label="Status:">
+                        <span>Pendente</span>
+                      </td>
+                      <td className={styles.actions} data-label="Ação:">
+                        <div>
+                          <span className={styles.icon}>
+                            <MdMoreHoriz title="Mais ações" />
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -195,11 +191,10 @@ const GroupDetails = (props: Props) => {
                 <p>Nenhuma prova relacionada.</p>
               )} */}
 
-            {selectedTests ? (
-              selectedTests
-                .filter((test) => test.data.id < 4)
+            {groupData?.provaGrupo ? (
+              groupData?.provaGrupo
                 .map((test) => (
-                  <CardMyTest test={test.data} key={test.data.id} />
+                  <CardMyTest test={test.provaAndamento} key={test.provaAndamento.id} />
                 ))
             ) : (
               <p>Nenhuma prova relacionada.</p>

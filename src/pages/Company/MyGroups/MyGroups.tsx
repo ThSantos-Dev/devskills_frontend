@@ -12,7 +12,7 @@ import styles from "./MyGroups.module.css";
 interface Props {}
 
 const MyGroups = (props: Props) => {
-  const [groupsData, setGroupsData] = useState<TGetAllGroupCompany>();
+  const [groupsData, setGroupsData] = useState<TGetAllGroupCompany[]>();
 
   const navigate = useNavigate();
 
@@ -69,24 +69,25 @@ const MyGroups = (props: Props) => {
             </thead>
             <tbody>
               {groupsData ? (
-                groupsData.provaAndamento.map((item) => (
+                groupsData.map((item) => (
                   <tr
-                    onClick={() => navigate(`/company/groups/${item.grupo.id}`)}
+                    key={item.id}
+                    onClick={() => navigate(`/company/groups/${item.id}`)}
                   >
                     <td data-label="nome">
-                      <span>{item.grupo.nome}</span>
+                      <span>{item.nome}</span>
                     </td>
                     <td data-label="Participantes">
-                      <span>{item.grupo._count.grupoUsuario}</span>
+                      <span>{item.quantidade}</span>
                     </td>
 
                     <td data-label="status">
                       <span
                         className={`${styles.status} ${
-                          item.grupo.status ? styles.active : styles.inative
+                          item.ativo ? styles.active : styles.inative
                         }`}
                       >
-                        {item.grupo.status ? "Ativo" : "Inativo"}
+                        {item.ativo ? "Ativo" : "Inativo"}
                       </span>
                     </td>
                     <td data-label="detalhes">
