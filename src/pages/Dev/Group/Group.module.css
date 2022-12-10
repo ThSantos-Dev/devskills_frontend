@@ -1,0 +1,59 @@
+.user_table_group_container {
+    width: 100%;
+    height: auto;
+    max-height: 50%;
+    background-color: var(--dark-container);
+    padding: 1%;
+    border-radius: 20px;
+}
+
+.user_table_group_container tr:nth-child(1) {
+    width: 25%;
+    background-color: var(--dark-container);
+
+    height: 70px;
+
+    text-align: start;
+}
+
+.user_table_group_container tr {
+    width: 25%;
+    height: 70px;
+    background-color: var(--dark-background);
+}
+
+.user_table_group_container th {
+    text-align: start;
+}
+
+.user_table_group_container tr td:nth-child(4) {
+    text-align: center;
+    font-size: 200%;
+    vertical-align: middle;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.user_table_group_container tr td:nth-child(4) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user_table_group_status_active {
+    width: 60%;
+    background-color: var(--background-light-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+.user_table_group_status_inactive {
+    width: 50%;
+    background-color: var(--dark-pink-extra);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}

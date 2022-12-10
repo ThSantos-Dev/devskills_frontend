@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cards_container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.container .cards_container > div {
+  flex: calc(100% / 2 - 40px) 0 0;
+  max-width: none;
+}
+
+/* Media Queries */
+@media only screen  and (max-width: 1068px) {
+    .container .cards_container > div {
+        flex: 80% 0 0;
+        margin: auto;
+    }
+}
+
