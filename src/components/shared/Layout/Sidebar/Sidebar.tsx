@@ -31,7 +31,7 @@ const Sidebar = (props: Props) => {
       icon: <BsBellFill />,
     },
     { text: "Testes", navigateTo: "/dev/exam", icon: <MdClass /> },
-    { text: "Grupos", navigateTo: "/dev/groups", icon: <HiOutlineUserGroup /> },
+    { text: "Grupos", navigateTo: `/dev/groups/${user.id}`, icon: <HiOutlineUserGroup /> },
     { text: "Salvos", navigateTo: "/dev/groups", icon: <MdFavoriteBorder /> },
   ];
 
