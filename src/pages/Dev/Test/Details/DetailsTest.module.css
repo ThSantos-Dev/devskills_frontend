@@ -1,0 +1,67 @@
+.container {
+    background-color: var(--dark-container);
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.container p {
+    font-weight: bold;
+}
+
+.line {
+    align-self: center;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--dark-light-blue);
+}
+
+.candidatesContainer {
+    display: flex;
+    gap: 1%;
+    align-items: center;
+}
+
+.companyProfile {
+    display: flex;
+    gap: 40px;
+}
+
+.companyProfile div {
+    background-color: aquamarine;
+    width: 2vw;
+    height: 10%;
+    border-radius: 100%;
+}
+
+.companyProfile button {
+    background-color: var(--dark-pink-extra);
+    width: 8vw;
+    height: 4vh;
+    border: none;
+    border-radius: 5px;
+    color: var(--color-white-text);
+    font-size: clamp(1px, .8rem, 2rem);
+    cursor: pointer;
+}
+
+.detailsContainer {
+    display: flex;
+    gap: 50%;
+}
+
+.detailsContainer > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+
+.infosContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
