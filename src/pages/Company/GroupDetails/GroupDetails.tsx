@@ -62,7 +62,7 @@ const GroupDetails = (props: Props) => {
     CompanyService.getGroupDetails(id, user.token).then((res) => {
       if (res.error) return;
 
-      const data: TGetGrouDetails = res.data[0];
+      const data: TGetGrouDetails = res.data;
 
       console.log(data);
       setGroupData(data);
@@ -85,12 +85,12 @@ const GroupDetails = (props: Props) => {
         <section className={styles.content_container}>
           <div className={styles.content}>
             <h2>Nome do grupo</h2>
-            <span>{groupData?.nome}</span>
+            <span>{groupData?.groupInfo.nome}</span>
           </div>
 
           <div className={styles.content}>
             <h2>Descrição do grupo</h2>
-            <p>{groupData?.descricao}</p>
+            <p>{groupData?.groupInfo.descricao}</p>
           </div>
         </section>
 
@@ -125,15 +125,19 @@ const GroupDetails = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {groupData?.grupoUsuario &&
-                  groupData?.grupoUsuario.map((candidate, index) => (
+                {groupData?.usersOfGroup &&
+                  groupData?.usersOfGroup.map((candidate, index) => (
                     <tr key={index}>
                       <td className={styles.position} data-label="Posição:">
                         <span>1</span>
                       </td>
                       <td className={styles.profile} data-label="#1">
                         <img
-                          src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                          src={
+                            candidate.usuario.foto_perfil
+                              ? candidate.usuario.foto_perfil
+                              : "https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                          }
                           alt="profile"
                           title="Ver perfil"
                         />
@@ -152,13 +156,17 @@ const GroupDetails = (props: Props) => {
                       </td>
 
                       <td className={styles.text} data-label="Localidade:">
-                        <span>
-                          {candidate.usuario.EnderecoUsuario[0]?.cidade.nome},{" "}
-                          {
-                            candidate.usuario.EnderecoUsuario[0]?.cidade.estado
-                              .nome
-                          }
-                        </span>
+                        {candidate.usuario.EnderecoUsuario[0]?.cidade.nome ? (
+                          <span>
+                            {candidate.usuario.EnderecoUsuario[0]?.cidade.nome},{" "}
+                            {
+                              candidate.usuario.EnderecoUsuario[0]?.cidade
+                                .estado.nome
+                            }
+                          </span>
+                        ) : (
+                          <span>Não informada</span>
+                        )}
                       </td>
                       <td className={styles.text} data-label="Status:">
                         <span>Pendente</span>
@@ -191,20 +199,22 @@ const GroupDetails = (props: Props) => {
                 <p>Nenhuma prova relacionada.</p>
               )} */}
 
-            {groupData?.provaGrupo ? (
-              groupData?.provaGrupo
-                .map((test) => (
-                  <CardMyTest test={test.provaAndamento} key={test.provaAndamento.id} />
-                ))
+            {groupData?.testsOfGroup ? (
+              groupData?.testsOfGroup.map((test) => (
+                <CardMyTest
+                  test={test.provaAndamento}
+                  key={test.provaAndamento.id}
+                />
+              ))
             ) : (
               <p>Nenhuma prova relacionada.</p>
             )}
           </div>
         </section>
-
+        {/* 
         <div className={styles.button_submit_container}>
           <button>Salvar alterações</button>
-        </div>
+        </div> */}
       </div>
     </Container>
   );
