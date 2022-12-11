@@ -31,10 +31,68 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
     status: "all",
   });
 
+  const [filteredCandidates, setFilteredsCandidates] = useState<
+    { data: TCandidatesRanking; selected: boolean }[]
+  >([...data.map((item) => ({ data: item, selected: true }))]);
+
+  const [listLocales, setListLocales] = useState([
+    ...new Set(
+      data.map((item) => {
+        return `${item.candidato.localidade.cidade}, ${item.candidato.localidade.estado}`;
+      })
+    ),
+  ]);
+
   const [showModalCondition, setShowModalCondition] = useState<boolean>(true);
   const [showModalAproved, setShowModalAproved] = useState<boolean>(false);
   const [showModalAprovedGroup, setShowModalAprovedGroup] =
     useState<boolean>(false);
+
+  const handleFilterCandidates = () => {
+    console.log(filteredCandidates);
+
+    let auxiliar = filteredCandidates.map((item) => {
+      let criteries = {
+        status: false,
+        score: false,
+        locale: false,
+      };
+      let finnalyStatus = false;
+
+      // Filtrando por status
+      if (filters.status === "corrected" && item.data.corrigida)
+        criteries.status = true;
+      else if (filters.status === "uncorrected" && !item.data.corrigida)
+        criteries.status = true;
+      else if (filters.status === "all") criteries.status = true;
+
+      // Filtrando por pontuação
+      if (
+        filters.score.selected === "between" &&
+        item.data.pontuacao >= filters.score.between.minValue &&
+        item.data.pontuacao <= filters.score.between.maxValue
+      ) {
+        criteries.score = true;
+      } else if (
+        filters.score.selected === "equals_to" &&
+        item.data.pontuacao === filters.score.equals_to
+      ) {
+        criteries.score = true;
+      } else if (
+        filters.score.selected === "bigger_then" &&
+        item.data.pontuacao === filters.score.bigger_then
+      ) {
+        criteries.score = true;
+      }
+
+      if (criteries.locale && criteries.score && criteries.status)
+        finnalyStatus = true;
+
+      return { data: item.data, selected: finnalyStatus };
+    });
+
+    setFilteredsCandidates(auxiliar);
+  };
 
   return (
     <section className={`${styles.container} ${show ? styles.active : ""}`}>
@@ -136,9 +194,10 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
           <div className={styles.select_container}>
             <SelectCustom
               options={[
-                { label: "Entre", value: "between" },
-                { label: "Igual a", value: "equals_to" },
-                { label: "Maior que", value: "bigger_then" },
+                ...listLocales.map((item, index) => ({
+                  label: item,
+                  value: index.toString(),
+                })),
               ]}
               defaultValue={{ label: "Entre", value: "between" }}
               name="filter"
@@ -188,7 +247,12 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
         </div>
 
         <div className={styles.button_container}>
-          <Button color="solid_white" size="small" text="Aplicar" />
+          <Button
+            color="solid_white"
+            size="small"
+            text="Aplicar"
+            handleOnClick={handleFilterCandidates}
+          />
         </div>
       </div>
 
@@ -209,51 +273,57 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td className={styles.position} data-label="Posição:">
-                  <span>{index + 1}</span>
-                </td>
-                <td className={styles.profile} data-label="#1">
-                  <img
-                    src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                    alt="profile"
-                    title="Ver perfil"
-                  />
-                  <span className={styles.name}>{item.candidato.nome}</span>
-                </td>
-                <td
-                  className={`${styles.text} ${styles.name}`}
-                  data-label="Nome:"
-                >
-                  <span>{item.candidato.nome}</span>
-                </td>
-                <td className={styles.text} data-label="Duração:">
-                  <span>{item.duracao}</span>
-                </td>
-                <td className={styles.text} data-label="Pontuação:">
-                  <span>{item.pontuacao}%</span>
-                </td>
-                <td className={styles.text} data-label="Localidade:">
-                  <span>
-                    {item.candidato.localidade.estado},{" "}
-                    {item.candidato.localidade.cidade}
-                  </span>
-                </td>
-                <td className={styles.text} data-label="Status:">
-                  <span>
-                    {item.corrigida ? "Corrigida" : "Aguardando correção"}
-                  </span>
-                </td>
-                <td className={styles.actions} data-label="Ação:">
-                  <div>
-                    <span className={styles.icon}>
-                      <MdMoreHoriz title="Mais ações" />
+            {filteredCandidates
+              .filter((item) => item.selected)
+              .map(({ data: item }, index) => (
+                <tr key={index}>
+                  <td className={styles.position} data-label="Posição:">
+                    <span>{index + 1}</span>
+                  </td>
+                  <td className={styles.profile} data-label="#1">
+                    <img
+                      src={
+                        item.candidato.foto_perfil
+                          ? item.candidato.foto_perfil
+                          : "https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                      }
+                      alt="profile"
+                      title="Ver perfil"
+                    />
+                    <span className={styles.name}>{item.candidato.nome}</span>
+                  </td>
+                  <td
+                    className={`${styles.text} ${styles.name}`}
+                    data-label="Nome:"
+                  >
+                    <span>{item.candidato.nome}</span>
+                  </td>
+                  <td className={styles.text} data-label="Duração:">
+                    <span>{item.duracao}</span>
+                  </td>
+                  <td className={styles.text} data-label="Pontuação:">
+                    <span>{item.pontuacao}%</span>
+                  </td>
+                  <td className={styles.text} data-label="Localidade:">
+                    <span>
+                      {item.candidato.localidade.estado},{" "}
+                      {item.candidato.localidade.cidade}
                     </span>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className={styles.text} data-label="Status:">
+                    <span>
+                      {item.corrigida ? "Corrigida" : "Aguardando correção"}
+                    </span>
+                  </td>
+                  <td className={styles.actions} data-label="Ação:">
+                    <div>
+                      <span className={styles.icon}>
+                        <MdMoreHoriz title="Mais ações" />
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
