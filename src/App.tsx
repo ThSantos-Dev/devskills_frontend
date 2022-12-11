@@ -33,6 +33,7 @@ import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import CompanyGroupDetails from './pages/Company/GroupDetails/GroupDetails';
 import TestDetails from "./pages/Test/Details/Details";
+import RankingOfDevs from "./pages/Company/RankingOfDevs/RankingOfDevs";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -202,6 +203,13 @@ const App = () => {
           path="/company/test/templates/:id"
           element={
             auth && type === "COMPANY" ? <TemplateDetails /> : <p>aaaa</p>
+          }
+        />
+
+        <Route
+          path="/company/ranking"
+          element={
+            auth && type === "COMPANY" ? <RankingOfDevs /> : <p>aaaa</p>
           }
         />
       </Routes>

@@ -3,7 +3,7 @@ import styles from "./Sidebar.module.css";
 
 // Icons
 import { BiHomeAlt } from "react-icons/bi";
-import { BsBellFill } from "react-icons/bs";
+import { BsBellFill, BsFillBarChartLineFill } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdClass, MdFavoriteBorder } from "react-icons/md";
 import { RiFoldersFill } from "react-icons/ri";
@@ -43,9 +43,9 @@ const Sidebar = (props: Props) => {
       icon: <RiFoldersFill />,
     },
     {
-      text: "Notificações",
-      navigateTo: "/company/notifications",
-      icon: <BsBellFill />,
+      text: "Ranking",
+      navigateTo: "/company/ranking",
+      icon: <BsFillBarChartLineFill />,
     },
     {
       text: "Grupos",
