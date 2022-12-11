@@ -33,4 +33,22 @@ export default class UserService {
         }
     }
 
+    static async getRecommendedTests(token: string) {
+        try {
+            console.log(BASE_URL + `/developer/recommendedTests`)
+            console.log(token)
+            const config = requestConfig("GET", undefined, token);
+            const res = await fetch(BASE_URL + `/developer/recommendedTests`, config).then(
+                (data) => data.json()
+            );
+
+            console.log(res)
+
+            return res;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 }
