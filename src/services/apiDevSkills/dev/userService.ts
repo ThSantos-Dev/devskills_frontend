@@ -38,9 +38,10 @@ export default class UserService {
             console.log(BASE_URL + `/developer/recommendedTests`)
             console.log(token)
             const config = requestConfig("GET", undefined, token);
-            const res = await fetch(BASE_URL + `/developer/recommendedTests`, config).then(
-                (data) => data.json()
-            );
+            const res = await fetch(
+              BASE_URL + `/developer/recommendedTest/getAll`,
+              config
+            ).then((data) => data.json());
 
             console.log(res)
 

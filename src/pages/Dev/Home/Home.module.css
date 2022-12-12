@@ -1,243 +1,252 @@
 .container {
-    max-width: 1440px;
-    width: 100%;
+  max-width: 1440px;
+  width: 100%;
 
-    margin: auto;
+  margin: auto;
 }
 
 .containerHeader {
-    width: 100%;
-    height: 30vh;
+  width: 100%;
+  height: 30vh;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    border-radius: 20px;
-    /* padding: 20px; */
-    margin-bottom: 40px;
+  border-radius: 20px;
+  /* padding: 20px; */
+  margin-bottom: 40px;
 
-    background-color: var(--dark-container);
+  background-color: var(--dark-container);
 }
 
 .containerHeader .text {
-    max-width: 40%;
+  max-width: 40%;
 
-    padding: 40px 40px;
-    padding-right: 0px;
+  padding: 40px 40px;
+  padding-right: 0px;
 
-    font-size: clamp(0.8rem, 3vw, 1rem);
+  font-size: clamp(0.8rem, 3vw, 1rem);
 
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .containerHeader .text h1 {
-    font-size: clamp(1.2rem, 3vw, 2rem);
+  font-size: clamp(1.2rem, 3vw, 2rem);
 }
 
 .containerHeader .ilustration {
-    width: clamp(200px, 24vw, 384px);
+  width: clamp(200px, 24vw, 384px);
 }
 
 .containerHeader .ilustration img {
-    width: 100%;
+  width: 100%;
 
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .line {
-    height: 100%;
-    background-color: var(--dark-blue);
-    width: 2px;
-    border-radius: 2px;
+  height: 100%;
+  background-color: var(--dark-blue);
+  width: 2px;
+  border-radius: 2px;
 }
 
 /* Ações */
 .actionsContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
 
-    width: 100%;    
-    height: 40vh;
+  width: 100%;
+  height: 40vh;
 
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 40px;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 40px;
 
-    background-color: var(--dark-container);
+  background-color: var(--dark-container);
 }
 
 .actionsContainer .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.cardSkill, .cardStack {
-    padding: 10px;
-    width: fit-content;
-    height: 10%;
-    border-radius: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.cardSkill,
+.cardStack {
+  padding: 10px;
+  width: fit-content;
+  height: 10%;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cardSkill, .cardStack p {
-    font-size: clamp(.5rem, .5vw, 1rem);
+.cardSkill,
+.cardStack p {
+  font-size: clamp(0.5rem, 0.5vw, 1rem);
 }
 
 .cardSkill {
-    background-color: var(--dark-pink);
+  background-color: var(--dark-pink);
 }
 
 .cardStack {
-    background-color: var(--dark-blue);
+  background-color: var(--dark-blue);
 }
 
 .action {
-    width: 230px;
+  width: 230px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    
-    padding: 20px 28px;
-    cursor: pointer;
-    
-    border-radius: 12px;
-    border: solid 2px var(--color-white-text);
-    background-color: var(--dark-container);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px 28px;
+  cursor: pointer;
+
+  border-radius: 12px;
+  border: solid 2px var(--color-white-text);
+  background-color: var(--dark-container);
 }
 
 .action p {
-    text-align: center;
-    font-size: clamp(1.2rem, 1vw, 2rem);
+  text-align: center;
+  font-size: clamp(1.2rem, 1vw, 2rem);
 }
 
 .action .icon {
-    width: max-content;
-    height: max-content;
+  width: max-content;
+  height: max-content;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    color: var(--dark-blue);
+  color: var(--dark-blue);
 
-    font-size: clamp(8rem, 4vw, 10rem);
+  font-size: clamp(8rem, 4vw, 10rem);
 }
 
 .actions .action:nth-child(even) .icon {
-    color: var(--dark-pink);
+  color: var(--dark-pink);
 }
 
 .testsContainer {
-    width: 100%;
-    height: 50vh;
+  width: 100%;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
 
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 10px;
 
-    background-color: var(--dark-container);
+  background-color: var(--dark-container);
 }
 
 .testsContainerHeader {
-    display: flex;
-    width: 100%;
-    align-items: center;
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 
 .testsContainerHeader > h1 {
-    font-size: clamp(1.2rem, 2vw, 2rem);
+  font-size: clamp(1.2rem, 2vw, 2rem);
 }
 
 .testsContainerHeader p {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .cardContainer {
-    width: 100%;
-    overflow: scroll;
-    display: flex;
-    flex-direction: row;
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
+  width: 100%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: row;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
 }
 
 .cardContainer::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, and Opera */
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 .cardTest {
-    min-width: 400px;
-    min-height: 100px;
-    width: 500px;
-    height: 200px;
-    background-color: var(--dark-background);
-    margin-right: 30px;
-    border-radius: 15px;
-    display: flex;
+  min-width: 400px;
+  min-height: 100px;
+  width: 500px;
+  height: 200px;
+  background-color: var(--dark-background);
+  margin-right: 30px;
+  border-radius: 15px;
+  display: flex;
 }
 
 .cardTestLogo {
-    width: 30%;
-    height: 100%;
-    border-radius: 15px;
+  width: 30%;
+  height: 100%;
+  border-radius: 15px;
 
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .cardTestLogo img {
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
 }
 
 .cardTestBody {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    height: 100%;
-    padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  padding: 10px 20px;
 }
 
 .cardTestBody h1 {
-    font-size: clamp(0.8rem, 1.5vw, 2rem);
-    font-weight: 600;
+  font-size: clamp(0.8rem, 1.5vw, 2rem);
+  font-weight: 600;
 }
 
 .cardTestBody p {
-    font-size: clamp(0.5rem, 1vw, 3rem);
-    font-weight: 600;
+  flex: 1;
+  font-size: clamp(0.5rem, 5vw, 0.9rem);
+  font-weight: 600;
+
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .actionsContainerText > h3 {
-    font-size: clamp(0.5rem, 2vw, 3rem);
+  font-size: clamp(0.5rem, 2vw, 3rem);
 }
 
 .actionsContainerText > p {
-    font-size: clamp(0.8rem, 1.2vw, 2rem);
+  font-size: clamp(0.8rem, 1.2vw, 2rem);
 }
 
 .cardTestSkillContainer {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .cardTestStackContainer {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }

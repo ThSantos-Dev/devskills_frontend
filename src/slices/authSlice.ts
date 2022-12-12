@@ -49,6 +49,8 @@ export const login = createAsyncThunk(
         return thunkAPI.rejectWithValue(res.error);
       }
 
+      console.log("SLICE", res)
+
       const user = {
         token: res.token,
         id: res.userInfo!.id,

@@ -1,35 +1,39 @@
 export type TTestInfo = {
-    titulo: string;
-    descricao: string;
-    duracao: string;
-    dataFim: Date;
-    empresa: TCompanyInfo;
-    tecnologias: TTestSkill[];
-    stacks: TTestStack[];
-  }
-  
-export type TCompanyInfo = {
-    id: number;
-    logo: string;
-    nome: string;
-}
-  
-  export type TTestSkill = {
-    habilidade: TSkill;
-  }
-  
-  export type TSkill = {
-    id: number;
-    icone: string;
-    nome: string;
-  }
-  
-  export type TTestStack = {
-    stack: TStack;
-  }
-  
-  export type TStack = {
-    id: number;
-    nome: string;
-  }
-  
+  titulo: string;
+  descricao: string;
+  duracao: string;
+  totalCandidatos: number;
+  dataFim: string;
+  empresa: TEmpresa;
+  tecnologias: TTecnologia[];
+  stacks: TStack[];
+  tipo: "PRATICA" | "TEORICA";
+};
+
+export type TEmpresa = {
+  id: number;
+  logo: any;
+  nome: string;
+};
+
+export type TTecnologia = {
+  habilidade: THabilidade;
+};
+
+export type THabilidade = {
+  id: number;
+  icone: string;
+  nome: string;
+};
+
+export type TStack = {
+  id: number;
+  idProva: number;
+  idProvaStack: number;
+  stack: TStack2;
+};
+
+export type TStack2 = {
+  id: number;
+  nome: string;
+};

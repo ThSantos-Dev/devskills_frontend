@@ -74,7 +74,7 @@ const App = () => {
         {/* <Route path="/dev/favorites" element={<RealizeTest />} /> */}
         <Route path="/dev/test/:id" element={<DetailsTest />} />
         <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
-        <Route path="/dev/profile/:id" element={<DevProfile/>}/>
+        <Route path="/developer/profile/:id" element={<DevProfile/>}/>
  
         {/* Routes of Company */}
         <Route

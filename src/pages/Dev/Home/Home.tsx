@@ -1,42 +1,47 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
-import HeaderIlustration from "../../../assets/img/dev-home-illustration.svg";
-import Container from '../../../components/shared/Layout/Container/Container'
 import { useNavigate } from "react-router-dom";
-import UserService from '../../../services/apiDevSkills/dev/userService';
-import CardTest from './CardTest';
-import styles from './Home.module.css'
-import actionIcon from '../../../assets/img/actionIcon.svg'
+import { toast } from "react-toastify";
+import actionIcon from "../../../assets/img/actionIcon.svg";
+import HeaderIlustration from "../../../assets/img/dev-home-illustration.svg";
+import Container from "../../../components/shared/Layout/Container/Container";
+import UserService from "../../../services/apiDevSkills/dev/userService";
+import { TGetTestRecommeded } from "../../../types/devskills/test/TGetTestRecommeded";
+import CardTest from "./CardTest";
+import styles from "./Home.module.css";
 
-type Props = {}
+type Props = {};
 
 const Home = (props: Props) => {
-
   const { user } = useSelector((state: any) => state.auth);
-  console.log(user)
-  const [userName, setUserName] = useState("")
+  console.log(user);
+  const [userName, setUserName] = useState("");
+
+  const [recommendedTest, setRecommendedTest] =
+    useState<TGetTestRecommeded[]>();
 
   const getUser = () => {
     if (!user.id) return;
 
     UserService.getById(parseInt(user.id), user.token).then((res) => {
       if (res.error) return toast.error(res.error);
-      setUserName(res.data.nome)
+      setUserName(res.data.nome);
     });
-  }
+  };
   const getRecommendedTests = () => {
     if (!user.token) return;
+
     UserService.getRecommendedTests(user.token).then((res) => {
       if (res.error) return toast.error(res.error);
-      console.log(res)
+
+      setRecommendedTest(res.data);
     });
-  }
+  };
 
   useEffect(() => {
-    getUser()
-    getRecommendedTests()
-  }, [])
+    getUser();
+    getRecommendedTests();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -44,9 +49,10 @@ const Home = (props: Props) => {
     <Container>
       <header className={styles.containerHeader}>
         <div className={styles.text}>
-          <h1>Bem-vindo, {userName}!</h1>
+          <h1>Bem-vindo, {userName.split(" ")[0]}!</h1>
           <p>
-            Estamos muito felizes com sua chegada! Confira as mais novas provas da nossa plataforma ou continue suas provas em andamento.
+            Estamos muito felizes com sua chegada! Confira as mais novas provas
+            da nossa plataforma ou continue suas provas em andamento.
           </p>
         </div>
         <div className={styles.ilustration}>
@@ -57,14 +63,19 @@ const Home = (props: Props) => {
         <div className={styles.testsContainerHeader}>
           <h1>Provas ideais para você</h1>
           {/* <p>ver mais...</p> */}
-
         </div>
         <div className={styles.cardContainer}>
-          <CardTest />
-          <CardTest />
-          <CardTest />
-          <CardTest />
-          <CardTest />
+          {recommendedTest &&
+            recommendedTest.map(({ prova, empresa }, index) => (
+              <CardTest
+                key={index}
+                title={prova.titulo}
+                description={prova.descricao}
+                logo_url={empresa.logo || null}
+                skills={prova.provaHabilidade.map((skill) => skill.habilidade.nome)}
+                stacks={prova.provaStack.map((stack) => stack.stack.nome)}
+              />
+            ))}
         </div>
       </div>
       <div className={styles.actionsContainer}>
@@ -73,27 +84,33 @@ const Home = (props: Props) => {
           <p>Conheça nossos atalhos feitos para melhorarem sua experiência.</p>
         </div>
         <div className={styles.line}></div>
-        <div className={styles.action} onClick={()=> navigate(`dev/groups/${user.id}`)}>
+        <div
+          className={styles.action}
+          onClick={() => navigate(`dev/groups/${user.id}`)}
+        >
           <div>
             <img src={actionIcon} alt="Ícone de atalho" />
           </div>
           <p>Convites de grupos</p>
         </div>
-        <div className={styles.action} onClick={()=> navigate(`dev/search`)}>
-        <div>
+        <div className={styles.action} onClick={() => navigate(`dev/search`)}>
+          <div>
             <img src={actionIcon} alt="Ícone de atalho" />
           </div>
           <p>Buscar novas provas</p>
         </div>
-        <div className={styles.action} onClick={()=> navigate(`dev/profile/${user.id}`)}>
-        <div>
+        <div
+          className={styles.action}
+          onClick={() => navigate(`dev/profile/${user.id}`)}
+        >
+          <div>
             <img src={actionIcon} alt="Ícone de atalho" />
           </div>
           <p>Acessar suas provas</p>
         </div>
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
