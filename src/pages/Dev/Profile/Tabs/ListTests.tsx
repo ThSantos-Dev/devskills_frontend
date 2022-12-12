@@ -35,7 +35,7 @@ const ListTests: React.FC<Props> = ({tests, logo}) => {
                 contentCustomStyle={{
                   backgroundColor: "var(--dark-container)",
                 }}
-                userView={false}
+                userView={true}
               />
             ))}
           </>

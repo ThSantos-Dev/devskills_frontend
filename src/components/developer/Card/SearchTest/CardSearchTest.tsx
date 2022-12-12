@@ -12,6 +12,7 @@ interface Props {
   img_url: string;
   containerCustomStyle?: CSS.Properties;
   contentCustomStyle?: CSS.Properties;
+  userView: boolean;
 }
 
 const CardSearchTest: React.FC<Props> = ({
@@ -23,13 +24,17 @@ const CardSearchTest: React.FC<Props> = ({
   img_url,
   containerCustomStyle,
   contentCustomStyle,
+  userView
 }) => {
   return (
     <div className={styles.card_test} style={{ ...containerCustomStyle }}>
-      <div className={styles.image_container}>
+      {
+        !userView &&
+        <div className={styles.image_container}>
         <img src={img_url} alt="logo" />
         <span>{type}</span>
       </div>
+      }
 
       <div className={styles.content} style={{ ...contentCustomStyle }}>
         <h3>{title}</h3>

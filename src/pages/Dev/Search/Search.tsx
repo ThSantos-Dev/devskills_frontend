@@ -127,6 +127,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -144,6 +145,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -161,6 +163,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -178,6 +181,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -195,6 +199,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -212,6 +217,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -229,6 +235,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -246,6 +253,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -263,6 +271,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -280,6 +289,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -297,6 +307,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
           <CardSearchTest
             title="Prova de PHP"
@@ -314,6 +325,7 @@ const Search = (props: Props) => {
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
               "https://firebasestorage.googleapis.com/v0/b/dev-skills-frontend.appspot.com/o/icons%2Fjavascript.svg?alt=media&token=b8859af0-410a-49b8-8bd8-4d41585900e4",
             ]}
+            userView={true}
           />
         </SliderContainer>
       </div>

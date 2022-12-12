@@ -1,10 +1,10 @@
 // Hooks
 import { useAuth } from "./hooks/useAuth";
-
+ 
 // Components
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+ 
 // Pages
 import CompanyLogin from "./pages/Company/Login/Login";
 import CompanyRegister from "./pages/Company/Register/Register";
@@ -12,10 +12,11 @@ import DevLogin from "./pages/Dev/Login/Login";
 import DevRegister from "./pages/Dev/Register/Register";
 import RetrievePassword from "./pages/RetrievePassword/RetrievePassword";
 import CreateTest from "./pages/Test/Create/CreateTest";
-
+import Groups from "./pages/Dev/Group/Group"
+ 
 // Pages of company
 import ComapanyHome from "./pages/Company/Home/Home";
-
+ 
 // Notify
 import "react-toastify/dist/ReactToastify.min.css";
 import ApplicationOverview from "./pages/Company/ApplicationOverview/ApplicationOverview";
@@ -32,27 +33,28 @@ import Home from "./pages/Institutional/Home";
 import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import CompanyGroupDetails from './pages/Company/GroupDetails/GroupDetails';
+import DevProfile from './pages/Dev/Profile/Profile'
 import TestDetails from "./pages/Test/Details/Details";
 import RankingOfDevs from "./pages/Company/RankingOfDevs/RankingOfDevs";
 
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
   const { auth, loading, type } = useAuth();
-
+ 
   if (loading) {
     return <p>Carregando...</p>;
   }
-
+ 
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route path="/" element={<ComapanyHome />} /> */}
         <Route path="/" element={<Home />} />
-
+ 
         {/* Routes Shared */}
         <Route path="/:user/redefine" element={<RetrievePassword />} />
         <Route path="/:user/test/create" element={<CreateTest />} />
-
+ 
         {/* Routes of Dev */}
         <Route
           path="/dev/register"
@@ -65,13 +67,15 @@ const App = () => {
         <Route path="/dev/home" element={<DevHome />} />
         {/* <Route path="/dev/profile" element={<RealizeTest />} /> */}
         <Route path="/dev/search" element={<Search />} />
+        <Route path="/dev/groups/:id" element={<Groups />} />
         {/* <Route path="/dev/mytests" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/notifications" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/exam" element={<RealizeTest />} /> */}
         {/* <Route path="/dev/favorites" element={<RealizeTest />} /> */}
         <Route path="/dev/test/:id" element={<DetailsTest />} />
         <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
-
+        <Route path="/dev/profile/:id" element={<DevProfile/>}/>
+ 
         {/* Routes of Company */}
         <Route
           path="/company/register"
@@ -143,7 +147,7 @@ const App = () => {
             )
           }
         />
-
+ 
         <Route
           path="/company/mygroups"
           element={
@@ -154,7 +158,7 @@ const App = () => {
             )
           }
         />
-
+ 
         <Route
           path="/company/groups/create"
           element={
@@ -165,7 +169,7 @@ const App = () => {
             )
           }
         />
-
+ 
         <Route
           path="/company/groups/:id"
           element={
@@ -176,7 +180,7 @@ const App = () => {
             )
           }
         />
-
+ 
         <Route
           path="/company/test/applicate/:id"
           element={
@@ -185,12 +189,6 @@ const App = () => {
             ) : (
               <Navigate to="/company/login" />
             )
-          }
-        />
-        <Route
-          path="/company/test/details/:id"
-          element={
-            auth && type === "COMPANY" ? <TestDetails /> : <CompanyLogin />
           }
         />
         <Route
@@ -213,10 +211,11 @@ const App = () => {
           }
         />
       </Routes>
-
+ 
       <ToastContainer limit={3} />
     </BrowserRouter>
   );
 };
-
+ 
 export default App;
+ 
