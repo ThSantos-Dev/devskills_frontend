@@ -1,0 +1,217 @@
+.container {
+  max-width: 1440px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 20vh;
+}
+
+.filters_container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  margin-bottom: 80px;
+}
+
+.filters_container h2 {
+  width: 100%;
+
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+
+  margin-bottom: 10px;
+}
+
+.filters_container > div {
+  flex: calc(100% / 3 - clamp(20px, 5vw, 80px))  0 1 !important;
+}
+
+/* Table */
+.table_container.close {
+  height: 0;
+  overflow: hidden;
+}
+
+.table_container table {
+  min-width: 100%;
+  border-collapse: collapse;
+
+  transition: all 0.3s ease !important;
+  cursor: pointer;
+}
+
+.table_container table .profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+  padding: 18px 20px;
+
+}
+
+.table_container table thead tr {
+  height: 60px;
+  transition: all 0.3s ease;
+
+  background-color: var(--dark-blue);
+}
+
+.table_container table thead th {
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
+}
+
+.table_container table thead th:nth-last-child(1),
+.table_container table tbody td:nth-last-child(1) {
+  padding-right: 20px;
+}
+
+.table_container table thead th:nth-child(1),
+.table_container table tbody td:nth-child(1) {
+  padding-left: 20px;
+}
+
+.table_container table tbody tr:hover {
+  background-color: var(--dark-grey) !important;
+}
+
+.table_container table tbody td {
+  text-align: center;
+  font-size: clamp(0.6rem, 5vw, 1.2rem);
+}
+
+
+.table_container table .profile img {
+  width: clamp(1rem, 5vw, 3rem);
+  height: clamp(1rem, 5vw, 3rem);
+
+  object-fit: cover;
+
+  border-radius: 100%;
+
+  cursor: pointer;
+}
+
+.table_container table .actions div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.table_container table .actions .icon svg {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.table_container table .actions .icon:hover svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.table_container table .actions span {
+  display: flex;
+  align-items: center;
+}
+
+.table_container table tbody tr:nth-child(even) {
+  background-color: var(--dark-light-blue);
+}
+
+.table_container table td.profile .name {
+  display: none;
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+  .table_container table thead {
+    display: none;
+  }
+
+  .table_container table tr {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 40px 0;
+
+    border-radius: 18px;
+    border: 1px solid var(--color-white-text);
+
+    transform: scale(0.9);
+  }
+
+  .table_container table td {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    text-align: right !important;
+
+    padding: 10px 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted var(--color-white-text);
+  }
+
+  .table_container table td.profile {
+    position: relative;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .table_container table td.position {
+    display: none !important;
+  }
+
+  .table_container table td.name {
+    display: none;
+  }
+
+  .table_container table td.profile .name {
+    display: block;
+  }
+
+  .table_container table td.profile img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .table_container table td.position {
+    display: flex;
+    align-items: center;
+
+    padding: 10px 30px;
+
+    border-bottom: 1px solid var(--color-white-text);
+  }
+
+  .table_container table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  .table_container table td.profile::before {
+    position: absolute;
+    top: 20px;
+    right: 42%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+
+    border-radius: 100%;
+
+    background-color: blueviolet;
+  }
+
+  .table_container table td.actions {
+    display: none;
+  }
+}

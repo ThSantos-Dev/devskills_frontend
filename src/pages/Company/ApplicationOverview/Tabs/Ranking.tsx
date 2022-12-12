@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
@@ -8,15 +8,17 @@ import {
   MdOutlinePersonOff,
 } from "react-icons/md";
 import SelectCustom from "../../../../components/shared/Form/Select/SelectCustom";
+import { TCandidatesRanking } from "../../../../types/devskills/test/TCandidatesRanking";
 import ChooseType from "../../../Test/ChooseType/ChooseType";
 import Button from "./../../../../components/shared/Form/Button/Button";
 import styles from "./Ranking.module.css";
 
 interface Props {
   show: boolean;
+  data: TCandidatesRanking[];
 }
 
-const Ranking: React.FC<Props> = ({ show }) => {
+const Ranking: React.FC<Props> = ({ show, data }) => {
   const [filters, setFilters] = useState({
     score: {
       between: { minValue: 1, maxValue: 100 },
@@ -29,14 +31,68 @@ const Ranking: React.FC<Props> = ({ show }) => {
     status: "all",
   });
 
+  const [filteredCandidates, setFilteredsCandidates] = useState<
+    { data: TCandidatesRanking; selected: boolean }[]
+  >([...data.map((item) => ({ data: item, selected: true }))]);
+
+  const [listLocales, setListLocales] = useState([
+    ...new Set(
+      data.map((item) => {
+        return `${item.candidato.localidade.cidade}, ${item.candidato.localidade.estado}`;
+      })
+    ),
+  ]);
+
   const [showModalCondition, setShowModalCondition] = useState<boolean>(true);
   const [showModalAproved, setShowModalAproved] = useState<boolean>(false);
   const [showModalAprovedGroup, setShowModalAprovedGroup] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
+  const handleFilterCandidates = () => {
+    console.log(filteredCandidates);
+
+    let auxiliar = filteredCandidates.map((item) => {
+      let criteries = {
+        status: false,
+        score: false,
+        locale: false,
+      };
+      let finnalyStatus = false;
+
+      // Filtrando por status
+      if (filters.status === "corrected" && item.data.corrigida)
+        criteries.status = true;
+      else if (filters.status === "uncorrected" && !item.data.corrigida)
+        criteries.status = true;
+      else if (filters.status === "all") criteries.status = true;
+
+      // Filtrando por pontuação
+      if (
+        filters.score.selected === "between" &&
+        item.data.pontuacao >= filters.score.between.minValue &&
+        item.data.pontuacao <= filters.score.between.maxValue
+      ) {
+        criteries.score = true;
+      } else if (
+        filters.score.selected === "equals_to" &&
+        item.data.pontuacao === filters.score.equals_to
+      ) {
+        criteries.score = true;
+      } else if (
+        filters.score.selected === "bigger_then" &&
+        item.data.pontuacao === filters.score.bigger_then
+      ) {
+        criteries.score = true;
+      }
+
+      if (criteries.locale && criteries.score && criteries.status)
+        finnalyStatus = true;
+
+      return { data: item.data, selected: finnalyStatus };
+    });
+
+    setFilteredsCandidates(auxiliar);
+  };
 
   return (
     <section className={`${styles.container} ${show ? styles.active : ""}`}>
@@ -138,9 +194,10 @@ const Ranking: React.FC<Props> = ({ show }) => {
           <div className={styles.select_container}>
             <SelectCustom
               options={[
-                { label: "Entre", value: "between" },
-                { label: "Igual a", value: "equals_to" },
-                { label: "Maior que", value: "bigger_then" },
+                ...listLocales.map((item, index) => ({
+                  label: item,
+                  value: index.toString(),
+                })),
               ]}
               defaultValue={{ label: "Entre", value: "between" }}
               name="filter"
@@ -190,7 +247,12 @@ const Ranking: React.FC<Props> = ({ show }) => {
         </div>
 
         <div className={styles.button_container}>
-          <Button color="solid_white" size="small" text="Aplicar" />
+          <Button
+            color="solid_white"
+            size="small"
+            text="Aplicar"
+            handleOnClick={handleFilterCandidates}
+          />
         </div>
       </div>
 
@@ -211,37 +273,47 @@ const Ranking: React.FC<Props> = ({ show }) => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(
-              (candidate, index) => (
+            {filteredCandidates
+              .filter((item) => item.selected)
+              .map(({ data: item }, index) => (
                 <tr key={index}>
                   <td className={styles.position} data-label="Posição:">
-                    <span>1</span>
+                    <span>{index + 1}</span>
                   </td>
                   <td className={styles.profile} data-label="#1">
                     <img
-                      src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                      src={
+                        item.candidato.foto_perfil
+                          ? item.candidato.foto_perfil
+                          : "https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                      }
                       alt="profile"
                       title="Ver perfil"
                     />
-                    <span className={styles.name}>Thales Santos da Silva</span>
+                    <span className={styles.name}>{item.candidato.nome}</span>
                   </td>
                   <td
                     className={`${styles.text} ${styles.name}`}
                     data-label="Nome:"
                   >
-                    <span>Thales Santos da Silva</span>
+                    <span>{item.candidato.nome}</span>
                   </td>
                   <td className={styles.text} data-label="Duração:">
-                    <span>00:43:23</span>
+                    <span>{item.duracao}</span>
                   </td>
                   <td className={styles.text} data-label="Pontuação:">
-                    <span>80%</span>
+                    <span>{item.pontuacao}%</span>
                   </td>
                   <td className={styles.text} data-label="Localidade:">
-                    <span>Jandira, SP</span>
+                    <span>
+                      {item.candidato.localidade.estado},{" "}
+                      {item.candidato.localidade.cidade}
+                    </span>
                   </td>
                   <td className={styles.text} data-label="Status:">
-                    <span>Aguardando correção</span>
+                    <span>
+                      {item.corrigida ? "Corrigida" : "Aguardando correção"}
+                    </span>
                   </td>
                   <td className={styles.actions} data-label="Ação:">
                     <div>
@@ -251,8 +323,7 @@ const Ranking: React.FC<Props> = ({ show }) => {
                     </div>
                   </td>
                 </tr>
-              )
-            )}
+              ))}
           </tbody>
         </table>
       </div>

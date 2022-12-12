@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Container from "../../../components/shared/Layout/Container/Container";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
 import { getAllOfCompany } from "../../../slices/common/testSlice";
 import {
   TResult,
@@ -25,6 +28,13 @@ export type TUserContact = {
 };
 
 const CreateGroup = (props: Props) => {
+  const [inputs, setInputs] = useState<{ title: string; description: string }>({
+    title: "",
+    description: "",
+  });
+
+  const [isLoading, setIsLaoding] = useState(false);
+
   const [selectedTests, setSelectedTests] = useState<
     { data: TResult; selected: boolean }[]
   >([]);
@@ -36,10 +46,14 @@ const CreateGroup = (props: Props) => {
     }[]
   >([]);
 
+  const { user } = useSelector((state: any) => state.auth);
+
   const { tests, loading } = useSelector<
     any,
     { tests: TTestOfCompany; loading: boolean }
   >((state: any) => state.test);
+
+  const navigate = useNavigate();
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<any>();
@@ -82,9 +96,55 @@ const CreateGroup = (props: Props) => {
     setListOfDevs(newList);
   };
 
+  const handleOnSubmit = async () => {
+    const toastId = toast.loading("Processando...");
+
+    console.log(listOfDevs, selectedTests);
+
+    const formatedData = {
+      nome: inputs.title,
+      descricao: inputs.description,
+      candidatos: [
+        ...listOfDevs
+          .filter((item) => item.selected === true)
+          .map((item) => item.data.id),
+      ],
+      id_prova_andamento: [
+        ...selectedTests
+          .filter((item) => item.selected === true)
+          .map((item) => item.data.id),
+      ],
+    };
+
+    console.log("Formatado:", formatedData);
+
+    setIsLaoding(true);
+
+    CompanyService.createGroup(formatedData, user.token).then((res) => {
+      if (res.error)
+        return toast.update(toastId, {
+          render: res.error,
+          autoClose: 3000,
+          type: "error",
+          isLoading: false,
+        });
+
+      toast.update(toastId, {
+        render: res.message,
+        autoClose: 3000,
+        type: "success",
+        isLoading: false,
+      });
+
+      setIsLaoding(false);
+
+      navigate("/company/mygroups");
+    });
+  };
+
   useEffect(() => {
     dispatch(getAllOfCompany());
-    UserService.getAll().then((res) => {
+    UserService.getAll(user.token).then((res) => {
       if (!res?.data) return;
 
       setListOfDevs([
@@ -116,7 +176,13 @@ const CreateGroup = (props: Props) => {
               <header>
                 <h2>Nome do grupo</h2>
                 <div className={styles.content}>
-                  <Input name="title" />
+                  <Input
+                    name="title"
+                    value={inputs.title}
+                    handleOnChange={(value) =>
+                      setInputs({ ...inputs, title: value })
+                    }
+                  />
                 </div>
               </header>
               <div className={styles.group_config}>
@@ -130,6 +196,10 @@ const CreateGroup = (props: Props) => {
                       cols={30}
                       rows={10}
                       placeholder="Insira sua descrição..."
+                      value={inputs.description}
+                      onChange={(e) =>
+                        setInputs({ ...inputs, description: e.target.value })
+                      }
                     ></textarea>
                   </div>
                 </div>
@@ -146,15 +216,17 @@ const CreateGroup = (props: Props) => {
                       />
                       <datalist id="list">
                         {listOfDevs &&
-                          listOfDevs.filter((item) => item.selected === false).map((item) => (
-                            <option
-                              key={item.data.id}
-                              value={item.data.email}
-                              onClick={handleAddUserToGroup}
-                            >
-                              {item.data.nome}
-                            </option>
-                          ))}
+                          listOfDevs
+                            .filter((item) => item.selected === false)
+                            .map((item) => (
+                              <option
+                                key={item.data.id}
+                                value={item.data.email}
+                                onClick={handleAddUserToGroup}
+                              >
+                                {item.data.nome}
+                              </option>
+                            ))}
                       </datalist>
 
                       <div
@@ -171,7 +243,10 @@ const CreateGroup = (props: Props) => {
                           {listOfDevs
                             .filter((item) => item.selected === true)
                             .map((item) => (
-                              <div className={styles.info_container}>
+                              <div
+                                className={styles.info_container}
+                                key={item.data.id}
+                              >
                                 <div className={styles.image}>
                                   <img
                                     src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
@@ -235,7 +310,13 @@ const CreateGroup = (props: Props) => {
               </div>
 
               <div className={styles.button_container}>
-                <Button text="Criar" color="solid_gray" size="small" />
+                <Button
+                  text={isLoading ? "Processando..." : "Criar"}
+                  color="solid_gray"
+                  size="small"
+                  handleOnClick={handleOnSubmit}
+                  disabled={isLoading}
+                />
               </div>
             </div>
           </>

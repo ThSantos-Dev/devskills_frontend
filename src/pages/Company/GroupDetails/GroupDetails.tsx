@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdMoreHoriz } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import CardMyTest from "../../../components/company/Card/CardMyTest";
 import Container from "../../../components/shared/Layout/Container/Container";
+import CompanyService from "../../../services/apiDevSkills/company/companyService";
 import { getAllOfCompany } from "../../../slices/common/testSlice";
+import { TGetGrouDetails } from "../../../types/devskills/company/TGetGroupDetails";
 import {
   TResult,
   TTestOfCompany,
@@ -15,6 +18,8 @@ import {
 interface Props {}
 
 const GroupDetails = (props: Props) => {
+  const { id } = useParams();
+
   const [showListCandidates, setShowListCandidates] = useState<boolean>(false);
 
   const [selectedTests, setSelectedTests] = useState<
@@ -25,6 +30,9 @@ const GroupDetails = (props: Props) => {
     any,
     { tests: TTestOfCompany; loading: boolean }
   >((state: any) => state.test);
+  const { user } = useSelector((state: any) => state.auth);
+
+  const [groupData, setGroupData] = useState<TGetGrouDetails>();
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<any>();
@@ -47,7 +55,18 @@ const GroupDetails = (props: Props) => {
   };
 
   useEffect(() => {
+    if (!id) return;
+
     dispatch(getAllOfCompany());
+
+    CompanyService.getGroupDetails(id, user.token).then((res) => {
+      if (res.error) return;
+
+      const data: TGetGrouDetails = res.data;
+
+      console.log(data);
+      setGroupData(data);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -66,17 +85,12 @@ const GroupDetails = (props: Props) => {
         <section className={styles.content_container}>
           <div className={styles.content}>
             <h2>Nome do grupo</h2>
-            <span>Seleção de desenvolvedor front-end</span>
+            <span>{groupData?.groupInfo.nome}</span>
           </div>
 
           <div className={styles.content}>
             <h2>Descrição do grupo</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-              porro. Sunt illum id ipsum facilis modi doloribus nobis sequi cum
-              optio hic corrupti eaque blanditiis dolorem impedit, voluptas
-              praesentium assumenda!
-            </p>
+            <p>{groupData?.groupInfo.descricao}</p>
           </div>
         </section>
 
@@ -111,46 +125,61 @@ const GroupDetails = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3, 4].map((candidate, index) => (
-                  <tr key={index}>
-                    <td className={styles.position} data-label="Posição:">
-                      <span>1</span>
-                    </td>
-                    <td className={styles.profile} data-label="#1">
-                      <img
-                        src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
-                        alt="profile"
-                        title="Ver perfil"
-                      />
-                      <span className={styles.name}>
-                        Thales Santos da Silva
-                      </span>
-                    </td>
-                    <td
-                      className={`${styles.text} ${styles.name}`}
-                      data-label="Nome:"
-                    >
-                      <span>Thales Santos da Silva</span>
-                    </td>
-                    <td className={styles.text} data-label="E-mail">
-                      <span>thales@email.com</span>
-                    </td>
-
-                    <td className={styles.text} data-label="Localidade:">
-                      <span>Jandira, SP</span>
-                    </td>
-                    <td className={styles.text} data-label="Status:">
-                      <span>Pendente</span>
-                    </td>
-                    <td className={styles.actions} data-label="Ação:">
-                      <div>
-                        <span className={styles.icon}>
-                          <MdMoreHoriz title="Mais ações" />
+                {groupData?.usersOfGroup &&
+                  groupData?.usersOfGroup.map((candidate, index) => (
+                    <tr key={index}>
+                      <td className={styles.position} data-label="Posição:">
+                        <span>1</span>
+                      </td>
+                      <td className={styles.profile} data-label="#1">
+                        <img
+                          src={
+                            candidate.usuario.foto_perfil
+                              ? candidate.usuario.foto_perfil
+                              : "https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                          }
+                          alt="profile"
+                          title="Ver perfil"
+                        />
+                        <span className={styles.name}>
+                          {candidate.usuario.nome}
                         </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td
+                        className={`${styles.text} ${styles.name}`}
+                        data-label="Nome:"
+                      >
+                        <span>{candidate.usuario.nome}</span>
+                      </td>
+                      <td className={styles.text} data-label="E-mail">
+                        <span>{candidate.usuario.email}</span>
+                      </td>
+
+                      <td className={styles.text} data-label="Localidade:">
+                        {candidate.usuario.EnderecoUsuario[0]?.cidade.nome ? (
+                          <span>
+                            {candidate.usuario.EnderecoUsuario[0]?.cidade.nome},{" "}
+                            {
+                              candidate.usuario.EnderecoUsuario[0]?.cidade
+                                .estado.nome
+                            }
+                          </span>
+                        ) : (
+                          <span>Não informada</span>
+                        )}
+                      </td>
+                      <td className={styles.text} data-label="Status:">
+                        <span>Pendente</span>
+                      </td>
+                      <td className={styles.actions} data-label="Ação:">
+                        <div>
+                          <span className={styles.icon}>
+                            <MdMoreHoriz title="Mais ações" />
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -170,21 +199,22 @@ const GroupDetails = (props: Props) => {
                 <p>Nenhuma prova relacionada.</p>
               )} */}
 
-            {selectedTests ? (
-              selectedTests
-                .filter((test) => test.data.id < 4)
-                .map((test) => (
-                  <CardMyTest test={test.data} key={test.data.id} />
-                ))
+            {groupData?.testsOfGroup ? (
+              groupData?.testsOfGroup.map((test) => (
+                <CardMyTest
+                  test={test.provaAndamento}
+                  key={test.provaAndamento.id}
+                />
+              ))
             ) : (
               <p>Nenhuma prova relacionada.</p>
             )}
           </div>
         </section>
-
+        {/* 
         <div className={styles.button_submit_container}>
           <button>Salvar alterações</button>
-        </div>
+        </div> */}
       </div>
     </Container>
   );

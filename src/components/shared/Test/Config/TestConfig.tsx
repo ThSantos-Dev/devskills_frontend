@@ -40,7 +40,7 @@ export type TSkillsData = {
   skills: number[];
 };
 
-type TSelected = {
+export type TSelected = {
   label: string;
   value: string;
 };
