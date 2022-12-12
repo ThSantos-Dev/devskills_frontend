@@ -51,4 +51,25 @@ export default class UserService {
         }
     }
 
+    static async getTestDetails(token: string, id: number) {
+        try {
+            console.log(token)
+
+            console.log(BASE_URL + `/test/details/${id}`)
+            
+            const config = requestConfig("GET", undefined, token);
+            
+            const res = await fetch(BASE_URL + `/test/${id}/details`, config).then(
+                (data) => data.json()
+            );
+
+            console.log(res)
+
+            return res;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 }

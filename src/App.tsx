@@ -33,7 +33,7 @@ import Home from "./pages/Institutional/Home";
 import TemplateDetails from "./pages/Test/TemplateDetails/TemplateDetails";
 import Templates from "./pages/Test/Templates/Templates";
 import CompanyGroupDetails from './pages/Company/GroupDetails/GroupDetails';
-// import DevProfile from './pages/Dev/Profile/Profile'
+import DevProfile from './pages/Dev/Profile/Profile'
  
 const App = () => {
   // Utilizando o hook para validar se o usuário está autenticado
@@ -72,7 +72,7 @@ const App = () => {
         {/* <Route path="/dev/favorites" element={<RealizeTest />} /> */}
         <Route path="/dev/test/:id" element={<DetailsTest />} />
         <Route path="/dev/test/realize/:id" element={<RealizeTest />} />
-        {/* <Route path="/dev/profile" element={<DevProfile/>}/> */}
+        <Route path="/dev/profile/:id" element={<DevProfile/>}/>
  
         {/* Routes of Company */}
         <Route

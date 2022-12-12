@@ -12,9 +12,24 @@ const CardTest = () => {
             <div className={styles.cardTestBody}>
                 <h1>Prova de banco de dados</h1>
                 <p>Prova de banco de dados</p>
-                <div className={styles.cardTestStackContainer}></div>
+                <div className={styles.cardTestStackContainer}>
+                    <div className={styles.cardStack}>
+                        <p>Front-end</p>
+                    </div>
+                    <div className={styles.cardStack}>
+                        <p>Back-end</p>
+                    </div>
+                </div>
+                <div className={styles.cardTestSkillContainer}>
+                    <div className={styles.cardSkill}>
+                        <p>JavaScript</p>
+                    </div>
+                    <div className={styles.cardSkill}>
+                        <p>ReactJS</p>
+                    </div>
+                </div>
             </div>
-        </div>
+            </div>
     )
 }
 

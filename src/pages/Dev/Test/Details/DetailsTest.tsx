@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { reset, startTest } from "./../../../../slices/common/testSlice";
 import { toast } from "react-toastify";
 import { BsFillPersonFill } from "react-icons/bs";
+import UserService from "../../../../services/apiDevSkills/dev/userService";
+import { TTestInfo, TCompanyInfo, TSkill, TStack, TTestSkill, TTestStack } from "../../../../types/devskills/test/TTestDetails";
 
 interface Props {}
 
@@ -19,6 +21,8 @@ const DetailsTest = (props: Props) => {
     (state: any) => state.test
   );
   const dispatch = useDispatch<any>();
+  const { user } = useSelector((state: any) => state.auth);
+  const [testData, setTestData] = useState<TTestInfo>();
   const navigate = useNavigate();
 
   const handleStartTest = () => {
@@ -42,6 +46,7 @@ const DetailsTest = (props: Props) => {
         () => navigate(`/dev/test/realize/${id}?idUserTest=${success.data.id}`),
         4000
       );
+
     }
 
     if (error) {
@@ -56,16 +61,39 @@ const DetailsTest = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error, loading]);
 
+  useEffect(()=>{
+    if(!id) return;
+    searchTestData();
+  }, [])
+
+  const searchTestData = () => {
+
+    if(!id) return;
+
+    UserService.getTestDetails(user.token, parseInt(id)).then((res) =>{
+      
+      console.log(res)
+      if(res.error) return toast.error(res.error)
+
+      console.log(res.data)
+
+      setTestData(res.data)
+    
+    })
+
+  }
+
   return (
     <Container filter={false} backTo="/dev/home" title="Detalhes da Prova">
-      <div className={styles.container}>
+      {testData ? (
+        <div className={styles.container}>
         <div className={styles.infosContainer}>
-        <h2>Título da prova</h2>
+        <h2>{testData?.titulo}</h2>
         <div className={styles.companyProfile}>
           <div>
-            <img src="" alt="" />
+            <img src={testData.empresa.logo} alt={testData.empresa.nome}/>
           </div>
-          <span>Nome da empresa</span>
+          <span>{testData.empresa.nome}</span>
           <button>Ver perfil</button>
         </div>
 
@@ -74,7 +102,7 @@ const DetailsTest = (props: Props) => {
           <span>500 candidatos</span>
         </div>
 
-        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets.</span>
+        <span>{testData.descricao}</span>
         
         </div>
 
@@ -124,6 +152,9 @@ const DetailsTest = (props: Props) => {
           handleOnClick={handleStartTest}
         />
       </div>
+      ) : (
+          <p>Carregando...</p>
+        )}
     </Container>
   );
 };

@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import HeaderIlustration from "../../../assets/img/dev-home-illustration.svg";
 import Container from '../../../components/shared/Layout/Container/Container'
+import { useNavigate } from "react-router-dom";
 import UserService from '../../../services/apiDevSkills/dev/userService';
 import CardTest from './CardTest';
 import styles from './Home.module.css'
+import actionIcon from '../../../assets/img/actionIcon.svg'
 
 type Props = {}
 
@@ -36,6 +38,8 @@ const Home = (props: Props) => {
     getRecommendedTests()
   }, [])
 
+  const navigate = useNavigate();
+
   return (
     <Container>
       <header className={styles.containerHeader}>
@@ -52,7 +56,7 @@ const Home = (props: Props) => {
       <div className={styles.testsContainer}>
         <div className={styles.testsContainerHeader}>
           <h1>Provas ideais para você</h1>
-          <p>ver mais...</p>
+          {/* <p>ver mais...</p> */}
 
         </div>
         <div className={styles.cardContainer}>
@@ -61,18 +65,31 @@ const Home = (props: Props) => {
           <CardTest />
           <CardTest />
           <CardTest />
-
-
         </div>
       </div>
       <div className={styles.actionsContainer}>
-        <div>
+        <div className={styles.actionsContainerText}>
           <h3>Acessos rápidos</h3>
-          <p>Conheça nossos atalhos para melhoras sua experiência.</p>
+          <p>Conheça nossos atalhos feitos para melhorarem sua experiência.</p>
         </div>
-        <div className={styles.action}>
-          <div></div>
-          <p></p>
+        <div className={styles.line}></div>
+        <div className={styles.action} onClick={()=> navigate(`dev/groups/${user.id}`)}>
+          <div>
+            <img src={actionIcon} alt="Ícone de atalho" />
+          </div>
+          <p>Convites de grupos</p>
+        </div>
+        <div className={styles.action} onClick={()=> navigate(`dev/search`)}>
+        <div>
+            <img src={actionIcon} alt="Ícone de atalho" />
+          </div>
+          <p>Buscar novas provas</p>
+        </div>
+        <div className={styles.action} onClick={()=> navigate(`dev/profile/${user.id}`)}>
+        <div>
+            <img src={actionIcon} alt="Ícone de atalho" />
+          </div>
+          <p>Acessar suas provas</p>
         </div>
       </div>
     </Container>
