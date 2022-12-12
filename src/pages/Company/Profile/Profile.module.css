@@ -22,7 +22,7 @@
   padding-top: 40px;
 }
 
-.media .image {
+.media .image, .media .image > svg {
   width: clamp(130px, 5vw, 180px);
   height: clamp(130px, 5vw, 180px);
 

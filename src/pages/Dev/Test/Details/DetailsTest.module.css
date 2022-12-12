@@ -60,7 +60,8 @@
 }
 
 .image_container {
-  width: clamp(80px, 5vw, 180px);
+  width: clamp(80px, 8vw, 280px);
+  height: clamp(80px, 8vw, 280px);
 
   display: flex;
   justify-content: center;

@@ -128,8 +128,8 @@ export default class TestService {
     const config = requestConfig("GET", undefined, token);
 
     try {
-      const res = await fetch(BASE_URL + "/developer/test/" + id, config).then(
-        (data) => data.json()
+      const res = await fetch(BASE_URL + "/test/" + id, config).then((data) =>
+        data.json()
       );
 
       return res;

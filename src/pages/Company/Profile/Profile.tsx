@@ -12,6 +12,7 @@ import styles from "./Profile.module.css";
 import Feedbacks from "./Tabs/Feedbacks";
 import ListTests from "./Tabs/ListTests";
 import Photos from "./Tabs/Photos";
+import { MdOutlineImageNotSupported } from "react-icons/md";
 
 interface Props {}
 
@@ -82,7 +83,11 @@ const Profile = (props: Props) => {
           <header>
             <div className={styles.media}>
               <div className={styles.image}>
-                <img src={companyData.logo} alt={companyData.nome_fantasia} />
+                {companyData.logo ? (
+                  <img src={companyData.logo} alt={companyData.nome_fantasia} />
+                ) : (
+                  <MdOutlineImageNotSupported />
+                )}
               </div>
               <div className={styles.icons}>
                 <span className={styles.icon}>

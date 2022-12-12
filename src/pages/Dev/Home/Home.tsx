@@ -20,6 +20,8 @@ const Home = (props: Props) => {
   const [recommendedTest, setRecommendedTest] =
     useState<TGetTestRecommeded[]>();
 
+  const navigate = useNavigate();
+
   const getUser = () => {
     if (!user.id) return;
 
@@ -28,6 +30,7 @@ const Home = (props: Props) => {
       setUserName(res.data.nome);
     });
   };
+
   const getRecommendedTests = () => {
     if (!user.token) return;
 
@@ -42,8 +45,6 @@ const Home = (props: Props) => {
     getUser();
     getRecommendedTests();
   }, []);
-
-  const navigate = useNavigate();
 
   return (
     <Container>
@@ -66,14 +67,17 @@ const Home = (props: Props) => {
         </div>
         <div className={styles.cardContainer}>
           {recommendedTest &&
-            recommendedTest.map(({ prova, empresa }, index) => (
+            recommendedTest.map(({id, prova, empresa }, index) => (
               <CardTest
                 key={index}
                 title={prova.titulo}
                 description={prova.descricao}
                 logo_url={empresa.logo || null}
-                skills={prova.provaHabilidade.map((skill) => skill.habilidade.nome)}
+                skills={prova.provaHabilidade.map(
+                  (skill) => skill.habilidade.nome
+                )}
                 stacks={prova.provaStack.map((stack) => stack.stack.nome)}
+                handleOnClick={() => navigate(`/dev/test/${id}`)}
               />
             ))}
         </div>

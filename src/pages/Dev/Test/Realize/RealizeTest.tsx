@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,9 +13,9 @@ import Alternative from "../../../../components/developer/Test/Realize/Alternati
 import Button from "./../../../../components/shared/Form/Button/Button";
 import Input from "./../../../../components/shared/Form/Input/Input";
 
+import { toast } from "react-toastify";
 import { useQuery } from "../../../../hooks/useQuery";
 import styles from "./RealizeTest.module.css";
-import { toast } from "react-toastify";
 
 interface Props {}
 
@@ -49,12 +49,12 @@ const RealizeTest: React.FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    if(error && !sendTest) return navigate("/dev/home")
+    if (error && !sendTest) return navigate("/dev/home");
 
-    if (!test?.prova.provasTodasQuestoes) return;
+    if (!test?.prova?.provasTodasQuestoes) return;
 
     setResponseData(
-      test!.prova.provasTodasQuestoes.map((question: any) => {
+      test!.prova.provasTodasQuestoes.map((question) => {
         if (question.questaoProva.questaoProvaTipo.tipo !== "DISSERTATIVA") {
           return {
             id_questao: question.idQuestaoProva,
@@ -62,14 +62,12 @@ const RealizeTest: React.FC<Props> = () => {
             id_alternativa:
               question.questaoProva.questaoProvaTipo.tipo === "UNICA_ESCOLHA"
                 ? 0
-                : question.questaoProva.alternativaProva.map(
-                    (alternative: any) => {
-                      return {
-                        id_alternativa: alternative.id,
-                        selected: false,
-                      };
-                    }
-                  ),
+                : question.questaoProva.alternativaProva.map((alternative) => {
+                    return {
+                      id_alternativa: alternative.id,
+                      selected: false,
+                    };
+                  }),
           };
         } else {
           return {
@@ -93,8 +91,7 @@ const RealizeTest: React.FC<Props> = () => {
       ).toISOString()
     );
 
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [test, error]);
 
   useEffect(() => {
