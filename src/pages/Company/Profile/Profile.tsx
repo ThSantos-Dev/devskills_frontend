@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiFillLinkedin, AiOutlineGlobal } from "react-icons/ai";
 import { BsGithub, BsInstagram } from "react-icons/bs";
+import { MdOutlineImageNotSupported } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,7 +13,6 @@ import styles from "./Profile.module.css";
 import Feedbacks from "./Tabs/Feedbacks";
 import ListTests from "./Tabs/ListTests";
 import Photos from "./Tabs/Photos";
-import { MdOutlineImageNotSupported } from "react-icons/md";
 
 interface Props {}
 
@@ -24,9 +24,9 @@ const Profile = (props: Props) => {
   const navigate = useNavigate();
 
   const [showTab, setShowTab] = useState({
-    tests: false,
+    tests: true,
     feedbacks: false,
-    photos: true,
+    photos: false,
   });
 
   const handleShowTab = (tab: "tests" | "feedbacks" | "photos") => {

@@ -63,8 +63,8 @@ export default class CompanyService {
     const config = requestConfig("POST", data, token);
 
     try {
-      const res = await fetch(BASE_URL + "/group/createGroup", config).then(
-        (data) => data.json()
+      const res = await fetch(BASE_URL + "/group/create", config).then((data) =>
+        data.json()
       );
 
       return res;

@@ -75,14 +75,16 @@ const ApplicationDetails = (props: Props) => {
   const handleApplyTest = () => {
     if (!handleValidate()) return;
 
+    console.log("########## AAAAAAAAA ", testConfig.duracao);
+
     const data = {
       id_prova: test.id,
       data_inicio: testConfig.data_inicio,
       data_fim: testConfig.data_fim,
-      duracao: testConfig.duracao ? +testConfig.duracao + ":00" : null,
+      duracao: "01:20:00" ,
     };
 
-    dispatch(applyTemplate(data));
+    // dispatch(applyTemplate(data));
   };
 
   useEffect(() => {

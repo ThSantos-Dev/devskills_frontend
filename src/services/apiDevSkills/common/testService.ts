@@ -113,7 +113,7 @@ export default class TestService {
     const config = requestConfig("POST", data, token);
 
     try {
-      const res = await fetch(BASE_URL + "/test/template", config).then(
+      const res = await fetch(BASE_URL + "/test/template/admin", config).then(
         (data) => data.json()
       );
 

@@ -25,7 +25,7 @@ interface Props {
 const Photos: React.FC<Props> = ({ photos, handleUpdateData }) => {
   const { user } = useSelector((state: any) => state.auth);
 
-  const [showAddPhotoModal, setShowAddPhotoModal] = useState<boolean>(true);
+  const [showAddPhotoModal, setShowAddPhotoModal] = useState<boolean>(false);
   const [photoSelected, setPhotoSelected] = useState<File>();
   const [legend, setLegend] = useState<String>("");
   const [loadingPhoto, setLoadingPhoto] = useState<boolean>(false);

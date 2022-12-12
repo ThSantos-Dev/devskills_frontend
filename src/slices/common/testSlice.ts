@@ -127,8 +127,6 @@ export const applyTemplate = createAsyncThunk(
   async (config: any, thunkAPI) => {
     const { auth }: any = thunkAPI.getState();
 
-    console.log(auth);
-
     const data = {
       id_empresa: auth.user.id,
       ...config,

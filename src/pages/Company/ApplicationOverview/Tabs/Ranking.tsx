@@ -43,7 +43,7 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
     ),
   ]);
 
-  const [showModalCondition, setShowModalCondition] = useState<boolean>(true);
+  const [showModalCondition, setShowModalCondition] = useState<boolean>(false);
   const [showModalAproved, setShowModalAproved] = useState<boolean>(false);
   const [showModalAprovedGroup, setShowModalAprovedGroup] =
     useState<boolean>(false);
@@ -109,7 +109,6 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
                 { label: "Igual a", value: "equals_to" },
                 { label: "Maior que", value: "bigger_then" },
               ]}
-              defaultValue={{ label: "Entre", value: "between" }}
               name="filter"
               placeholder="Nenhum"
               handleOnChange={(value) => {
@@ -306,8 +305,9 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
                   </td>
                   <td className={styles.text} data-label="Localidade:">
                     <span>
-                      {item.candidato.localidade.estado},{" "}
-                      {item.candidato.localidade.cidade}
+                      {item.candidato.localidade.cidade ?
+                        `${item.candidato.localidade.estado},
+                      ${item.candidato.localidade.cidade}` : 'Não informada.'}
                     </span>
                   </td>
                   <td className={styles.text} data-label="Status:">

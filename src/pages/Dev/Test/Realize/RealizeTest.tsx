@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
-
+import Countdown from "react-countdown-simple";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
+import { useQuery } from "../../../../hooks/useQuery";
 import {
   finishTest,
   getToRealizeById,
 } from "../../../../slices/common/testSlice";
-
-import Countdown from "react-countdown-simple";
-import Alternative from "../../../../components/developer/Test/Realize/Alternative/Alternative";
+import { TTestRealize } from "../../../../types/devskills/test/TTestRealize";
 import Button from "./../../../../components/shared/Form/Button/Button";
 import Input from "./../../../../components/shared/Form/Input/Input";
-
-import { toast } from "react-toastify";
-import { useQuery } from "../../../../hooks/useQuery";
 import styles from "./RealizeTest.module.css";
 
 interface Props {}
@@ -107,7 +104,7 @@ const RealizeTest: React.FC<Props> = () => {
         autoClose: 3000,
       });
 
-      navigate("/dev/mytests");
+      navigate("/dev/home");
     }
 
     if (error) {
@@ -118,7 +115,7 @@ const RealizeTest: React.FC<Props> = () => {
         autoClose: 3000,
       });
 
-      navigate("/dev/mytests");
+      navigate("/dev/home");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
