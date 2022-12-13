@@ -31,7 +31,11 @@ const Sidebar = (props: Props) => {
       icon: <BsBellFill />,
     },
     { text: "Testes", navigateTo: "/dev/exam", icon: <MdClass /> },
-    { text: "Grupos", navigateTo: `/dev/groups/${user.id}`, icon: <HiOutlineUserGroup /> },
+    {
+      text: "Grupos",
+      navigateTo: `/dev/groups/${user.id}`,
+      icon: <HiOutlineUserGroup />,
+    },
     { text: "Salvos", navigateTo: "/dev/groups", icon: <MdFavoriteBorder /> },
   ];
 
@@ -92,11 +96,21 @@ const Sidebar = (props: Props) => {
         <header className={styles.header}>
           <div
             className={styles.image_text}
-            onClick={() => navigate(`/${type.toLowerCase()}/profile/${user.id}`)}
+            onClick={() =>
+              navigate(`/${type.toLowerCase()}/profile/${user.id}`)
+            }
           >
             <span className={styles.image}>
               <img
-                src="https://criticalhits.com.br/wp-content/uploads/2019/01/naruto-uzumaki_qabz.png"
+                src={
+                  type === "DEVELOPER"
+                    ? user.profile_image
+                      ? user.profile_image
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                    : user.logo
+                    ? user.logo
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                }
                 alt=""
               />
             </span>

@@ -18,6 +18,7 @@ export type TLoginResponse = {
     nome: string;
     idEmpresa: number;
     type: "COMPANY";
+    logo: string;
   };
   token?: string;
 

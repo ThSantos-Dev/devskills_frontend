@@ -58,7 +58,7 @@ export const login = createAsyncThunk(
       localStorage.setItem("user", JSON.stringify(user));
 
       // Retornando o usuário cadastrado
-      return thunkAPI.fulfillWithValue(user);
+      return thunkAPI.fulfillWithValue({...user, profile_image: res.userInfo?.fotoPerfil});
     } else if (type === "COMPANY") {
       //  Chamando o service responsável por realizar o login da Empresa
       const res = await companyAuthService.login(data.user);
@@ -79,7 +79,7 @@ export const login = createAsyncThunk(
       localStorage.setItem("user", JSON.stringify(company));
 
       // Retornando o usuário cadastrado
-      return company;
+      return {...company, logo: res.data?.logo};
     } else if (type === "ADMIN") {
       //  Chamando o service responsável por realizar o login do Administrador
       const res = await adminAuthService.login(data.user);
