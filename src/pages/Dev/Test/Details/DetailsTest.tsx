@@ -99,7 +99,9 @@ const DetailsTest = (props: Props) => {
                 )}
               </div>
               <span>{testData.empresa.nome}</span>
-              <button>Ver perfil</button>
+              <button onClick={() => navigate("/company/profile/1")}>
+                Ver perfil
+              </button>
             </div>
 
             <div className={styles.candidatesContainer}>

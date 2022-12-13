@@ -75,11 +75,13 @@ const TemplateDetails = (props: Props) => {
   const handleApplyTest = () => {
     if (!handleValidate()) return;
 
+    console.log("########## AAAAAAAAA ", testConfig.duracao);
+
     const data = {
-      id_prova: test.id,
+      id_prova: parseInt(id!),
       data_inicio: testConfig.data_inicio,
       data_fim: testConfig.data_fim,
-      duracao: testConfig.duracao ? +testConfig.duracao + ":00" : null,
+      duracao: testConfig.duracao ? testConfig.duracao + ":00" : null,
     };
 
     dispatch(applyTemplate(data));
@@ -184,7 +186,11 @@ const TemplateDetails = (props: Props) => {
                 ) : (
                   <p>
                     Repositório no GitHub{" "}
-                    <a href={test.provas.link_repositorio} target={"_blank"} rel="noreferrer">
+                    <a
+                      href={test.provas.link_repositorio}
+                      target={"_blank"}
+                      rel="noreferrer"
+                    >
                       {test.provas.link_repositorio}
                     </a>
                   </p>

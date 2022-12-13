@@ -186,7 +186,7 @@ const App = () => {
         <Route
           path="/company/profile/:id"
           element={
-            auth && type === "COMPANY" ? (
+            auth && type === "COMPANY" || type === "DEVELOPER" ? (
               <CompanyProfile />
             ) : (
               <Navigate to="/company/login" />

@@ -9,10 +9,7 @@ import TestConfig, {
   TTestConfigData,
 } from "../../../components/shared/Test/Config/TestConfig";
 import Preview from "../../../components/shared/Test/Preview/Preview";
-import {
-  applyTemplate,
-  getTemplateById,
-} from "../../../slices/common/testSlice";
+import { getTemplateById } from "../../../slices/common/testSlice";
 import { TTestTemplateDetails } from "../../../types/devskills/test/TTestTemplateDetails";
 import styles from "./ApplicationDetails.module.css";
 
@@ -75,13 +72,12 @@ const ApplicationDetails = (props: Props) => {
   const handleApplyTest = () => {
     if (!handleValidate()) return;
 
-    console.log("########## AAAAAAAAA ", testConfig.duracao);
 
     const data = {
       id_prova: test.id,
       data_inicio: testConfig.data_inicio,
       data_fim: testConfig.data_fim,
-      duracao: "01:20:00" ,
+      duracao: testConfig.duracao ? testConfig.duracao + ":00" : null,
     };
 
     // dispatch(applyTemplate(data));

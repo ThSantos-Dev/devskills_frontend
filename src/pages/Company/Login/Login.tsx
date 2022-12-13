@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Reducer
-import { login } from "../../../slices/authSlice";
+import { login, reset } from "../../../slices/authSlice";
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
@@ -53,6 +53,10 @@ const Login = () => {
       })
     );
   };
+
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
   // Responsável por verifica se deu certo
   useEffect(() => {
