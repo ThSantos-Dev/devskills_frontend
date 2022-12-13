@@ -108,12 +108,14 @@ const Photos: React.FC<Props> = ({ photos, handleUpdateData }) => {
     <section className={styles.container}>
       <header>
         <h2>Galeria de fotos</h2>
-        <div
-          className={styles.button_container}
-          onClick={() => setShowAddPhotoModal(true)}
-        >
-          <Button color="solid_white" size="small" text="Adicionar" />
-        </div>
+        {user.type === "COMPANY" && (
+          <div
+            className={styles.button_container}
+            onClick={() => setShowAddPhotoModal(true)}
+          >
+            <Button color="solid_white" size="small" text="Adicionar" />
+          </div>
+        )}
       </header>
 
       <div className={styles.photos_container}>
@@ -121,15 +123,17 @@ const Photos: React.FC<Props> = ({ photos, handleUpdateData }) => {
           <div className={styles.image_container}>
             <img src={item.foto} alt={item.legenda} />
 
-            <div
-              className={styles.remove_photo}
-              onClick={() => handleRemovePhoto(item.foto, item.id)}
-            >
-              <span>Remover</span>
-              <span className={styles.icon}>
-                <BsTrashFill />
-              </span>
-            </div>
+            {user.type === "COMPANY" && (
+              <div
+                className={styles.remove_photo}
+                onClick={() => handleRemovePhoto(item.foto, item.id)}
+              >
+                <span>Remover</span>
+                <span className={styles.icon}>
+                  <BsTrashFill />
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

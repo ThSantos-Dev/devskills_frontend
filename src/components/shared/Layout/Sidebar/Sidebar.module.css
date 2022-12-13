@@ -111,6 +111,7 @@ body.dark {
 .sidebar .header .image_text {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .sidebar .header .logo_text {
   display: flex;

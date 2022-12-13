@@ -77,7 +77,7 @@ const Profile = (props: Props) => {
   }, []);
 
   return (
-    <Container title="Perfil" backTo={`/${user.type}/home`}>
+    <Container title="Perfil" backTo={`/${user.type === "COMPANY" ? "company" : "dev"}/home`}>
       {companyData ? (
         <div className={styles.container}>
           <header>

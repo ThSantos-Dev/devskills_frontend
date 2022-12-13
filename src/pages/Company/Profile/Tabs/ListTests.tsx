@@ -1,17 +1,15 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOfCompany } from "../../../../slices/common/testSlice";
+import { useNavigate } from "react-router-dom";
 import { TProvaAndamento } from "../../../../types/devskills/company/TCompanyInfo";
-import { TTestOfCompany } from "../../../../types/devskills/test/TTestOfCompany";
 import CardSearchTest from "./../../../../components/developer/Card/SearchTest/CardSearchTest";
 import styles from "./ListTests.module.css";
 
 interface Props {
-  tests: TProvaAndamento[],
+  tests: TProvaAndamento[];
   logo: string;
 }
 
-const ListTests: React.FC<Props> = ({tests, logo}) => {
+const ListTests: React.FC<Props> = ({ tests, logo }) => {
+  const navigate = useNavigate();
   return (
     <section className={styles.container}>
       <h2>Provas cadastradas</h2>
@@ -25,8 +23,10 @@ const ListTests: React.FC<Props> = ({tests, logo}) => {
                 description={test.prova.descricao}
                 img_url={logo}
                 stack={test.prova.provaHabilidade[0].habilidade.nome}
-                type={'Teórica'}
-                icons={test.prova.provaHabilidade.map((item) => item.habilidade.icone)}
+                type={"Teórica"}
+                icons={test.prova.provaHabilidade.map(
+                  (item) => item.habilidade.icone
+                )}
                 key={test.prova.id}
                 containerCustomStyle={{
                   borderRadius: "12px",
@@ -36,6 +36,7 @@ const ListTests: React.FC<Props> = ({tests, logo}) => {
                   backgroundColor: "var(--dark-container)",
                 }}
                 userView={false}
+                handleOnCLick={() => navigate(`/dev/test/${test.prova.id}`)}
               />
             ))}
           </>

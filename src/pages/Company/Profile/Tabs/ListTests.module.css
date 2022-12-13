@@ -14,6 +14,7 @@
 .container .cards_container > div {
   flex: calc(100% / 2 - 40px) 0 0;
   max-width: none;
+  cursor: pointer;
 }
 
 /* Media Queries */
