@@ -201,6 +201,10 @@
   height: 100%;
   border-radius: 15px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: #fff;
 }
 
@@ -209,6 +213,9 @@
   height: 100%;
   object-fit: cover;
   border-radius: 15px;
+}
+.cardTestLogo svg {
+  font-size: clamp(4rem, 10vw, 10rem);
 }
 
 .cardTestBody {

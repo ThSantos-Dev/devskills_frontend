@@ -96,7 +96,7 @@ const MyTests = (props: Props) => {
       styleTitleContainer={{ maxWidth: "1400px" }}
     >
       <div className={styles.cards_container}>
-        {tests?.results?.length > 0 &&
+        {tests?.results?.length > 0 ? (
           tests.results.map((test, index) => (
             <div
               className={styles.card}
@@ -114,7 +114,10 @@ const MyTests = (props: Props) => {
                 </span>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <h2>Você não tem provas cadastradas na plataforma.</h2>
+        )}
       </div>
 
       {/* <PagenationBar

@@ -7,11 +7,14 @@ import HeaderIlustration from "../../../assets/img/company-home-ilsutration.svg"
 import { IoAddCircleSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import Container from "../../../components/shared/Layout/Container/Container";
+import { useNavigate } from 'react-router-dom';
 
 interface Props {}
 
 const Home = (props: Props) => {
   const { user } = useSelector((state: any) => state.auth);
+
+  const navigate = useNavigate()
 
   return (
     <Container>
@@ -33,26 +36,35 @@ const Home = (props: Props) => {
           <h2>Ações rápidas</h2>
 
           <div className={styles.actions}>
-            <div className={styles.action}>
+            <div
+              className={styles.action}
+              onClick={() => navigate("/company/groups/create")}
+            >
               <span className={styles.icon}>
                 <IoAddCircleSharp />
               </span>
 
               <span>Criar grupo</span>
             </div>
-            <div className={styles.action}>
+            <div
+              className={styles.action}
+              onClick={() => navigate("/company/test/create")}
+            >
               <span className={styles.icon}>
                 <IoAddCircleSharp />
               </span>
 
               <span>Criar prova</span>
             </div>
-            <div className={styles.action}>
+            <div
+              className={styles.action}
+              onClick={() => navigate("/company/test/templates")}
+            >
               <span className={styles.icon}>
                 <IoAddCircleSharp />
               </span>
 
-              <span>Criar prova</span>
+              <span>Aplicar prova</span>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,8 +14,7 @@ type Props = {};
 
 const Home = (props: Props) => {
   const { user } = useSelector((state: any) => state.auth);
-  console.log(user);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<string>();
 
   const [recommendedTest, setRecommendedTest] =
     useState<TGetTestRecommeded[]>();
@@ -41,7 +40,7 @@ const Home = (props: Props) => {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUser();
     getRecommendedTests();
   }, []);
@@ -50,7 +49,7 @@ const Home = (props: Props) => {
     <Container>
       <header className={styles.containerHeader}>
         <div className={styles.text}>
-          <h1>Bem-vindo, {userName.split(" ")[0]}!</h1>
+          <h1>Bem-vindo, {userName && userName.split(" ")[0]}!</h1>
           <p>
             Estamos muito felizes com sua chegada! Confira as mais novas provas
             da nossa plataforma ou continue suas provas em andamento.
@@ -67,7 +66,7 @@ const Home = (props: Props) => {
         </div>
         <div className={styles.cardContainer}>
           {recommendedTest &&
-            recommendedTest.map(({id, prova, empresa }, index) => (
+            recommendedTest.map(({ id, prova, empresa }, index) => (
               <CardTest
                 key={index}
                 title={prova.titulo}

@@ -2,10 +2,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Services
+import { Navigate } from "react-router-dom";
 import adminAuthService from "../services/apiDevSkills/admin/authService";
 import companyAuthService from "../services/apiDevSkills/company/authService";
 import devAuthService from "../services/apiDevSkills/dev/authService";
-import { Navigate } from "react-router-dom";
 
 export interface IAuth {
   user: any;
@@ -49,19 +49,16 @@ export const login = createAsyncThunk(
         return thunkAPI.rejectWithValue(res.error);
       }
 
-      console.log("SLICE", res)
-
       const user = {
         token: res.token,
         id: res.userInfo!.id,
-        name: res.userInfo!.name,
         type: "DEVELOPER",
       };
-      
+
       localStorage.setItem("user", JSON.stringify(user));
 
       // Retornando o usuário cadastrado
-      return res;
+      return thunkAPI.fulfillWithValue(user);
     } else if (type === "COMPANY") {
       //  Chamando o service responsável por realizar o login da Empresa
       const res = await companyAuthService.login(data.user);

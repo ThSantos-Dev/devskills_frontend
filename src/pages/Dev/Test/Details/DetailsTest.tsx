@@ -30,6 +30,19 @@ const DetailsTest = (props: Props) => {
     dispatch(startTest(parseInt(id!)));
   };
 
+  const searchTestData = () => {
+    if (!id) return;
+
+    UserService.getTestDetails(user.token, parseInt(id)).then((res) => {
+      console.log(res);
+      if (res.error) return toast.error(res.error);
+
+      console.log(res.data);
+
+      setTestData(res.data);
+    });
+  };
+
   useEffect(() => {
     if (loading && !idToast) setIdToast(toast.loading("Processando..."));
 
@@ -64,20 +77,9 @@ const DetailsTest = (props: Props) => {
   useEffect(() => {
     if (!id) return;
     searchTestData();
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const searchTestData = () => {
-    if (!id) return;
-
-    UserService.getTestDetails(user.token, parseInt(id)).then((res) => {
-      console.log(res);
-      if (res.error) return toast.error(res.error);
-
-      console.log(res.data);
-
-      setTestData(res.data);
-    });
-  };
 
   return (
     <Container filter={false} backTo="/dev/home" title="Detalhes da Prova">

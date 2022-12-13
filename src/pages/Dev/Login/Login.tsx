@@ -8,7 +8,7 @@ import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 
 // Reducer
-import { login } from "../../../slices/authSlice";
+import { login, reset } from "../../../slices/authSlice";
 
 // SVG
 import ilustration from "../../../assets/img/dev-ilustration-login.svg";
@@ -28,7 +28,9 @@ const Login = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   // Monitorando o Redux de autenticação
-  const { loading, error, success } = useSelector((state: any) => state.auth);
+  const { loading, error, success, user } = useSelector(
+    (state: any) => state.auth
+  );
 
   // Instanciando o Dispatch para poder utilizar as funções do Redux
   const dispatch = useDispatch<any>();
@@ -58,13 +60,16 @@ const Login = () => {
   // };
 
   // Responsável por verifica se deu certo
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [])
+
   useEffect(() => {
     if (success) {
       toast.success(success, {
         autoClose: 3000,
       });
-
-      navigate("/dev/home");
     }
 
     if (error) {
@@ -72,7 +77,9 @@ const Login = () => {
         autoClose: 3000,
       });
     }
-  }, [error, navigate, success]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, success]);
 
   return (
     <>

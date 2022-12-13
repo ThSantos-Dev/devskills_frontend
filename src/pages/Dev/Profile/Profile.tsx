@@ -13,9 +13,8 @@ import Button from "./../../../components/shared/Form/Button/Button";
 import Container from "./../../../components/shared/Layout/Container/Container";
 import styles from "./Profile.module.css";
 import Feedbacks from "./Tabs/Feedbacks";
-import ListTests from "./Tabs/ListTests";
 
-interface Props { }
+interface Props {}
 
 const ProfileUser = (props: Props) => {
   const { id } = useParams();
@@ -64,7 +63,6 @@ const ProfileUser = (props: Props) => {
     if (!id) return;
 
     CompanyService.getProfileData(parseInt(id), user.token).then((res) => {
-
       if (res.error) return toast.error(res.error);
 
       setCompanyData(res.data);
@@ -74,7 +72,7 @@ const ProfileUser = (props: Props) => {
   const searchUser = () => {
     if (!id) return;
 
-    console.log(user)
+    console.log(user);
 
     UserService.getById(parseInt(id), user.token).then((res) => {
       console.log(res);
@@ -82,20 +80,19 @@ const ProfileUser = (props: Props) => {
       if (res.error) return toast.error(res.error);
 
       console.log(res.data);
-      setUserData(res.data)
+      setUserData(res.data);
     });
-
-  }
+  };
 
   useEffect(() => {
     if (!id) return;
     searchCompanyData();
-    searchUser()
+    searchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Container title="Perfil" backTo={`/${user.type}/home`}>
+    <Container title="Perfil" backTo={`/dev/home`}>
       {userData ? (
         <div className={styles.container}>
           <header>
@@ -121,8 +118,9 @@ const ProfileUser = (props: Props) => {
 
             <div className={styles.info}>
               <div
-                className={`${styles.button_container} ${user.type === "COMPANY" ? styles.show : ""
-                  }`}
+                className={`${styles.button_container} ${
+                  user.type === "COMPANY" ? styles.show : ""
+                }`}
               >
                 <Button
                   color="solid_white"
@@ -166,36 +164,39 @@ const ProfileUser = (props: Props) => {
                 <h2>Provas realizadas</h2>
 
                 <div className={styles.cards_container}>
-                  {userData.usuarioProva.length > 0 ?
-
+                  {userData.usuarioProva.length > 0 ? (
                     userData.usuarioProva.map((prova: TTest) => {
-                      return <CardSearchTest
-                        description={prova.provaAndamento.prova.descricao}
-                        title={prova.provaAndamento.prova.titulo}
-                        stack={prova.provaAndamento.prova.provaHabilidade[0].habilidade.nome}
-                        key={prova.provaAndamento.id}
-                        containerCustomStyle={{
-                          borderRadius: "12px",
-                          overflow: "hidden",
-                          marginBottom: "40px"
-                        }}
-                        type={prova.provaAndamento.prova.titulo}
-                        contentCustomStyle={{
-                          backgroundColor: "var(--dark-container)",
-                        }}
-                        userView={true}
-                        icons={prova.provaAndamento.prova.provaHabilidade.map((item) => item.habilidade.icone)}
-                        img_url={""} />
+                      return (
+                        <CardSearchTest
+                          description={prova.provaAndamento.prova.descricao}
+                          title={prova.provaAndamento.prova.titulo}
+                          stack={
+                            prova.provaAndamento.prova.provaHabilidade[0]
+                              .habilidade.nome
+                          }
+                          key={prova.provaAndamento.id}
+                          containerCustomStyle={{
+                            borderRadius: "12px",
+                            overflow: "hidden",
+                            marginBottom: "40px",
+                          }}
+                          type={prova.provaAndamento.prova.titulo}
+                          contentCustomStyle={{
+                            backgroundColor: "var(--dark-container)",
+                          }}
+                          userView={true}
+                          icons={prova.provaAndamento.prova.provaHabilidade.map(
+                            (item) => item.habilidade.icone
+                          )}
+                          img_url={""}
+                        />
+                      );
                     })
-
-
-                    : (
-                      <p>Carregando...</p>
-                    )}
+                  ) : (
+                    <p>Carregando...</p>
+                  )}
                 </div>
               </section>
-
-
             )}
             {showTab.feedbacks && <Feedbacks />}
             {showTab.infos && (
@@ -206,23 +207,47 @@ const ProfileUser = (props: Props) => {
                 </div>
                 <div className={styles.user_info_item}>
                   <label>Endereço : </label>
-                  {
-                    userData.EnderecoUsuario.map((endereco: any) => <p>{endereco.logradouro}, {endereco.numero}, {endereco.bairro} - {endereco.cidade.nome} {endereco.complemento && `, Complemento :${endereco.complemento}`}</p>)
-                  }
+                  {userData.EnderecoUsuario.map((endereco: any) => (
+                    <p>
+                      {endereco.logradouro}, {endereco.numero},{" "}
+                      {endereco.bairro} - {endereco.cidade.nome}{" "}
+                      {endereco.complemento &&
+                        `, Complemento :${endereco.complemento}`}
+                    </p>
+                  ))}
                 </div>
                 <div className={styles.user_info_item}>
                   <label>Telefone(s) : </label>
-                  <p>{userData.UsuarioTelefone.map((telefone: any) => `(${telefone.ddd}) ${telefone.numero}`)}</p>
+                  <p>
+                    {userData.UsuarioTelefone.map(
+                      (telefone: any) => `(${telefone.ddd}) ${telefone.numero}`
+                    )}
+                  </p>
                 </div>
                 <div className={styles.user_info_item}>
                   <label>Habilidades : </label>
-                  <p>{userData.usuarioHabilidade.map((habilidade: any, index) => `${habilidade.habilidade.nome}${index + 1 == userData.usuarioHabilidade.length ? "." : ","} `)}</p>
+                  <p>
+                    {userData.usuarioHabilidade.map(
+                      (habilidade: any, index) =>
+                        `${habilidade.habilidade.nome}${
+                          index + 1 == userData.usuarioHabilidade.length
+                            ? "."
+                            : ","
+                        } `
+                    )}
+                  </p>
                 </div>
                 <div className={styles.user_info_item}>
                   <label>Stacks : </label>
-                  <p>{userData.usuarioStack.map((stack: any, index) => `${stack.stack.nome}${index + 1 == userData.usuarioStack.length ? "." : ","} `)}</p>
+                  <p>
+                    {userData.usuarioStack.map(
+                      (stack: any, index) =>
+                        `${stack.stack.nome}${
+                          index + 1 == userData.usuarioStack.length ? "." : ","
+                        } `
+                    )}
+                  </p>
                 </div>
-
               </div>
             )}
           </div>

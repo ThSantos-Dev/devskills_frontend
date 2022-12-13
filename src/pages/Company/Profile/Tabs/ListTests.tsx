@@ -40,7 +40,7 @@ const ListTests: React.FC<Props> = ({tests, logo}) => {
             ))}
           </>
         ) : (
-          <p>Carregando...</p>
+          <p>Não há provas cadastradas.</p>
         )}
       </div>
     </section>

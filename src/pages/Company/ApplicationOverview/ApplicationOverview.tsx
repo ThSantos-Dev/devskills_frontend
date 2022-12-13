@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Button from "../../../components/shared/Form/Button/Button";
 import Container from "../../../components/shared/Layout/Container/Container";
 import TestService from "../../../services/apiDevSkills/common/testService";
 import { TCandidatesRanking } from "../../../types/devskills/test/TCandidatesRanking";
@@ -84,7 +83,6 @@ const ApplicationOverview = (props: Props) => {
         <header className={styles.content}>
           <div className={styles.title_container}>
             <h2>{testInfo?.titulo}</h2>
-            <Button color="solid_white" size="small" text="Detalhes" />
           </div>
 
           <p>{testInfo?.descricao}</p>

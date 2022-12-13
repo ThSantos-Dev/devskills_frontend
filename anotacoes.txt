@@ -18,3 +18,48 @@ API externa
  NodeMailer
  Firebase
  Brasil API
+
+
+ Provas
+ 1______________________
+ Estágio desenvolvedor web
+
+ Atividades a exercer:
+- Participar de revisões de código regularmente e orientar outros membros da equipe sobre as melhores práticas a serem seguidas
+- Entregar soluções bem construídas e testadas em tempo hábil 
+- Gerenciar riscos, escalar conforme necessário e oferecer opções e melhorias
+- Criar e desenvolver uma interface de usuário baseada na web que seja moderna e altamente responsiva
+
+1. Unica escolha
+Considerando o conteúdo sobre CSS. O que a propriedade deplay define?
+- Define de qual maneira o elemento será disposto na tela (CORRETA)
+- Define de qual maneira a sombra do elemento será disposto na tela
+- Define de qual maneira o elemento irá flutuar em relação ao seu elemento parent
+- Define de qual cor será a borda do elemento
+- Define a cor do bloco do elemento
+
+2. Única escolha
+Em CSS, no que diz respeito a seletores. Qual a diferença entre # e .?
+- . define IDs e # define classes
+- # define IDs e . define classes (CORRETA)
+- ; define IDs e $ define classes
+- . define IDs e $ define classes
+
+3. Única escolha
+O Web Content Accessibility Guidelines (WCAG) 2.0 do W3C é uma recomendação para construção de
+Web Sites acessíveis. Ele serve como guia para que se possa fazer conteúdos que estejam relacionados a
+pessoas:
+-  exclusivamente com deficiências visuais
+- exclusivamente com deficiências visuais e auditivas.
+-  exclusivamente com deficiências visuais, auditivas e cognitivas.
+- com deficiências do tipo cegueira, baixa visão (visão limitada), surdez, perda parcial de audição,
+dificuldades cognitivas, deficiência de fala, fotossensibilidade e combinações destas deficiências. (CORRETA)
+-  com deficiências do tipo cegueira, baixa visão (visão limitada), surdez, perda parcial de audição,
+dificuldades cognitivas, deficiência de fala e fotossensibilidade, mas somente atendendo uma destas
+deficiências por vez, sem haver combinações.
+
+
+4. Dissertativa
+Descreva com suas palavras, o que você entende por "aplicação front-end".
+
+

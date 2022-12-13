@@ -143,6 +143,15 @@ const App = () => {
           }
         />
 
+
+
+
+
+
+
+
+        
+
         {/* Routes of Company */}
         <Route
           path="/company/register"

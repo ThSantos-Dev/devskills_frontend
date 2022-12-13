@@ -103,7 +103,7 @@ const Register = () => {
 
     if (error) {
       toast.update(idToast, {
-        render: error,
+        render: "Vamos ver se é esse aqui",
         type: "error",
         isLoading: false,
         autoClose: 3000,
@@ -111,7 +111,8 @@ const Register = () => {
 
       setStep({ one: true, two: false });
     }
-  }, [devLoading, success, error, navigate, idToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
 
   if (loading) return <p>Carregando...</p>;
 
