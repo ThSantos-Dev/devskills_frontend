@@ -198,9 +198,8 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
                   value: index.toString(),
                 })),
               ]}
-              defaultValue={{ label: "Entre", value: "between" }}
               name="filter"
-              placeholder="Nenhum"
+              placeholder="Selecione"
               isMulti={true}
               closeMenuOnSelect={false}
               handleOnChange={(value) => {}}
@@ -305,9 +304,10 @@ const Ranking: React.FC<Props> = ({ show, data }) => {
                   </td>
                   <td className={styles.text} data-label="Localidade:">
                     <span>
-                      {item.candidato.localidade.cidade ?
-                        `${item.candidato.localidade.estado},
-                      ${item.candidato.localidade.cidade}` : 'Não informada.'}
+                      {item.candidato.localidade.cidade
+                        ? `${item.candidato.localidade.estado},
+                      ${item.candidato.localidade.cidade}`
+                        : "Não informada."}
                     </span>
                   </td>
                   <td className={styles.text} data-label="Status:">

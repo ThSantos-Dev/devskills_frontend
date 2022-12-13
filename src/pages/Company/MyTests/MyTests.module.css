@@ -30,6 +30,7 @@
 }
 
 .card p {
+  flex: 1 0;
   font-size: clamp(0.5rem, 5vw, 0.9rem);
   font-weight: 300;
 

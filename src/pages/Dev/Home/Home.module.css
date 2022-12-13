@@ -253,10 +253,12 @@
 
 .cardTestSkillContainer {
   display: flex;
+  align-items: flex-end;
   gap: 5px;
 }
 
 .cardTestStackContainer {
   display: flex;
+  align-items: flex-end;
   gap: 5px;
 }

@@ -12,7 +12,7 @@ import { reset } from "../../../slices/common/testSlice";
 import { TSkillsData } from "../../Dev/Register/Skills/Skills";
 import {
   filterTestOfCompany,
-  getAllOfCompany,
+  getAllOfCompany
 } from "./../../../slices/common/testSlice";
 import { TTestOfCompany } from "./../../../types/devskills/test/TTestOfCompany";
 
@@ -70,6 +70,7 @@ const MyTests = (props: Props) => {
 
   useEffect(() => {
     dispatch(getAllOfCompany());
+    console.log(tests)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -96,28 +97,28 @@ const MyTests = (props: Props) => {
       styleTitleContainer={{ maxWidth: "1400px" }}
     >
       <div className={styles.cards_container}>
-        {tests?.results?.length > 0 ? (
+        {tests?.results?.length > 0 ?
           tests.results.map((test, index) => (
             <div
               className={styles.card}
               key={index}
               onClick={() => navigate("/company/test/applicate/" + test.id)}
             >
-              <h2>{test.prova.titulo}</h2>
-              <p>{test.prova.descricao}</p>
+              <h2>{test.prova?.titulo}</h2>
+              <p>{test.prova?.descricao}</p>
 
               <div className={styles.card_info}>
-                <span>{test.prova.ativo ? "Ativa" : "Inativa"}</span>
+                <span>{test.prova?.ativo ? "Ativa" : "Inativa"}</span>
                 <span>
                   Até{" "}
-                  {test.data_fim.split("T")[0].split("-").reverse().join("/")}
+                  {test.data_fim && test.data_fim.split("T")[0].split("-").reverse().join("/")}
                 </span>
               </div>
             </div>
-          ))
-        ) : (
-          <h2>Você não tem provas cadastradas na plataforma.</h2>
-        )}
+          )) : (
+            <h2>Você não tem provas cadastradas na plataforma.</h2>
+        
+          )}
       </div>
 
       {/* <PagenationBar
